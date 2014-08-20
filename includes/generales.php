@@ -27,3 +27,5 @@ function obtenerIp(){
 function obtenerNombreEquipo(){
     return gethostname();
 }
+
+// fin de archivo
