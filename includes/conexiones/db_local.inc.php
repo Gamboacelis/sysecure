@@ -26,17 +26,17 @@ class database {
 		return $obj;
 	}
 	
-	function maxid( $table ){
-		$query = "SELECT MAX(id) AS lastid FROM $table";
+	function maxid( $campo,$table ){
+		$query = "SELECT MAX($campo) AS lastid FROM $table";
 		$obj = $this->db->query($query);
-		return $obj;
+                $id = $obj->fetch_object();
+		return $id->lastid;
 	}
 	
 	function newid( $table ){
-		$newid = $this->maxid($table);
-		$id = $newid->fetch_object();
-		if ($id->lastid)
-			$obj = $id->lastid + 1;
+		$id = $this->maxid($table);
+		if ($id)
+			$obj = $id + 1;
 		else 
 			$obj = 1;	
 		
