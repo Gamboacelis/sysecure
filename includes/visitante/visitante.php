@@ -38,4 +38,7 @@ class clase_visitante
 
 $visitante = new  clase_visitante();
 var_dump($visitante->get_visitante("1720985066"));
+
+//cambio nuevo de visitante
 ?>
+
