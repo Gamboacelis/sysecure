@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('#listaUsuarios').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "includes/datatable/consultaUsuarios.php",
+        "sAjaxSource": "includes/usuario/Usuarios_dataTable.php",
         "oLanguage": {
             "sEmptyTable": "No hay datos disponibles en la tabla",
             "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
@@ -135,7 +135,7 @@ function guardarCambioClave(usuario) {
             var clave = $('#password').val();
             var codigo = $('#IDuser').val();
             $.ajax({
-                url: "./data/datosUsuarios.php?opcion=cambioClaveUsuario",
+                url: "./includes/usuario/Usuarios_model.php?opcion=cambioClaveUsuario",
                 type: 'post',
                 data: {codigo: codigo, clave: clave},
                 success: function(respuesta) {
@@ -155,7 +155,7 @@ function guardarCambioClave(usuario) {
         if (ButtonPressed === "No") {
         }
     });
-    var url = './data/datosUsuarios.php?opcion=enviarDatosUsuario';
+    var url = './includes/usuario/Usuarios_model.php?opcion=enviarDatosUsuario';
     $.ajax({
         url: url,
         datetype: "json",
@@ -178,7 +178,7 @@ function GuardarCambioClaveUsuario(codPar) {
         if (ButtonPressed === "Si") {
             var clave = $('#clave_' + codPar).val();
             $.ajax({
-                url: "./data/datosUsuarios.php?opcion=cambioClaveUsuario",
+                url: "./includes/usuario/Usuarios_model.php?opcion=cambioClaveUsuario",
                 type: 'post',
                 data: {codigo: codPar, clave: clave},
                 success: function(respuesta) {
@@ -205,7 +205,7 @@ function GuardarCambioClaveUsuario(codPar) {
     });
 }
 function editarUsuario(usuario) {
-    var url = './data/datosUsuarios.php?opcion=enviarDatosUsuario';
+    var url = './includes/usuario/Usuarios_model.php?opcion=enviarDatosUsuario';
     $.ajax({
         url: url,
         datetype: "json",
@@ -216,9 +216,10 @@ function editarUsuario(usuario) {
             limpiarFormulario();
             carga_DatosIncialesUsuarios(json_obj);
             $('#frmUsuarioModal').modal('show');
+            $("#centro").hide();
             $("#password").hide();
-            $('#smart-form-register >header').text('Actualización de Datos Usuario')
             $("#passwordConfirm").hide();
+            $('#smart-form-register >header').text('Actualización de Datos Usuario')
             $('#IDuser').val(usuario);
 
         }
@@ -229,7 +230,7 @@ function guardarUsuario() {
     var usuario = $('#IDuser').val();
     if (usuario === '') {
         $.ajax({
-            url: './data/datosUsuarios.php?opcion=guardaDatosUsuario',
+            url: './includes/usuario/Usuarios_model.php?opcion=guardaDatosUsuario',
             datetype: "json",
             type: 'POST',
             data: $("#smart-form-register").serialize(),
@@ -249,7 +250,7 @@ function guardarUsuario() {
         });
     } else {
         $.ajax({
-            url: './data/datosUsuarios.php?opcion=actualizarDatosUsuario',
+            url: './includes/usuario/Usuarios_model.php?opcion=actualizarDatosUsuario',
             datetype: "json",
             type: 'POST',
             data: $("#smart-form-register").serialize(),
@@ -273,10 +274,11 @@ function guardarUsuario() {
 function nuevoUsuario() {
     $('#frmUsuarioModal').modal('show');
     limpiarFormulario();
+    $("#centro").show();
     $("#password").show();
+    $("#passwordConfirm").show();
     $('#smart-form-register >header').text('Registro Nuevo Usuario')
     $('#IDuser').val('');
-    $("#passwordConfirm").show();
 }
 function eliminarUsuario(codPar, nomCod) {
 
@@ -287,7 +289,7 @@ function eliminarUsuario(codPar, nomCod) {
     }, function(ButtonPressed) {
         if (ButtonPressed === "Si") {
             $.ajax({
-                url: "./data/datosUsuarios.php?opcion=eliminarUsuario",
+                url: "./includes/usuario/Usuarios_model.php?opcion=eliminarUsuario",
                 type: 'post',
                 data: {codigo: codPar},
                 success: function(respuesta) {
@@ -318,8 +320,9 @@ function limpiarFormulario() {
     $("#passwordConfirm").val('');  /*Usuario*/
     $("#email").val('');  /*E-Mail*/
     $("#celular").val('');/*Celular*/
-    $('#grupo').prop('selectedIndex', 0);/*Grupo*/
-    $('#cargo').prop('selectedIndex', 0);/*Cargo*/
+    $("#cedula").val('');/*Cedula*/
+    $('#tipoUsuario').prop('selectedIndex', 0);/*Tipo de Usuario*/
+    $('#centro').prop('selectedIndex', 0);/*Centro*/
 }
 function carga_DatosIncialesUsuarios(edt) {
     $("#nombre").val(edt.datosUsuario.USU_NOMBRE);  /*Nombre*/
@@ -327,6 +330,7 @@ function carga_DatosIncialesUsuarios(edt) {
     $("#usuario").val(edt.datosUsuario.USU_USUARIO);  /*Usuario*/
     $("#email").val(edt.datosUsuario.USU_EMAIL);  /*E-Mail*/
     $("#celular").val(edt.datosUsuario.USU_CELULAR);/*Celular*/
-    $('#grupo option[value="' + edt.datosUsuario.GRP_COD + '"]').attr("selected", true);/*Grupo*/
-    $('#cargo option[value="' + edt.datosUsuario.CAR_COD + '"]').attr("selected", true);/*Cargo*/
+    $("#cedula").val(edt.datosUsuario.USU_CEDULA);/*Celular*/
+//    $('#tipoUsuario option[value="' + edt.datosUsuario.ROL_COD + '"]').attr("selected", true);/*Tipo de Usuario*/
+    $('#tipoUsuario').prop('selectedIndex', edt.datosUsuario.ROL_COD);
 }

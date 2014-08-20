@@ -2,7 +2,7 @@
 
 session_start();
 date_default_timezone_set('America/Bogota');
-include_once("conexiones/db_local.inc.php");
+include_once PATH_PROD.SISTEM_NAME.'/includes/conexiones/db_local.inc.php';
 $dbmysql = new database();
 $modulos = isset($_GET['modulo']) ? $_GET['modulo'] : 'ninguno';
 switch ($modulos) {
@@ -30,9 +30,9 @@ function revisarUsuarios() {
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Nombre</th>
-                                        <th><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> Usuario</th>
-                                        <th><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> Clave</th>
+                                        <th><i class="fa fa-fw fa-male text-muted hidden-md hidden-sm hidden-xs"></i> Nombre</th>
+                                        <th><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Usuario</th>
+                                        <th><i class="fa fa-fw fa-lock text-muted hidden-md hidden-sm hidden-xs"></i> Clave</th>
                                         <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Acción</th>
                                     </tr>
                                 </thead>
@@ -128,7 +128,8 @@ function frmUsuario() {
                                                                                     <select id="centro" name="centro">
                                                                                             <option value="0" selected="" disabled="">-- Centro --</option>
                                                                                             ' . comboCentro() . '
-                                                                                    </select> <i></i> </label>
+                                                                                    </select> <i></i> 
+                                                                            </label>
                                                                     </section>
                                                                 </div>	
                                                             </fieldset>

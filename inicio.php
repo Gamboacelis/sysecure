@@ -19,9 +19,10 @@ if ($_SESSION["autenticado"] == 'SI') {
             break;
         case 'usuario':
             $option = isset($_GET['op']) ? $_GET['op'] : 0;
-            include_once("./includes/usuario.php");
+            include_once("./includes/usuario/Usuarios_vistas.php");
             switch ($option) {
                 case 'revisarUsuarios':
+                    $titulo='Revisión de Usuarios';
                     $contenido = revisarUsuarios();
                     break;
             }
@@ -422,7 +423,9 @@ if ($_SESSION["autenticado"] == 'SI') {
 
             <!-- FastClick: For mobile devices -->
             <script src="js/plantilla/plugin/fastclick/fastclick.min.js"></script>
-
+            
+            <!-- Generador de MD5 -->
+            <script src="js/plantilla/plugin/jquery-md5/jquery.md5.min.js"></script>
             <!--[if IE 8]>
 
             <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
