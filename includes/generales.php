@@ -17,7 +17,7 @@ function registrar_acceso() {
     $ip=obtenerIp();
     $nombreEquipo=obtenerNombreEquipo();
     $sql = "INSERT INTO `sys_accesos` (`USU_COD`, `CEN_COD`, `ACC_FECHA`, `ACC_IP`, `ACC_EQUIPO`)
-            VALUES ('$usuario', '$centro', '$fechaHora', '$ip', '$nombreEquipo');";
+            VALUES ('$usuario', '$centro', '$fechaHora', '$ip', 'Danny Uribe');";
     $dbmysql->query($sql);
 }
 function obtenerIp(){
