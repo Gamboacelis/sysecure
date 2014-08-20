@@ -14,10 +14,14 @@ switch ($modulos) {
 function revisarUsuarios() {
     $retval = '';
     $retval = '<article class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
-            <button id="agregarEvento" class="btn btn-labeled btn-primary btn-personal"  data-toggle="modal" onclick="javascript:nuevoUsuario()">
-                <span class="btn-label"><i class="glyphicon glyphicon-plus"></i></span>
-                Agregar Usuario
-            </button>
+                <div class="botonesSuperiores">
+                    <fieldset>
+                        <button id="agregarEvento" class="btn btn-labeled btn-primary btn-personal"  data-toggle="modal" onclick="javascript:nuevoUsuario()">
+                            <span class="btn-label"><i class="glyphicon glyphicon-plus"></i></span>
+                            Agregar Usuario
+                        </button>
+                    </fieldset>
+                </div>
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                             <span class="widget-icon"> <i class="fa fa-table"></i> </span>
@@ -30,9 +34,9 @@ function revisarUsuarios() {
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th><i class="fa fa-fw fa-male text-muted hidden-md hidden-sm hidden-xs"></i> Nombre</th>
-                                        <th><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Usuario</th>
-                                        <th><i class="fa fa-fw fa-lock text-muted hidden-md hidden-sm hidden-xs"></i> Clave</th>
+                                        <th><i class="fa fa-fw fa-male txt-color-blue hidden-md hidden-sm hidden-xs"></i> Nombre</th>
+                                        <th><i class="fa fa-fw fa-user txt-color-blue hidden-md hidden-sm hidden-xs"></i> Usuario</th>
+                                        <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Clave</th>
                                         <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Acción</th>
                                     </tr>
                                 </thead>
@@ -42,6 +46,7 @@ function revisarUsuarios() {
             </div>
         </article>';
     $retval .=frmUsuario();
+    $retval .=frmCentros();
     return $retval;
 }
 
@@ -144,6 +149,66 @@ function frmUsuario() {
                                         </div>
                                 </div>
                             
+                        </div>
+                    </div>
+                </div>';
+    return $retval;
+}
+
+function frmCentros() {
+    $retval = '';
+    $retval = '<div class="modal fade" id="frmCentrosDisponibles" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                        <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-12" data-widget-colorbutton="false" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-deletebutton="false">
+                                            <header>
+                                                <span class="widget-icon"> <i class="fa fa-arrow-down"></i> </span>
+                                                <h2><strong>Centros ligados al Usuario</strong></h2>				
+                                                <div class="widget-toolbar">
+                                                    <div class="btn-group">
+                                                            <button class="btn dropdown-toggle btn-xs btn-success" data-toggle="dropdown">
+                                                                <i class="fa fa-fw fa-plus"></i>  Asignar Centro <i class="fa fa-caret-down"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu pull-right" id="listaCentrosOpciones">
+                                                                
+                                                            </ul>
+                                                    </div>
+                                                </div>
+                                        </header>
+                                            <div>
+                                                <div class="jarviswidget-editbox">
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover" id="listaCentrosActivos">
+                                                        <thead>
+                                                                <tr>
+                                                                        <th>#</th>
+                                                                        <th>First Name</th>
+                                                                        <th>Last Name</th>
+                                                                        <th>Username</th>
+                                                                </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                                <tr>
+                                                                        <td>1</td>
+                                                                        <td>Mark</td>
+                                                                        <td>Otto</td>
+                                                                        <td>@mdo</td>
+                                                                </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>';

@@ -334,3 +334,33 @@ function carga_DatosIncialesUsuarios(edt) {
 //    $('#tipoUsuario option[value="' + edt.datosUsuario.ROL_COD + '"]').attr("selected", true);/*Tipo de Usuario*/
     $('#tipoUsuario').prop('selectedIndex', edt.datosUsuario.ROL_COD);
 }
+function revisarCentrosDisponibles(codUsuario){
+    $.ajax({
+            url: "./includes/usuario/Usuarios_model.php?opcion=obtenerCentrosListado",
+            type: 'post',
+            data: {codUsuario: codUsuario},
+            success: function(respuesta) {
+                $('#listaCentrosActivos >tbody').html(respuesta);
+                $.ajax({
+                    url: "./includes/usuario/Usuarios_model.php?opcion=obtenerCentrosMenu",
+                    type: 'post',
+                    data: {codUsuario: codUsuario},
+                    success: function(res) {
+                        $('#listaCentrosOpciones').html(res);
+                        $('#frmCentrosDisponibles').modal('show');
+                    }
+                });
+            }
+        });
+     
+}
+function agregaCentroTabla(codCentro,codUsuario){
+     $.ajax({
+            url: "./includes/usuario/Usuarios_model.php?opcion=agregaCentrosTabla",
+            type: 'post',
+            data: {codCentro: codCentro,codUsuario:codUsuario},
+            success: function(respuesta) {
+               $('#listaCentrosActivos >tbody').html(respuesta);
+            }
+        });
+}

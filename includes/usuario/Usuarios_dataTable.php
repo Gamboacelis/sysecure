@@ -122,7 +122,10 @@ global $dbmysql;
                                                 ''.utf8_encode($nombre).'',
                                                 ''.utf8_encode($aRow[ 'USU_USUARIO' ]).'',
                                                 '<div class="verclave">'.utf8_encode($aRow[ 'USU_CLAVE' ]).'</div><section><label class="input cambioClave '.$aRow[ 'USU_COD' ].'"><input type="password" placeholder="Password" name="clave" id="clave_'.$aRow[ 'USU_COD' ].'"><a class="btn btn-primary btn-xs" title="Guardar Cambio" href="javascript:GuardarCambioClaveUsuario('.$aRow[ 'USU_COD' ].')"><i class="fa fa-save"></i></a></label></section>',
-                                                '<a class="btn btn-success btn-xs" title="Cambio de Clave" href="javascript:cambiarClaveUsuario('.$aRow[ 'USU_COD' ].')">
+                                                '<a class="btn btn-success btn-xs" title="Centros Asignados" href="javascript:revisarCentrosDisponibles('.$aRow[ 'USU_COD' ].')">
+                                                    <i class="fa fa-map-marker"></i>
+                                                </a>
+                                                <a class="btn btn-success btn-xs" title="Cambio de Clave" href="javascript:cambiarClaveUsuario('.$aRow[ 'USU_COD' ].')">
                                                     <i class="fa fa-key"></i>
                                                 </a>
                                                 <a class="btn btn-success btn-xs" title="Editar Usuario" href="javascript:editarUsuario('.$aRow[ 'USU_COD' ].')">
