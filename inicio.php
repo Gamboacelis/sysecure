@@ -10,9 +10,10 @@ if ($_SESSION["autenticado"] == 'SI') {
     switch ($modulos) {
         case 'administrativo':
             $option = isset($_GET['op']) ? $_GET['op'] : 0;
-            include_once("./includes/pabellones.php");
+            include_once("./includes/pabellones/pabellon_vistas.php");
             switch ($option) {
                 case 'pabellones':
+                    $titulo='Revisión de Pabellones';
                     $contenido = reporte_pabellones();
                     break;
             }
@@ -439,6 +440,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/plantilla/app.min.js"></script>
             <script src="js/visitas.js"></script>
             <script src="js/usuario.js"></script>
+            <script src="js/pabellones.js"></script>
 
             <!-- PAGE RELATED PLUGIN(S) -->
 
