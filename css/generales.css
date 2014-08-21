@@ -1,2 +1,4 @@
 .cambioClave{display:none}
 .botonesSuperiores{margin:0 0 5px}
+.tablaPabellonesDetalle:hover{color:#058dc7;cursor:pointer}
+.txtPabellonHorario{color:#f00;font-size:1.2em;font-weight:bolder}
