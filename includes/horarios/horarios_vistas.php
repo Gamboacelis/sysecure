@@ -42,7 +42,7 @@ function frm_asignacionPabellones() {
                                 </div>
                                 <div class="widget-body no-padding">
                                     <div class="table-responsive">
-                                            <table class="table table-bordered table-striped table-hover">
+                                            <table id="listaPabellones" class="table table-bordered table-striped table-hover">
                                                 <thead>
                                                     <tr>
                                                             <th>#</th>
@@ -86,11 +86,12 @@ function frm_asignacionPabellones() {
                                     <table id="tbPabellonesHorarios" class="table table-striped table-bordered table-hover">
                                         <thead>
                                             <tr id="tablaHorarios">
-                                                    <td>Dia</td>
-                                                    <td>Descripción</td>
-                                                    <td>Hora Ingreso</td>
-                                                    <td>Hora Salida</td>
-                                                    <td>Acciones</td>
+                                                    <th>Dia</th>
+                                                    <th>Descripción</th>
+                                                    <th>Hora Ingreso</th>
+                                                    <th>Hora Salida</th>
+                                                    <th>Estado</th>
+                                                    <th>Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>';
@@ -127,6 +128,7 @@ function frmHorarios(){
                                                             </header>
                                                             <fieldset>
                                                                     <input type="hidden" id="IDhorario" name="IDhorario">
+                                                                    <input type="hidden" id="IDpabellonFrm" name="IDpabellonFrm">
                                                                     <div class="row">
                                                                         <section class="col col-6">
                                                                                 <label>Días:</label>
@@ -138,11 +140,13 @@ function frmHorarios(){
                                                                                                 <option value="Miercoles">Miercoles</option>
                                                                                                 <option value="Jueves">Jueves</option>
                                                                                                 <option value="Viernes">Viernes</option>
+                                                                                                <option value="Sábado">Sábado</option>
+                                                                                                <option value="Domingo">Domingo</option>
                                                                                         </select> <i></i> </label>
                                                                         </section>
                                                                         <section class="col col-6">
                                                                                 <label>Descripción:</label>
-                                                                                <label class="input"> <i class="icon-append fa fa-comment-o "></i>
+                                                                                <label class="input"> <i class="icon-append fa fa-comment-o"></i>
                                                                                         <input type="text" id="descripcion" name="descripcion" placeholder="Descripción">
                                                                                         <b class="tooltip tooltip-bottom-right">Necesario para Validar la Cuenta</b> </label>
                                                                         </section>
@@ -160,7 +164,14 @@ function frmHorarios(){
                                                                                         <input type="text" id="horaSalida" name="horaSalida" placeholder="00:00">
                                                                                         <b class="tooltip tooltip-bottom-right">Necesario para Validar la Cuenta</b> </label>
                                                                         </section>
+                                                                        
                                                                     </div>
+                                                                    <section>
+                                                                        <label class="checkbox">
+                                                                            <input id="estado" type="checkbox" name="estado" value="A">
+                                                                            <i></i>Activo
+                                                                        </label>
+                                                                    </section>
                                                             </fieldset>
                                                             <footer>
                                                                     <button type="submit" class="btn btn-primary">

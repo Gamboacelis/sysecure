@@ -6,57 +6,57 @@ $dbmysql = new database();
 date_default_timezone_set('America/Bogota');
 $funcion = isset($_GET['opcion']) ? $_GET['opcion'] : 'ninguno';
 switch ($funcion) {
-    case 'enviarDatosPabellon':
-        enviarDatosPabellon();
+    case 'enviarDatosHorario':
+        enviarDatosHorario();
         break;
-    case 'guardaDatosPabellon':
-        guardaDatosPabellon();
+    case 'guardaDatosHorario':
+        guardaDatosHorario();
         break;
-    case 'actualizarDatosPabellon':
-        actualizarDatosPabellon();
+    case 'actualizarDatosHorario':
+        actualizarDatosHorario();
         break;
-    case 'eliminarPabellon':
-        eliminarPabellon();
+    case 'eliminarHorario':
+        eliminarHorario();
         break;
     case 'buscarHorariosPabellon':
         buscarHorariosPabellon();
         break;
 }
 
-function enviarDatosPabellon() {
+function enviarDatosHorario() {
     global $dbmysql;
-    $idpabellon = $_POST['pabellon'];
-    $sql = "SELECT * FROM `sys_pabellones` WHERE PAB_COD =$idpabellon";
+    $idHorario = $_POST['horario'];
+    $sql = "SELECT * FROM `sys_horarios` WHERE HOR_COD =$idHorario";
     $val = $dbmysql->query($sql);
     $row = $val->fetch_object();
-    $lista['datosPabellon'] = array(
-        "PAB_COD" => $row->PAB_COD,
-        "NVL_COD" => $row->NVL_COD,
-        "PAB_ALA" => $row->PAB_ALA,
-        "PAB_DESCRIPCION" => $row->PAB_DESCRIPCION,
-        "PAB_CAPACIDAD" => $row->PAB_CAPACIDAD,
-        "PAB_DETALLES" => $row->PAB_DETALLES
+    $lista['datosHorario'] = array(
+        "HOR_COD" => $row->HOR_COD,
+        "HOR_DESCRIPCION" => $row->HOR_DESCRIPCION,
+        "HOR_DIAS" => $row->HOR_DIAS,
+        "HOR_HORA_ING" => $row->HOR_HORA_ING,
+        "HOR_HORA_SAL" => $row->HOR_HORA_SAL,
+        "HOR_ESTADO" => $row->HOR_ESTADO
     );
 
     echo $encode = json_encode($lista);
 }
 
-function actualizarDatosPabellon() {
+function actualizarDatosHorario() {
     global $dbmysql;
-    $codigo = $_POST['IDpabellon'];
-    $ala = $_POST["ala"];
+    $codigo = $_POST['IDhorario'];
+    $dias= $_POST["dias"];
     $descripcion = $_POST["descripcion"];
-    $capacidad = $_POST["capacidad"];
-    $detalles = $_POST["detalles"];
-    $nivel = $_POST["nivel"];
+    $horaIngreso = $_POST["horaIngreso"];
+    $horaSalida = $_POST["horaSalida"];
+    $estado = $_POST["estado"];
 
-    $sql = "UPDATE `sys_pabellones` SET 
-                NVL_COD    = '$nivel',
-                PAB_ALA  = '$ala',
-                PAB_DESCRIPCION   = '$descripcion',
-                PAB_CAPACIDAD     = '$capacidad',
-                PAB_DETALLES   = '$detalles'
-            WHERE PAB_COD=$codigo;";
+    $sql = "UPDATE `sys_horarios` SET 
+                HOR_DESCRIPCION     = '$descripcion',
+                HOR_DIAS            = '$dias',
+                HOR_HORA_ING        = '$horaIngreso',
+                HOR_HORA_SAL        = '$horaSalida',
+                HOR_ESTADO          ='$estado'
+            WHERE HOR_COD=$codigo;";
     $val = $dbmysql->query($sql);
     if ($val) {
         echo 1;
@@ -65,16 +65,15 @@ function actualizarDatosPabellon() {
     }
 }
 
-function guardaDatosPabellon() {
+function guardaDatosHorario() {
     global $dbmysql;
-    $ala = $_POST["ala"];
+    $dias= $_POST["dias"];
     $descripcion = $_POST["descripcion"];
-    $capacidad = $_POST["capacidad"];
-    $detalles = $_POST["detalles"];
-    $nivel = $_POST["nivel"];
-    $centro = $_SESSION["usu_centro_cod"];
-    $sql = "INSERT INTO `sys_pabellones`(CEN_COD,NVL_COD,PAB_ALA,PAB_DESCRIPCION,PAB_CAPACIDAD,PAB_DETALLES)VALUES
-            ('$centro','$nivel','$ala','$descripcion','$capacidad','$detalles');";
+    $horaIngreso = $_POST["horaIngreso"];
+    $horaSalida = $_POST["horaSalida"];
+    $pabellon = $_POST["IDpabellonFrm"];
+    $sql = "INSERT INTO `sys_horarios`(PAB_COD,HOR_DESCRIPCION,HOR_DIAS,HOR_HORA_ING,HOR_HORA_SAL,HOR_ESTADO)VALUES
+            ('$pabellon','$descripcion','$dias','$horaIngreso','$horaSalida','A');";
     $val = $dbmysql->query($sql);
     if ($val) {
         echo 1;
@@ -83,10 +82,10 @@ function guardaDatosPabellon() {
     }
 }
 
-function eliminarPabellon() {
+function eliminarHorario() {
     global $dbmysql;
     $codigo = $_POST['codigo'];
-    $sql = "DELETE  FROM `sys_pabellones` WHERE PAB_COD=$codigo;";
+    $sql = "UPDATE `sys_horarios` SET HOR_ESTADO = 'I' WHERE HOR_COD=$codigo;";
     $val = $dbmysql->query($sql);
     if ($val) {
         echo 1;
@@ -102,22 +101,25 @@ function buscarHorariosPabellon() {
     $val = $dbmysql->query($sql);
     if ($val->num_rows > 0) {
         while ($row = $val->fetch_object()) {
+            $cadenaParametros=$row->HOR_COD.',\''.$row->HOR_DESCRIPCION.'\','.$codPabellon;
+            $estado=($row->HOR_ESTADO=='A')?'<span class="label label-success">Activo</span>':'<span class="label label-danger">Inactivo</span>';
             $retval .='<tr id="tablaHorarios">
                            <td>' . $row->HOR_DIAS . '</td>
                            <td>' . $row->HOR_DESCRIPCION . '</td>
                            <td>' . $row->HOR_HORA_ING . '</td>
                            <td>' . $row->HOR_HORA_SAL . '</td>
-                           <td><a class="btn btn-success btn-xs" title="Editar Horario" href="javascript:mostrarArchivosProducto(' . $row->PRO_ID . ')">
-                                    <i class="fa fa-folder-open-o"></i>
+                           <td>' . $estado . '</td>
+                           <td><a class="btn btn-success btn-xs" title="Editar Horario" href="javascript:editarHorario(' . $row->HOR_COD . ')">
+                                    <i class="fa fa-pencil"></i>
                                 </a>
-                                <a class="btn btn-danger btn-xs ' . $row->PRO_ID . ' eliminaParticipante" title="Eliminar Horario" href="javascript:eliminarProductoArchivo(' . $row->PRO_ID . ')">
+                                <a class="btn btn-danger btn-xs" title="Eliminar Horario" href="javascript:eliminarHorario(' . $cadenaParametros . ')">
                                     <i class="fa fa-trash-o"></i>
                                 </a></td>
                    </tr>';
         }
     } else {
         $retval .='<tr>
-                           <td colspan="5" align="center"><div class="txtPabellonHorario">Ningun Horario Asignado</div><input type="hidden" class="nomDescripcionArchivo" id="nomDescripcionArchivo" name="nomDescripcionArchivo" value="' . $row->PRO_ID . '"></td>
+                           <td colspan="6" align="center"><div class="txtPabellonHorario">Ningun Horario Asignado</div><input type="hidden" class="nomDescripcionArchivo" id="nomDescripcionArchivo" name="nomDescripcionArchivo" value="' . $row->PRO_ID . '"></td>
                    </tr>';
     }
 //    $retval .=buscarArchivosProducto();
