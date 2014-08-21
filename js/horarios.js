@@ -53,7 +53,7 @@ function mostrarHoraiosPabellon(pabellon) {
         }
     });
 }
-function nuevoPabellon() {
+function nuevoHorario() {
     var codPabellon=$('#IDpabellon').val();
     $('.checkbox').hide();
     if(codPabellon!==''){

@@ -4,32 +4,51 @@ if ($_SESSION["autenticado"] == 'SI') {
     $titulo = '';
     $contenido = '';
     $usuario = '';
+    
     $usuario = $_SESSION["usu_real_nombre"];
     $modulos = isset($_GET['modulo']) ? $_GET['modulo'] : 'ninguno';
     include_once("./includes/visitas.php");
+    include_once("./includes/generales.php");
+    inicializaMenu();
     switch ($modulos) {
         case 'administrativo':
             $option = isset($_GET['op']) ? $_GET['op'] : 0;
             include_once("./includes/pabellones/pabellon_vistas.php");
             include_once("./includes/usuario/Usuarios_vistas.php");
             include_once("./includes/horarios/horarios_vistas.php");
+            include_once("./includes/ppl/ppl_vistas.php");
             switch ($option) {
+                case 'horarios':
+                    $titulo='Revisión de Horarios';
+                    $activarMenu31='class="active"';
+                    $contenido = frm_asignacionPabellones();
+                    break;
                 case 'pabellones':
                     $titulo='Revisión de Pabellones';
+                    $activarMenu32='class="active"';
                     $contenido = reporte_pabellones();
+                    break;
+                case 'ppl':
+                    $titulo='Revisión de Personas Privadas de Libertad';
+                    $activarMenu33='class="active"';
+                    $contenido = revisarPpl();
                     break;
                 case 'usuarios':
                     $titulo='Revisión de Usuarios';
+                    $activarMenu34='class="active"';
                     $contenido = revisarUsuarios();
                     break;
-                case 'horarios':
-                    $titulo='Revisión de Horarios';
-                    $contenido = frm_asignacionPabellones();
+                case 'visitantes':
+                    $titulo='Revisión de Usuarios';
+                    $activarMenu35='class="active"';
+                    $contenido = revisarUsuarios();
                     break;
+                
             }
             break;
         default:
             $titulo = 'Reporte de Visitas';
+            $activarMenu1='class="active"';
             $contenido = reporte_visitantes();
             break;
     }
@@ -186,34 +205,23 @@ if ($_SESSION["autenticado"] == 'SI') {
                 </div>
                 <!-- NAVIGATION -->
                 <nav>
-                    <ul>
-                        <li class="active">
-                            <a href="inicio.php" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Principal</span></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent">Visitas</span></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Administracion</span></a>
+                    <ul id="sysMenu">
+                        <li <?php echo $activarMenu1 ?>><a href="inicio.php" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Principal</span></a></li>
+                        <li <?php echo $activarMenu2 ?>><a href="#"><i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent">Visitas</span></a></li>
+                        <li <?php echo $activarMenu3 ?>><a href="#"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Administracion</span></a>
                             <ul>
-                                <li><a href="#">Calendario</a></li>
-                                <li><a href="?modulo=administrativo&op=pabellones">Pabellones</a></li>
-                                <li><a href="?modulo=administrativo&op=horarios">Horarios de Visitas</a></li>
-                                <li><a href="?modulo=administrativo&op=usuarios">Usuarios</a></li>
+                                <li <?php echo $activarMenu31 ?>><a href="?modulo=administrativo&op=horarios">Horarios de Visitas</a></li>
+                                <li <?php echo $activarMenu32 ?>><a href="?modulo=administrativo&op=pabellones">Pabellones</a></li>
+                                <li <?php echo $activarMenu33 ?>><a href="?modulo=administrativo&op=ppl">PPL</a></li>
+                                <li <?php echo $activarMenu34 ?>><a href="?modulo=administrativo&op=usuarios">Usuarios</a></li>
+                                <li <?php echo $activarMenu35 ?>><a href="?modulo=administrativo&op=visitantes">Visitantes</a></li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-table"></i> <span class="menu-item-parent">Controles Accesos</span></a>
+                        <li <?php echo $activarMenu4 ?>><a href="#"><i class="fa fa-lg fa-fw fa-table"></i> <span class="menu-item-parent">Controles Accesos</span></a>
                             <ul>
-                                <li>
-                                    <a href="#">Control Acceso 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Control Acceso 2</a>
-                                </li>
-                                <li>
-                                    <a href="#">Control Acceso 3</a>
-                                </li>
+                                <li <?php echo $activarMenu41 ?>><a href="#">Control Acceso 1</a></li>
+                                <li <?php echo $activarMenu42 ?>><a href="#">Control Acceso 2</a></li>
+                                <li <?php echo $activarMenu43 ?>><a href="#">Control Acceso 3</a></li>
                             </ul>
                         </li>
 
@@ -438,10 +446,12 @@ if ($_SESSION["autenticado"] == 'SI') {
 
             <!-- MAIN APP JS FILE -->
             <script src="js/plantilla/app.min.js"></script>
+            <script src="js/general.js"></script>
             <script src="js/visitas.js"></script>
             <script src="js/usuario.js"></script>
             <script src="js/pabellones.js"></script>
             <script src="js/horarios.js"></script>
+            <script src="js/ppl.js"></script>
 
             <!-- PAGE RELATED PLUGIN(S) -->
             <script src="js/plantilla/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
@@ -471,6 +481,7 @@ if ($_SESSION["autenticado"] == 'SI') {
         </body>
     </html>
     <?php
+    
 } else {
     header('Location: index.php');
 }

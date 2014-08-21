@@ -74,7 +74,7 @@ function frm_asignacionPabellones() {
                                     <h2>Listado de Horarios asignados al Pabellon</h2>
                                     <div class="widget-toolbar">
                                         <div class="btn-group">
-                                                <button class="btn btn-xs btn-success btn-personal" data-toggle="modal" onclick="javascript:nuevoPabellon()">
+                                                <button class="btn btn-xs btn-success btn-personal" data-toggle="modal" onclick="javascript:nuevoHorario()">
                                                     <i class="fa fa-fw fa-plus"></i>  Agregar Horario
                                                 </button>
                                         </div>

@@ -8,7 +8,19 @@ $dbmysql = new database();
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+function inicializaMenu(){
+        $activarMenu1='';
+        $activarMenu2='';
+        $activarMenu3='';
+        $activarMenu31='';
+        $activarMenu32='';
+        $activarMenu33='';
+        $activarMenu34='';
+        $activarMenu4='';
+        $activarMenu41='';
+        $activarMenu42='';
+        $activarMenu43='';
+    }
 function registrar_acceso() {
     global $dbmysql;
     $usuario=$_SESSION["user_id"];
