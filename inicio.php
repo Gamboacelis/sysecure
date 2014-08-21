@@ -11,20 +11,20 @@ if ($_SESSION["autenticado"] == 'SI') {
         case 'administrativo':
             $option = isset($_GET['op']) ? $_GET['op'] : 0;
             include_once("./includes/pabellones/pabellon_vistas.php");
+            include_once("./includes/usuario/Usuarios_vistas.php");
+            include_once("./includes/horarios/horarios_vistas.php");
             switch ($option) {
                 case 'pabellones':
                     $titulo='Revisión de Pabellones';
                     $contenido = reporte_pabellones();
                     break;
-            }
-            break;
-        case 'usuario':
-            $option = isset($_GET['op']) ? $_GET['op'] : 0;
-            include_once("./includes/usuario/Usuarios_vistas.php");
-            switch ($option) {
-                case 'revisarUsuarios':
+                case 'usuarios':
                     $titulo='Revisión de Usuarios';
                     $contenido = revisarUsuarios();
+                    break;
+                case 'horarios':
+                    $titulo='Revisión de Horarios';
+                    $contenido = frm_asignacionPabellones();
                     break;
             }
             break;
@@ -198,8 +198,8 @@ if ($_SESSION["autenticado"] == 'SI') {
                             <ul>
                                 <li><a href="#">Calendario</a></li>
                                 <li><a href="?modulo=administrativo&op=pabellones">Pabellones</a></li>
-                                <li><a href="#">Horarios de Visitas</a></li>
-                                <li><a href="?modulo=usuario&op=revisarUsuarios">Usuarios</a></li>
+                                <li><a href="?modulo=administrativo&op=horarios">Horarios de Visitas</a></li>
+                                <li><a href="?modulo=administrativo&op=usuarios">Usuarios</a></li>
                             </ul>
                         </li>
                         <li>
@@ -441,9 +441,10 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/visitas.js"></script>
             <script src="js/usuario.js"></script>
             <script src="js/pabellones.js"></script>
+            <script src="js/horarios.js"></script>
 
             <!-- PAGE RELATED PLUGIN(S) -->
-
+            <script src="js/plantilla/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
             <!-- Flot Chart Plugin: Flot Engine, Flot Resizer, Flot Tooltip -->
             <script src="js/plantilla/plugin/flot/jquery.flot.cust.min.js"></script>
             <script src="js/plantilla/plugin/flot/jquery.flot.resize.min.js"></script>
@@ -458,10 +459,13 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/plantilla/plugin/datatables/dataTables.tableTools.min.js"></script>
             <script src="js/plantilla/plugin/datatables/dataTables.bootstrap.min.js"></script>
             <script src="js/plantilla/plugin/knob/jquery.knob.min.js"></script>
+            
+            
             <script>
                 $(document).ready(function() {
                     // DO NOT REMOVE : GLOBAL FUNCTIONS!
                     pageSetUp();
+                    
                 });
             </script>
         </body>
