@@ -50,6 +50,35 @@ if ($_SESSION["autenticado"] == 'SI') {
                 
             }
             break;
+        case 'controles':
+            $option = isset($_GET['op']) ? $_GET['op'] : 0;
+            switch ($option) {
+                case 'acceso1':
+                    include_once("./includes/controles/acceso1/acceso1_vistas.php");
+                    $titulo='Revisión de Accesos Primer Nivel';
+                    $activarMenu41='class="active"';
+                    $contenido = frm_asignacionPabellones();
+                    break;
+                case 'acceso2':
+                    include_once("./includes/controles/acceso2/acceso2_vistas.php");
+                    $titulo='Revisión de Accesos Segundo Nivel';
+                    $activarMenu42='class="active"';
+                    $contenido = frm_asignacionPabellones();
+                    break;
+                case 'acceso3':
+                    include_once("./includes/controles/acceso3/acceso3_vistas.php");
+                    $titulo='Revisión de Accesos Tercer Nivel';
+                    $activarMenu43='class="active"';
+                    $contenido = frm_asignacionPabellones();
+                    break;
+                case 'acceso4':
+                    include_once("./includes/controles/acceso4/acceso4_vistas.php");
+                    $titulo='Revisión de Accesos Cuarto Nivel';
+                    $activarMenu44='class="active"';
+                    $contenido = frm_asignacionPabellones();
+                    break;
+            }
+            break;
         default:
             $titulo = 'Reporte de Visitas';
             $activarMenu1='class="active"';
@@ -221,11 +250,12 @@ if ($_SESSION["autenticado"] == 'SI') {
                                 <li <?php echo $activarMenu35 ?>><a href="?modulo=administrativo&op=visitantes">Visitantes</a></li>
                             </ul>
                         </li>
-                        <li <?php echo $activarMenu4 ?>><a href="#"><i class="fa fa-lg fa-fw fa-table"></i> <span class="menu-item-parent">Controles Accesos</span></a>
+                        <li <?php echo $activarMenu4 ?>><a href="#"><i class="fa fa-lg fa-fw fa-table"></i> <span class="menu-item-parent">Controles</span></a>
                             <ul>
-                                <li <?php echo $activarMenu41 ?>><a href="#">Control Acceso 1</a></li>
-                                <li <?php echo $activarMenu42 ?>><a href="#">Control Acceso 2</a></li>
-                                <li <?php echo $activarMenu43 ?>><a href="#">Control Acceso 3</a></li>
+                                <li <?php echo $activarMenu41 ?>><a href="?modulo=controles&op=acceso1">Acceso 1</a></li>
+                                <li <?php echo $activarMenu42 ?>><a href="?modulo=controles&op=acceso2">Acceso 2</a></li>
+                                <li <?php echo $activarMenu43 ?>><a href="?modulo=controles&op=acceso3">Acceso 3</a></li>
+                                <li <?php echo $activarMenu44 ?>><a href="?modulo=controles&op=acceso4">Acceso 4</a></li>
                             </ul>
                         </li>
 
