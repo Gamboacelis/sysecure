@@ -128,7 +128,7 @@ global $dbmysql;
 		$sWhere = substr_replace( $sWhere, "", -3 );
 
 
-		$sWhere .= ' and VIS_ESTADO = "A" )';
+//		$sWhere .= ' and VIS_ESTADO = "A" )';
 
 	}
 
@@ -171,7 +171,7 @@ global $dbmysql;
 	 * Get data to display
 
 	 */
-
+        $sWhere = ($sWhere=='')?' WHERE VIS_ESTADO = "A"':' AND VIS_ESTADO = "A"';
 	$sQuery = "
 
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."
