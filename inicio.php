@@ -17,6 +17,8 @@ if ($_SESSION["autenticado"] == 'SI') {
             include_once("./includes/usuario/Usuarios_vistas.php");
             include_once("./includes/horarios/horarios_vistas.php");
             include_once("./includes/ppl/ppl_vistas.php");
+            include_once("./includes/visitante/visitantes_vistas.php");
+
             switch ($option) {
                 case 'horarios':
                     $titulo='Revisión de Horarios';
@@ -39,9 +41,11 @@ if ($_SESSION["autenticado"] == 'SI') {
                     $contenido = revisarUsuarios();
                     break;
                 case 'visitantes':
-                    $titulo='Revisión de Usuarios';
+                    $titulo='Revisión de Visitantes';
+
                     $activarMenu35='class="active"';
-                    $contenido = revisarUsuarios();
+
+                    $contenido = revisarVisitantes();
                     break;
                 
             }
@@ -452,6 +456,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/pabellones.js"></script>
             <script src="js/horarios.js"></script>
             <script src="js/ppl.js"></script>
+            <script src="js/visitantes.js"></script>
 
             <!-- PAGE RELATED PLUGIN(S) -->
             <script src="js/plantilla/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
