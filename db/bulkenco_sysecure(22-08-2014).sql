@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 22-08-2014 a las 17:34:53
+-- Tiempo de generación: 22-08-2014 a las 17:46:52
 -- Versión del servidor: 5.5.25a
 -- Versión de PHP: 5.4.4
 
@@ -27,14 +27,14 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `sys_accesos` (
-  `ACC_COD` int(11) NOT NULL COMMENT 'Codigo de Acceso',
+  `ACC_COD` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Codigo de Acceso',
   `USU_COD` int(11) DEFAULT NULL COMMENT 'Codigo de Usuario',
   `CEN_COD` int(11) DEFAULT NULL COMMENT 'Codigo del Centro',
   `ACC_FECHA` datetime NOT NULL COMMENT 'Fecha y Hora del Acceso',
   `ACC_IP` varchar(60) NOT NULL COMMENT 'Direccion Ip de la maquina desde la que Accesde',
   `ACC_EQUIPO` varchar(60) NOT NULL COMMENT 'Nombre del Equipo desde donde se Accede',
   PRIMARY KEY (`ACC_COD`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de control de Accesos al Sistema';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de control de Accesos al Sistema' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -48,7 +48,15 @@ CREATE TABLE IF NOT EXISTS `sys_celdas` (
   `CEL_DESCRPCION` varchar(200) DEFAULT NULL COMMENT 'Descripcion de la celda',
   PRIMARY KEY (`CEL_COD`),
   KEY `FK_REFERENCE_17` (`PAB_COD`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Celdas que tiene un Pabellon de un centro' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Celdas que tiene un Pabellon de un centro' AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `sys_celdas`
+--
+
+INSERT INTO `sys_celdas` (`CEL_COD`, `PAB_COD`, `CEL_DESCRPCION`) VALUES
+(1, 1, 'Celda 1'),
+(2, 1, 'Celda 2');
 
 -- --------------------------------------------------------
 
@@ -151,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `sys_garita` (
 --
 
 CREATE TABLE IF NOT EXISTS `sys_historia_ppl` (
-  `HIS_COD` int(11) NOT NULL COMMENT 'Codigo del Historial de cambios del PPL',
+  `HIS_COD` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Codigo del Historial de cambios del PPL',
   `USU_COD` int(11) DEFAULT NULL COMMENT 'Codigo de Usuario',
   `PPL_COD` int(11) DEFAULT NULL COMMENT 'Codigo del PPL',
   `PAB_COD` int(11) DEFAULT NULL COMMENT 'Codigo del pabellon',
@@ -159,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `sys_historia_ppl` (
   `HIS_FECHA` datetime NOT NULL COMMENT 'fecha de Cambios del Historia',
   `HIS_MOTIVO` varchar(500) NOT NULL COMMENT 'MOtivo de los cambios',
   PRIMARY KEY (`HIS_COD`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla del Historial del PPL';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla del Historial del PPL' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -168,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `sys_historia_ppl` (
 --
 
 CREATE TABLE IF NOT EXISTS `sys_horarios` (
-  `HOR_COD` int(11) NOT NULL COMMENT 'Codigo del Horario',
+  `HOR_COD` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Codigo del Horario',
   `PAB_COD` int(11) DEFAULT NULL COMMENT 'Codigo del pabellon',
   `HOR_DESCRIPCION` varchar(200) DEFAULT NULL COMMENT 'Descripcion del Horario',
   `HOR_DIAS` varchar(200) DEFAULT NULL COMMENT 'Dias disponibles para las visitas',
@@ -176,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `sys_horarios` (
   `HOR_HORA_SAL` time DEFAULT NULL COMMENT 'Hora de Salida del Horario',
   `HOR_ESTADO` varchar(2) DEFAULT NULL COMMENT 'Estadp del Horario',
   PRIMARY KEY (`HOR_COD`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Datos de horarios que pueden tener los pabellones para las v';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Datos de horarios que pueden tener los pabellones para las v' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -185,11 +193,11 @@ CREATE TABLE IF NOT EXISTS `sys_horarios` (
 --
 
 CREATE TABLE IF NOT EXISTS `sys_item_tipos` (
-  `ITS_COD` int(11) NOT NULL COMMENT 'Codigo del Item-Tipo-Sancion',
+  `ITS_COD` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Codigo del Item-Tipo-Sancion',
   `TPS_COD` int(11) DEFAULT NULL COMMENT 'Codigo del tipo-Sancion',
   `ITS_DESCRIPCION` varchar(200) DEFAULT NULL COMMENT 'Descripcion del Item-Tipo-Sancion',
   PRIMARY KEY (`ITS_COD`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Todos los items que pueden tener los tipos de sancion';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Todos los items que pueden tener los tipos de sancion' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -227,7 +235,15 @@ CREATE TABLE IF NOT EXISTS `sys_parentesco` (
   `PAR_COD` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Codigo del Parentesco',
   `PAR_DESCRIPCION` varchar(200) NOT NULL COMMENT 'Descripcion del Parentesco',
   PRIMARY KEY (`PAR_COD`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parentescos que pueden tener los visitantes' AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parentescos que pueden tener los visitantes' AUTO_INCREMENT=14 ;
+
+--
+-- Volcado de datos para la tabla `sys_parentesco`
+--
+
+INSERT INTO `sys_parentesco` (`PAR_COD`, `PAR_DESCRIPCION`) VALUES
+(12, 'Papá'),
+(13, 'Mamá');
 
 -- --------------------------------------------------------
 
@@ -244,7 +260,15 @@ CREATE TABLE IF NOT EXISTS `sys_ppl` (
   `PPL_IMG` varchar(200) NOT NULL COMMENT 'Imagen del PPL',
   `PPL_ESTADO` varchar(2) NOT NULL COMMENT 'Estado del PPL',
   PRIMARY KEY (`PPL_COD`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Datos de la persona Provada de Libertad' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Datos de la persona Provada de Libertad' AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `sys_ppl`
+--
+
+INSERT INTO `sys_ppl` (`PPL_COD`, `CEL_COD`, `PPL_NOMBRE`, `PPL_APELLIDO`, `PPL_CEDULA`, `PPL_IMG`, `PPL_ESTADO`) VALUES
+(1, 1, 'Antonio', 'Gonzales', '1720802394', 'AntonioGonzales.jpg', 'A'),
+(2, 2, 'Carlos', 'Moreno', '1720090057', 'CarlosMoreno.jpg', 'A');
 
 -- --------------------------------------------------------
 
@@ -274,13 +298,13 @@ INSERT INTO `sys_roles` (`ROL_COD`, `ROL_DESCRIPCION`, `ROL_ESTADO`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `sys_sanciones` (
-  `SAN_COD` int(11) NOT NULL COMMENT 'Codigo de la Sancion',
+  `SAN_COD` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Codigo de la Sancion',
   `TPS_COD` int(11) DEFAULT NULL COMMENT 'Codigo del tipo-Sancion',
   `SAN_DESCRIPCION` varchar(200) DEFAULT NULL COMMENT 'Descripcion de la Sancion',
   `SAN_TIEMPO` int(11) DEFAULT NULL COMMENT 'Tiempo en Numeros Sancionado',
   `SAN_TIEMPO_DES` varchar(60) DEFAULT NULL COMMENT 'Descripcion del Tiempo de la Sancion',
   PRIMARY KEY (`SAN_COD`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de almacenamiento de Sanciones de las Visitas';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de almacenamiento de Sanciones de las Visitas' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -289,10 +313,10 @@ CREATE TABLE IF NOT EXISTS `sys_sanciones` (
 --
 
 CREATE TABLE IF NOT EXISTS `sys_tipo_sancion` (
-  `TPS_COD` int(11) NOT NULL COMMENT 'Codigo del tipo-Sancion',
+  `TPS_COD` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Codigo del tipo-Sancion',
   `TPS_DESCRIPCION` varchar(200) DEFAULT NULL COMMENT 'descripcion del  tipo-Sancion',
   PRIMARY KEY (`TPS_COD`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Listado de Tipos que puede tener una sancion';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Listado de Tipos que puede tener una sancion' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -389,12 +413,12 @@ INSERT INTO `sys_visitante` (`VIS_COD`, `VIS_NOMBRE`, `VIS_APELLIDO`, `PAR_COD`,
 --
 
 CREATE TABLE IF NOT EXISTS `sys_visitante_ppl` (
-  `VIP_COD` int(11) NOT NULL COMMENT 'Codigo del Visitanten-PPL',
+  `VIP_COD` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Codigo del Visitanten-PPL',
   `PPL_COD` int(11) NOT NULL COMMENT 'Codigo del PPL',
   `VIS_COD` int(11) NOT NULL COMMENT 'Codigo secuencial del Visitante',
   `VIP_FECHA` date NOT NULL COMMENT 'Fecha del Visitanten-PPL',
   PRIMARY KEY (`VIP_COD`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Listado de Visitantes que se encuentran ligados a un PPL';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Listado de Visitantes que se encuentran ligados a un PPL' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -403,14 +427,14 @@ CREATE TABLE IF NOT EXISTS `sys_visitante_ppl` (
 --
 
 CREATE TABLE IF NOT EXISTS `sys_visitante_sancion` (
-  `VSA_COD` int(11) NOT NULL COMMENT 'Codigo del Visitante-Sancion',
+  `VSA_COD` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Codigo del Visitante-Sancion',
   `SAN_COD` int(11) DEFAULT NULL COMMENT 'Codigo de la Sancion',
   `VIS_COD` int(11) DEFAULT NULL COMMENT 'Codigo secuencial del Visitante',
   `USU_COD` int(11) DEFAULT NULL COMMENT 'Codigo de Usuario',
   `VSA_NOTA` varchar(500) DEFAULT NULL COMMENT 'Nota del Visitante-Sancion',
   `VSA_FECHA` datetime DEFAULT NULL COMMENT 'Fecha del Visitante-Sancion',
   PRIMARY KEY (`VSA_COD`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Las sanciones que obtiene un visitante';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Las sanciones que obtiene un visitante' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
