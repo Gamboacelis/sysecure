@@ -5,10 +5,10 @@ session_start();
 	 * Copyright: 2014 - Willian Espinosa - Edicion Especial
 	 */	
 
-include_once '../conexiones/db_local.inc.php';
+include_once '../../conexiones/db_local.inc.php';
     $dbmysql = new database();
     date_default_timezone_set('America/Bogota');
-include_once( '../conexiones/config_local.ini.php' );
+include_once( '../../conexiones/config_local.ini.php' );
 global $dbmysql;
         $aColumns = array('PPL_COD','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_HUELLA','PPL_ESTADO');
 	/* Campo de Index */
@@ -120,16 +120,10 @@ global $dbmysql;
                     $cadenaParametros=utf8_encode($aRow[ 'PPL_COD' ].','."'$nombre'");
                     $output['aaData'][] =array( ''.utf8_encode($aRow[ 'PPL_COD' ]).'',
                                                 ''.utf8_encode($nombre).'',
-                                                '<img src="'.'/'.SISTEM_NAME.PATH_PPL.$aRow[ 'PPL_IMG' ].'" class="img-thumbnail" style="width: 60px">',
+                                                '<img src="'.'./'.PATH_PPL.$aRow[ 'PPL_IMG' ].'" class="img-thumbnail" style="width: 60px">',
                                                 ''.utf8_encode($aRow[ 'PPL_CEDULA' ]).'',
-                                                '<a class="btn btn-success btn-xs" title="Centros Asignados" href="javascript:revisarCentrosDisponibles('.$aRow[ 'PPL_COD' ].')">
-                                                    <i class="fa fa-map-marker"></i>
-                                                </a>
-                                                <a class="btn btn-success btn-xs" title="Editar Usuario" href="javascript:editarPpl('.$aRow[ 'PPL_COD' ].')">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-                                                <a class="btn btn-danger btn-xs '.$aRow[ 'PPL_COD' ].' eliminaParticipante" title="Anular PPL" href="javascript:eliminarPpl('.$cadenaParametros.')">
-                                                    <i class="fa fa-trash-o"></i>
+                                                '<a class="btn btn-info btn-lg" title="Visitantes Asignados" href="javascript:revisarVisitantesAsignados('.$aRow[ 'PPL_COD' ].')">
+                                                    <i class="fa fa-child"></i> Visitantes
                                                 </a>');
         }
 //        print_r($output);

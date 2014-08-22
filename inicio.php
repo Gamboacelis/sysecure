@@ -487,6 +487,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/horarios.js"></script>
             <script src="js/ppl.js"></script>
             <script src="js/visitantes.js"></script>
+            <script src="js/acceso1.js"></script>
 
             <!-- PAGE RELATED PLUGIN(S) -->
             <script src="js/plantilla/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>

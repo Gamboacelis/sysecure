@@ -31,7 +31,49 @@ function revisarPpl() {
                     </div>
             </div>
         </article>';
-//    $retval .=frmUsuario();
-//    $retval .=frmCentros();
+    $retval .=frmVisitas();
+    return $retval;
+}
+function frmVisitas(){
+    $retval = '';
+    $retval = '<div class="modal fade" id="frmVisitasModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                                                <header>
+                                                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                        <h2>Lista de Visitantes Permitidos </h2>				
+                                                </header>
+                                                <div>
+                                                    <div class="jarviswidget jarviswidget-color-greenDark" id="wid-id-2" data-widget-editbutton="false">
+                                                        <header>
+                                                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                                            <h2>Visitantes notificados por el PPL</h2>
+                                                        </header>
+                                                        <div>
+                                                            <div class="jarviswidget-editbox">
+                                                            </div>
+                                                            <div class="widget-body no-padding">
+                                                                        <div id="tablaVisitantes" class="table-responsive">
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>';
+    return $retval;
     return $retval;
 }
