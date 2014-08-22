@@ -1,5 +1,5 @@
 <?php
-//define('PATH_PROD','/public_html/wiesolutions.com/');
+define('PATH_PROD','/public_html/wiesolutions.com/');
 
 define('PATH_PROD','C:/xampp/htdocs/');
 define('SISTEM_NAME','sysecure_remoto');
