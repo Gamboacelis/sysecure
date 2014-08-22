@@ -1,20 +1,12 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     19/08/2014 22:01:35                          */
+/* Created on:     22/08/2014 10:26:07                          */
 /*==============================================================*/
 
 
 drop table if exists sys_accesos;
 
-drop table if exists sys_celdas;
-
-drop table if exists sys_centro;
-
-drop table if exists sys_ciudad;
-
 drop table if exists sys_control;
-
-drop table if exists sys_etapas;
 
 drop table if exists sys_garita;
 
@@ -24,25 +16,11 @@ drop table if exists sys_horarios;
 
 drop table if exists sys_item_tipos;
 
-drop table if exists sys_pabellones;
-
 drop table if exists sys_parentesco;
-
-drop table if exists sys_ppl;
-
-drop table if exists sys_ppl_pabellon;
-
-drop table if exists sys_roles;
 
 drop table if exists sys_sanciones;
 
 drop table if exists sys_tipo_sancion;
-
-drop table if exists sys_usuario_centro;
-
-drop table if exists sys_usuarios;
-
-drop table if exists sys_visitante;
 
 drop table if exists sys_visitante_ppl;
 
@@ -55,12 +33,12 @@ drop table if exists sys_visitas;
 /*==============================================================*/
 create table sys_accesos
 (
-   ACC_COD              int not null comment 'Codigo del Acceso',
-   USU_COD              int,
-   CEN_COD              int comment 'Codigo del Centro',
-   ACC_FECHA            datetime not null comment 'Fecha y Hora de Acceso',
-   ACC_IP               varchar(60) not null comment 'Direccion IP del equipo que Accede',
-   ACC_EQUIPO           varchar(60) not null comment 'Nombre de la Maquina que Accede',
+   ACC_COD              int not null comment 'Codigo de Acceso',
+   USU_COD              int(11) comment 'Codigo de Usuario',
+   CEN_COD              int(11) comment 'Codigo del Centro',
+   ACC_FECHA            datetime not null comment 'Fecha y Hora del Acceso',
+   ACC_IP               varchar(60) not null comment 'Direccion Ip de la maquina desde la que Accesde',
+   ACC_EQUIPO           varchar(60) not null comment 'Nombre del Equipo desde donde se Accede',
    primary key (ACC_COD)
 );
 
@@ -115,7 +93,7 @@ create table sys_control
 (
    CON_COD              int(11) not null auto_increment comment 'codigo del Control',
    GAR_COD              int not null comment 'Codigo de la garita',
-   VIS_COD              int not null comment 'Codigo secuencial del Visitante',
+   VIP_COD              int comment 'Codigo del Visitanten-PPL',
    CON_ESTADO           varchar(1) not null comment 'A: Activo, I:inactivo',
    primary key (CON_COD)
 )
@@ -241,21 +219,6 @@ create table sys_ppl
 ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3;
 
 alter table sys_ppl comment 'Datos de la persona Provada de Libertad';
-
-/*==============================================================*/
-/* Table: sys_ppl_pabellon                                      */
-/*==============================================================*/
-create table sys_ppl_pabellon
-(
-   CPP_COD              int(11) not null auto_increment comment 'Codigo del Registro',
-   PAB_COD              int not null comment 'Codigo del Pabellon',
-   PPL_COD              int not null comment 'Codigo del PPL',
-   CPP_ESTADO           varchar(1) not null comment 'Estado del registro',
-   primary key (CPP_COD)
-)
-ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3;
-
-alter table sys_ppl_pabellon comment 'Datos del Pabellon con el PPL';
 
 /*==============================================================*/
 /* Table: sys_roles                                             */
@@ -392,8 +355,9 @@ alter table sys_visitante_sancion comment 'Las sanciones que obtiene un visitant
 create table sys_visitas
 (
    VISG_COD             int(11) not null auto_increment comment 'Codigo de la Visita',
-   VIS_COD              int not null comment 'Codigo secuencial del Visitante',
    PPL_COD              int not null comment 'Codigo del PPL',
+   VIP_COD              int comment 'Codigo del Visitanten-PPL',
+   HOR_COD              int comment 'Codigo del Horario',
    VISG_FECHA           date not null comment 'Fecha de la Visita',
    VISG_HORA_INGRESO    time not null comment 'Hora de Ingreso a la Visita',
    VISG_HORA_SALIDA     time not null comment 'Hora de Salida de la Visita',
@@ -404,10 +368,10 @@ ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 alter table sys_visitas comment 'Registro de Visitas realizadas';
 
-alter table sys_accesos add constraint FK_RELATIONSHIP_28 foreign key (USU_COD)
+alter table sys_accesos add constraint FK_REFERENCE_33 foreign key (USU_COD)
       references sys_usuarios (USU_COD) on delete restrict on update restrict;
 
-alter table sys_accesos add constraint FK_RELATIONSHIP_29 foreign key (CEN_COD)
+alter table sys_accesos add constraint FK_REFERENCE_34 foreign key (CEN_COD)
       references sys_centro (CEN_COD) on delete restrict on update restrict;
 
 alter table sys_celdas add constraint FK_REFERENCE_17 foreign key (PAB_COD)
@@ -419,8 +383,8 @@ alter table sys_centro add constraint FK_REFERENCE_8 foreign key (CIU_COD)
 alter table sys_control add constraint FK_REFERENCE_14 foreign key (GAR_COD)
       references sys_garita (GAR_COD) on delete restrict on update restrict;
 
-alter table sys_control add constraint FK_REFERENCE_15 foreign key (VIS_COD)
-      references sys_visitante (VIS_COD) on delete restrict on update restrict;
+alter table sys_control add constraint FK_REFERENCE_30 foreign key (VIP_COD)
+      references sys_visitante_ppl (VIP_COD) on delete restrict on update restrict;
 
 alter table sys_historia_ppl add constraint FK_REFERENCE_19 foreign key (USU_COD)
       references sys_usuarios (USU_COD) on delete restrict on update restrict;
@@ -448,12 +412,6 @@ alter table sys_pabellones add constraint FK_REFERENCE_16 foreign key (NVL_COD)
 
 alter table sys_ppl add constraint FK_REFERENCE_18 foreign key (CEL_COD)
       references sys_celdas (CEL_COD) on delete restrict on update restrict;
-
-alter table sys_ppl_pabellon add constraint FK_REFERENCE_10 foreign key (PPL_COD)
-      references sys_ppl (PPL_COD) on delete restrict on update restrict;
-
-alter table sys_ppl_pabellon add constraint FK_REFERENCE_9 foreign key (PAB_COD)
-      references sys_pabellones (PAB_COD) on delete restrict on update restrict;
 
 alter table sys_sanciones add constraint FK_REFERENCE_23 foreign key (TPS_COD)
       references sys_tipo_sancion (TPS_COD) on delete restrict on update restrict;
@@ -485,8 +443,11 @@ alter table sys_visitante_sancion add constraint FK_REFERENCE_28 foreign key (VI
 alter table sys_visitante_sancion add constraint FK_REFERENCE_29 foreign key (USU_COD)
       references sys_usuarios (USU_COD) on delete restrict on update restrict;
 
-alter table sys_visitas add constraint FK_REFERENCE_4 foreign key (VIS_COD)
-      references sys_visitante (VIS_COD) on delete restrict on update restrict;
+alter table sys_visitas add constraint FK_REFERENCE_31 foreign key (VIP_COD)
+      references sys_visitante_ppl (VIP_COD) on delete restrict on update restrict;
+
+alter table sys_visitas add constraint FK_REFERENCE_32 foreign key (HOR_COD)
+      references sys_horarios (HOR_COD) on delete restrict on update restrict;
 
 alter table sys_visitas add constraint FK_REFERENCE_5 foreign key (PPL_COD)
       references sys_ppl (PPL_COD) on delete restrict on update restrict;

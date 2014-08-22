@@ -57,7 +57,7 @@ if ($_SESSION["autenticado"] == 'SI') {
                     include_once("./includes/controles/acceso1/acceso1_vistas.php");
                     $titulo='Revisión de Accesos Primer Nivel';
                     $activarMenu41='class="active"';
-                    $contenido = frm_asignacionPabellones();
+                    $contenido = revisarPpl();
                     break;
                 case 'acceso2':
                     include_once("./includes/controles/acceso2/acceso2_vistas.php");
