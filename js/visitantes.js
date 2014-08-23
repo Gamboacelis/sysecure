@@ -218,3 +218,14 @@ function eliminarVisitante(cod)
         }
     });
 }
+
+
+function limpiarFormulario() {
+    $("#nombre").val('');  /*Nombre*/
+    $("#apellido").val('');  /*Apellido*/
+    $("#correo").val('');  /*Usuario*/
+    $("#direccion").val('');  /*E-Mail*/
+    $("#telefono").val('');/*Celular*/
+    $("#cedula").val('');/*Cedula*/
+    $("#huella").val('');/*Cedula*/    
+}
