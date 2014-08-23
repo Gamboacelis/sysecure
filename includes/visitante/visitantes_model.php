@@ -103,9 +103,9 @@ function guardaDatosVisitante() {
 
 
 
-    $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_TELEFONO,VIS_CEDULA, VIS_HUELLA,VIS_DIRECCION,VIS_CORREO)VALUES
+    $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_TELEFONO,VIS_CEDULA, VIS_HUELLA,VIS_DIRECCION,VIS_CORREO,VIS_ESTADO)VALUES
 
-            ('$nombre','$apellido','$telefono','$cedula','$huella','$direccion','$correo');";
+            ('$nombre','$apellido','$telefono','$cedula','$huella','$direccion','$correo','A');";
 
     $val = $dbmysql->query($sql);
 
