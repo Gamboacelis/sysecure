@@ -56,13 +56,20 @@ function editarVisitante(visitante) {
 
 function carga_DatosIncialesUsuarios(edt) {
 
-    $("#nombre").val(edt.datosVisitante.VIS_NOMBRE);  /*Nombre*/
+    $("#nombre").val(edt.datosVisitante.VIS_NOMBRE);  
 
-    $("#apellido").val(edt.datosVisitante.VIS_APELLIDO);  /*Apellido*/
+    $("#apellido").val(edt.datosVisitante.VIS_APELLIDO);  
 
-    $("#telefono").val(edt.datosVisitante.VIS_TELEFONO);  /*Usuario*/
+    $("#telefono").val(edt.datosVisitante.VIS_TELEFONO); 
 
-    $("#cedula").val(edt.datosVisitante.VIS_CEDULA);  /*E-Mail*/
+    $("#cedula").val(edt.datosVisitante.VIS_CEDULA);  
+
+    $("#huella").val(edt.datosVisitante.VIS_HUELLA);  
+
+    $("#direccion").val(edt.datosVisitante.VIS_DIRECCION); 
+
+    $("#correo").val(edt.datosVisitante.VIS_CORREO);  
+
 
 
 }
@@ -170,4 +177,44 @@ function nuevoVisitante() {
 
     $('#IDvisitante').val('');
 
+}
+
+
+function eliminarVisitante(cod)
+{
+    $.SmartMessageBox({
+    title: "Confirmación!",
+    content: "Esta seguro de eliminar al Visitante",
+    buttons: '[No][Si]'
+    }, function(ButtonPressed) {
+        if (ButtonPressed === "Si") {
+            $.ajax({
+                url: "./includes/visitante/visitantes_model.php?opcion=eliminarVisitante",
+                type: 'post',
+                data: {codigo: cod},
+                success: function(respuesta) {
+
+                    if (respuesta === '1') {
+
+                        $.smallBox({
+                            title: cod,
+                            content: "<i class='fa fa-clock-o'></i> <i>Visitante Eliminado...</i>",
+                            color: "#659265",
+                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                            timeout: 4000
+                        });
+
+                        location.reload();
+
+                    }
+                }
+
+                
+            });
+
+
+        }
+        if (ButtonPressed === "No") {
+        }
+    });
 }

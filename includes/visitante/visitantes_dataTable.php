@@ -23,7 +23,7 @@ include_once( '../conexiones/config_local.ini.php' );
 global $dbmysql;
 	
 
-        $aColumns = array('VIS_COD','VIS_NOMBRE','VIS_APELLIDO','VIS_CEDULA','VIS_HUELLA','VIS_DIRECCION','VIS_TELEFONO');
+        $aColumns = array('VIS_COD','VIS_NOMBRE','VIS_APELLIDO','VIS_CEDULA','VIS_HUELLA','VIS_DIRECCION','VIS_TELEFONO','VIS_ESTADO');
 
 	/* Campo de Index */
 
@@ -127,7 +127,8 @@ global $dbmysql;
 
 		$sWhere = substr_replace( $sWhere, "", -3 );
 
-		$sWhere .= '  )';
+
+		$sWhere .= ' and VIS_ESTADO = "A" )';
 
 	}
 
@@ -183,6 +184,7 @@ global $dbmysql;
 
 		$sLimit";
 
+
 	$rResult = mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
 
 //	echo $sQuery;
@@ -190,6 +192,7 @@ global $dbmysql;
 	/* Data set length after filtering */
 
 	$sQuery = "SELECT FOUND_ROWS()";
+
 
 	$rResultFilterTotal = mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
 
@@ -257,7 +260,7 @@ global $dbmysql;
 
                                                 </a>
 
-                                                <a class="btn btn-danger btn-xs '.$aRow[ 'VIS_COD' ].' eliminaParticipante" title="Eliminar Visitante" href="javascript:eliminarVisitante('.$cadenaParametros.')">
+                                                <a class="btn btn-danger btn-xs '.$aRow[ 'VIS_COD' ].' eliminaParticipante" title="Eliminar Visitante" href="javascript:eliminarVisitante('.$aRow[ 'VIS_COD' ].')">
 
                                                     <i class="fa fa-trash-o"></i>
 

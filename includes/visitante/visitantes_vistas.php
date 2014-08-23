@@ -210,6 +210,45 @@ function frmVisitante() {
 
                                                                 </div>
 
+                                                                <div class="row">
+
+                                                                    <section class="col col-6">
+
+                                                                            <label class="input">
+
+                                                                                    <input type="telf" id="huella" name="huella" placeholder="Codigo de Huella">
+
+                                                                            </label>
+
+                                                                    </section>
+
+                                                                    <section class="col col-6">
+
+                                                                            <label class="input">
+
+                                                                                    <input type="telf" id="correo" name="correo" placeholder="Correo Electrónico">
+
+                                                                            </label>
+
+                                                                    </section>
+
+                                                                </div>     
+
+
+                                                                <div class="row">
+
+                                                                    <section class="col col-6">
+
+                                                                            <label class="input">
+
+                                                                                    <input type="telf" id="direccion" name="direccion" placeholder="Direccion" style=" width: 527px; ">
+
+                                                                            </label>
+
+                                                                    </section>
+
+
+                                                                </div>    
 
                                                             </fieldset>
 

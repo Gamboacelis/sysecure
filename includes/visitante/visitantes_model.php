@@ -30,8 +30,14 @@ switch ($funcion) {
 
         actualizarDatosVisitante();
 
-        break;            
+        break;       
 
+    case 'eliminarVisitante':
+        
+         eliminarVisitante();         
+
+         break;
+ 
 
 
 }
@@ -89,9 +95,15 @@ function guardaDatosVisitante() {
 
     $cedula = $_POST["cedula"];
 
+    $huella = $_POST["huella"];
+
+    $direccion = $_POST["direccion"];
+
+    $correo = $_POST["correo"];    
 
 
-    $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_TELEFONO,VIS_CEDULA)VALUES
+
+    $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_TELEFONO,VIS_CEDULA, VIS_HUELLA,VIS_DIRECCION,VIS_CORREO)VALUES
 
             ('$nombre','$apellido','$telefono','$cedula');";
 
@@ -125,6 +137,11 @@ function actualizarDatosVisitante() {
 
     $cedula = $_POST["cedula"];
 
+    $huella = $_POST["huella"];
+
+    $direccion = $_POST["direccion"];
+
+    $correo = $_POST["correo"];    
 
 
 
@@ -136,10 +153,48 @@ function actualizarDatosVisitante() {
 
                 VIS_TELEFONO   = '$telefono',
 
-                VIS_CEDULA    = '$cedula'
+                VIS_CEDULA    = '$cedula',
+
+                VIS_HUELLA  = '$huella',
+
+                VIS_DIRECCION   = '$direccion',
+
+                VIS_CORREO    = '$correo'
+
+
 
 
             WHERE VIS_COD=$codigo;";
+
+
+
+    $val = $dbmysql->query($sql);
+
+   if ($val) {
+
+        echo 1;
+
+    } else {
+
+        echo 0;
+
+    }
+
+}
+
+
+function eliminarVisitante()
+{
+
+    global $dbmysql;
+
+    $codigo = $_POST['codigo'];
+
+    $sql = "UPDATE `sys_visitante` SET 
+
+            VIS_ESTADO   = 'E'
+
+        WHERE VIS_COD=$codigo";
 
 
 
