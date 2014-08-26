@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 22-08-2014 a las 17:46:52
+-- Tiempo de generación: 22-08-2014 a las 19:47:35
 -- Versión del servidor: 5.5.25a
 -- Versión de PHP: 5.4.4
 
@@ -113,9 +113,17 @@ CREATE TABLE IF NOT EXISTS `sys_control` (
   `CON_COD` int(11) NOT NULL AUTO_INCREMENT COMMENT 'codigo del Control',
   `GAR_COD` int(11) NOT NULL COMMENT 'Codigo de la garita',
   `VIP_COD` int(11) DEFAULT NULL COMMENT 'Codigo del Visitanten-PPL',
+  `CON_FECHA` date NOT NULL COMMENT 'Fecha del Control',
   `CON_ESTADO` varchar(1) NOT NULL COMMENT 'A: Activo, I:inactivo',
   PRIMARY KEY (`CON_COD`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `sys_control`
+--
+
+INSERT INTO `sys_control` (`CON_COD`, `GAR_COD`, `VIP_COD`, `CON_FECHA`, `CON_ESTADO`) VALUES
+(1, 1, 1, '2014-08-22', 'A');
 
 -- --------------------------------------------------------
 
@@ -146,11 +154,21 @@ INSERT INTO `sys_etapas` (`NVL_COD`, `NVL_DESCRIPCION`) VALUES
 
 CREATE TABLE IF NOT EXISTS `sys_garita` (
   `GAR_COD` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Codigo de la garita',
-  `GAR_DESCRIPCION` int(11) NOT NULL COMMENT 'Descripcion de la garita',
+  `GAR_DESCRIPCION` varchar(60) CHARACTER SET utf8 NOT NULL COMMENT 'Descripcion de la garita',
   `USU_COD` int(11) NOT NULL COMMENT 'Codigo de Usuario',
-  `GAR_ESTADO` varchar(1) NOT NULL COMMENT 'Estado de la Garita',
+  `GAR_ESTADO` varchar(1) CHARACTER SET utf8 NOT NULL COMMENT 'Estado de la Garita',
   PRIMARY KEY (`GAR_COD`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Volcado de datos para la tabla `sys_garita`
+--
+
+INSERT INTO `sys_garita` (`GAR_COD`, `GAR_DESCRIPCION`, `USU_COD`, `GAR_ESTADO`) VALUES
+(1, 'Acceso 1', 1, 'A'),
+(2, 'Acceso 2', 2, 'A'),
+(3, 'Acceso 3', 1, 'A'),
+(4, 'Acceso 4', 2, 'A');
 
 -- --------------------------------------------------------
 
@@ -235,15 +253,15 @@ CREATE TABLE IF NOT EXISTS `sys_parentesco` (
   `PAR_COD` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Codigo del Parentesco',
   `PAR_DESCRIPCION` varchar(200) NOT NULL COMMENT 'Descripcion del Parentesco',
   PRIMARY KEY (`PAR_COD`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parentescos que pueden tener los visitantes' AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parentescos que pueden tener los visitantes' AUTO_INCREMENT=3 ;
 
 --
 -- Volcado de datos para la tabla `sys_parentesco`
 --
 
 INSERT INTO `sys_parentesco` (`PAR_COD`, `PAR_DESCRIPCION`) VALUES
-(12, 'Papá'),
-(13, 'Mamá');
+(1, 'Papá'),
+(2, 'Mamá');
 
 -- --------------------------------------------------------
 
@@ -258,6 +276,7 @@ CREATE TABLE IF NOT EXISTS `sys_ppl` (
   `PPL_APELLIDO` varchar(200) NOT NULL COMMENT 'Apellidos del PPL',
   `PPL_CEDULA` varchar(13) NOT NULL COMMENT 'Cedula del PPL',
   `PPL_IMG` varchar(200) NOT NULL COMMENT 'Imagen del PPL',
+  `PPL_HUELLA` varchar(200) NOT NULL COMMENT 'Huella del PPL',
   `PPL_ESTADO` varchar(2) NOT NULL COMMENT 'Estado del PPL',
   PRIMARY KEY (`PPL_COD`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Datos de la persona Provada de Libertad' AUTO_INCREMENT=3 ;
@@ -266,9 +285,9 @@ CREATE TABLE IF NOT EXISTS `sys_ppl` (
 -- Volcado de datos para la tabla `sys_ppl`
 --
 
-INSERT INTO `sys_ppl` (`PPL_COD`, `CEL_COD`, `PPL_NOMBRE`, `PPL_APELLIDO`, `PPL_CEDULA`, `PPL_IMG`, `PPL_ESTADO`) VALUES
-(1, 1, 'Antonio', 'Gonzales', '1720802394', 'AntonioGonzales.jpg', 'A'),
-(2, 2, 'Carlos', 'Moreno', '1720090057', 'CarlosMoreno.jpg', 'A');
+INSERT INTO `sys_ppl` (`PPL_COD`, `CEL_COD`, `PPL_NOMBRE`, `PPL_APELLIDO`, `PPL_CEDULA`, `PPL_IMG`, `PPL_HUELLA`, `PPL_ESTADO`) VALUES
+(1, 1, 'Antonio', 'Gonzales', '1720802394', 'AntonioGonzales.jpg', 'EDS65498', 'A'),
+(2, 2, 'Carlos', 'Moreno', '1720090057', 'CarlosMoreno.jpg', 'FFDD654', 'A');
 
 -- --------------------------------------------------------
 
@@ -403,8 +422,8 @@ CREATE TABLE IF NOT EXISTS `sys_visitante` (
 
 INSERT INTO `sys_visitante` (`VIS_COD`, `VIS_NOMBRE`, `VIS_APELLIDO`, `PAR_COD`, `VIS_CEDULA`, `VIS_HUELLA`, `VIS_DIRECCION`, `VIS_TELEFONO`, `VIS_CORREO`, `VIS_IMAGEN`, `VIS_ESTADO`) VALUES
 (1, 'David', 'Lara', 1, '17208021397', '987asda54', 'Calderon', '3811679', '', '', 'A'),
-(2, 'Willian', 'Espinosa', 0, '1720802394', 'EFAF654987', '', '09928789', '', '', 'E'),
-(3, 'Juan', 'Perez', 0, '1720823654', 'FDSDFS987325', '', '09864164', '', '', 'A');
+(2, 'Willian', 'Espinosa', 1, '1720802394', 'EFAF654987', '', '09928789', '', '', 'E'),
+(3, 'Juan', 'Perez', 2, '1720823654', 'FDSDFS987325', '', '09864164', '', '', 'A');
 
 -- --------------------------------------------------------
 
@@ -418,7 +437,16 @@ CREATE TABLE IF NOT EXISTS `sys_visitante_ppl` (
   `VIS_COD` int(11) NOT NULL COMMENT 'Codigo secuencial del Visitante',
   `VIP_FECHA` date NOT NULL COMMENT 'Fecha del Visitanten-PPL',
   PRIMARY KEY (`VIP_COD`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Listado de Visitantes que se encuentran ligados a un PPL' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Listado de Visitantes que se encuentran ligados a un PPL' AUTO_INCREMENT=4 ;
+
+--
+-- Volcado de datos para la tabla `sys_visitante_ppl`
+--
+
+INSERT INTO `sys_visitante_ppl` (`VIP_COD`, `PPL_COD`, `VIS_COD`, `VIP_FECHA`) VALUES
+(1, 1, 1, '0000-00-00'),
+(2, 2, 2, '0000-00-00'),
+(3, 1, 3, '0000-00-00');
 
 -- --------------------------------------------------------
 
