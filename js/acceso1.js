@@ -1,6 +1,4 @@
 $(document).ready(function() {
-//    pageSetUp();
-    
     $('#listaAcceso1').dataTable({
         "bServerSide": true,
         "sAjaxSource": "includes/controles/acceso1/acceso1_dataTable.php",
@@ -37,7 +35,7 @@ function permitirAccesoVisitante(codVisita,nomVisita){
                     case '0':
                         $.smallBox({
                             title: "Error..!!",
-                            content: "<i class='fa fa-clock-o'></i> <i>Problemas con la Base de datos con sulte con el Administrados; codigo ACMODEL_L48</i>",
+                            content: "<i class='fa fa-clock-o'></i> <i>Problemas con la Base de datos con sulte con el Administrados; codigo AC1MODEL_L48</i>",
                             color: "#C46A69",
                             iconSmall: "fa fa-times fa-2x fadeInRight animated",
                             timeout: 6000

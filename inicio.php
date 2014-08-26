@@ -9,7 +9,8 @@ if ($_SESSION["autenticado"] == 'SI') {
     $modulos = isset($_GET['modulo']) ? $_GET['modulo'] : 'ninguno';
     include_once("./includes/visitas.php");
     include_once("./includes/generales.php");
-    inicializaMenu();
+    $clGeneral = new general();
+    $clGeneral->inicializaMenu();
     switch ($modulos) {
         case 'administrativo':
             $option = isset($_GET['op']) ? $_GET['op'] : 0;

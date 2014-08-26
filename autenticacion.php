@@ -1,5 +1,6 @@
 <?php
 include_once 'includes/generales.php';
+$clGeneral = new general();
 include_once("includes/conexiones/db_local.inc.php");
 $db = new database();
 date_default_timezone_set('America/Bogota');
@@ -24,7 +25,7 @@ if($consulta->num_rows>0){
             $_SESSION["usu_rol_descrip"]=$row->ROL_DESCRIPCION;
             $_SESSION["usu_centro_cod"]=$row->CEN_COD;
             $_SESSION["usu_centro_descrip"]=$row->CEN_DESCRIPCION;
-        registrar_acceso();
+        $clGeneral->registrar_acceso();
 	echo "ok";
 }
 else{
