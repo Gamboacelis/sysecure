@@ -92,7 +92,7 @@ global $dbmysql;
 	 * Get data to display
 	 */
         
-        ($sWhere=='')?' WHERE GAR_COD = 1':' AND GAR_COD = 1';
+        $sWhere =($sWhere=='')?' WHERE GAR_COD = 1':' AND GAR_COD = 1';
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."
 		FROM   $sTable

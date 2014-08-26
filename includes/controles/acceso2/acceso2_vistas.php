@@ -4,13 +4,13 @@ session_start();
 
 date_default_timezone_set('America/Bogota');
 
-include_once PATH_PROD.SISTEM_NAME.'/includes/conexiones/db_local.inc.php';
+//include_once PATH_PROD.SISTEM_NAME.'/includes/conexiones/db_local.inc.php';
+//
+//$dbmysql = new database();
 
-$dbmysql = new database();
 
 
-
-function frm_asignacionPabellones() {
+function frm_revisarAcceso2() {
     $retval = '';
     $retval = '<article class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
                 <div class="botonesSuperiores">
@@ -41,13 +41,13 @@ function frm_asignacionPabellones() {
                     </div>
             </div>
         </article>';
-    $retval .=frmVisitante();
+//    $retval .=frmAccesoVisitante();
 //    $retval .=frmCentros();
     return $retval;
 }
 
 
-function frmVisitante() {
+function frmAccesoVisitante() {
 
     $retval = '';
 
