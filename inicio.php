@@ -66,7 +66,18 @@ if ($_SESSION["autenticado"] == 'SI') {
                     $activarMenu42='class="active"';
                     $contenido = frm_asignacionPabellones();
                     break;
-
+                case 'acceso3':
+                    include_once("./includes/controles/acceso3/acceso3_vistas.php");
+                    $titulo='Revisión de Accesos Tercer Nivel';
+                    $activarMenu43='class="active"';
+                    $contenido = frm_asignacionPabellones();
+                    break;
+                case 'acceso4':
+                    include_once("./includes/controles/acceso4/acceso4_vistas.php");
+                    $titulo='Revisión de Accesos Cuarto Nivel';
+                    $activarMenu44='class="active"';
+                    $contenido = frm_asignacionPabellones();
+                    break;
             }
             break;
         default:
@@ -477,9 +488,8 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/horarios.js"></script>
             <script src="js/ppl.js"></script>
             <script src="js/visitantes.js"></script>
-            <script src="js/acceso2.js"></script>
             <script src="js/acceso1.js"></script>
-
+            <script src="js/acceso2.js"></script>
 
             <!-- PAGE RELATED PLUGIN(S) -->
             <script src="js/plantilla/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
