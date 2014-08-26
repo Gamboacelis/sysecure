@@ -1,5 +1,9 @@
 $(document).ready(function() {
-//    pageSetUp();
+    var start = new Date;
+    setInterval(function() {
+        $('.Timer').text((new Date - start) / 1000 + " Seconds");
+    }, 1000);
+    
     $('#listaPpl').dataTable({
         "bServerSide": true,
         "sAjaxSource": "includes/ppl/ppl_dataTable.php",
@@ -13,3 +17,10 @@ $(document).ready(function() {
         }
     });
 });
+function nuevoPpl() {
+    alert('987');
+    $('#frmPPLModal').modal('show');
+//    limpiarFormularioPabellon();
+//    $('#smart-form-pabellon >header').text('Registro Nuevo Pabellon')
+//    $('#IDpabellon').val('');
+}
