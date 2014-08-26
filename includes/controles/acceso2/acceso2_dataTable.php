@@ -91,6 +91,8 @@ global $dbmysql;
 	 * SQL queries
 	 * Get data to display
 	 */
+        
+        ($sWhere=='')?' WHERE GAR_COD = 1':' AND GAR_COD = 1';
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."
 		FROM   $sTable
@@ -130,9 +132,9 @@ global $dbmysql;
                                                 ''.utf8_encode($aRow[ 'VIS_CEDULA' ]).'',
                                                 ''.utf8_encode($nombre_ppl).'',
                                                 '<img src=".//uploads/imagenes/ppl/'.$aRow['PPL_IMG'].'" style="width: 60px">',
-                                                '<a class="btn btn-info btn-lg" title="Actualizar" href="javascript:actualizarInformacion('.$aRow[ 'CON_COD' ].')">
+                                                '<a class="btn btn-info btn-lg" title="Actualizar" href="javascript:actualizarInformacion('.$aRow[ 'VIS_COD' ].')">
                                                     <i class="fa fa-child"></i>Actualizar inf. visitante</a>
-												  <a class="btn btn-info btn-lg" style="background-color: #FA5858;" title="Permitir acceso" href="javascript:permitirAcceso('.$aRow[ 'CON_COD' ].')">
+												  <a class="btn btn-info btn-lg" style="background-color: #FA5858;" title="Permitir acceso" href="javascript:permitirAcceso(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].',this.class)">
                                                     <i class="fa fa-child"></i>Permitir acceso</a>
                                                     ');
         }
