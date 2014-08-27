@@ -51,7 +51,7 @@ function actualizarInformacion(visitante) {
    }
 
 
-function permitirAcceso(nombre, cod,elemento)
+function permitirAcceso(nombre, cod,contr)
 {
     $.SmartMessageBox({
     title: "Confirmación!",
@@ -62,7 +62,7 @@ function permitirAcceso(nombre, cod,elemento)
             $.ajax({
                 url: "./includes/controles/acceso2/acceso2_model.php?opcion=permitirAcceso2",
                 type: 'post',
-                data: {codigo: cod},
+                data: {codigo: cod, control: contr },
                 success: function(respuesta) {
 
                     if (respuesta === '1') {
