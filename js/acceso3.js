@@ -14,7 +14,7 @@ $(document).ready(function() {
     });
 });
 
-function permitirAcceso(nombre, cod,elemento){
+function permitirAcceso3(nombre, cod,elemento){
     $.SmartMessageBox({
     title: "Confirmación!",
     content: "Esta seguro que desea permitir el aceeso del visitante "+nombre+ "?",
@@ -25,7 +25,7 @@ function permitirAcceso(nombre, cod,elemento){
                 url: "./includes/controles/acceso3/acceso3_model.php?opcion=permitirAcceso3",
                 type: 'post',
                 data: {codigo: cod},
-                success: function(respuesta) {
+                success: function(respuesta){
 
                     if (respuesta === '1') {
 
@@ -39,8 +39,7 @@ function permitirAcceso(nombre, cod,elemento){
                         location.reload();
                     }
                 },
-                error:function()
-                {
+                error:function(){
                         $.smallBox({
                             title: nombre,
                             content: "<i class='fa fa-clock-o'></i> <i>Error durante el proceso, datos no guardados</i>",
@@ -52,4 +51,8 @@ function permitirAcceso(nombre, cod,elemento){
             });
         }
     });
+}
+
+function negarAcceso3(codVisita){
+    
 }

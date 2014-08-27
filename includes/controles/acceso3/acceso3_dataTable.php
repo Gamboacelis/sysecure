@@ -92,7 +92,7 @@ global $dbmysql;
 	 * Get data to display
 	 */
         
-        $sWhere =($sWhere=='')?" WHERE CON_ESTADO='A'":" AND CON_ESTADO='A'";
+//        $sWhere =($sWhere=='')?" WHERE CON_ESTADO='A' ":" AND CON_ESTADO='A' ";
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."
 		FROM   $sTable
@@ -127,16 +127,16 @@ global $dbmysql;
                 /* General output */
                     $nombre_visitante=$aRow[ 'VIS_NOMBRE' ].' '.$aRow[ 'VIS_APELLIDO' ];
                     $nombre_ppl =$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ];
-                    $output['aaData'][] =array( '<img src=".//uploads/imagenes/ppl/'.$aRow['PPL_IMG'].'" style="width: 60px" class="img-thumbnail">',
-                                                ''.utf8_encode($aRow[ 'CON_COD' ]).'',
-                    	                		''.utf8_encode($nombre_visitante).'',
+                    $output['aaData'][] =array( ''.utf8_encode($aRow[ 'CON_COD' ]).'',
+                                                '<img src=".//uploads/imagenes/ppl/'.$aRow['PPL_IMG'].'" style="width: 60px" class="img-thumbnail">',
+               	                		''.utf8_encode($nombre_visitante).'',
                                                 ''.utf8_encode($aRow[ 'VIS_CEDULA' ]).'',
                                                 ''.utf8_encode($nombre_ppl).'',
                                                 '<img src=".//uploads/imagenes/ppl/'.$aRow['PPL_IMG'].'" style="width: 60px" class="img-thumbnail">',
-                                                '<a class="btn btn-info btn-lg" title="Actualizar" href="javascript:actualizarInformacion('.$aRow[ 'VIS_COD' ].')">
-                                                    <i class="fa fa-child"></i>Actualizar inf. visitante</a>
-												  <a class="btn btn-info btn-lg" style="background-color: #FA5858;" title="Permitir acceso" href="javascript:permitirAcceso(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].',this.class)">
-                                                    <i class="fa fa-child"></i>Permitir acceso</a>
+                                                '<a class="btn btn-danger btn-lg" title="Actualizar" href="javascript:negarAcceso3('.$aRow[ 'VIS_COD' ].')">
+                                                    <i class="fa fa-ban"></i> Negar Acceso</a>
+						<a class="btn btn-success btn-lg" title="Permitir acceso" href="javascript:permitirAcceso3(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'CON_COD' ].')">
+                                                    <i class="fa fa-check"></i> Permitir Acceso</a>
                                                     ');
         }
 //        print_r($output);

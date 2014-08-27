@@ -92,7 +92,7 @@ global $dbmysql;
 	 * Get data to display
 	 */
         
-        $sWhere =($sWhere=='')?" WHERE GAR_COD = 1 AND CON_ESTADO='A'":" AND GAR_COD = 1 AND CON_ESTADO='A'";
+//        $sWhere =($sWhere=='')?" WHERE GAR_COD = 1 AND CON_ESTADO='A'":" AND GAR_COD = 1 AND CON_ESTADO='A'";
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."
 		FROM   $sTable

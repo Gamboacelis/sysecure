@@ -19,12 +19,12 @@ function permitirAcceso2() {
     $fecha = date('Y-m-d');
     $codVisita = $_POST['codigo'];
     $codControl = $_POST['control'];
+    
+    $sql3 = "UPDATE `sys_control` SET `CON_ESTADO` = 'S' WHERE `CON_COD` = ".$codControl;
+    $val3 = $dbmysql->query($sql3);
 
     $sql2 = "INSERT INTO `sys_control` (`GAR_COD` ,`VIP_COD` ,`CON_FECHA` ,`CON_ESTADO`)VALUES ('2', '$codVisita','$fecha','A');";
     $val2 = $dbmysql->query($sql2);
-
-    $sql3 = "UPDATE `sys_control` SET `CON_ESTADO` = 'S' WHERE `CON_COD` = ".$codControl;
-    $val3 = $dbmysql->query($sql3);
 
     if ($val2) {
         echo 1;
