@@ -70,7 +70,7 @@ if ($_SESSION["autenticado"] == 'SI') {
                     include_once("./includes/controles/acceso3/acceso3_vistas.php");
                     $titulo='Revisión de Accesos Tercer Nivel';
                     $activarMenu43='class="active"';
-                    $contenido = frm_asignacionPabellones();
+                    $contenido = frm_revisarAcceso3();
                     break;
                 case 'acceso4':
                     include_once("./includes/controles/acceso4/acceso4_vistas.php");
@@ -490,6 +490,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/visitantes.js"></script>
             <script src="js/acceso1.js"></script>
             <script src="js/acceso2.js"></script>
+            <script src="js/acceso3.js"></script>
 
             <!-- PAGE RELATED PLUGIN(S) -->
             <script src="js/plantilla/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
