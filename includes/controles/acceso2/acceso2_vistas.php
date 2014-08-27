@@ -41,7 +41,7 @@ function frm_revisarAcceso2() {
                     </div>
             </div>
         </article>';
-//    $retval .=frmAccesoVisitante();
+   $retval .=frmAccesoVisitante();
 //    $retval .=frmCentros();
     return $retval;
 }
