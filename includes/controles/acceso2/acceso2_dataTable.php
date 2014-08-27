@@ -17,7 +17,7 @@ include_once( '../conexiones/config_local.ini.php' );
 
 
 global $dbmysql;
-        $aColumns = array('CON_COD','VIP_COD','CON_FECHA','GAR_COD','VIS_COD','VIS_NOMBRE','VIS_APELLIDO','PAR_COD','VIS_CEDULA','VIS_HUELLA','VIS_DIRECCION','VIS_TELEFONO','VIS_CORREO','VIS_IMAGEN','VIS_ESTADO','PPL_COD','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_HUELLA','PPL_ESTADO');
+        $aColumns = array('CON_COD','VIP_COD','CON_FECHA','CON_ESTADO','GAR_COD','VIS_COD','VIS_NOMBRE','VIS_APELLIDO','PAR_COD','VIS_CEDULA','VIS_HUELLA','VIS_DIRECCION','VIS_TELEFONO','VIS_CORREO','VIS_IMAGEN','VIS_ESTADO','PPL_COD','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_HUELLA','PPL_ESTADO');
 	/* Campo de Index */
 	$sIndexColumn = "CON_COD";
 	/* Tabla a Usar */
@@ -92,7 +92,7 @@ global $dbmysql;
 	 * Get data to display
 	 */
         
-        $sWhere =($sWhere=='')?" WHERE GAR_COD = 1 AND VIS_ESTADO='A'":" AND GAR_COD = 1 AND VIS_ESTADO='A'";
+        $sWhere =($sWhere=='')?" WHERE GAR_COD = 1 AND CON_ESTADO='A'":" AND GAR_COD = 1 AND CON_ESTADO='A'";
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."
 		FROM   $sTable
