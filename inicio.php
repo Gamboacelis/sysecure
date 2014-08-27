@@ -452,7 +452,10 @@ if ($_SESSION["autenticado"] == 'SI') {
 
             <!-- JQUERY VALIDATE -->
             <script src="js/plantilla/plugin/jquery-validate/jquery.validate.min.js"></script>
-
+            
+             <!-- JQUERY VALIDATE MENSSAGE IN SPANISH -->
+            <script src="js/plantilla/plugin/jquery-validate/jqueryvalidatemessage.min.js"></script>
+                
             <!-- JQUERY MASKED INPUT -->
             <script src="js/plantilla/plugin/masked-input/jquery.maskedinput.min.js"></script>
 

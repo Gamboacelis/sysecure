@@ -61,46 +61,85 @@ function frmPpl(){
                                                 </header>
                                                 <div>
                                                     <div class="widget-body no-padding">
-                                                        <form id="smart-form-pabellon" class="smart-form" action="javascript:guardarPabellon()">
+                                                        <form id="smart-form-ppl" class="smart-form" action="javascript:guardarPpl()">
                                                             <header>
                                                                     Formulario de Registro
                                                             </header>
                                                             <fieldset>
-                                                                    <input type="hidden" id="IDpabellon" name="IDpabellon">
+                                                                    <input type="hidden" id="IDppl" name="IDppl">
                                                                     <div class="row">
                                                                         <section class="col col-6">
-                                                                                <label class="label">Nivel</label>
+                                                                                <label class="label">Pabellon</label>
                                                                                 <label class="select">
-                                                                                        <select id="nivel" name="nivel">
-                                                                                                <option value="0" selected="" disabled="">-- Niveles --</option>
+                                                                                        <select id="pabellon" name="pabellon">
+                                                                                                <option value="0" selected="" disabled="">-- Pabellones --</option>
+                                                                                                '.comboPabellon().'
                                                                                         </select> <i></i> 
                                                                                 </label>
                                                                         </section>
                                                                         <section class="col col-6">
-                                                                                <label class="label">Ala</label>
-                                                                                <label class="input"> <i class="icon-append fa fa-user"></i>
-                                                                                    <input type="text" id="ala" name="ala" placeholder="Ala">
-                                                                                    <b class="tooltip tooltip-bottom-right">Ingese el Ala en el que se encuentra</b> 
+                                                                                <label class="label">Celda</label>
+                                                                                <label class="select">
+                                                                                        <select id="celda" name="celda">
+                                                                                                <option value="0" selected="" disabled="">-- Celdas --</option>
+                                                                                                '.comboCeldas().'
+                                                                                        </select> <i></i> 
                                                                                 </label>
                                                                         </section>
                                                                     </div>
-                                                                    <section>
-                                                                            <label class="label">Descripción</label>
+                                                                    <div class="row">
+                                                                    <section class="col col-6">
+                                                                            <label class="label">Nombres</label>
                                                                             <label class="input"> <i class="icon-append fa fa-envelope-o"></i>
-                                                                                    <input type="text" id="descripcion" name="descripcion" placeholder="Descripción del Pabellon">
-                                                                                    <b class="tooltip tooltip-bottom-right">Necesario para identificar el Pabellon</b> </label>
+                                                                                    <input type="text" id="nombre" name="nombre" placeholder="Nombre del PPL">
+                                                                                    <b class="tooltip tooltip-bottom-right">Escriba el Nombre del PPL</b> </label>
                                                                     </section>
-                                                                    <section>
-                                                                            <label class="label">Capacidad</label>
+                                                                    <section class="col col-6">
+                                                                            <label class="label">Apellidos</label>
                                                                             <label class="input"> <i class="icon-append fa fa-lock"></i>
-                                                                                    <input type="number" name="capacidad" placeholder="Capacidad Máxima" id="capacidad">
-                                                                                    <b class="tooltip tooltip-bottom-right">Debe ingresar la Capacidad de PPL del Pabellon</b> </label>
+                                                                                    <input type="text" name="apellido" placeholder="Aopellido del PPL" id="apellido">
+                                                                                    <b class="tooltip tooltip-bottom-right">Escriba el Apellido del PPL</b> </label>
                                                                     </section>
-                                                                    <section>
-                                                                            <label class="label">Detalles</label>
-                                                                            <label class="textarea"> <i class="icon-append fa fa-comment"></i>
-                                                                                    <textarea id="detalles"  name="detalles" placeholder="Detalles del Pabellon"></textarea>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-6">
+                                                                                <label class="label">Cédula</label>
+                                                                                <label class="input"> <i class="icon-append fa fa-lock"></i>
+                                                                                        <input type="text" id="cedula"  name="cedula" placeholder="Cédula del PPL">
+                                                                        </section>
+                                                                    </div>
+                                                            </fieldset>
+                                                            <fieldset>
+                                                                <div class="row">
+                                                                    <section class="col col-6">
+                                                                            <label class="label">Imagen</label>
+                                                                            <div id="imgPpl">
+                                                                                <img src="img/avatars/male.png" class="img-thumbnail" style="width: 200px">
+                                                                            </div>
+                                                                            <div id="imgCambio">
+                                                                                <div class="cargar_img">
+                                                                                    <input id="fileImagen" name="fileImagen" type="file" />
+                                                                                    <div id="cargar_txt">
+                                                                                        <span class="cargar_btn">Cambiar Imagen</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="imgCambio_botones">
+                                                                                    <a class="btn btn-default btn-circle" href="javascript:agregarImagen();">
+                                                                                        <i class="glyphicon glyphicon-ok"></i>
+                                                                                    </a>
+                                                                                    <a class="btn btn-default btn-circle" href="javascript:cancelarImagen();">
+                                                                                        <i class="glyphicon glyphicon-ban-circle"></i>
+                                                                                    </a>
+                                                                                </div>
+                                                                            <div>
                                                                     </section>
+                                                                    <section class="col col-6">
+                                                                            <label class="label">Huella Dactilar</label>
+                                                                            <label class="input"> <i class="icon-append fa fa-lock"></i>
+                                                                                    <input type="text" name="huella" placeholder="Huella Dactilar" id="huella" >
+                                                                                    <b class="tooltip tooltip-bottom-right">Escanee la Huella Dactilar del PPL</b> </label>
+                                                                    </section>
+                                                                    </div>
                                                             </fieldset>
                                                             <footer>
                                                                     <button type="submit" class="btn btn-primary">
@@ -116,5 +155,30 @@ function frmPpl(){
                         </div>
                     </div>
                 </div>';
+    return $retval;
+}
+function comboPabellon() {
+    global $dbmysql;
+    $retval = '';
+    $sql = "SELECT * FROM `sys_pabellones`;";
+    $val = $dbmysql->query($sql);
+    if ($val->num_rows > 0) {
+        while ($row = $val->fetch_object()) {
+            $retval.='<option value="' . $row->PAB_COD . '">' . $row->PAB_DESCRIPCION . '</option>';
+        }
+    }
+    return $retval;
+}
+
+function comboCeldas() {
+    global $dbmysql;
+    $retval = '';
+    $sql = "SELECT * FROM `sys_celdas` WHERE ROL_ESTADO='A';";
+    $val = $dbmysql->query($sql);
+    if ($val->num_rows > 0) {
+        while ($row = $val->fetch_object()) {
+            $retval.='<option value="' . $row->ROL_COD . '">' . $row->ROL_DESCRIPCION . '</option>';
+        }
+    }
     return $retval;
 }

@@ -128,7 +128,7 @@ global $dbmysql;
                     $nombre_visitante=$aRow[ 'VIS_NOMBRE' ].' '.$aRow[ 'VIS_APELLIDO' ];
                     $nombre_ppl =$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ];
                     $output['aaData'][] =array( ''.utf8_encode($aRow[ 'CON_COD' ]).'',
-                    	                		''.utf8_encode($nombre_visitante).'',
+                    	                	''.utf8_encode($nombre_visitante).'',
                                                 ''.utf8_encode($aRow[ 'VIS_CEDULA' ]).'',
                                                 ''.utf8_encode($nombre_ppl).'',
                                                 '<img src=".//uploads/imagenes/ppl/'.$aRow['PPL_IMG'].'" style="width: 60px">',
