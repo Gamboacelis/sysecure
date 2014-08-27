@@ -36,7 +36,8 @@ function obtenerVisitantesAsignados() {
                     </thead>
                     <tbody>';
     if ($val->num_rows > 0) {
-        while ($row = $val->fetch_object()) {
+        while ($row = $val->fetch_object()) { 
+            
             $cadenaParametros = $row->VIP_COD . ',\'' . $row->VIS_NOMBRE . ' ' . $row->VIS_APELLIDO . '\'';
             $visAutorizado = consultaVisitanteAutorizado($row->VIP_COD);
             $visCantidad = consultaCantidadAutorizados($row->VIP_COD);

@@ -92,7 +92,7 @@ global $dbmysql;
 	 * Get data to display
 	 */
         
-        $sWhere =($sWhere=='')?' WHERE GAR_COD = 1':' AND GAR_COD = 1';
+        $sWhere =($sWhere=='')?" WHERE GAR_COD = 1 AND VIS_ESTADO='A'":" AND GAR_COD = 1 AND VIS_ESTADO='A'";
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."
 		FROM   $sTable
@@ -100,7 +100,7 @@ global $dbmysql;
 		$sOrder
 		$sLimit";
 	$rResult = mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
-//	echo $sQuery;
+	echo $sQuery;
 	/* Data set length after filtering */
 	$sQuery = "SELECT FOUND_ROWS()";
 	$rResultFilterTotal = mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
