@@ -134,7 +134,7 @@ global $dbmysql;
                                                 '<img src=".//uploads/imagenes/ppl/'.$aRow['PPL_IMG'].'" style="width: 60px">',
                                                 '<a class="btn btn-info btn-lg" title="Actualizar" href="javascript:actualizarInformacion('.$aRow[ 'VIS_COD' ].')">
                                                     <i class="fa fa-child"></i>Actualizar inf. visitante</a>
-												  <a class="btn btn-info btn-lg" style="background-color: #FA5858;" title="Permitir acceso" href="javascript:permitirAcceso(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].',this.class)">
+												  <a class="btn btn-info btn-lg" style="background-color: #FA5858;" title="Permitir acceso" href="javascript:permitirAcceso(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'CON_COD' ].')">
                                                     <i class="fa fa-child"></i>Permitir acceso</a>
                                                     ');
         }
