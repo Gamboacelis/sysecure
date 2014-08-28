@@ -47,6 +47,18 @@ var $registerForm = $("#smart-form-ppl").validate({
         }
     });
 });
+function mostrarCelda(){
+    $('#pabellon').val();
+    $.ajax({
+            url: './includes/ppl/ppl_model.php?opcion=mostrarCelda',
+            datetype: "json",
+            type: 'POST',
+            data: $("#smart-form-ppl").serialize(),
+            success: function(res) {
+                $('#celda').html(res);
+            }
+        });
+}
 function nuevoPpl() {
     $('#frmPPLModal').modal('show');
     limpiarFormularioPpl();
@@ -96,24 +108,53 @@ function cancelarImagen(){
 }
 
 function guardarPpl(){
-    var pabellon = $('#IDppl').val();
-    if (pabellon === '') {
+    var ppl = $('#IDppl').val();
+    if (ppl === '') {
         $.ajax({
             url: './includes/ppl/ppl_model.php?opcion=guardaDatosPpl',
             datetype: "json",
             type: 'POST',
             data: $("#smart-form-ppl").serialize(),
             success: function(res) {
-                if (res === '1') {
-                    $.smallBox({
-                        title: "PPL Almacenado",
-                        content: "<i class='fa fa-clock-o'></i> <i>PPL Agregado correctamente...</i>",
-                        color: "#659265",
-                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                        timeout: 4000
-                    });
-                    limpiarFormularioPpl();
-                    location.reload();
+                switch (res){
+                    case '0':
+                        $.smallBox({
+                            title: "Error..!!",
+                            content: "<i class='fa fa-clock-o'></i> <i>Problemas con el Almacenamiento, contáctese con su proveedor</i>",
+                            color: "#C46A69",
+                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                            timeout: 4000
+                        });
+                        break;
+                    case '1':
+                        $.smallBox({
+                            title: "PPL Almacenado",
+                            content: "<i class='fa fa-clock-o'></i> <i>PPL Agregado correctamente...</i>",
+                            color: "#659265",
+                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                            timeout: 4000
+                        });
+                        limpiarFormularioPpl();
+                        location.reload();
+                        break;
+                    case '2':
+                        $.smallBox({
+                            title: "Error..!!",
+                            content: "<i class='fa fa-clock-o'></i> <i>Huella Dactilar Existente, Revice la Huella</i>",
+                            color: "#C46A69",
+                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                            timeout: 7000
+                        });
+                        break;
+                    case '3':
+                        $.smallBox({
+                            title: "Error..!!",
+                            content: "<i class='fa fa-clock-o'></i> <i>Ya existe un PPL con esos Datos(Nombre, Apellido, Cedula y Huella)</i>",
+                            color: "#C46A69",
+                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                            timeout: 7000
+                        });
+                        break;
                 }
             }
         });
@@ -140,7 +181,144 @@ function guardarPpl(){
     }
     $('#frmPabellonModal').modal('hide');
 }
+function revisarVisitantesDisponibles(codPpl){
+    $('#IDpplNew').val(codPpl);
+    $.ajax({
+            url: './includes/ppl/ppl_model.php?opcion=mostrarVisitantesPpl',
+            datetype: "json",
+            type: 'POST',
+            data: {codPpl:codPpl},
+            success: function(res) {
+                $('#litaVisitantesPpl >tbody').html(res);
+                $('#frmVisitantesModal').modal('show');
+            }
+        });
+}
+function editarVisita(cod){
+    $('#vis'+cod).children('td').children('.txtVisDatos').hide();
+    $('#vis'+cod).children('td').children('.visDatos').show();
+    $('#vis'+cod).children('td').children('.visBtnGuardar').show();
+    $('#vis'+cod).children('td').children('.visBtnDatos').hide();
+}
+function GuardarCambioVisita(cod,tipo){
+    if(tipo==='N'){
+        var url='./includes/ppl/ppl_model.php?opcion=guardarListaVisitante';
+        var codigo=$('#IDpplNew').val();
+        var nombre=$('#new').children('td').children('#visNombre').val();
+        var apellido=$('#new').children('td').children('#visApellido').val();
+        var parentesco=$('#new').children('td').children('#visParentesco').val();
+    }else{
+        var url='./includes/ppl/ppl_model.php?opcion=actualizaListaVisitante';
+        var codigo=cod;
+        var nombre=$('#vis'+cod).children('td').children('#visNombre').val();
+        var apellido=$('#vis'+cod).children('td').children('#visApellido').val();
+        var parentesco=$('#vis'+cod).children('td').children('#visParentesco').val();
+    }
+    debugger;
+    $.ajax({
+            url: url,
+            datetype: "json",
+            type: 'POST',
+            data: {visCod:codigo,nombre:nombre,apellido:apellido,parentesco:parentesco},
+            success: function(res) {
+                if(res!='0'){
+                    var json_obj = $.parseJSON(res);
+                    if(tipo==='N'){
+                        $('#new').children('td').children('#txtVisNombre').text(json_obj.datosActualizados.nombre);
+                        $('#new').children('td').children('#txtVisApellido').text(json_obj.datosActualizados.apellido);
+                        $('#new').children('td').children('#txtVisParentesco').text(json_obj.datosActualizados.parentesco);
+                    }else{
+                        $('#vis'+cod).children('td').children('#txtVisNombre').text(json_obj.datosActualizados.nombre);
+                        $('#vis'+cod).children('td').children('#txtVisApellido').text(json_obj.datosActualizados.apellido);
+                        $('#vis'+cod).children('td').children('#txtVisParentesco').text(json_obj.datosActualizados.parentesco);
+                    }
+                }
+                if(tipo==='N'){
+                    $('#new').children('td').children('#visNombre').val(json_obj.datosActualizados.nombre);
+                    $('#new').children('td').children('#visApellido').val(json_obj.datosActualizados.apellido);
+                    $('#new').children('td').children('#visParentesco').prop('selectedIndex', parentesco);
+                    $('#new').children('td').children('.txtVisDatos').show();
+                    $('#new').children('td').children('.visDatos').hide();
+                    $('#new').children('td').children('.visBtnGuardar').hide();
+                    $('#new').children('td').children('.visBtnDatos').show();
+                }else{
+                    $('#vis'+cod).children('td').children('#visNombre').val(json_obj.datosActualizados.nombre);
+                    $('#vis'+cod).children('td').children('#visApellido').val(json_obj.datosActualizados.apellido);
+                    $('#vis'+cod).children('td').children('#visParentesco').prop('selectedIndex', parentesco);
+                    $('#vis'+cod).children('td').children('.txtVisDatos').show();
+                    $('#vis'+cod).children('td').children('.visDatos').hide();
+                    $('#vis'+cod).children('td').children('.visBtnGuardar').hide();
+                    $('#vis'+cod).children('td').children('.visBtnDatos').show();
+                }
+                $.smallBox({
+                        title: "Actualización",
+                        content: "<i class='fa fa-clock-o'></i> <i>Visitante Actualizado correctamente...</i>",
+                        color: "#659265",
+                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                        timeout: 4000
+                    });
+            }
+        });
+}
+function nuevoVisitantePpl(){
+        var tds=$("#litaVisitantesPpl tr:first td").length; // Obtenemos el total de columnas (tr) del id "tabla" 
+        var trs=$("#litaVisitantesPpl tr").length; 
+        var alerta=1;
+        var nuevaFila='<tr id="new">'; 
+                nuevaFila+="<td>"+(trs); 
+                nuevaFila+='<td><img src="img/avatars/male.png" class="img-thumbnail" style="width: 60px" />'; 
+                nuevaFila+='<td><div class="txtVisDatos" id="txtVisNombre"></div><input type="text" id="visNombre" name="visNombre" class="visDatos">'; 
+                nuevaFila+='<td><div class="txtVisDatos" id="txtVisApellido"></div><input type="text" id="visApellido" name="visApellido" class="visDatos">'; 
+                nuevaFila+='<td><div class="txtVisDatos" id="txtVisParentesco"></div><select id="visParentesco" name="visParentesco" class="visDatos"></select>'; 
+                 $.ajax({
+                    url: './includes/ppl/ppl_model.php?opcion=comboParentesco',
+                    datetype: "json",
+                    type: 'POST',
+                    data: {alerta:alerta},
+                    success: function(res) {
+                        $('#new').children('td').children('#visParentesco').html(res); 
+                    }
+                });
+                var valida='N';
+            nuevaFila+='<td><a class="btn btn-primary btn-xs visBtnGuardar" title="Guardar Cambio" href="javascript:GuardarCambioVisita('+trs+',\''+valida+'\')"><i class="fa fa-save"></i></a>'; 
+            nuevaFila+="</tr>"; 
+         $("#litaVisitantesPpl").append(nuevaFila); 
+         $('#new').children('td').children('.visDatos').show();
+         $('#new').children('td').children('.visBtnGuardar').show();   
+        
+}
+function eliminarVisitantePpl(codPar, nomCod) {
 
+    $.SmartMessageBox({
+        title: "Confirmación!",
+        content: "Esta seguro de eliminar al Visitante <span class='txt-color-orangeDark'><strong>" + nomCod + " </strong></span>?",
+        buttons: '[No][Si]'
+    }, function(ButtonPressed) {
+        if (ButtonPressed === "Si") {
+            $.ajax({
+                url: "./includes/ppl/ppl_model.php?opcion=eliminarVisitantePpl",
+                type: 'post',
+                data: {codigo: codPar},
+                success: function(respuesta) {
+                    if (respuesta === '1') {
+                        $('.' + codPar).parent('td').parent('tr').addClass('paraEliminarUsuario');
+                        $('.paraEliminarUsuario').fadeOut('tr');
+                        $.smallBox({
+                            title: nomCod,
+                            content: "<i class='fa fa-clock-o'></i> <i>Visitante Eliminado...</i>",
+                            color: "#659265",
+                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                            timeout: 4000
+                        });
+                    }
+                }
+            });
+
+        }
+        if (ButtonPressed === "No") {
+        }
+    });
+}
 function limpiarFormularioPpl() {
     $("#nombre").val('');  /*Ala*/
     $("#apellido").val('');  /*Descripcion*/

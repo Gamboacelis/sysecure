@@ -40,7 +40,7 @@ function revisarPpl() {
             </div>
         </article>';
     $retval .=frmPpl();
-//    $retval .=frmCentros();
+    $retval .=frmVisitantes();
     return $retval;
 }
 function frmPpl(){
@@ -66,12 +66,36 @@ function frmPpl(){
                                                                     Formulario de Registro
                                                             </header>
                                                             <fieldset>
+                                                                    <section>
+                                                                            <label class="label">Imagen</label>
+                                                                            <div id="imgPpl">
+                                                                                <img src="img/avatars/male.png" class="img-thumbnail" style="width: 200px">
+                                                                            </div>
+                                                                            <div id="imgCambio">
+                                                                                <div class="cargar_img">
+                                                                                    <input id="fileImagen" name="fileImagen" type="file" />
+                                                                                    <div id="cargar_txt">
+                                                                                        <span class="cargar_btn">Cambiar Imagen</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="imgCambio_botones">
+                                                                                    <a class="btn btn-default btn-circle" href="javascript:agregarImagen();">
+                                                                                        <i class="glyphicon glyphicon-ok"></i>
+                                                                                    </a>
+                                                                                    <a class="btn btn-default btn-circle" href="javascript:cancelarImagen();">
+                                                                                        <i class="glyphicon glyphicon-ban-circle"></i>
+                                                                                    </a>
+                                                                                </div>
+                                                                            <div>
+                                                                    </section>
+                                                            </fieldset>
+                                                            <fieldset>
                                                                     <input type="hidden" id="IDppl" name="IDppl">
                                                                     <div class="row">
                                                                         <section class="col col-6">
                                                                                 <label class="label">Pabellon</label>
                                                                                 <label class="select">
-                                                                                        <select id="pabellon" name="pabellon">
+                                                                                        <select id="pabellon" name="pabellon" onchange="javascript:mostrarCelda()">
                                                                                                 <option value="0" selected="" disabled="">-- Pabellones --</option>
                                                                                                 '.comboPabellon().'
                                                                                         </select> <i></i> 
@@ -82,7 +106,6 @@ function frmPpl(){
                                                                                 <label class="select">
                                                                                         <select id="celda" name="celda">
                                                                                                 <option value="0" selected="" disabled="">-- Celdas --</option>
-                                                                                                '.comboCeldas().'
                                                                                         </select> <i></i> 
                                                                                 </label>
                                                                         </section>
@@ -109,44 +132,75 @@ function frmPpl(){
                                                                         </section>
                                                                     </div>
                                                             </fieldset>
-                                                            <fieldset>
-                                                                <div class="row">
-                                                                    <section class="col col-6">
-                                                                            <label class="label">Imagen</label>
-                                                                            <div id="imgPpl">
-                                                                                <img src="img/avatars/male.png" class="img-thumbnail" style="width: 200px">
-                                                                            </div>
-                                                                            <div id="imgCambio">
-                                                                                <div class="cargar_img">
-                                                                                    <input id="fileImagen" name="fileImagen" type="file" />
-                                                                                    <div id="cargar_txt">
-                                                                                        <span class="cargar_btn">Cambiar Imagen</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="imgCambio_botones">
-                                                                                    <a class="btn btn-default btn-circle" href="javascript:agregarImagen();">
-                                                                                        <i class="glyphicon glyphicon-ok"></i>
-                                                                                    </a>
-                                                                                    <a class="btn btn-default btn-circle" href="javascript:cancelarImagen();">
-                                                                                        <i class="glyphicon glyphicon-ban-circle"></i>
-                                                                                    </a>
-                                                                                </div>
-                                                                            <div>
-                                                                    </section>
-                                                                    <section class="col col-6">
-                                                                            <label class="label">Huella Dactilar</label>
-                                                                            <label class="input"> <i class="icon-append fa fa-lock"></i>
-                                                                                    <input type="text" name="huella" placeholder="Huella Dactilar" id="huella" >
-                                                                                    <b class="tooltip tooltip-bottom-right">Escanee la Huella Dactilar del PPL</b> </label>
-                                                                    </section>
-                                                                    </div>
-                                                            </fieldset>
+                                                            
                                                             <footer>
                                                                     <button type="submit" class="btn btn-primary">
                                                                             Registrar
                                                                     </button>
                                                             </footer>
                                                         </form>						
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>';
+    return $retval;
+}
+function frmVisitantes(){
+    $retval = '';
+    $retval = '<div class="modal fade" id="frmVisitantesModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                                                <header>
+                                                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                </header>
+                                                <div>
+                                                    <div class="widget-body">
+                                                        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <div id="wid-id-4" class="jarviswidget jarviswidget-color-darken" data-widget-editbutton="false" style="" role="widget" data-widget-attstyle="jarviswidget-color-teal">
+                                                                <header>
+                                                                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                                                        <h2>Listado de Visitantes Autorizados <spam id="totalSeleccionados"></spam></h2>
+                                                                        <div class="widget-toolbar">
+                                                                            <div class="btn-group">
+                                                                                    <button class="btn btn-xs btn-success btn-personal" data-toggle="modal" onclick="javascript:nuevoVisitantePpl()">
+                                                                                        <i class="fa fa-fw fa-plus"></i>  Agregar Visitante
+                                                                                    </button>
+                                                                            </div>
+                                                                        </div>
+                                                                </header>
+                                                                <div>
+                                                                    <div class="widget-body no-padding">
+                                                                        <div class="table-responsive">
+                                                                            <table id="litaVisitantesPpl" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox" style="text-align:center">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th><i class="fa fa-check"></i><input type="hidden" id="IDpplNew" name="IDpplNew"></th>
+                                                                                        <th><i class="fa fa-picture-o"></i> Imagen</th>
+                                                                                        <th><i class="fa fa-user"></i> Nombre</th>
+                                                                                        <th><i class="fa fa-user"></i> Apellido</th>
+                                                                                        <th><i class="fa fa-lock"></i> Parentesco</th>
+                                                                                        <th><i class="fa fa-gear"></i> Acciones</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </div>
+                                                    </article>
                                                 </div>
                                             </div>
                                         </div>
@@ -170,15 +224,3 @@ function comboPabellon() {
     return $retval;
 }
 
-function comboCeldas() {
-    global $dbmysql;
-    $retval = '';
-    $sql = "SELECT * FROM `sys_celdas` WHERE ROL_ESTADO='A';";
-    $val = $dbmysql->query($sql);
-    if ($val->num_rows > 0) {
-        while ($row = $val->fetch_object()) {
-            $retval.='<option value="' . $row->ROL_COD . '">' . $row->ROL_DESCRIPCION . '</option>';
-        }
-    }
-    return $retval;
-}

@@ -116,14 +116,15 @@ global $dbmysql;
         
 	while ( $aRow = mysql_fetch_array( $rResult ) ){
                 /* General output */
+                    $img=($aRow[ 'PPL_IMG' ]!='')?'/'.SISTEM_NAME.PATH_PPL.$aRow[ 'PPL_IMG' ]:'img/avatars/male.png';
                     $nombre=$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ];
                     $cadenaParametros=utf8_encode($aRow[ 'PPL_COD' ].','."'$nombre'");
                     $output['aaData'][] =array( ''.utf8_encode($aRow[ 'PPL_COD' ]).'',
                                                 ''.utf8_encode($nombre).'',
-                                                '<img src="'.'/'.SISTEM_NAME.PATH_PPL.$aRow[ 'PPL_IMG' ].'" class="img-thumbnail" style="width: 60px">',
+                                                '<img src="/'.$img.'" class="img-thumbnail" style="width: 60px">',
                                                 ''.utf8_encode($aRow[ 'PPL_CEDULA' ]).'',
-                                                '<a class="btn btn-success btn-xs" title="Centros Asignados" href="javascript:revisarCentrosDisponibles('.$aRow[ 'PPL_COD' ].')">
-                                                    <i class="fa fa-map-marker"></i>
+                                                '<a class="btn btn-success btn-xs" title="Visitantes Habilitados" href="javascript:revisarVisitantesDisponibles('.$aRow[ 'PPL_COD' ].')">
+                                                    <i class="fa fa-group"></i>
                                                 </a>
                                                 <a class="btn btn-success btn-xs" title="Editar Usuario" href="javascript:editarPpl('.$aRow[ 'PPL_COD' ].')">
                                                     <i class="fa fa-pencil"></i>
