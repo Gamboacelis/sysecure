@@ -92,7 +92,7 @@ function guardarVisitante() {
 
             data: $("#smart-form-register").serialize(),
 
-            success: function(res) {
+            success: function(res) { 
 
                 if (res === '1') {
 

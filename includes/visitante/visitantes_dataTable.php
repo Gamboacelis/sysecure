@@ -18,7 +18,7 @@ include_once '../conexiones/db_local.inc.php';
 
     date_default_timezone_set('America/Bogota');
 
-include_once( '../conexiones/config_local.ini.php' );
+include_once( '../conexiones/config_local.ini.php' ); 
 
 global $dbmysql;
 	

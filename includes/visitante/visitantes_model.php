@@ -97,7 +97,7 @@ function guardaDatosVisitante() {
 
     $direccion = $_POST["direccion"];
 
-    $correo = $_POST["correo"];    
+    $correo = $_POST["correo"];     
 
 
 
