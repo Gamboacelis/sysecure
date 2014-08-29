@@ -14,6 +14,9 @@ var $cambioClaveForm = $("#smart-form-horarios").validate({
             },
             horaSalida: {
                 required: true,
+            },
+            tipoVisitas: {
+                required: true
             }
         },
         // Messages for form validation
@@ -29,6 +32,9 @@ var $cambioClaveForm = $("#smart-form-horarios").validate({
             },
             horaSalida: {
                 required: 'Por favor, Indique hasta que hora la Visita',
+            },
+            tipoVisitas: {
+                required: 'Por favor, Indique que Tipos de Visita pueden Acceder en ese Horario'
             }
         },
         // Do not change code below
@@ -198,6 +204,7 @@ function carga_DatosIncialesHorario(edt) {
     $('#dias').prop('selectedIndex', edt.datosHorario.HOR_DIAS);
     $('#dias option[value="' + edt.datosHorario.HOR_DIAS + '"]').attr("selected", true);/*Tipo de Usuario*/
     edt.datosHorario.HOR_ESTADO=='A'?$("#estado").prop("checked", true):$("#estado").prop("checked", false); 
+    
 }
 function limpiarFormularioHorario() {
     $('#dias').prop('selectedIndex', 0);  /*Dias*/

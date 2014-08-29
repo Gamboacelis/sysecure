@@ -167,6 +167,13 @@ function frmHorarios(){
                                                                         
                                                                     </div>
                                                                     <section>
+                                                                        <div class="form-group">
+                                                                            <label>Tipo de Visitas</label>
+                                                                            <select multiple style="width:100%" class="select2" id="tipoVisitas" placeholder="Seleccione Tipo de Visita">
+                                                                                        '.comboTipoVisitas().'
+                                                                            </select>
+                                                                    </section>
+                                                                    <section>
                                                                         <label class="checkbox">
                                                                             <input id="estado" type="checkbox" name="estado" value="A">
                                                                             <i></i>Activo
@@ -187,7 +194,6 @@ function frmHorarios(){
                         </div>
                     </div>
                 </div>';
-    return $retval;
     return $retval;
 }
 
@@ -399,4 +405,17 @@ function eliminarArchivo() {
     } else {
         echo '';
     }
+}
+
+function comboTipoVisitas() {
+    global $dbmysql;
+    $retval = '';
+    $sql = "SELECT * FROM `sys_tipovisita`;";
+    $val = $dbmysql->query($sql);
+    if ($val->num_rows > 0) {
+        while ($row = $val->fetch_object()) {
+            $retval.='<option value="' . $row->TPV_COD . '">' . $row->TPV_DESCRIPCION . '</option>';
+        }
+    }
+    return $retval;
 }
