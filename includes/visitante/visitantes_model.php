@@ -95,17 +95,15 @@ function guardaDatosVisitante() {
 
     $cedula = $_POST["cedula"];
 
-    $huella = $_POST["huella"];
-
     $direccion = $_POST["direccion"];
 
     $correo = $_POST["correo"];    
 
 
 
-    $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_TELEFONO,VIS_CEDULA, VIS_HUELLA,VIS_DIRECCION,VIS_CORREO,VIS_ESTADO)VALUES
+    $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_TELEFONO,VIS_CEDULA, VIS_DIRECCION,VIS_CORREO,VIS_ESTADO)VALUES
 
-            ('$nombre','$apellido','$telefono','$cedula','$huella','$direccion','$correo','A');";
+            ('$nombre','$apellido','$telefono','$cedula','$direccion','$correo','A');";
 
     $val = $dbmysql->query($sql);
 
@@ -137,7 +135,6 @@ function actualizarDatosVisitante() {
 
     $cedula = $_POST["cedula"];
 
-    $huella = $_POST["huella"];
 
     $direccion = $_POST["direccion"];
 
@@ -155,7 +152,7 @@ function actualizarDatosVisitante() {
 
                 VIS_CEDULA    = '$cedula',
 
-                VIS_HUELLA  = '$huella',
+          
 
                 VIS_DIRECCION   = '$direccion',
 

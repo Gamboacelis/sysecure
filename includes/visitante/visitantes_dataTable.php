@@ -23,7 +23,7 @@ include_once( '../conexiones/config_local.ini.php' );
 global $dbmysql;
 	
 
-        $aColumns = array('VIS_COD','VIS_NOMBRE','VIS_APELLIDO','VIS_CEDULA','VIS_HUELLA','VIS_DIRECCION','VIS_TELEFONO','VIS_ESTADO');
+        $aColumns = array('VIS_COD','VIS_NOMBRE','VIS_APELLIDO','VIS_CEDULA','VIS_DIRECCION','VIS_TELEFONO','VIS_ESTADO');
 
 	/* Campo de Index */
 

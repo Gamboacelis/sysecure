@@ -76,10 +76,10 @@ function carga_DatosIncialesUsuarios(edt) {
 
 function guardarVisitante() {
 
+
     var visitante = $('#IDvisitante').val();
 
     if (visitante === '') {
-
 
         $.ajax({
             
@@ -116,7 +116,13 @@ function guardarVisitante() {
 
                 }
 
+
+            },
+            error: function (res)
+            {
+                alert("error al guardar la informacion en la base de datos.")
             }
+            
 
         });
 
