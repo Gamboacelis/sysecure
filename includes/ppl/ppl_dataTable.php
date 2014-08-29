@@ -10,7 +10,7 @@ include_once '../conexiones/db_local.inc.php';
     date_default_timezone_set('America/Bogota');
 include_once( '../conexiones/config_local.ini.php' );
 global $dbmysql;
-        $aColumns = array('PPL_COD','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_HUELLA','PPL_ESTADO');
+        $aColumns = array('PPL_COD','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_ESTADO');
 	/* Campo de Index */
 	$sIndexColumn = "PPL_COD";
 	/* Tabla a Usar */
@@ -84,6 +84,8 @@ global $dbmysql;
 	 * SQL queries
 	 * Get data to display
 	 */
+        $sWhere=($sWhere=='')?" WHERE PPL_ESTADO!='E' ":" AND PPL_ESTADO!='E' ";
+        
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."
 		FROM   $sTable
@@ -116,13 +118,28 @@ global $dbmysql;
         
 	while ( $aRow = mysql_fetch_array( $rResult ) ){
                 /* General output */
-                    $img=($aRow[ 'PPL_IMG' ]!='')?'/'.SISTEM_NAME.PATH_PPL.$aRow[ 'PPL_IMG' ]:'img/avatars/male.png';
+                switch ($aRow[ 'PPL_ESTADO' ]) {
+                    case 'L':
+                            $estado='<span class="label label-success">Libre</span>';
+                        break;
+                    case 'T':
+                            $estado='<span class="label label-warning">Traslado</span>';
+                        break;
+                    case 'D':
+                            $estado='<span class="label label-info">Audiencia</span>';
+                        break;
+                    default:
+                        $estado='<span class="label label-primary">Preso</span>';
+                        break;
+                }
+                    $img=($aRow[ 'PPL_IMG' ]!='')?''.SISTEM_NAME.PATH_PPL.$aRow[ 'PPL_IMG' ]:SISTEM_NAME.'/img/avatars/male.png';
                     $nombre=$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ];
                     $cadenaParametros=utf8_encode($aRow[ 'PPL_COD' ].','."'$nombre'");
                     $output['aaData'][] =array( ''.utf8_encode($aRow[ 'PPL_COD' ]).'',
                                                 ''.utf8_encode($nombre).'',
                                                 '<img src="/'.$img.'" class="img-thumbnail" style="width: 60px">',
                                                 ''.utf8_encode($aRow[ 'PPL_CEDULA' ]).'',
+                                                ''.$estado.'',
                                                 '<a class="btn btn-success btn-xs" title="Visitantes Habilitados" href="javascript:revisarVisitantesDisponibles('.$aRow[ 'PPL_COD' ].')">
                                                     <i class="fa fa-group"></i>
                                                 </a>
