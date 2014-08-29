@@ -1,12 +1,20 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     22/08/2014 10:26:07                          */
+/* Created on:     29/08/2014 0:02:17                           */
 /*==============================================================*/
 
 
 drop table if exists sys_accesos;
 
+drop table if exists sys_celdas;
+
+drop table if exists sys_centro;
+
+drop table if exists sys_ciudad;
+
 drop table if exists sys_control;
+
+drop table if exists sys_etapas;
 
 drop table if exists sys_garita;
 
@@ -14,13 +22,35 @@ drop table if exists sys_historia_ppl;
 
 drop table if exists sys_horarios;
 
+drop table if exists sys_huellas;
+
 drop table if exists sys_item_tipos;
+
+drop table if exists sys_pabellones;
+
+drop table if exists sys_parametros;
 
 drop table if exists sys_parentesco;
 
+drop table if exists sys_ppl;
+
+drop table if exists sys_roles;
+
 drop table if exists sys_sanciones;
 
+drop table if exists sys_tipoActor;
+
+drop table if exists sys_tipoVisita;
+
+drop table if exists sys_tipoVisitaHorario;
+
 drop table if exists sys_tipo_sancion;
+
+drop table if exists sys_usuario_centro;
+
+drop table if exists sys_usuarios;
+
+drop table if exists sys_visitante;
 
 drop table if exists sys_visitante_ppl;
 
@@ -94,7 +124,8 @@ create table sys_control
    CON_COD              int(11) not null auto_increment comment 'codigo del Control',
    GAR_COD              int not null comment 'Codigo de la garita',
    VIP_COD              int comment 'Codigo del Visitanten-PPL',
-   CON_ESTADO           varchar(1) not null comment 'A: Activo, I:inactivo',
+   CON_FECHA            date not null comment 'fecha del Control',
+   CON_ESTADO           varchar(1) not null comment 'A: Autorizado, N:Negado',
    primary key (CON_COD)
 )
 ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
@@ -117,7 +148,7 @@ alter table sys_etapas comment 'Etapas en las que se encuentra un pabellon';
 create table sys_garita
 (
    GAR_COD              int(11) not null auto_increment comment 'Codigo de la garita',
-   GAR_DESCRIPCION      int not null comment 'Descripcion de la garita',
+   GAR_DESCRIPCION      varchar(60) not null comment 'Descripcion de la garita',
    USU_COD              int not null comment 'Codigo de Usuario',
    GAR_ESTADO           varchar(1) not null comment 'Estado de la Garita',
    primary key (GAR_COD)
@@ -159,6 +190,24 @@ create table sys_horarios
 alter table sys_horarios comment 'Datos de horarios que pueden tener los pabellones para las v';
 
 /*==============================================================*/
+/* Table: sys_huellas                                           */
+/*==============================================================*/
+create table sys_huellas
+(
+   HUE_COD              int not null comment 'Codigo secuencial del codigo de la Huella',
+   ACT_COD              int comment 'Codigo secuencial de Actor',
+   HUE_CODPPLVIS        int comment 'Codigo del Actor Visitante o PPL',
+   HUE_MANO             varchar(60) comment 'Mano de la Huella',
+   HUE_DEDO             varchar(60) comment 'Nombre del dedo de la mano',
+   HUE_HUELLA           varchar(100) comment 'Huella Dactilar',
+   HUE_IMAGEN           varchar(200) comment 'Imagen de la Huella',
+   HUE_ESTADO           varchar(2) comment 'Estado: A:Activo, E:Eliminado',
+   primary key (HUE_COD)
+);
+
+alter table sys_huellas comment 'Tabla de Huellas Dactilares ';
+
+/*==============================================================*/
 /* Table: sys_item_tipos                                        */
 /*==============================================================*/
 create table sys_item_tipos
@@ -190,11 +239,26 @@ ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4;
 alter table sys_pabellones comment 'Datos de los Pabellones de un Centro';
 
 /*==============================================================*/
+/* Table: sys_parametros                                        */
+/*==============================================================*/
+create table sys_parametros
+(
+   PAR_COD              int not null,
+   PAR_MODULO           varchar(60) not null,
+   PAR_DESCRIPCION      varchar(200) not null,
+   PAR_VALOR            varchar(200),
+   primary key (PAR_COD)
+);
+
+alter table sys_parametros comment 'Tabla de Parametros Generales';
+
+/*==============================================================*/
 /* Table: sys_parentesco                                        */
 /*==============================================================*/
 create table sys_parentesco
 (
    PAR_COD              int(11) not null auto_increment comment 'Codigo del Parentesco',
+   TPV_COD              int comment 'Codigo de Tipo de Visita',
    PAR_DESCRIPCION      varchar(200) not null comment 'Descripcion del Parentesco',
    primary key (PAR_COD)
 )
@@ -248,6 +312,43 @@ create table sys_sanciones
 );
 
 alter table sys_sanciones comment 'Tabla de almacenamiento de Sanciones de las Visitas';
+
+/*==============================================================*/
+/* Table: sys_tipoActor                                         */
+/*==============================================================*/
+create table sys_tipoActor
+(
+   ACT_COD              int not null comment 'Codigo secuencial de Actor',
+   ACT_DESCRIPCION      varchar(60) comment 'Descripcion del Actor',
+   primary key (ACT_COD)
+);
+
+alter table sys_tipoActor comment 'Tabla tipo actores de las Huellas';
+
+/*==============================================================*/
+/* Table: sys_tipoVisita                                        */
+/*==============================================================*/
+create table sys_tipoVisita
+(
+   TPV_COD              int not null comment 'Codigo de Tipo de Visita',
+   TPV_DESCRIPCION      varchar(200) not null comment 'descripcion del Tipo de Visita',
+   primary key (TPV_COD)
+);
+
+alter table sys_tipoVisita comment 'Tabla con Tipos de visitantes';
+
+/*==============================================================*/
+/* Table: sys_tipoVisitaHorario                                 */
+/*==============================================================*/
+create table sys_tipoVisitaHorario
+(
+   TVH_COD              int not null comment 'Codigo del Tipo de Visita horario',
+   TPV_COD              int comment 'Codigo de Tipo de Visita',
+   HOR_COD              int comment 'Codigo del Horario',
+   primary key (TVH_COD)
+);
+
+alter table sys_tipoVisitaHorario comment 'Relacion entre los tipos de Visitas en los diferentes horari';
 
 /*==============================================================*/
 /* Table: sys_tipo_sancion                                      */
@@ -342,8 +443,9 @@ create table sys_visitante_sancion
    SAN_COD              int comment 'Codigo de la Sancion',
    VIS_COD              int comment 'Codigo secuencial del Visitante',
    USU_COD              int comment 'Codigo de Usuario',
-   VSA_NOTA             varchar(500) comment 'Nota del Visitante-Sancion',
-   VSA_FECHA            datetime comment 'Fecha del Visitante-Sancion',
+   VSA_NOTA             varchar(5000) comment 'Nota del Visitante-Sancion',
+   VSA_FECHA_INI        datetime comment 'Fecha del Visitante-Sancion',
+   VSA_FECHA_FIN        date comment 'Fecha del Fin de Sancion',
    primary key (VSA_COD)
 );
 
@@ -401,6 +503,9 @@ alter table sys_historia_ppl add constraint FK_REFERENCE_22 foreign key (CEL_COD
 alter table sys_horarios add constraint FK_REFERENCE_26 foreign key (PAB_COD)
       references sys_pabellones (PAB_COD) on delete restrict on update restrict;
 
+alter table sys_huellas add constraint FK_REFERENCE_38 foreign key (ACT_COD)
+      references sys_tipoActor (ACT_COD) on delete restrict on update restrict;
+
 alter table sys_item_tipos add constraint FK_REFERENCE_24 foreign key (TPS_COD)
       references sys_tipo_sancion (TPS_COD) on delete restrict on update restrict;
 
@@ -410,11 +515,20 @@ alter table sys_pabellones add constraint FK_REFERENCE_11 foreign key (CEN_COD)
 alter table sys_pabellones add constraint FK_REFERENCE_16 foreign key (NVL_COD)
       references sys_etapas (NVL_COD) on delete restrict on update restrict;
 
+alter table sys_parentesco add constraint FK_REFERENCE_35 foreign key (TPV_COD)
+      references sys_tipoVisita (TPV_COD) on delete restrict on update restrict;
+
 alter table sys_ppl add constraint FK_REFERENCE_18 foreign key (CEL_COD)
       references sys_celdas (CEL_COD) on delete restrict on update restrict;
 
 alter table sys_sanciones add constraint FK_REFERENCE_23 foreign key (TPS_COD)
       references sys_tipo_sancion (TPS_COD) on delete restrict on update restrict;
+
+alter table sys_tipoVisitaHorario add constraint FK_REFERENCE_36 foreign key (TPV_COD)
+      references sys_tipoVisita (TPV_COD) on delete restrict on update restrict;
+
+alter table sys_tipoVisitaHorario add constraint FK_REFERENCE_37 foreign key (HOR_COD)
+      references sys_horarios (HOR_COD) on delete restrict on update restrict;
 
 alter table sys_usuario_centro add constraint FK_REFERENCE_1 foreign key (CEN_COD)
       references sys_centro (CEN_COD) on delete restrict on update restrict;

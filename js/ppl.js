@@ -214,7 +214,6 @@ function GuardarCambioVisita(cod,tipo){
         var apellido=$('#vis'+cod).children('td').children('#visApellido').val();
         var parentesco=$('#vis'+cod).children('td').children('#visParentesco').val();
     }
-    debugger;
     $.ajax({
             url: url,
             datetype: "json",
@@ -234,13 +233,7 @@ function GuardarCambioVisita(cod,tipo){
                     }
                 }
                 if(tipo==='N'){
-                    $('#new').children('td').children('#visNombre').val(json_obj.datosActualizados.nombre);
-                    $('#new').children('td').children('#visApellido').val(json_obj.datosActualizados.apellido);
-                    $('#new').children('td').children('#visParentesco').prop('selectedIndex', parentesco);
-                    $('#new').children('td').children('.txtVisDatos').show();
-                    $('#new').children('td').children('.visDatos').hide();
-                    $('#new').children('td').children('.visBtnGuardar').hide();
-                    $('#new').children('td').children('.visBtnDatos').show();
+                    revisarVisitantesDisponibles(json_obj.datosActualizados.codigoPPL);
                 }else{
                     $('#vis'+cod).children('td').children('#visNombre').val(json_obj.datosActualizados.nombre);
                     $('#vis'+cod).children('td').children('#visApellido').val(json_obj.datosActualizados.apellido);
@@ -261,30 +254,53 @@ function GuardarCambioVisita(cod,tipo){
         });
 }
 function nuevoVisitantePpl(){
-        var tds=$("#litaVisitantesPpl tr:first td").length; // Obtenemos el total de columnas (tr) del id "tabla" 
-        var trs=$("#litaVisitantesPpl tr").length; 
-        var alerta=1;
-        var nuevaFila='<tr id="new">'; 
-                nuevaFila+="<td>"+(trs); 
-                nuevaFila+='<td><img src="img/avatars/male.png" class="img-thumbnail" style="width: 60px" />'; 
-                nuevaFila+='<td><div class="txtVisDatos" id="txtVisNombre"></div><input type="text" id="visNombre" name="visNombre" class="visDatos">'; 
-                nuevaFila+='<td><div class="txtVisDatos" id="txtVisApellido"></div><input type="text" id="visApellido" name="visApellido" class="visDatos">'; 
-                nuevaFila+='<td><div class="txtVisDatos" id="txtVisParentesco"></div><select id="visParentesco" name="visParentesco" class="visDatos"></select>'; 
-                 $.ajax({
-                    url: './includes/ppl/ppl_model.php?opcion=comboParentesco',
-                    datetype: "json",
-                    type: 'POST',
-                    data: {alerta:alerta},
-                    success: function(res) {
-                        $('#new').children('td').children('#visParentesco').html(res); 
-                    }
+    var codigo=$('#IDpplNew').val();
+    $.ajax({
+        url: './includes/ppl/ppl_model.php?opcion=validarCantidadVisitante',
+        datetype: "json",
+        type: 'POST',
+        data: {codigo:codigo},
+        success: function(res) {
+            if(res==='1'){
+                var tds=$("#litaVisitantesPpl tr:first td").length; // Obtenemos el total de columnas (tr) del id "tabla" 
+                var trs=$("#litaVisitantesPpl tr").length; 
+                var alerta=1;
+                var tr = $("tr#new").attr("id");
+                if(tr === undefined){
+                var nuevaFila='<tr id="new">'; 
+                        nuevaFila+="<td>"+(trs); 
+                        nuevaFila+='<td><img src="img/avatars/male.png" class="img-thumbnail" style="width: 60px" />'; 
+                        nuevaFila+='<td><div class="txtVisDatos" id="txtVisNombre"></div><input type="text" id="visNombre" name="visNombre" class="visDatos">'; 
+                        nuevaFila+='<td><div class="txtVisDatos" id="txtVisApellido"></div><input type="text" id="visApellido" name="visApellido" class="visDatos">'; 
+                        nuevaFila+='<td><div class="txtVisDatos" id="txtVisParentesco"></div><select id="visParentesco" name="visParentesco" class="visDatos"></select>'; 
+                         $.ajax({
+                            url: './includes/ppl/ppl_model.php?opcion=comboParentesco',
+                            datetype: "json",
+                            type: 'POST',
+                            data: {alerta:alerta},
+                            success: function(res) {
+                                $('#new').children('td').children('#visParentesco').html(res); 
+                            }
+                        });
+                        var valida='N',nada='';
+                    nuevaFila+='<td><a class="btn btn-primary btn-xs visBtnGuardar" title="Guardar Cambio" href="javascript:GuardarCambioVisita(\''+nada+'\',\''+valida+'\')"><i class="fa fa-save"></i></a>'; 
+                    nuevaFila+="</tr>"; 
+                 $("#litaVisitantesPpl").append(nuevaFila); 
+                 $('#new').children('td').children('.visDatos').show();
+                 $('#new').children('td').children('.visBtnGuardar').show();   
+             }
+            }else{
+                $.smallBox({
+                    title: "Error..!!",
+                    content: "<i class='fa fa-clock-o'></i> <i>Limite máximo de Visitantes Asignados</i>",
+                    color: "#C46A69",
+                    iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                    timeout: 6000
                 });
-                var valida='N';
-            nuevaFila+='<td><a class="btn btn-primary btn-xs visBtnGuardar" title="Guardar Cambio" href="javascript:GuardarCambioVisita('+trs+',\''+valida+'\')"><i class="fa fa-save"></i></a>'; 
-            nuevaFila+="</tr>"; 
-         $("#litaVisitantesPpl").append(nuevaFila); 
-         $('#new').children('td').children('.visDatos').show();
-         $('#new').children('td').children('.visBtnGuardar').show();   
+            }
+        }
+    });
+        
         
 }
 function eliminarVisitantePpl(codPar, nomCod) {
