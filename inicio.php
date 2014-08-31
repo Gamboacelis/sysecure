@@ -330,7 +330,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <!-- END MAIN PANEL -->
 
             <!-- PAGE FOOTER -->
-            <div class="page-footer">
+            <!--div class="page-footer">
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
                         <span class="txt-color-white">Sysecure WebApp © 2014-2015</span>

@@ -72,10 +72,17 @@ function guardaDatosHorario() {
     $horaIngreso = $_POST["horaIngreso"];
     $horaSalida = $_POST["horaSalida"];
     $pabellon = $_POST["IDpabellonFrm"];
+    $tipoVisitas=$_POST["tipoVisitas"]; 
     $sql = "INSERT INTO `sys_horarios`(PAB_COD,HOR_DESCRIPCION,HOR_DIAS,HOR_HORA_ING,HOR_HORA_SAL,HOR_ESTADO)VALUES
             ('$pabellon','$descripcion','$dias','$horaIngreso','$horaSalida','A');";
     $val = $dbmysql->query($sql);
     if ($val) {
+        $maxHorario = $dbmysql->maxid('HOR_COD','sys_horarios');
+        for ($i=0;$i<count($tipoVisitas);$i++){     
+            echo $sql2 = "INSERT INTO  `sys_tipovisitahorario`(TPV_COD,HOR_COD)VALUES
+            ('$tipoVisitas[$i]','$maxHorario');";
+            $val2 = $dbmysql->query($sql2);
+        } 
         echo 1;
     } else {
         echo 0;

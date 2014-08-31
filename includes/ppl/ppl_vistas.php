@@ -7,7 +7,7 @@ $dbmysql = new database();
 
 function revisarPpl() {
     $retval = '';
-    $retval = '<article class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+    $retval = '<article class="col-xs-12 col-sm-12 col-md-12 col-lg-10" id="viewPPL">
                 <div class="botonesSuperiores">
                     <fieldset>
                         <button id="agregarEvento" class="btn btn-labeled btn-primary btn-personal"  data-toggle="modal" onclick="javascript:nuevoPpl();">
@@ -31,6 +31,7 @@ function revisarPpl() {
                                         <th><i class="fa fa-fw fa-male txt-color-blue hidden-md hidden-sm hidden-xs"></i> Nombre</th>
                                         <th><i class="fa fa-fw fa-user txt-color-blue hidden-md hidden-sm hidden-xs"></i> Imagen</th>
                                         <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Cédula</th>
+                                        <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Estado</th>
                                         <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Acción</th>
                                     </tr>
                                 </thead>
@@ -69,24 +70,25 @@ function frmPpl(){
                                                                     <section>
                                                                             <label class="label">Imagen</label>
                                                                             <div id="imgPpl">
-                                                                                <img src="img/avatars/male.png" class="img-thumbnail" style="width: 200px">
+                                                                                <input id="imagPpl" name="imagPpl" type="hidden" />
+                                                                                <img id="imagenPPL" alt="imagenPPL" src="img/avatars/male.png" class="img-thumbnail" style="width: 200px">
                                                                             </div>
-                                                                            <div id="imgCambio">
-                                                                                <div class="cargar_img">
-                                                                                    <input id="fileImagen" name="fileImagen" type="file" />
-                                                                                    <div id="cargar_txt">
-                                                                                        <span class="cargar_btn">Cambiar Imagen</span>
+                                                                                <div id="imgCambio">
+                                                                                    <div class="cargar_img">
+                                                                                        <input id="filePpl" name="filePpl" type="file" />
+                                                                                        <div id="cargar_txt">
+                                                                                            <span class="cargar_btn">Cambiar Imagen</span>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="imgCambio_botones">
-                                                                                    <a class="btn btn-default btn-circle" href="javascript:agregarImagen();">
-                                                                                        <i class="glyphicon glyphicon-ok"></i>
-                                                                                    </a>
-                                                                                    <a class="btn btn-default btn-circle" href="javascript:cancelarImagen();">
-                                                                                        <i class="glyphicon glyphicon-ban-circle"></i>
-                                                                                    </a>
-                                                                                </div>
-                                                                            <div>
+                                                                                    <div class="imgCambio_botones">
+                                                                                        <a class="btn btn-default btn-circle" href="javascript:agregarImagenPpl();">
+                                                                                            <i class="glyphicon glyphicon-ok"></i>
+                                                                                        </a>
+                                                                                        <a class="btn btn-default btn-circle" href="javascript:cancelarImagen();">
+                                                                                            <i class="glyphicon glyphicon-ban-circle"></i>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                <div>
                                                                     </section>
                                                             </fieldset>
                                                             <fieldset>
@@ -129,6 +131,18 @@ function frmPpl(){
                                                                                 <label class="label">Cédula</label>
                                                                                 <label class="input"> <i class="icon-append fa fa-lock"></i>
                                                                                         <input type="text" id="cedula"  name="cedula" placeholder="Cédula del PPL">
+                                                                        </section>
+                                                                         <section class="col col-6" id=estadoLavel>
+                                                                                <label class="label">Estado</label>
+                                                                                <label class="select">
+                                                                                        <select id="estado" name="estado">
+                                                                                                <option value="0" selected="" disabled="">-- Estado --</option>
+                                                                                                <option value="A">Preso</option>
+                                                                                                <option value="L">Libre</option>
+                                                                                                <option value="T">Traslado</option>
+                                                                                                <option value="D">Audiencia</option>
+                                                                                        </select> <i></i> 
+                                                                                </label>
                                                                         </section>
                                                                     </div>
                                                             </fieldset>
