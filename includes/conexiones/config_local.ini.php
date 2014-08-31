@@ -10,5 +10,5 @@ define('USER_NAME', 'root');
 define('USER_PASSWD', '');
 //define('USER_NAME', 'bulkenco_wie');
 //define('USER_PASSWD', 'mvTmjsunp00');
-define('DB_NAME','bulkenco_sysecure');
+define('DB_NAME','sysecure');
 ?>
