@@ -23,7 +23,6 @@ $(document).ready(function() {
     var $registerForm = $("#smart-form-ppl").validate({
         rules: {
             pabellon: {required: true},
-            celda: {required: true},
             nombre: {required: true},
             apellido: {required: true},
             cedula: {required: true},

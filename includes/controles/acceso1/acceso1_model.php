@@ -80,7 +80,7 @@ function obtenerVisitantesAsignados() {
         $retval .='</tbody>
          </table>';
     } else {
-        $retval .='<div style="text-align: center; color: sienna;"><p>El PPL: ' . $row->VIS_NOMBRE . ' ' . $row->VIS_APELLIDO . ' pertenece al Pabellon ' . $datoPPL->PAB_DESCRIPCION . ', el cual no tiene Horarios para este momento...!</p></div>';
+        $retval .='<div style="text-align: center; color: red;"><p>El PPL: ' . $row->VIS_NOMBRE . ' ' . $row->VIS_APELLIDO . ' pertenece al Pabellon ' . $datoPPL->PAB_DESCRIPCION . ', el cual no tiene Horarios para este momento...!</p></div>';
     }
     echo $retval;
 }

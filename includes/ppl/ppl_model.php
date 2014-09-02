@@ -47,18 +47,18 @@ switch ($funcion) {
 function enviarDatosPpl() {
     global $dbmysql;
     $codPpl = $_POST['codPpl'];
-    $sql = "SELECT p.*,c.*,pa.* FROM `sys_ppl` p, sys_celdas c, sys_pabellones pa WHERE p.`CEL_COD`=c.`CEL_COD` AND pa.`PAB_COD`=c.`PAB_COD`  AND p.`PPL_COD` =$codPpl";
+    $sql = "SELECT p.*,pa.* FROM `sys_ppl` p, sys_pabellones pa WHERE pa.`PAB_COD`=p.`PAB_COD`  AND p.`PPL_COD` =$codPpl";
     $val = $dbmysql->query($sql);
     $row = $val->fetch_object();
     $lista['datosPPL'] = array(
         "PPL_COD" => $row->PPL_COD,
+        "PAB_COD" => $row->PAB_COD,
         "CEL_COD" => $row->CEL_COD,
         "PPL_NOMBRE" => $row->PPL_NOMBRE,
         "PPL_APELLIDO" => $row->PPL_APELLIDO,
         "PPL_CEDULA" => $row->PPL_CEDULA,
         "PPL_IMG" => $row->PPL_IMG,
-        "PPL_ESTADO" => $row->PPL_ESTADO,
-        "PAB_COD" => $row->PAB_COD
+        "PPL_ESTADO" => $row->PPL_ESTADO
     );
 
     echo $encode = json_encode($lista);
@@ -167,10 +167,10 @@ function guardaDatosPpl() {
     $cedula = $_POST["cedula"];
     $imagen = explode('/', $_POST["imagPpl"]);
     $img = $imagen[3];
-    $existente = verificarPplExistente($nombre, $apellido, $cedula, $huella);
+    $existente = verificarPplExistente($nombre, $apellido, $cedula);
     if ($existente == 0) {
-        $sql = "INSERT INTO `sys_ppl`(CEL_COD,PPL_NOMBRE,PPL_APELLIDO,PPL_CEDULA,PPL_IMG,PPL_ESTADO)VALUES
-                ('$celda','$nombre','$apellido','$cedula','$img','A');";
+        $sql = "INSERT INTO `sys_ppl`(PAB_COD,CEL_COD,PPL_NOMBRE,PPL_APELLIDO,PPL_CEDULA,PPL_IMG,PPL_ESTADO)VALUES
+                ('$pabellon','$celda','$nombre','$apellido','$cedula','$img','A');";
         $val = $dbmysql->query($sql);
         if ($val) {
             echo 1; // RESULTADO EXITOSO

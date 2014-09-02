@@ -10,7 +10,7 @@ include_once '../conexiones/db_local.inc.php';
     date_default_timezone_set('America/Bogota');
 include_once( '../conexiones/config_local.ini.php' );
 global $dbmysql;
-        $aColumns = array('PPL_COD','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_ESTADO');
+        $aColumns = array('PPL_COD','PAB_COD','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_ESTADO');
 	/* Campo de Index */
 	$sIndexColumn = "PPL_COD";
 	/* Tabla a Usar */
@@ -129,7 +129,7 @@ global $dbmysql;
                             $estado='<span class="label label-info">Audiencia</span>';
                         break;
                     default:
-                        $estado='<span class="label label-primary">Preso</span>';
+                        $estado='<span class="label label-primary">Privado Livertad</span>';
                         break;
                 }
                     $img=($aRow[ 'PPL_IMG' ]!='')?''.SISTEM_NAME.PATH_PPL.$aRow[ 'PPL_IMG' ]:SISTEM_NAME.'/img/avatars/male.png';

@@ -201,7 +201,7 @@ function carga_DatosIncialesHorario(edt) {
     $("#descripcion").val(edt.datosHorario.HOR_DESCRIPCION);  /*Descripcion*/
     $("#horaIngreso").val(edt.datosHorario.HOR_HORA_ING);  /*Hora de Ingreso*/
     $("#horaSalida").val(edt.datosHorario.HOR_HORA_SAL);  /*Hora de Salida*/
-    $('#dias').prop('selectedIndex', edt.datosHorario.HOR_DIAS);
+    $('#tipoVisitas').prop('selectedIndex', edt.datosHorario.TPV_COD);
     $('#dias option[value="' + edt.datosHorario.HOR_DIAS + '"]').attr("selected", true);/*Tipo de Usuario*/
     edt.datosHorario.HOR_ESTADO=='A'?$("#estado").prop("checked", true):$("#estado").prop("checked", false); 
     

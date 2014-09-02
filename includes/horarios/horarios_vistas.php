@@ -87,6 +87,7 @@ function frm_asignacionPabellones() {
                                         <thead>
                                             <tr id="tablaHorarios">
                                                     <th>Dia</th>
+                                                    <th>Tipo Visita</th>
                                                     <th>Descripción</th>
                                                     <th>Hora Ingreso</th>
                                                     <th>Hora Salida</th>
@@ -169,7 +170,7 @@ function frmHorarios(){
                                                                     <section>
                                                                         <div class="form-group">
                                                                             <label>Tipo de Visitas</label>
-                                                                            <select multiple style="width:100%" class="select2" id="tipoVisitas" placeholder="Seleccione Tipo de Visita">
+                                                                            <select  style="width:100%" class="select2" id="tipoVisitas" placeholder="Seleccione Tipo de Visita">
                                                                                         '.comboTipoVisitas().'
                                                                             </select>
                                                                     </section>
