@@ -10,12 +10,6 @@ include_once '../../conexiones/db_local.inc.php';
     date_default_timezone_set('America/Bogota');
 include_once( '../conexiones/config_local.ini.php' );
 
-
-
-		
-
-
-
 global $dbmysql;
         $aColumns = array('CON_COD','VIP_COD','CON_FECHA','CON_ESTADO','GAR_COD','VIS_COD','VIS_NOMBRE','VIS_APELLIDO','PAR_COD','VIS_CEDULA','VIS_DIRECCION','VIS_TELEFONO','VIS_CORREO','VIS_IMAGEN','VIS_ESTADO','PPL_COD','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_ESTADO');
 	/* Campo de Index */

@@ -10,7 +10,7 @@ include_once '../../conexiones/db_local.inc.php';
     date_default_timezone_set('America/Bogota');
 include_once( '../../conexiones/config_local.ini.php' );
 global $dbmysql;
-        $aColumns = array('PPL_COD','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_HUELLA','PPL_ESTADO');
+        $aColumns = array('PPL_COD','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_ESTADO');
 	/* Campo de Index */
 	$sIndexColumn = "PPL_COD";
 	/* Tabla a Usar */
