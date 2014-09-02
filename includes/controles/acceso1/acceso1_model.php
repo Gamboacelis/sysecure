@@ -22,44 +22,66 @@ function obtenerVisitantesAsignados() {
     $fecha = date('Y-m-d');
     $hora = date('H:i:s');
     $codPpl = $_POST['codPpl'];
-    $sql = "SELECT vp.*,v.*, p.* FROM sys_visitante_ppl vp,`sys_visitante` v, sys_parentesco p WHERE p.PAR_COD=v.PAR_COD AND vp.`VIS_COD`=v.`VIS_COD` AND v.`VIS_ESTADO` ='A' AND  vp.PPL_COD= $codPpl;";
-    $val = $dbmysql->query($sql);
-    $retval .='<table id="visitantesPermitidos" class="table table-hover table-bordered">
-                    <thead>
+    $obtenerDia = $clGeneral->obtenerDia(); // Obtener el dia de la Semana en Español
+    $datosPPL = $clGeneral->obtenerInformacionPPL($codPpl); // Extrae los datos del PPL
+    $datoPPL = $datosPPL->fetch_object();
+    $pabellon = $datoPPL->PAB_COD; // Selecciona el codigo del Pabellon
+    $nombresPpl = $datoPPL->PPL_NOMBRE.' '.$datoPPL->PPL_APELLIDO;
+    $horarios = $clGeneral->obtenerHorario($pabellon, $obtenerDia, $hora); //Consulta los horarios del Pabellon en este dia y a esta Hora
+    if ($horarios != '0'){
+        $horario = $horarios->fetch_object();
+        
+        $tipoVisita = $horario->TPV_COD;
+        $horaInicio = $horario->HOR_HORA_ING;
+        $horaFin = $horario->HOR_HORA_SAL;
+
+        $sql = "SELECT vp.*,v.*, p.* FROM sys_visitante_ppl vp,`sys_visitante` v, sys_parentesco p WHERE p.PAR_COD=v.PAR_COD AND vp.`VIS_COD`=v.`VIS_COD` AND v.`VIS_ESTADO` ='A' AND p.TPV_COD=$tipoVisita AND  vp.PPL_COD= $codPpl;";
+        $val = $dbmysql->query($sql);
+        $retval .='<div class="alert alert-info no-margin fade in">
+                            <button class="close" data-dismiss="alert"> × </button><i class="fa-fw fa fa-info"></i>
+                            PPL: <strong>'.$nombresPpl.'</strong>,<br> Pabellon: ' . $datoPPL->PAB_DESCRIPCION . ', <br> Horario: '.$obtenerDia.', Desde: '.$horaInicio.' Hasta: '.$horaFin.' <br>
+                             <p style="color:red;"><strong>Tipo de Visita: </strong>'.$horario->TPV_DESCRIPCION.'</p>
+                    </div>
+                    <table id="visitantesPermitidos" class="table table-hover table-bordered">
+                      <thead>
                         <tr>
-                            <th>#</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
-                            <th>Parentezco</th>
+                            <th>Parentesco</th>
+                            <th>Tipo Visita</th>
                             <th>Acción</th>
                         </tr>
                     </thead>
                     <tbody>';
-    if ($val->num_rows > 0) {
-        while ($row = $val->fetch_object()) { 
-            
-            $cadenaParametros = $row->VIP_COD . ',\'' . $row->VIS_NOMBRE . ' ' . $row->VIS_APELLIDO . '\'';
-            $visAutorizado = consultaVisitanteAutorizado($row->VIP_COD);
-            $visCantidad = consultaCantidadAutorizados($row->VIP_COD);
-            if ($visAutorizado == '1') {
-                $autorizado = '<span class="label label-primary">Ingreso Autorizado: ' . $fecha . '</span>';
-            }elseif ($visCantidad < 2) {
-                $autorizado = '<a class="btn btn-success" title="Permitir Acceso" href="javascript:permitirAccesoVisitante(' . $cadenaParametros . ')"><i class="fa fa-child"></i> Permitir Acceso</a>';
-            }else{
-                $autorizado = '<span class="label label-warning">Límite Máximo Autorizado</span>';
-            }
-            
-            $retval.='<tr>
-                                <td>' . $row->VIP_COD . '</td>
+        if ($val->num_rows > 0) {
+            while ($row = $val->fetch_object()) {
+                $cadenaParametros = $row->VIP_COD . ',\'' . $row->VIS_NOMBRE . ' ' . $row->VIS_APELLIDO . '\'';
+                $visAutorizado = consultaVisitanteAutorizado($row->VIP_COD);
+                $visCantidad = consultaCantidadAutorizados($row->VIP_COD);
+                if ($visAutorizado == '1') {
+                    $autorizado = '<span class="label label-primary">Ingreso Autorizado: ' . $fecha . '</span>';
+                } elseif ($visCantidad < 2) {
+                    $autorizado = '<a class="btn btn-success" title="Permitir Acceso" href="javascript:permitirAccesoVisitante(' . $cadenaParametros . ')"><i class="fa fa-child"></i> Permitir Acceso</a>';
+                } else {
+                    $autorizado = '<span class="label label-warning">Límite Máximo Autorizado</span>';
+                }
+
+                $retval.='<tr>
                                 <td>' . $row->VIS_NOMBRE . '</td>
                                 <td>' . $row->VIS_APELLIDO . '</td>
                                 <td>' . $row->PAR_DESCRIPCION . '</td>
+                                <td>' . $horario->TPV_DESCRIPCION . '</td>
                                 <td>' . $autorizado . '</td>
                             </tr>';
+            }
+        }else{
+            $retval .='<tr><td colspan="5" style="text-align: center; color: sienna;">El PPL no tiene Visitantes del Tipo <strong>'.$horario->TPV_DESCRIPCION.'</strong></td></tr>';
         }
-    }
-    $retval .='</tbody>
+        $retval .='</tbody>
          </table>';
+    } else {
+        $retval .='<div style="text-align: center; color: sienna;"><p>El PPL: ' . $row->VIS_NOMBRE . ' ' . $row->VIS_APELLIDO . ' pertenece al Pabellon ' . $datoPPL->PAB_DESCRIPCION . ', el cual no tiene Horarios para este momento...!</p></div>';
+    }
     echo $retval;
 }
 
