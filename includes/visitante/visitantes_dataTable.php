@@ -2,179 +2,141 @@
 
 session_start();
 
-	/*
+/*
 
-	 * Script:    DataTables server-side script for PHP and MySQL
+ * Script:    DataTables server-side script for PHP and MySQL
 
-	 * Copyright: 2014 - Willian Espinosa - Edicion Especial
+ * Copyright: 2014 - Willian Espinosa - Edicion Especial
 
-	 */	
+ */
 
 
 
 include_once '../conexiones/db_local.inc.php';
 
-    $dbmysql = new database();
+$dbmysql = new database();
 
-    date_default_timezone_set('America/Bogota');
+date_default_timezone_set('America/Bogota');
 
-include_once( '../conexiones/config_local.ini.php' ); 
+include_once( '../conexiones/config_local.ini.php' );
 
 global $dbmysql;
-	
 
-        $aColumns = array('VIS_COD','VIS_NOMBRE','VIS_APELLIDO','VIS_CEDULA','VIS_DIRECCION','VIS_TELEFONO','VIS_ESTADO');
 
-	/* Campo de Index */
+$aColumns = array('VIS_COD', 'VIS_NOMBRE', 'VIS_APELLIDO', 'VIS_CEDULA', 'VIS_DIRECCION', 'VIS_TELEFONO', 'VIS_ESTADO');
 
-	$sIndexColumn = "VIS_COD";
+/* Campo de Index */
 
-	/* Tabla a Usar */
+$sIndexColumn = "VIS_COD";
 
-	$sTable =  "sys_visitante";
+/* Tabla a Usar */
 
-        /* Conexion a la Base */
+$sTable = "sys_visitante";
 
-	$gaSql['link'] =  mysql_pconnect( HOST_NAME, USER_NAME, USER_PASSWD  ) or
+/* Conexion a la Base */
 
-		die( 'Could not open connection to server' );
+$gaSql['link'] = mysql_pconnect(HOST_NAME, USER_NAME, USER_PASSWD) or
 
-            mysql_select_db( DB_NAME, $gaSql['link'] ) or 
+        die('Could not open connection to server');
 
-		die( 'Could not select database'. DB_NAME );
+mysql_select_db(DB_NAME, $gaSql['link']) or
 
-	$sLimit = "";
+        die('Could not select database' . DB_NAME);
 
-	if ( isset( $_GET['iDisplayStart'] ) && $_GET['iDisplayLength'] != '-1' )
+$sLimit = "";
 
-	{
+if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
 
-		$sLimit = "LIMIT ".mysql_real_escape_string( $_GET['iDisplayStart'] ).", ".
+    $sLimit = "LIMIT " . mysql_real_escape_string($_GET['iDisplayStart']) . ", " .
+            mysql_real_escape_string($_GET['iDisplayLength']);
+}
 
-			mysql_real_escape_string( $_GET['iDisplayLength'] );
+/*
 
-	}
+ * Ordenamiento
 
-	/*
+ */
 
-	 * Ordenamiento
+if (isset($_GET['iSortCol_0'])) {
 
-	 */
+    $sOrder = "ORDER BY  ";
 
-	if ( isset( $_GET['iSortCol_0'] ) )
 
-	{
 
-		$sOrder = "ORDER BY  ";
+    for ($i = 0; $i < intval($_GET['iSortingCols']); $i++) {
 
-                
+        if ($_GET['bSortable_' . intval($_GET['iSortCol_' . $i])] == "true") {
 
-		for ( $i=0 ; $i<intval( $_GET['iSortingCols'] ) ; $i++ )
+            $sOrder .= $aColumns[intval($_GET['iSortCol_' . $i])] . "
 
-		{
-
-			if ( $_GET[ 'bSortable_'.intval($_GET['iSortCol_'.$i]) ] == "true" )
-
-			{
-
-				$sOrder .= $aColumns[ intval( $_GET['iSortCol_'.$i] ) ]."
-
-				 	".mysql_real_escape_string( $_GET['sSortDir_'.$i] ) .", ";
-
-                                
-
-			}
-
-		}
+				 	" . mysql_real_escape_string($_GET['sSortDir_' . $i]) . ", ";
+        }
+    }
 
 //		
 
-		$sOrder = substr_replace( $sOrder, "", -2 );
+    $sOrder = substr_replace($sOrder, "", -2);
 
-		if ( $sOrder == "ORDER BY USU_COD" )
+    if ($sOrder == "ORDER BY USU_COD") {
 
-		{
+        $sOrder = "ORDER BY USU_COD DESC";
+    }
+}
 
-			$sOrder = "ORDER BY USU_COD DESC";
 
-		}
 
-	}
+/*
 
-        
+ * Filtering
 
-	/* 
+ */
 
-	 * Filtering
+$sWhere = "";
 
-	 */
+if ($_GET['sSearch'] != "") {
 
-	$sWhere = "";
+    $sWhere = "WHERE (";
 
-	if ( $_GET['sSearch'] != "" )
+    for ($i = 0; $i < count($aColumns); $i++) {
 
-	{
+        $sWhere .= $aColumns[$i] . " LIKE '%" . mysql_real_escape_string($_GET['sSearch']) . "%' OR ";
+    }
 
-		$sWhere = "WHERE (";
-
-		for ( $i=0 ; $i<count($aColumns) ; $i++ )
-
-		{
-
-			$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string( $_GET['sSearch'] )."%' OR ";
-
-		}
-
-		$sWhere = substr_replace( $sWhere, "", -3 );
+    $sWhere = substr_replace($sWhere, "", -3);
 
 
 //		$sWhere .= ' and VIS_ESTADO = "A" )';
+}
 
-	}
-
-	/* Individual column filtering */
+/* Individual column filtering */
 
 //	for ( $i=0 ; $i<count($aColumns) ; $i++ )
-
 //	{
-
 //		if ( $_GET['bSearchable_'.$i] == "true" && $_GET['sSearch_'.$i] != '' )
-
 //		{
-
 //			if ( $sWhere == "" )
-
 //			{
-
 //				$sWhere = "WHERE ";
-
 //			}
-
 //			else
-
 //			{
-
 //				$sWhere .= " AND ";
-
 //			}
-
 //			$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string($_GET['sSearch_'.$i])."%' ";
-
 //		}
-
 //	}
 
-	/*
+/*
 
-	 * SQL queries
+ * SQL queries
 
-	 * Get data to display
+ * Get data to display
 
-	 */
-        $sWhere = ($sWhere=='')?' WHERE VIS_ESTADO = "A"':' AND VIS_ESTADO = "A"';
-	$sQuery = "
+ */
+$sWhere = ($sWhere == '') ? ' WHERE VIS_ESTADO = "A"' : ' AND VIS_ESTADO = "A"';
+$sQuery = "
 
-		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."
+		SELECT SQL_CALC_FOUND_ROWS " . str_replace(" , ", " ", implode(",", $aColumns)) . "
 
 		FROM   $sTable
 
@@ -185,91 +147,71 @@ global $dbmysql;
 		$sLimit";
 
 
-	$rResult = mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
+$rResult = mysql_query($sQuery, $gaSql['link']) or die(mysql_error());
 
 //	echo $sQuery;
 
-	/* Data set length after filtering */
+/* Data set length after filtering */
 
-	$sQuery = "SELECT FOUND_ROWS()";
+$sQuery = "SELECT FOUND_ROWS()";
 
 
-	$rResultFilterTotal = mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
+$rResultFilterTotal = mysql_query($sQuery, $gaSql['link']) or die(mysql_error());
 
-	$aResultFilterTotal = mysql_fetch_array($rResultFilterTotal);
+$aResultFilterTotal = mysql_fetch_array($rResultFilterTotal);
 
-	$iFilteredTotal = $aResultFilterTotal[0];
+$iFilteredTotal = $aResultFilterTotal[0];
 
-        /***********************************/
+/* * ******************************** */
 
-        
 
-            $sQuery = "SELECT COUNT(".$sIndexColumn.")
+
+$sQuery = "SELECT COUNT(" . $sIndexColumn . ")
 
                         FROM   $sTable";
 
-            $rResultTotal = mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
+$rResultTotal = mysql_query($sQuery, $gaSql['link']) or die(mysql_error());
 
-            $aResultTotal = mysql_fetch_array($rResultTotal);
+$aResultTotal = mysql_fetch_array($rResultTotal);
 
-            $iTotal = $aResultTotal[0];
+$iTotal = $aResultTotal[0];
 
-            $output = array(
+$output = array(
+    "sEcho" => intval($_GET['sEcho']),
+    "iTotalRecords" => $iTotal,
+    "iTotalDisplayRecords" => $iFilteredTotal,
+    "aaData" => array());
 
-		"sEcho" => intval($_GET['sEcho']),
+/*
 
-		"iTotalRecords" => $iTotal,
+ * Output
 
-		"iTotalDisplayRecords" => $iFilteredTotal,
+ */
 
-		"aaData" => array());
-
-	/*
-
-	 * Output
-
-	 */
-
-        $i=0;
+$i = 0;
 
 
-        
-
-	while ( $aRow = mysql_fetch_array( $rResult ) ){
-
-                /* General output */
-
-                    $nombre=$aRow[ 'VIS_NOMBRE' ].' '.$aRow[ 'VIS_APELLIDO' ];
-
-                    $cadenaParametros=utf8_encode($aRow[ 'VIS_COD' ].','."'$nombre'");
-
-                    $output['aaData'][] =array( ''.utf8_encode($aRow[ 'VIS_COD' ]).'',
-
-                                                ''.utf8_encode($nombre).'',
 
 
-                                                ''.utf8_encode($aRow[ 'VIS_CEDULA' ]).'',
+while ($aRow = mysql_fetch_array($rResult)) {
 
-                                                ''.utf8_encode($aRow[ 'VIS_HUELLA' ]).'',
+    /* General output */
 
-                                                ''.utf8_encode($aRow[ 'VIS_TELEFONO' ]).'',
-
-                                                '<a class="btn btn-success btn-xs" title="Editar Visitante" href="javascript:editarVisitante('.$aRow[ 'VIS_COD' ].')">
-
-                                                    <i class="fa fa-pencil"></i>
-
-                                                </a>
-
-                                                <a class="btn btn-danger btn-xs '.$aRow[ 'VIS_COD' ].' eliminaParticipante" title="Eliminar Visitante" href="javascript:eliminarVisitante('.$aRow[ 'VIS_COD' ].')">
-
-                                                    <i class="fa fa-trash-o"></i>
-
-                                                </a>');
-
-        }
-
-//        print_r($output);
-
-	echo json_encode( $output );
-
+    $nombre = $aRow['VIS_NOMBRE'] . ' ' . $aRow['VIS_APELLIDO'];
+    $cadenaParametros = utf8_encode($aRow['VIS_COD'] . ',' . "'$nombre'");
+    //'VIS_COD', 'VIS_NOMBRE', 'VIS_APELLIDO', 'VIS_CEDULA', 'VIS_DIRECCION', 'VIS_TELEFONO', 'VIS_ESTADO'
+    $estado=($aRow['VIS_ESTADO']=='A')?'<span class="label label-primary">Activo</span>':'<span class="label label-danger">Sancionado</span>';
+    $output['aaData'][] = array('' . utf8_encode($aRow['VIS_COD']) . '',
+        '' . utf8_encode($nombre) . '',
+        '' . utf8_encode($aRow['VIS_CEDULA']) . '',
+        '' . utf8_encode($aRow['VIS_TELEFONO']) . '',
+        ''.$estado.'',
+        '<a class="btn btn-success btn-xs" title="Editar Visitante" href="javascript:editarVisitante(' . $aRow['VIS_COD'] . ')">
+            <i class="fa fa-pencil"></i>
+        </a>
+        <a class="btn btn-danger btn-xs ' . $aRow['VIS_COD'] . ' eliminaParticipante" title="Eliminar Visitante" href="javascript:eliminarVisitante(' . $aRow['VIS_COD'] . ')">
+            <i class="fa fa-trash-o"></i>
+        </a>');
+}
+echo json_encode($output);
 ?>

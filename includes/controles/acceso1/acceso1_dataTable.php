@@ -10,11 +10,11 @@ include_once '../../conexiones/db_local.inc.php';
     date_default_timezone_set('America/Bogota');
 include_once( '../../conexiones/config_local.ini.php' );
 global $dbmysql;
-        $aColumns = array('PPL_COD','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_ESTADO');
+        $aColumns = array('PPL_COD','PPL_COD','PAB_COD','PAB_DESCRIPCION','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_ESTADO');
 	/* Campo de Index */
 	$sIndexColumn = "PPL_COD";
 	/* Tabla a Usar */
-	$sTable =  "sys_ppl";
+	$sTable =  "sys_vw_control1";
         /* Conexion a la Base */
 	$gaSql['link'] =  mysql_pconnect( HOST_NAME, USER_NAME, USER_PASSWD  ) or
 		die( 'Could not open connection to server' );
@@ -113,15 +113,18 @@ global $dbmysql;
 	 * Output
 	 */
         $i=0;
-        
+//        'PPL_COD','PPL_COD','PAB_COD','PAB_DESCRIPCION','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_ESTADO'
 	while ( $aRow = mysql_fetch_array( $rResult ) ){
                 /* General output */
                     $nombre=$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ];
                     $cadenaParametros=utf8_encode($aRow[ 'PPL_COD' ].','."'$nombre'");
+                    $estado=($aRow['PPL_ESTADO']=='A')?'<span class="label label-primary">Privado Livertad</span>':'<span class="label label-danger">Inactivo</span>';
                     $output['aaData'][] =array( ''.utf8_encode($aRow[ 'PPL_COD' ]).'',
+                                                ''.$aRow[ 'PAB_DESCRIPCION' ].'',
                                                 ''.utf8_encode($nombre).'',
                                                 '<img src="'.'./'.PATH_PPL.$aRow[ 'PPL_IMG' ].'" class="img-thumbnail" style="width: 60px">',
                                                 ''.utf8_encode($aRow[ 'PPL_CEDULA' ]).'',
+                                                ''.$estado.'',
                                                 '<a class="btn btn-info btn-lg" title="Visitantes Asignados" href="javascript:revisarVisitantesAsignados('.$aRow[ 'PPL_COD' ].')">
                                                     <i class="fa fa-child"></i> Visitantes
                                                 </a>');

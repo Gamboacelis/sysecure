@@ -5,7 +5,7 @@ date_default_timezone_set('America/Bogota');
 
 function frm_revisarAcceso3() {
     $retval = '';
-    $retval = '<article class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+    $retval = '<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="botonesSuperiores">
                 </div>
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">

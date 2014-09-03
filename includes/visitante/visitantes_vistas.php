@@ -1,12 +1,10 @@
 <?php
 
-
-
 session_start();
 
 date_default_timezone_set('America/Bogota');
 
-include_once PATH_PROD.SISTEM_NAME.'/includes/conexiones/db_local.inc.php';
+include_once PATH_PROD . SISTEM_NAME . '/includes/conexiones/db_local.inc.php';
 
 $dbmysql = new database();
 
@@ -19,10 +17,7 @@ switch ($modulos) {
         revisarUsuarios();
 
         break;
-
 }
-
-
 
 function revisarVisitantes() {
 
@@ -74,9 +69,9 @@ function revisarVisitantes() {
 
                                         <th><i class="fa fa-fw fa-user txt-color-blue hidden-md hidden-sm hidden-xs"></i> Cédula</th>
 
-                                        <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Huella</th>
+                                        <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Teléfono</th>
 
-                                        <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Teléfono</th>
+                                        <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Estado</th>
 
                                         <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Acción</th>                                        
 
@@ -101,10 +96,7 @@ function revisarVisitantes() {
     $retval .=frmCentros();
 
     return $retval;
-
 }
-
-
 
 function frmVisitante() {
 
@@ -281,7 +273,4 @@ function frmVisitante() {
                 </div>';
 
     return $retval;
-
 }
-
-

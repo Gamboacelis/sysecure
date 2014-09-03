@@ -8,7 +8,7 @@ session_start();
 include_once '../../conexiones/db_local.inc.php';
     $dbmysql = new database();
     date_default_timezone_set('America/Bogota');
-include_once( '../conexiones/config_local.ini.php' );
+include_once( '../../conexiones/config_local.ini.php' );
 
 
 
@@ -131,11 +131,11 @@ global $dbmysql;
                     	                	''.utf8_encode($nombre_visitante).'',
                                                 ''.utf8_encode($aRow[ 'VIS_CEDULA' ]).'',
                                                 ''.utf8_encode($nombre_ppl).'',
-                                                '<img src=".//uploads/imagenes/ppl/'.$aRow['PPL_IMG'].'" style="width: 60px">',
-                                                '<a class="btn btn-info btn-lg" title="Actualizar" href="javascript:actualizarInformacion('.$aRow[ 'VIS_COD' ].')">
-                                                    <i class="fa fa-child"></i>Actualizar inf. visitante</a>
-												  <a class="btn btn-info btn-lg" style="background-color: #FA5858;" title="Permitir acceso" href="javascript:permitirAcceso(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'CON_COD' ].')">
-                                                    <i class="fa fa-child"></i>Permitir acceso</a>
+                                                '<img src=".//uploads/imagenes/ppl/'.$aRow['PPL_IMG'].'" class="img-thumbnail" style="width: 60px">',
+                                                '<a class="btn btn-info" title="Actualizar" href="javascript:actualizarInformacion('.$aRow[ 'VIS_COD' ].')">
+                                                    <i class="fa fa-pencil"></i> Editar Visitante</a>
+							<a class="btn btn-success" title="Permitir acceso" href="javascript:permitirAcceso(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'CON_COD' ].')">
+                                                    <i class="fa fa-check"></i>Permitir Acceso</a>
                                                     ');
         }
 //        print_r($output);

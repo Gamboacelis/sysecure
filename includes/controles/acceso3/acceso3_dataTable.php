@@ -8,7 +8,7 @@ session_start();
 include_once '../../conexiones/db_local.inc.php';
     $dbmysql = new database();
     date_default_timezone_set('America/Bogota');
-include_once( '../conexiones/config_local.ini.php' );
+include_once( '../../conexiones/config_local.ini.php' );
 
 global $dbmysql;
         $aColumns = array('CON_COD','VIP_COD','CON_FECHA','CON_ESTADO','GAR_COD','VIS_COD','VIS_NOMBRE','VIS_APELLIDO','PAR_COD','VIS_CEDULA','VIS_DIRECCION','VIS_TELEFONO','VIS_CORREO','VIS_IMAGEN','VIS_ESTADO','PPL_COD','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_ESTADO');
@@ -127,9 +127,9 @@ global $dbmysql;
                                                 ''.utf8_encode($aRow[ 'VIS_CEDULA' ]).'',
                                                 ''.utf8_encode($nombre_ppl).'',
                                                 '<img src=".//uploads/imagenes/ppl/'.$aRow['PPL_IMG'].'" style="width: 60px" class="img-thumbnail">',
-                                                '<a class="btn btn-danger btn-lg" title="Actualizar" href="javascript:negarAcceso3('.$aRow[ 'VIP_COD' ].','.$aRow[ 'VIS_COD' ].')">
+                                                '<a class="btn btn-danger" title="Actualizar" href="javascript:negarAcceso3('.$aRow[ 'VIP_COD' ].','.$aRow[ 'VIS_COD' ].')">
                                                     <i class="fa fa-ban"></i> Negar Acceso</a>
-						<a class="btn btn-success btn-lg" title="Permitir acceso" href="javascript:permitirAcceso3(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'CON_COD' ].')">
+						<a class="btn btn-success" title="Permitir acceso" href="javascript:permitirAcceso3(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'CON_COD' ].')">
                                                     <i class="fa fa-check"></i> Permitir Acceso</a>
                                                     ');
         }
