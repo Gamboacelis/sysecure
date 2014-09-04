@@ -26,9 +26,7 @@ function permitirAcceso3(nombre, cod,elemento){
                 type: 'post',
                 data: {codigo: cod},
                 success: function(respuesta){
-
                     if (respuesta === '1') {
-
                         $.smallBox({
                             title: nombre,
                             content: "<i class='fa fa-clock-o'></i> <i>Acceso del visitante Permitido...</i>",
