@@ -35,7 +35,7 @@ function obtenerVisitantesAsignados() {
         $horaInicio = $horario->HOR_HORA_ING;
         $horaFin = $horario->HOR_HORA_SAL;
 
-        $sql = "SELECT vp.*,v.*, p.* FROM sys_visitante_ppl vp,`sys_visitante` v, sys_parentesco p WHERE p.PAR_COD=v.PAR_COD AND vp.`VIS_COD`=v.`VIS_COD` AND v.`VIS_ESTADO` ='A' AND p.TPV_COD=$tipoVisita AND  vp.PPL_COD= $codPpl;";
+        $sql = "SELECT vp.*,v.*, p.* FROM sys_visitante_ppl vp,`sys_visitante` v, sys_parentesco p WHERE p.PAR_COD=v.PAR_COD AND vp.`VIS_COD`=v.`VIS_COD` AND p.TPV_COD=$tipoVisita AND  vp.PPL_COD= $codPpl;";
         $val = $dbmysql->query($sql);
         $retval .='<div class="alert alert-info no-margin fade in">
                             <button class="close" data-dismiss="alert"> × </button><i class="fa-fw fa fa-info"></i>
@@ -58,20 +58,21 @@ function obtenerVisitantesAsignados() {
                 $cadenaParametros = $row->VIP_COD . ',\'' . $row->VIS_NOMBRE . ' ' . $row->VIS_APELLIDO . '\'';
                 $visAutorizado = consultaVisitanteAutorizado($row->VIP_COD);
                 $visCantidad = consultaCantidadAutorizados($row->VIP_COD);
-                if ($visAutorizado == '1') {
-                    $autorizado = '<span class="label label-primary">Ingreso Autorizado: ' . $fecha . '</span>';
-                } elseif ($visCantidad < 2) {
-                    $autorizado = '<a class="btn btn-success" title="Permitir Acceso" href="javascript:permitirAccesoVisitante(' . $cadenaParametros . ')"><i class="fa fa-child"></i> Permitir Acceso</a>';
-                } else {
-                    $autorizado = '<span class="label label-warning">Límite Máximo Autorizado</span>';
-                }
-
+                
+                    if ($visAutorizado == '1') {
+                        $autorizado = '<span class="label label-primary">Ingreso Autorizado: ' . $fecha . '</span>';
+                    } elseif ($visCantidad < 2) {
+                        $autorizado = '<a class="btn btn-success" title="Permitir Acceso" href="javascript:permitirAccesoVisitante(' . $cadenaParametros . ')"><i class="fa fa-child"></i> Permitir Acceso</a>';
+                    } else {
+                        $autorizado = '<span class="label label-warning">Límite Máximo Autorizado</span>';
+                    }
+                
                 $retval.='<tr>
                                 <td>' . $row->VIS_NOMBRE . '</td>
                                 <td>' . $row->VIS_APELLIDO . '</td>
                                 <td>' . $row->PAR_DESCRIPCION . '</td>
                                 <td>' . $horario->TPV_DESCRIPCION . '</td>
-                                <td>' . $autorizado . '</td>
+                                <td>' . $estado=($row->VIS_ESTADO =='A')?$autorizado:'<span class="label label-danger">Visitante Sancionado</span>'. '</td>
                             </tr>';
             }
         }else{
