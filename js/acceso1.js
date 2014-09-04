@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('#listaAcceso1').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "includes/controles/acceso1/acceso1_dataTable.php",
+        "sAjaxSource": "./includes/controles/acceso1/acceso1_dataTable.php",
         "oLanguage": {
             "sEmptyTable": "No hay datos disponibles en la tabla",
             "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
@@ -11,6 +11,9 @@ $(document).ready(function() {
             "sZeroRecords": "No hay registros que mostrar"
         }
     });
+    $('#listaAcceso1 tbody tr').click(function(){
+        alert();
+    });
 });
 
 function revisarVisitantesAsignados(codPpl){
@@ -19,7 +22,6 @@ function revisarVisitantesAsignados(codPpl){
             type: 'post',
             data: {codPpl: codPpl},
             success: function(respuesta) {
-                $('#visitantesPermitidos').dataTable();
                 $('#tablaVisitantes').html(respuesta);
                 $('#frmVisitasModal').modal('show');
             }

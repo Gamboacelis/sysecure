@@ -46,12 +46,14 @@ function actualizarDatosHorario() {
     global $dbmysql;
     $codigo = $_POST['IDhorario'];
     $dias= $_POST["dias"];
+    $tipoVisitas=$_POST["tipoVisitas"]; 
     $descripcion = $_POST["descripcion"];
     $horaIngreso = $_POST["horaIngreso"];
     $horaSalida = $_POST["horaSalida"];
     $estado = $_POST["estado"];
 
     $sql = "UPDATE `sys_horarios` SET 
+                TPV_COD             = '$tipoVisitas',
                 HOR_DESCRIPCION     = '$descripcion',
                 HOR_DIAS            = '$dias',
                 HOR_HORA_ING        = '$horaIngreso',
@@ -75,7 +77,7 @@ function guardaDatosHorario() {
     $pabellon = $_POST["IDpabellonFrm"];
     $tipoVisitas=$_POST["tipoVisitas"]; 
     $sql = "INSERT INTO `sys_horarios`(PAB_COD,TPV_COD,HOR_DESCRIPCION,HOR_DIAS,HOR_HORA_ING,HOR_HORA_SAL,HOR_ESTADO)VALUES
-            ('$pabellon',$tipoVisitas,'$descripcion','$dias','$horaIngreso','$horaSalida','A');";
+            ('$pabellon','$tipoVisitas','$descripcion','$dias','$horaIngreso','$horaSalida','A');";
     $val = $dbmysql->query($sql);
     if ($val) {echo 1;} else {echo 0;}
 }
