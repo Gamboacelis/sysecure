@@ -70,7 +70,7 @@ function guardarDatosSanciones() {
     $fecha = date('Y-m-d',strtotime($fecha_inicio) + (24*3600*$dias_sancion));
 
     $sql = "UPDATE `sys_visitante_sancion` SET 
-                VSA_FECHA_FIN    = '$fecha'
+                VSA_FECHA_FIN    = '$fecha', SAN_COD = $sancion
             WHERE VSA_COD=$IDsancion;";
     $val = $dbmysql->query($sql);
     if ($val) {echo 1;} else {echo 0;}    
