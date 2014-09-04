@@ -17,7 +17,7 @@ $(document).ready(function() {
 
 function editarSancion(visitante,sancion) {
 
-    var url = './includes/sanciones/sancion_model.php?opcion=enviarDatosSanciones';
+    var url = './includes/sanciones/sancion_model.php?opcion=enviarDatosTipoSanciones';
 
     $.ajax({
 
@@ -33,6 +33,8 @@ function editarSancion(visitante,sancion) {
 
                 $('#sancion').html(res);
 
+                tipo_sancion = $('#sancion').val();
+                editarSancionItem(tipo_sancion)
                 $('#frmAsignarSancion').modal('show');
 
 
@@ -40,16 +42,44 @@ function editarSancion(visitante,sancion) {
 
                 $('#IDvisitante').val(visitante);
                 $('#IDsancion').val(sancion);
+        }
+
+    });
+}
+
+function seleccionSancion()
+{
+    tipo_sancion = $('#sancion').val();
+
+    editarSancionItem(tipo_sancion);
+}
 
 
+function editarSancionItem(sancion) {
+
+    var url = './includes/sanciones/sancion_model.php?opcion=enviarDatosSanciones';
+
+    $.ajax({
+
+        url: url,
+
+        datetype: "json",
+
+        type: 'POST',
+
+         data: {tipo_sancion:sancion},
+
+        success: function(res) {
+
+
+
+                $('#sancionItem').html(res);
 
         }
 
     });
-
-
-
 }
+
 
 function guardarSancion(visitante) {
 

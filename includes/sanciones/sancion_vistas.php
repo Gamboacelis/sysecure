@@ -142,13 +142,22 @@ function editSancion() {
 
                                                                     <section class="col col-6">
 
-                                                                            <label class="input" id="select_sancion">
+                                                                            <label class="input" id="select_sancion">Tipo de sanci&oacute;n</label>
 
-                                                                                <select id="sancion" name="sancion"  class="form-control">
+                                                                                <select id="sancion" name="sancion" onchange="seleccionSancion()" class="form-control">
                                                                                 </select>
-                                                                            </label>
+                                                                            
 
                                                                     </section>
+                                                                    <section class="col col-6">
+
+                                                                            <label class="input" id="select_sancion">Sanci&oacute;n</label>
+
+                                                                                <select id="sancionItem"  name="sancionItem"  class="form-control">
+                                                                                </select>
+                                                                            
+
+                                                                    </section>                                                                    
 
                                                                 </div>
                                                             </fieldset>

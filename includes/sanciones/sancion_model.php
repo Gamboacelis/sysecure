@@ -24,18 +24,39 @@ switch ($funcion) {
 
         guardarDatosSanciones();
 
-        break;        
+        break;   
+    case 'enviarDatosTipoSanciones':
+
+        enviarDatosTipoSanciones();
+
+        break;               
 
 }
 
+function enviarDatosTipoSanciones() {
 
+    global $dbmysql;
+
+
+    $sql = "SELECT * FROM `sys_tipo_sancion` WHERE TPS_COD != 1";
+
+    $val = $dbmysql->query($sql);
+
+    $retval = '';
+    
+    while ($row = $val->fetch_object()) {
+            $retval.='<option value="' . $row->TPS_COD . '">' . $row->TPS_DESCRIPCION . '</option>';
+    }
+
+    echo $retval;
+}
 
 function enviarDatosSanciones() {
 
     global $dbmysql;
 
-
-    $sql = "SELECT * FROM `sys_sanciones` WHERE SAN_COD != 1";
+    $tipo_sancion = $_POST['tipo_sancion'];
+    $sql = "SELECT * FROM `sys_sanciones` WHERE SAN_COD != 1 AND TPS_COD = $tipo_sancion";
 
     $val = $dbmysql->query($sql);
 
@@ -46,7 +67,6 @@ function enviarDatosSanciones() {
     }
 
     echo $retval;
-
 }
 
 function guardarDatosSanciones() {
