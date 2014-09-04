@@ -37,8 +37,9 @@ function bloquearAceeso3() {
     $sql1="INSERT INTO `sys_visitante_sancion` (
             `VIS_COD` ,
             `USU_COD` ,
-            `VSA_NOTA`
-            )VALUES ('$codVisitante', '$usuario', '$descripcionBloqueo');";
+            `VSA_NOTA`,
+            `VSA_FECHA_INI`
+            )VALUES ('$codVisitante', '$usuario', '$descripcionBloqueo'.'$fecha');";
     $val1 = $dbmysql->query($sql1);
     
     $sql2 = "INSERT INTO `sys_control` (`GAR_COD` ,`VIP_COD` ,`CON_FECHA` ,`CON_ESTADO`)VALUES ('3', '$codVisita','$fecha','S');";
