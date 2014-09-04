@@ -55,7 +55,7 @@ function obtenerVisitantesAsignados() {
                     <tbody>';
         if ($val->num_rows > 0) {
             while ($row = $val->fetch_object()) {
-                $cadenaParametros = $row->VIP_COD . ',\'' . $row->VIS_NOMBRE . ' ' . $row->VIS_APELLIDO . '\'';
+                $cadenaParametros = $row->VIP_COD . ',\'' . $row->VIS_NOMBRE . ' ' . $row->VIS_APELLIDO . '\''.','.$horario->HOR_COD;
                 $visAutorizado = consultaVisitanteAutorizado($row->VIP_COD);
                 $visCantidad = consultaCantidadAutorizados($row->VIP_COD);
                 
@@ -115,10 +115,11 @@ function permitirAccesoVisitante() {
     global $dbmysql;
     $fecha = date('Y-m-d');
     $codVisita = $_POST['codVisita'];
+    $horario = $_POST['horario'];
     $sql = "SELECT * FROM `sys_control` WHERE `GAR_COD`=1 AND `VIP_COD` = '$codVisita' AND `CON_FECHA` ='$fecha' AND CON_ESTADO='A';";
     $val = $dbmysql->query($sql);
     if ($val->num_rows == 0) {
-        $sql2 = "INSERT INTO `sys_control` (`GAR_COD` ,`VIP_COD` ,`CON_FECHA` ,`CON_ESTADO`)VALUES ('1', '$codVisita','$fecha','A');";
+        $sql2 = "INSERT INTO `sys_control` (`GAR_COD` ,`VIP_COD` ,`HOR_COD`,`CON_FECHA` ,`CON_ESTADO`)VALUES ('1', '$codVisita','$horario','$fecha','A');";
         $val2 = $dbmysql->query($sql2);
         if ($val2) {
             echo 1;

@@ -18,34 +18,43 @@ switch ($funcion) {
 }
 
 function permitirAcceso3() {
-    global $dbmysql;
-    $fecha = date('Y-m-d');
-    $codVisita = $_POST['codigo'];
-    $sql2 = "INSERT INTO `sys_control` (`GAR_COD` ,`VIP_COD` ,`CON_FECHA` ,`CON_ESTADO`)VALUES ('3', '$codVisita','$fecha','A');";
-//    $val2 = $dbmysql->query($sql2);
-    $poscedula=obtenerPosicioncedula();
-    
-//    if ($val2) {echo 1;} else {echo 0;}
+    global $dbmysql,$clGeneral;
+    $fecha = date('Y-m-d'); 
+    $codVisita = $_POST['vipcontrol'];
+    $codPpl=$_POST['pplcod'];
+    $codControl=$_POST['codControl'];
+    $horario=$_POST['horario'];
+    $horaIng=date('H:i');
+    $sql3 = "UPDATE `sys_control` SET `CON_ESTADO` = 'S' WHERE `CON_COD` = ".$codControl;
+    $val3 = $dbmysql->query($sql3);
+    $horaSal=$clGeneral->obtenerHorarioxCod($horario)->fetch_object();
+    $sql1 = "INSERT INTO `sys_control` (`GAR_COD` ,`VIP_COD` ,`HOR_COD`,`CON_FECHA` ,`CON_ESTADO`)VALUES ('3', '$codVisita','$horario','$fecha','A');";
+    $val1 = $dbmysql->query($sql1);
+    //CREA REGISTRO VISITA
+    $poscedula= explode('/',obtenerPosicioncedula());
+    $sql2 = "INSERT INTO `sys_visitas` (`PPL_COD`,`VIP_COD` ,`HOR_COD`,`VISG_FECHA`,`VISG_HORA_INGRESO`,`VISG_HORA_SALIDA`,`VISG_POSCHAR`,`VISG_POSNUM`,`VISG_ESTADO`)
+                                VALUES ('$codPpl', '$codVisita','$horario','$fecha','$horaIng','$horaSal->HOR_HORA_SAL','$poscedula[0]','$poscedula[1]','A');";
+    $val2 = $dbmysql->query($sql2);
+    if ($val1 and $val2 and $val3) {echo 1;} else {echo 0;}
 }
 
 function obtenerPosicioncedula(){
     global $dbmysql,$clGeneral;
     $fecha = date('Y-m-d');
-    $sql2 = "SELECT MAX(`VISG_POSCHAR`) AS MAXLITERAL,MAX(`VISG_POSNUM`) AS MAXSECUENCIAL FROM `sys_visitas` WHERE `VISG_FECHA` ='$fecha' AND `VISG_ESTADO` ='A';";
+    echo $sql2 = "SELECT MAX(`VISG_POSCHAR`) AS MAXLITERAL,MAX(`VISG_POSNUM`) AS MAXSECUENCIAL FROM `sys_visitas` WHERE `VISG_FECHA` ='$fecha' AND `VISG_ESTADO` ='A';";
     $val2 = $dbmysql->query($sql2);
     $row = $val2->fetch_object();
-    $maxLiteral=$row->MAXLITERAL;
-    $maxSecuencial=$row->MAXSECUENCIAL;
-    echo $valParametro=$clGeneral->obtenerValorParametro(3);
+    echo $maxLiteral=($val2->num_rows>0)?$row->MAXLITERAL:'A';
+    echo $maxSecuencial=($val2->num_rows>0)?$row->MAXSECUENCIAL:1;
+    $valParametro=$clGeneral->obtenerValorParametro(3);
     if($maxSecuencial==$valParametro){
         $maxSecuencial=1;
         $maxLiteral=($maxLiteral=='Z')?$maxLiteral='A':++$maxLiteral;
     }else{
         $maxSecuencial=$maxSecuencial+1;
-        ++$maxLiteral;
     }
-    exit;
-    return $maxLiteral.$maxSecuencial;
+    return $maxLiteral.'/'.$maxSecuencial;
+        exit();
 }
 
 function bloquearAceeso3() {

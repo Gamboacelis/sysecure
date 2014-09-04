@@ -14,7 +14,7 @@ $(document).ready(function() {
     });
 });
 
-function permitirAcceso3(nombre, cod,elemento){
+function permitirAcceso3(nombre, vipcontrol,pplcod,codControl,horario){
     $.SmartMessageBox({
     title: "Confirmación!",
     content: "Esta seguro que desea permitir el aceeso del visitante "+nombre+ "?",
@@ -24,7 +24,7 @@ function permitirAcceso3(nombre, cod,elemento){
             $.ajax({
                 url: "./includes/controles/acceso3/acceso3_model.php?opcion=permitirAcceso3",
                 type: 'post',
-                data: {codigo: cod},
+                data: {vipcontrol: vipcontrol,pplcod:pplcod,codControl:codControl,horario:horario},
                 success: function(respuesta){
                     if (respuesta === '1') {
                         $.smallBox({
@@ -34,7 +34,7 @@ function permitirAcceso3(nombre, cod,elemento){
                             iconSmall: "fa fa-check fa-2x fadeInRight animated",
                             timeout: 4000
                         });
-                        location.reload();
+//                        location.reload();
                     }
                 },
                 error:function(){
