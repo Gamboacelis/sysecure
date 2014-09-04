@@ -57,11 +57,11 @@ function obtenerVisitantesAsignados() {
             while ($row = $val->fetch_object()) {
                 $cadenaParametros = $row->VIP_COD . ',\'' . $row->VIS_NOMBRE . ' ' . $row->VIS_APELLIDO . '\''.','.$horario->HOR_COD;
                 $visAutorizado = consultaVisitanteAutorizado($row->VIP_COD);
-                $visCantidad = consultaCantidadAutorizados($row->VIP_COD);
-                
+                $visCantidad = consultaCantidadAutorizados($codPpl);
+                $canParametro=$clGeneral->obtenerValorParametro(2); // Consulta cantidad de Visitas simultaneas de la tabla Parametros (VISITANTES)
                     if ($visAutorizado == '1') {
                         $autorizado = '<span class="label label-primary">Ingreso Autorizado: ' . $fecha . '</span>';
-                    } elseif ($visCantidad < 2) {
+                    } elseif ($visCantidad < $canParametro) {
                         $autorizado = '<a class="btn btn-success" title="Permitir Acceso" href="javascript:permitirAccesoVisitante(' . $cadenaParametros . ')"><i class="fa fa-child"></i> Permitir Acceso</a>';
                     } else {
                         $autorizado = '<span class="label label-warning">Límite Máximo Autorizado</span>';
@@ -89,7 +89,7 @@ function obtenerVisitantesAsignados() {
 function consultaVisitanteAutorizado($codVisita) {
     global $dbmysql;
     $fecha = date('Y-m-d');
-    $sql = "SELECT * FROM `sys_control` WHERE `GAR_COD`=1 AND `VIP_COD` = '$codVisita' AND `CON_FECHA` ='$fecha' AND CON_ESTADO='A';";
+    $sql = "SELECT * FROM `sys_control` WHERE `GAR_COD`=1 AND `VIP_COD` = '$codVisita' AND `CON_FECHA` ='$fecha';";
     $val = $dbmysql->query($sql);
     if ($val->num_rows > 0) {
         return 1;
@@ -98,10 +98,10 @@ function consultaVisitanteAutorizado($codVisita) {
     }
 }
 
-function consultaCantidadAutorizados($codVisita) {
+function consultaCantidadAutorizados($codPpl) {
     global $dbmysql;
     $fecha = date('Y-m-d');
-    $sql = "SELECT count(*) AS Cantidad FROM `sys_control` WHERE `GAR_COD`=1 AND `CON_FECHA` ='$fecha' AND CON_ESTADO='A';";
+    $sql = "SELECT count(*) AS Cantidad FROM `sys_control` c,sys_visitante_ppl vp WHERE vp.`VIP_COD`=c.`VIP_COD` AND `GAR_COD`=1 AND `CON_FECHA` ='$fecha' AND PPL_COD='$codPpl';";
     $val = $dbmysql->query($sql);
     if ($val->num_rows > 0) {
         $row = $val->fetch_object();
