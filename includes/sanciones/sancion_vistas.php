@@ -62,6 +62,8 @@ function revisarSanciones() {
                                         <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Sanción</th>
 
                                         <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Estado</th>
+                                        
+                                        <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Observaci&oacute;n</th>
 
                                         <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Fecha Inicio</th>
 
@@ -153,13 +155,26 @@ function editSancion() {
 
                                                                             <label class="input" id="select_sancion">Sanci&oacute;n</label>
 
-                                                                                <select id="sancionItem"  name="sancionItem"  class="form-control">
+                                                                                <select id="sancionItem"  name="sancionItem" onchange="seleccionTiempo()"  class="form-control">
                                                                                 </select>
                                                                             
 
                                                                     </section>                                                                    
 
                                                                 </div>
+                                                                <div class="row">
+
+                                                                    <section class="col col-6">
+
+                                                                            <label class="input" id="tiempo_sancion">Dias de  sanci&oacute;n: <small></small></label>
+
+                                                                            
+                                                                            
+    
+                                                                   </section>
+                                                         
+
+                                                                </div>                                                                
                                                             </fieldset>
 
                                                             <footer>
