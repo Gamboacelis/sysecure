@@ -36,10 +36,11 @@ function bloquearAceeso3() {
     $usuario=$_SESSION["user_id"];
     $sql1="INSERT INTO `sys_visitante_sancion` (
             `VIS_COD` ,
+            `SAN_COD` ,
             `USU_COD` ,
             `VSA_NOTA`,
             `VSA_FECHA_INI`
-            )VALUES ('$codVisitante', '$usuario', '$descripcionBloqueo'.'$fecha');";
+            )VALUES ('$codVisitante', 1,'$usuario', '$descripcionBloqueo'.'$fecha');";
     $val1 = $dbmysql->query($sql1);
     
     $sql2 = "INSERT INTO `sys_control` (`GAR_COD` ,`VIP_COD` ,`CON_FECHA` ,`CON_ESTADO`)VALUES ('3', '$codVisita','$fecha','S');";
