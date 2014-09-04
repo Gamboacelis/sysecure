@@ -48,6 +48,7 @@ if ($_SESSION["autenticado"] == 'SI') {
 
                     $contenido = revisarVisitantes();
                     break;
+                    
                 
             }
             break;
@@ -64,7 +65,7 @@ if ($_SESSION["autenticado"] == 'SI') {
                     include_once("./includes/controles/acceso2/acceso2_vistas.php");
                     $titulo='Revisión de Accesos Segundo Nivel';
                     $activarMenu42='class="active"';
-                    $contenido = frm_revisarAcceso2();
+                    $contenido = frm_revisarAcceso2(); 
                     break;
                 case 'acceso3':
                     include_once("./includes/controles/acceso3/acceso3_vistas.php");
@@ -78,6 +79,15 @@ if ($_SESSION["autenticado"] == 'SI') {
                     $activarMenu44='class="active"';
                     $contenido = frm_asignacionPabellones();
                     break;
+                case 'sanciones':
+                    include_once("./includes/sanciones/sancion_vistas.php");
+
+                    $titulo='Revisión de Visitantes sancionados';
+
+                    $activarMenu45='class="active"';
+
+                    $contenido = revisarSanciones();
+                    break;    
             }
             break;
         default:
@@ -257,6 +267,8 @@ if ($_SESSION["autenticado"] == 'SI') {
                                 <li <?php echo $activarMenu42 ?>><a href="?modulo=controles&op=acceso2">Acceso 2</a></li>
                                 <li <?php echo $activarMenu43 ?>><a href="?modulo=controles&op=acceso3">Acceso 3</a></li>
                                 <li <?php echo $activarMenu44 ?>><a href="?modulo=controles&op=acceso4">Acceso 4</a></li>
+                                <li <?php echo $activarMenu44 ?>><a href="?modulo=controles&op=sanciones">Sanciones</a></li>
+
                             </ul>
                         </li>
 
@@ -494,6 +506,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/acceso1.js"></script>
             <script src="js/acceso2.js"></script>
             <script src="js/acceso3.js"></script>
+            <script src="js/sancionados.js"></script>
 
             <!-- PAGE RELATED PLUGIN(S) -->
             <script src="js/plantilla/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
