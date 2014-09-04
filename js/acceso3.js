@@ -34,7 +34,7 @@ function permitirAcceso3(nombre, vipcontrol,pplcod,codControl,horario){
                             iconSmall: "fa fa-check fa-2x fadeInRight animated",
                             timeout: 4000
                         });
-//                        location.reload();
+                        location.reload();
                     }
                 },
                 error:function(){

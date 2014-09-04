@@ -41,20 +41,26 @@ function permitirAcceso3() {
 function obtenerPosicioncedula(){
     global $dbmysql,$clGeneral;
     $fecha = date('Y-m-d');
-    echo $sql2 = "SELECT MAX(`VISG_POSCHAR`) AS MAXLITERAL,MAX(`VISG_POSNUM`) AS MAXSECUENCIAL FROM `sys_visitas` WHERE `VISG_FECHA` ='$fecha' AND `VISG_ESTADO` ='A';";
+    //Consulta Maximo del Literal
+    $sql2 = "SELECT MAX(`VISG_POSCHAR`) AS MAXLITERAL FROM `sys_visitas` WHERE `VISG_FECHA` ='$fecha' AND `VISG_ESTADO` ='A';";
     $val2 = $dbmysql->query($sql2);
     $row = $val2->fetch_object();
-    echo $maxLiteral=($val2->num_rows>0)?$row->MAXLITERAL:'A';
-    echo $maxSecuencial=($val2->num_rows>0)?$row->MAXSECUENCIAL:1;
-    $valParametro=$clGeneral->obtenerValorParametro(3);
+    $maxLiteral=($row->MAXLITERAL!== null)?$row->MAXLITERAL:'A';
+    //Consulta Maximo del Secuencial
+    $sql2 = "SELECT MAX(`VISG_POSCHAR`) AS MAXLITERAL,MAX(`VISG_POSNUM`) AS MAXSECUENCIAL FROM `sys_visitas` WHERE `VISG_FECHA` ='$fecha' AND VISG_POSCHAR = '$maxLiteral' AND `VISG_ESTADO` ='A';";
+    $val2 = $dbmysql->query($sql2);
+    $row = $val2->fetch_object();
+    $maxSecuencial=($row->MAXSECUENCIAL!== null)?$row->MAXSECUENCIAL:1;
+    ////******************************************/////
+    $valParametro=$clGeneral->obtenerValorParametro(3); //Obtiene el Valor del Parametro 3 (ACCESO 3)
     if($maxSecuencial==$valParametro){
         $maxSecuencial=1;
         $maxLiteral=($maxLiteral=='Z')?$maxLiteral='A':++$maxLiteral;
     }else{
-        $maxSecuencial=$maxSecuencial+1;
+        $maxSecuencial=($row->MAXSECUENCIAL == null)?$maxSecuencial:$maxSecuencial+1;
     }
     return $maxLiteral.'/'.$maxSecuencial;
-        exit();
+        
 }
 
 function bloquearAceeso3() {
