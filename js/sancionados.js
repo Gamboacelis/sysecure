@@ -55,6 +55,7 @@ function seleccionSancion()
 }
 
 
+
 function editarSancionItem(sancion) {
 
     var url = './includes/sanciones/sancion_model.php?opcion=enviarDatosSanciones';
@@ -72,8 +73,8 @@ function editarSancionItem(sancion) {
         success: function(res) {
 
 
-
                 $('#sancionItem').html(res);
+                tiempoSancion();
 
         }
 
@@ -81,7 +82,42 @@ function editarSancionItem(sancion) {
 }
 
 
-function guardarSancion(visitante) {
+function seleccionTiempo()
+{
+    sancion = $('#sancionItem').val();
+
+    tiempoSancion(sancion);
+}
+
+function tiempoSancion()
+{
+
+    sancion = $('#sancionItem').val();
+    var url = './includes/sanciones/sancion_model.php?opcion=enviarDatosTiempo';
+
+    $.ajax({
+
+        url: url,
+
+        datetype: "json",
+
+        type: 'POST',
+
+         data: {sancion:sancion},
+
+        success: function(res) {
+
+
+               $('#tiempo_sancion small').html(res);
+
+        }
+
+    });
+
+}
+
+
+function guardarSancion() {
 
 
  $.ajax({

@@ -23,7 +23,7 @@ include_once( '../conexiones/config_local.ini.php' );
 global $dbmysql; 
 
 
-$aColumns = array('VIS_COD', 'VIS_NOMBRE', 'VIS_APELLIDO', 'VIS_CEDULA', 'VIS_DIRECCION', 'VIS_TELEFONO', 'VIS_ESTADO','SAN_DESCRIPCION','VSA_FECHA_INI','VSA_FECHA_FIN','VSA_COD');
+$aColumns = array('VIS_COD', 'VIS_NOMBRE', 'VIS_APELLIDO', 'VIS_CEDULA', 'VIS_DIRECCION', 'VIS_TELEFONO', 'VIS_ESTADO','SAN_DESCRIPCION','VSA_FECHA_INI','VSA_FECHA_FIN','VSA_COD','VSA_NOTA');
 
 /* Campo de Index */
 
@@ -206,6 +206,7 @@ while ($aRow = mysql_fetch_array($rResult)) {
         '' . utf8_encode($aRow['VIS_CEDULA']) . '',
         '' . utf8_encode($aRow['SAN_DESCRIPCION']) . '',
         ''.$estado.'',
+        '' . utf8_encode($aRow['VSA_NOTA']) .'',
         '' . utf8_encode($aRow['VSA_FECHA_INI']) . '',
         '' . utf8_encode($aRow['VSA_FECHA_FIN']) . '',
         '<a class="btn btn-success btn-xs" title="Editar Visitante" href="javascript:editarSancion(' . $aRow['VIS_COD'] . ','.$aRow['VSA_COD'].')">

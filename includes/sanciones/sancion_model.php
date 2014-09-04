@@ -29,7 +29,13 @@ switch ($funcion) {
 
         enviarDatosTipoSanciones();
 
-        break;               
+        break;   
+
+    case 'enviarDatosTiempo':
+
+        enviarDatosTiempo();
+
+        break;                       
 
 }
 
@@ -69,11 +75,25 @@ function enviarDatosSanciones() {
     echo $retval;
 }
 
+function  enviarDatosTiempo(){
+    global $dbmysql;
+
+    $sancion = $_POST['sancion'];
+    $sql = "SELECT * FROM `sys_sanciones` WHERE  SAN_COD = $sancion";
+
+    $val = $dbmysql->query($sql);
+    $row = $val->fetch_object();
+
+    $retval = $row->SAN_TIEMPO.' '. $row->SAN_TIEMPO_DES;
+    
+    echo $retval;
+}
+
 function guardarDatosSanciones() {
 
     global $dbmysql;
 
-    $sancion = $_POST["sancion"];
+    $sancion = $_POST["sancionItem"];
     $IDvisitante = $_POST["IDvisitante"];
     $IDsancion = $_POST["IDsancion"]; 
 
