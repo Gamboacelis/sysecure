@@ -168,12 +168,13 @@ function frmHorarios(){
                                                                         
                                                                     </div>
                                                                     <section>
-                                                                        <div class="form-group">
-                                                                            <label>Tipo de Visitas</label>
-                                                                            <select  style="width:100%" class="select2" id="tipoVisitas" placeholder="Seleccione Tipo de Visita">
-                                                                                        '.comboTipoVisitas().'
-                                                                            </select>
-                                                                    </section>
+                                                                                <label>Tipo de Visitas</label>
+                                                                                <label class="select">
+                                                                                        <select id="tipoVisitas" placeholder="Seleccione Tipo de Visita" name="tipoVisitas">
+                                                                                                <option value="0" selected="" disabled="">-- Tipo de Visita --</option>
+                                                                                                '.comboTipoVisitas().'
+                                                                                        </select> <i></i> </label>
+                                                                        </section>
                                                                     <section>
                                                                         <label class="checkbox">
                                                                             <input id="estado" type="checkbox" name="estado" value="A">

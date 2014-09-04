@@ -122,13 +122,12 @@ global $dbmysql;
                     $output['aaData'][] =array( ''.utf8_encode($aRow[ 'PPL_COD' ]).'',
                                                 ''.$aRow[ 'PAB_DESCRIPCION' ].'',
                                                 ''.utf8_encode($nombre).'',
-                                                '<img src="'.'./'.PATH_PPL.$aRow[ 'PPL_IMG' ].'" class="img-thumbnail" style="width: 60px">',
+//                                                '<img src="'.'./'.PATH_PPL.$aRow[ 'PPL_IMG' ].'" class="img-thumbnail" style="width: 60px">',
                                                 ''.utf8_encode($aRow[ 'PPL_CEDULA' ]).'',
                                                 ''.$estado.'',
-                                                '<a class="btn btn-info btn-lg" title="Visitantes Asignados" href="javascript:revisarVisitantesAsignados('.$aRow[ 'PPL_COD' ].')">
+                                                '<a class="btn btn-info" title="Visitantes Asignados" href="javascript:revisarVisitantesAsignados('.$aRow[ 'PPL_COD' ].')">
                                                     <i class="fa fa-child"></i> Visitantes
                                                 </a>');
         }
-//        print_r($output);
 	echo json_encode( $output );
 ?>
