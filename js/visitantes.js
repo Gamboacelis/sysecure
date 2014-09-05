@@ -35,7 +35,7 @@ function editarVisitante(visitante) {
 
             limpiarFormulario();
 
-            carga_DatosIncialesUsuarios(json_obj);
+            carga_DatosIncialesUsuarios(json_obj,visitante);
 
             $('#frmVisitanteModal').modal('show');
 
@@ -54,7 +54,7 @@ function editarVisitante(visitante) {
 
 }
 
-function carga_DatosIncialesUsuarios(edt) {
+function carga_DatosIncialesUsuarios(edt,vis) {
 
     $("#nombre").val(edt.datosVisitante.VIS_NOMBRE);  
 
@@ -70,7 +70,7 @@ function carga_DatosIncialesUsuarios(edt) {
 
     $("#correo").val(edt.datosVisitante.VIS_CORREO);  
 
-    cargarParentesco();
+    cargarParentesco(vis);
 
 
 
@@ -239,11 +239,12 @@ function limpiarFormulario() {
 }
 
 
-function cargarParentesco()
+function cargarParentesco(visitante)
 {
     $.ajax({
         url: "./includes/visitante/visitantes_model.php?opcion=enviarDatosParentesco",
         type: 'post',
+        data: {visitante:visitante},
         success: function(respuesta) {
 
                 $('#parentesco').html(respuesta);
