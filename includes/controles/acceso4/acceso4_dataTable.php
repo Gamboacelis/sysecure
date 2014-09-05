@@ -11,9 +11,9 @@ include_once '../../conexiones/db_local.inc.php';
 include_once( '../../conexiones/config_local.ini.php' );
 
 global $dbmysql;
-        $aColumns = array('CON_COD','VIP_COD','CON_FECHA','CON_ESTADO','GAR_COD','VIS_COD','VIS_NOMBRE','VIS_APELLIDO','PAR_COD','VIS_CEDULA','VIS_DIRECCION','VIS_TELEFONO','VIS_CORREO','VIS_IMAGEN','VIS_ESTADO','PPL_COD','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_ESTADO');
+        $aColumns = array('VISG_COD','PPL_COD','VIP_COD','HOR_COD','VISG_FECHA','VISG_HORA_INGRESO','VISG_HORA_SALIDA','VISG_TRANSCURRIDO','VISG_POSCHAR','VISG_POSNUM','VISG_ESTADO','VIS_COD','VIS_NOMBRE','VIS_APELLIDO','PAR_COD','VIS_CEDULA','VIS_DIRECCION','VIS_TELEFONO','VIS_CORREO','VIS_IMAGEN','VIS_ESTADO');
 	/* Campo de Index */
-	$sIndexColumn = "CON_COD";
+	$sIndexColumn = "VISG_COD";
 	/* Tabla a Usar */
 	$sTable =  "sys_vw_control4";
         /* Conexion a la Base */
@@ -116,22 +116,23 @@ global $dbmysql;
 	 * Output
 	 */
         $i=0;
-        
+//VISG_COD,PPL_COD,VIP_COD,HOR_COD,VISG_FECHA,VISG_HORA_INGRESO,VISG_HORA_SALIDA,VISG_TRANSCURRIDO,VISG_POSCHAR,VISG_POSNUM,VISG_ESTADO,VIS_COD,VIS_NOMBRE,VIS_APELLIDO,PAR_COD,VIS_CEDULA,VIS_DIRECCION,VIS_TELEFONO,VIS_CORREO,VIS_IMAGEN,VIS_ESTADO
 	while ( $aRow = mysql_fetch_array( $rResult ) ){
                 /* General output */
                     $nombre_visitante=$aRow[ 'VIS_NOMBRE' ].' '.$aRow[ 'VIS_APELLIDO' ];
-                    $nombre_ppl =$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ];
-                    $output['aaData'][] =array( ''.utf8_encode($aRow[ 'CON_COD' ]).'',
-//                                                '<img src=".//uploads/imagenes/ppl/'.$aRow['PPL_IMG'].'" style="width: 60px" class="img-thumbnail">',
+                    
+                  $estado=($aRow[ 'VISG_ESTADO' ]=='A')?'<span class="label label-success">Activo</span>':'<span class="label label-danger">Inactivo</span>';
+                    $output['aaData'][] =array( ''.utf8_encode($aRow[ 'VIS_COD' ]).'',
                	                		''.utf8_encode($nombre_visitante).'',
                                                 ''.utf8_encode($aRow[ 'VIS_CEDULA' ]).'',
-                                                ''.utf8_encode($nombre_ppl).'',
-//                                                '<img src=".//uploads/imagenes/ppl/'.$aRow['PPL_IMG'].'" style="width: 60px" class="img-thumbnail">',
-                                                '<a class="btn btn-danger" title="Actualizar" href="javascript:negarAcceso3('.$aRow[ 'VIP_COD' ].','.$aRow[ 'VIS_COD' ].')">
-                                                    <i class="fa fa-ban"></i> Negar Acceso</a>
-						<a class="btn btn-success" title="Permitir acceso" href="javascript:permitirAcceso3(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'CON_COD' ].')">
-                                                    <i class="fa fa-check"></i> Permitir Acceso</a>
-                                                    ');
+                                                ''.utf8_encode($aRow[ 'VISG_FECHA' ]).'',
+                                                ''.utf8_encode($aRow[ 'VISG_HORA_INGRESO' ]).'',
+                                                ''.utf8_encode($aRow[ 'VISG_HORA_SALIDA' ]).'<div id="hola"></div>',
+                                                '<div class="progress progress-striped active no-margin">'
+                        . '                         <div id="progresoTiempo" class="progress-bar progress-bar-success" style="width: 65%" role="progressbar">'.utf8_encode($aRow[ 'VISG_TRANSCURRIDO' ]).'</div>'
+                        . '                      </div>',
+                                                ''.$aRow[ 'VISG_POSCHAR' ].$aRow[ 'VISG_POSNUM' ].'',
+                                                ''.$estado.'');
         }
 //        print_r($output);
 	echo json_encode( $output );
