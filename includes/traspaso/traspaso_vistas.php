@@ -126,7 +126,21 @@ function aplicarTraspaso(){
                                                                    </section>
                                                          
 
-                                                                </div>                                                                
+                                                                </div>      
+                                                                <div class="row">
+
+                                                                    <section class="col col-6">
+
+                                                                            <label class="input" >Motivo del traspaso</label>
+
+                                                                            <textarea rows="4" cols="50" class="form-control" id="motivo" name="motivo"></textarea>
+
+                                                                            
+    
+                                                                   </section>
+                                                         
+
+                                                                </div>                                                                                                                                  
                                                             </fieldset>
 
                                                             <footer>

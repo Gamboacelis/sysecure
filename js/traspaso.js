@@ -32,7 +32,7 @@ function aplicarTraspaso(cod,ppl)
         success: function(res) {
 
             $('#pabellonActual').html('<strong>Pabellon actual:</strong> Pabellon '+res);
-            listarPabellones();
+            listarPabellones(cod);
             $('#IDppl').val(ppl);
             $('#frmAplicarTraspaso').modal('show');
 
@@ -47,7 +47,7 @@ function aplicarTraspaso(cod,ppl)
 
 }    
 
-function listarPabellones()
+function listarPabellones(cod)
 {
     var url = './includes/traspaso/traspaso_model.php?opcion=enviarDatosPabellones';
 
@@ -58,6 +58,8 @@ function listarPabellones()
         datetype: "json",
 
         type: 'POST',
+
+        data: {codigo: cod},
 
         success: function(res) {
 
@@ -76,6 +78,7 @@ function guardarTraspaso()
     var url = './includes/traspaso/traspaso_model.php?opcion=guardarTraspaso';
     var ppl = $('#IDppl').val();
     var pabellon = $('#nuevoPabellon').val();
+    var motivo = $('#motivo').val();
 
     $.ajax({
 
@@ -85,7 +88,7 @@ function guardarTraspaso()
 
         type: 'POST',
 
-        data: {codigo: ppl,codigoPabellon:pabellon},
+        data: {codigo: ppl,codigoPabellon:pabellon,motivo:motivo},
 
         success: function(res) {
 

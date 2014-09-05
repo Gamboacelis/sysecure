@@ -59,7 +59,10 @@ function enviarDatosPabellones() {
 
     global $dbmysql;
 
-    $sql = "SELECT * FROM `sys_pabellones` ";
+    $idpab = $_POST['codigo'];
+
+
+    $sql = "SELECT * FROM `sys_pabellones` WHERE PAB_COD != $idpab ";
 
     $val = $dbmysql->query($sql);
 
@@ -75,11 +78,17 @@ function enviarDatosPabellones() {
 function guardarTraspaso() {
 
     global $dbmysql;
+    $fecha = date('Y-m-d'); 
+    $usuario=$_SESSION["user_id"];
     $codigoPpl = $_POST['codigo'];
     $codigoPabellon = $_POST['codigoPabellon'];
+    $motivo = $_POST['motivo'];
     $sql = "UPDATE `sys_ppl` SET PAB_COD= $codigoPabellon WHERE PPL_COD=$codigoPpl;";
     $val = $dbmysql->query($sql);
-    if ($val) {
+
+    $sql2 = "INSERT INTO `sys_historia_ppl`(`USU_COD`, `PPL_COD`, `PAB_COD`, `HIS_FECHA`, `HIS_MOTIVO`) VALUES ($usuario,$codigoPpl,$codigoPabellon,'$fecha','$motivo');";
+    $val2 = $dbmysql->query($sql2);
+    if ($val and $val2) {
         echo 1;
     } else {
         echo 0;

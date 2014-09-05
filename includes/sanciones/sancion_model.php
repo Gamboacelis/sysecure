@@ -35,7 +35,13 @@ switch ($funcion) {
 
         enviarDatosTiempo();
 
-        break;                       
+        break;  
+        
+    case 'eliminarSancion':
+
+        eliminarSancion();
+
+        break;     
 
 }
 
@@ -116,5 +122,14 @@ function guardarDatosSanciones() {
     if ($val) {echo 1;} else {echo 0;}    
 }
 
+function eliminarSancion()
+{
+    global $dbmysql;
+    $IDvisitante = $_POST["IDvisitante"];
+    $sql = "UPDATE `sys_visitante` SET VIS_ESTADO = 'A'  WHERE VIS_COD=$IDvisitante;";
+    $val = $dbmysql->query($sql);
+    if ($val) {echo 1;} else {echo 0;}    
+
+}
 
 
