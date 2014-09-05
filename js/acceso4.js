@@ -11,16 +11,18 @@ $(document).ready(function() {
         }
     });
         $('#listaAcceso4').on('click', 'tr', function(event) {
-            $('#frmTerminarModal').modal('show');
+            var cod = $(this).find("td").eq(0).children('input').val();
+            colocarDatosFinalizar(cod);
         });
 
 //    $('#listaAcceso4').children('tbody').children('tr').addClass('terminarVisita');
-    window.setInterval(function() {
+    
+    var interval=setInterval(function() {
         intervaloTranscurrido();
     }, 1000);
 });
 
-function intervaloTranscurrido() {
+function intervaloTranscurrido(interval) {
     $('#listaAcceso4 >tbody >tr').each(function() {
         var cod = $(this).find("td").eq(0).children('input').val();
         $.ajax({
@@ -29,28 +31,28 @@ function intervaloTranscurrido() {
             data: {codigo: cod},
             success: function(numero) {
                 var valor = Math.round(numero);
-                switch (valor) {
-                    case valor < 0:
+                if(valor===100){
+                    $("#progresoTiempo" + cod).html('100 %');
+                    $("#progresoTiempo" + cod).removeClass('bg-color-yellow');
+                    $("#progresoTiempo" + cod).addClass('bg-color-redLight');
+                    $("#progresoTiempo" + cod).css({"width": ("100%")});
+                }else{
+                    if(valor<=0){
                         $("#progresoTiempo" + cod).html('0 %');
                         $("#progresoTiempo" + cod).removeClass('bg-color-redLight');
                         $("#progresoTiempo" + cod).addClass('progress-bar-success');
-                        break;
-                    case valor >= 95:
-                        $("#progresoTiempo" + cod).removeClass('progress-bar-success');
-                        $("#progresoTiempo" + cod).addClass('bg-color-redLight');
-                        break;
-                    case valor === 100:
-                        $("#progresoTiempo" + cod).html(valor + ' %');
-                        break;
-                    case valor > 100:
-                        $("#progresoTiempo" + cod).html('100 %');
-                        $("#progresoTiempo" + cod).removeClass('progress-bar-success');
-                        $("#progresoTiempo" + cod).addClass('bg-color-redLight');
-                        break;
-                    default:
-                        $("#progresoTiempo" + cod).html(valor + ' %');
-                        $("#progresoTiempo" + cod).css({"width": (valor + "%")});
-                        break;
+                        $("#progresoTiempo" + cod).css({"width": ("0 %")});
+                     }else{
+                         if(valor >= 90){
+                            $("#progresoTiempo" + cod).html(valor + ' %');
+                            $("#progresoTiempo" + cod).removeClass('progress-bar-success');
+                            $("#progresoTiempo" + cod).addClass('bg-color-yellow');
+                            $("#progresoTiempo" + cod).css({"width": (valor + "%")});
+                        }else{
+                            $("#progresoTiempo" + cod).html(valor + ' %');
+                            $("#progresoTiempo" + cod).css({"width": (valor + "%")});
+                        }
+                     }
                 }
             }
         });
@@ -86,7 +88,32 @@ function cerrarSesion(){
         }
     });
 }
+function colocarDatosFinalizar(cod){
+    $.ajax({
+                url: "./includes/controles/acceso4/acceso4_model.php?opcion=traerdatosFin",
+                type: 'post',
+                data: {visCod: cod},
+                success: function(respuesta) {
+                    var json_obj = $.parseJSON(respuesta);
+                    colocarInformacionVisita(json_obj);
+                    $('#frmTerminarModal').modal('show');
+                }
+            });
+}
 
+function colocarInformacionVisita(edt){
+    $("#txtNombre").text(edt.datosVisita.VIS_NOMBRE);  /*Nombre*/
+    $("#txtApellido").text(edt.datosVisita.VIS_APELLIDO);  /*Apellido*/
+    $("#txtCedula").text(edt.datosVisita.VIS_CEDULA);  /*Usuario*/
+    $("#txtHoraIng").text(edt.datosVisita.VISG_HORA_INGRESO);  /*E-Mail*/
+    $("#txtHoraSal").text(edt.datosVisita.VISG_HORA_SALIDA);  /*Nombre*/
+    
+    
+//    $("#txtApellido").val(edt.datosPabellon.PAB_DESCRIPCION);  /*Apellido*/
+//    $("#txtCedula").val(edt.datosPabellon.PAB_CAPACIDAD);  /*Usuario*/
+//    $("#txtHoraIng").val(edt.datosPabellon.PAB_DETALLES);  /*E-Mail*/
+//    $('#nivel').prop('selectedIndex', edt.datosPabellon.NVL_COD);
+}
 function permitirAcceso3(nombre, vipcontrol, pplcod, codControl, horario) {
     $.SmartMessageBox({
         title: "Confirmación!",

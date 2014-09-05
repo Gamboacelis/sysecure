@@ -72,11 +72,11 @@ function frmFinalizaVisitante(){
                                                                         <div class="row">
                                                                             <section class="col col-12">
                                                                                     <h1 id="txtSancion" class="text-danger">Visitante Sancionado</h1>
-                                                                                    <h2 id="txtNombre" class="text-primary">Willian Alejandro</h2>
-                                                                                    <h2 id="txtApellido" class="text-primary">Espinosa Marquez</h2>
-                                                                                    <h2 id="txtCedula"><strong> 1720802394</strong></h2>
+                                                                                    <h2 id="txtNombre" class="text-primary"></h2>
+                                                                                    <h2 id="txtApellido" class="text-primary"></h2>
+                                                                                    <h2 id="txtCedula"><strong></strong></h2>
                                                                                     <h4>Hora de Ingreso: <p id="txtHoraIng"></p></h4>
-                                                                                    <h4>Hora de Salida: <p id="txtHoraIng"></p></h4>
+                                                                                    <h4>Hora de Salida: <p id="txtHoraSal"></p></h4>
                                                                             </section>
                                                                         </div>
                                                                     </section>

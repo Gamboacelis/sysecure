@@ -11,9 +11,11 @@ switch ($funcion) {
     case 'intervalo':
         intervalo();
         break;
-
     case 'bloquearAceeso3':
         bloquearAceeso3();
+        break;
+    case 'traerdatosFin':
+        traerdatosFin();
         break;
 }
 
@@ -36,19 +38,46 @@ function intervalo() {
     $horario_salida=$row3->HOR_HORA_SAL;
     $tiempoTotal = (strtotime($horario_salida) - strtotime($hora_entrada))/60;
     
-    echo $tiempoFinal=($tiempoTrans*100)/$tiempoTotal;
-    
-    
-    
-    
-    
-    
-    
-//    $sql2 = "INSERT INTO `sys_control` (`GAR_COD` ,`VIP_COD` ,`CON_FECHA` ,`CON_ESTADO`)VALUES ('3', '$codVisita','$fecha','A');";
-//    $val2 = $dbmysql->query($sql2);
-//    if ($val2) {echo 1;} else {echo 0;}
+    $tiempoFinal=($tiempoTrans*100)/$tiempoTotal;
+    echo $tp=($tiempoFinal>=100)?100:$tiempoFinal;
 }
 
+function traerdatosFin(){
+    global $dbmysql;
+    $codVisita = $_POST['visCod'];
+    $hora=date('H:i');
+    $sql = "SELECT v.*,vp.*,vis.*,p.* FROM `sys_visitas` v, sys_visitante_ppl vp, sys_visitante vis, sys_ppl p WHERE vp.`VIP_COD`=v.`VIP_COD` AND vp.VIS_COD=vis.VIS_COD AND p.`PPL_COD`=v.`PPL_COD` AND v.`VISG_COD`=$codVisita;";
+    $val = $dbmysql->query($sql);
+    if ($val->num_rows > 0) {
+        $row = $val->fetch_object();
+        $tiempoExceso = (strtotime($hora) - strtotime($row->VISG_HORA_SALIDA))/60;
+        $lista['datosVisita'] = array(
+        "VISG_COD"              => $row->VISG_COD,
+        "VISG_FECHA"            => $row->VISG_FECHA,
+        "VISG_HORA_INGRESO"     => $row->VISG_HORA_INGRESO,
+        "VISG_HORA_SALIDA"      => $row->VISG_HORA_SALIDA,
+        "VISG_TRANSCURRIDO"     => $row->VISG_TRANSCURRIDO,
+        "VISG_POSCHAR"          => $row->VISG_POSCHAR,
+        "VISG_POSNUM"           => $row->VISG_POSNUM,
+        "VISG_ESTADO"           => $row->VISG_ESTADO,
+        "PPL_COD"               => $row->PPL_COD,
+        "PAB_COD"               => $row->PAB_COD,
+        "PPL_NOMBRE"            => $row->PPL_NOMBRE,
+        "PPL_APELLIDO"          => $row->PPL_APELLIDO,
+        "PPL_IMG"               => $row->PPL_IMG,
+        "VIS_COD"               => $row->VIS_COD,
+        "VIS_NOMBRE"            => $row->VIS_NOMBRE,
+        "VIS_APELLIDO"          => $row->VIS_APELLIDO,
+        "VIS_CEDULA"            => $row->VIS_CEDULA,
+        "VIS_IMAGEN"            => $row->VIS_IMAGEN,
+        "VIS_ESTADO"            => $row->VIS_ESTADO
+    );
+
+    echo $encode = json_encode($lista);
+        
+    }
+
+}
 function bloquearAceeso3() {
     global $dbmysql;
     $fecha = date('Y-m-d');
