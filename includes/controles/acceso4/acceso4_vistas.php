@@ -36,6 +36,64 @@ function frm_revisarAcceso4() {
             </div>
         </article>';
     
-//    $retval .= frmBloqueoVisitante();
+    $retval .= frmFinalizaVisitante();
+    return $retval;
+}
+
+function frmFinalizaVisitante(){
+    $retval = '';
+    $retval = '<div class="modal fade" id="frmTerminarModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                                                <header>
+                                                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                        <h2>Finalizar Visita</h2>				
+                                                </header>
+                                                <div>
+                                                    <div class="widget-body no-padding">
+                                                        <form id="smart-form-horarios" class="smart-form" action="javascript:guardarHorario()">
+                                                            <header>Datos del Visitante</header>
+                                                            <fieldset>
+                                                                    <section class="col col-6">
+                                                                            <label class="label">Imagen Visitante</label>
+                                                                            <div id="imgPpl">
+                                                                                <input id="imagPpl" name="imagPpl" type="hidden" />
+                                                                                <img id="imagenPPL" alt="imagenPPL" src="img/avatars/male.png" class="img-thumbnail" style="width: 200px">
+                                                                            </div>
+                                                                    </section>
+                                                                    <section class="col col-6">
+                                                                        <div class="row">
+                                                                            <section class="col col-12">
+                                                                                    <h1 id="txtSancion" class="text-danger">Visitante Sancionado</h1>
+                                                                                    <h2 id="txtNombre" class="text-primary">Willian Alejandro</h2>
+                                                                                    <h2 id="txtApellido" class="text-primary">Espinosa Marquez</h2>
+                                                                                    <h2 id="txtCedula"><strong> 1720802394</strong></h2>
+                                                                                    <h4>Hora de Ingreso: <p id="txtHoraIng"></p></h4>
+                                                                                    <h4>Hora de Salida: <p id="txtHoraIng"></p></h4>
+                                                                            </section>
+                                                                        </div>
+                                                                    </section>
+                                                            </fieldset>
+                                                            <footer>
+                                                                    <button type="submit" class="btn btn-primary">
+                                                                            Terminar visita
+                                                                    </button>
+                                                            </footer>
+                                                        </form>						
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>';
     return $retval;
 }

@@ -121,7 +121,7 @@ global $dbmysql;
                 /* General output */
                     $nombre_visitante=$aRow[ 'VIS_NOMBRE' ].' '.$aRow[ 'VIS_APELLIDO' ];
                     
-                  $estado=($aRow[ 'VISG_ESTADO' ]=='A')?'<span class="label label-success">Activo</span>':'<span class="label label-danger">Inactivo</span>';
+                  $estado=($aRow[ 'VISG_ESTADO' ]=='A')?'<span class="label label-success">Activo</span>':'<span class="label label-danger">Finalizado</span>';
                     $output['aaData'][] =array( '<input type="hidden" class="codVisita" id="cod_'.$aRow[ 'VISG_COD' ].'" name="codVisita" value="'.$aRow[ 'VISG_COD' ].'">'.$aRow[ 'VISG_COD' ].'',
                	                		''.utf8_encode($nombre_visitante).'',
                                                 ''.utf8_encode($aRow[ 'VIS_CEDULA' ]).'',
