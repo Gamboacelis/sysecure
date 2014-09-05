@@ -37,6 +37,12 @@ switch ($funcion) {
          eliminarVisitante();         
 
          break;
+
+    case 'enviarDatosParentesco':
+        
+         enviarDatosParentesco();         
+
+         break;         
  
 
 
@@ -97,13 +103,15 @@ function guardaDatosVisitante() {
 
     $direccion = $_POST["direccion"];
 
-    $correo = $_POST["correo"];     
+    $correo = $_POST["correo"];
+    
+    $parentesco = $_POST["parentesco"];     
 
 
 
-    $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_TELEFONO,VIS_CEDULA, VIS_DIRECCION,VIS_CORREO,VIS_ESTADO)VALUES
+    $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_TELEFONO,VIS_CEDULA, VIS_DIRECCION,VIS_CORREO,VIS_ESTADO,PAR_COD)VALUES
 
-            ('$nombre','$apellido','$telefono','$cedula','$direccion','$correo','A');";
+            ('$nombre','$apellido','$telefono','$cedula','$direccion','$correo','A',$parentesco);";
 
     $val = $dbmysql->query($sql);
 
@@ -138,7 +146,9 @@ function actualizarDatosVisitante() {
 
     $direccion = $_POST["direccion"];
 
-    $correo = $_POST["correo"];    
+    $correo = $_POST["correo"];   
+
+    $parentesco = $_POST["parentesco"];    
 
 
 
@@ -156,7 +166,9 @@ function actualizarDatosVisitante() {
 
                 VIS_DIRECCION   = '$direccion',
 
-                VIS_CORREO    = '$correo'
+                VIS_CORREO    = '$correo',
+
+                PAR_COD =  $parentesco
 
 
 
@@ -207,4 +219,22 @@ function eliminarVisitante()
 
     }
 
+}
+
+
+function enviarDatosParentesco() {
+
+    global $dbmysql;
+
+    $sql = "SELECT * FROM `sys_parentesco`";
+
+    $val = $dbmysql->query($sql);
+
+    $retval = '';
+    
+    while ($row = $val->fetch_object()) {
+            $retval.='<option value="' . $row->PAR_COD . '">' . $row->PAR_DESCRIPCION . '</option>';
+    }
+
+    echo $retval;
 }

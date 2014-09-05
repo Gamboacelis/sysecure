@@ -70,6 +70,8 @@ function carga_DatosIncialesUsuarios(edt) {
 
     $("#correo").val(edt.datosVisitante.VIS_CORREO);  
 
+    cargarParentesco();
+
 
 
 }
@@ -234,4 +236,20 @@ function limpiarFormulario() {
     $("#telefono").val('');/*Celular*/
     $("#cedula").val('');/*Cedula*/
     $("#huella").val('');/*Cedula*/    
+}
+
+
+function cargarParentesco()
+{
+    $.ajax({
+        url: "./includes/visitante/visitantes_model.php?opcion=enviarDatosParentesco",
+        type: 'post',
+        success: function(respuesta) {
+
+                $('#parentesco').html(respuesta);
+
+        }
+        
+    });
+
 }

@@ -242,6 +242,18 @@ function frmVisitante() {
 
                                                                 </div>    
 
+                                                            <div class="row">
+
+                                                                    <section class="col col-6">
+
+                                                                            <label class="input">Parentesco</label>
+                                                                            <select id="parentesco" name="parentesco"></select>
+
+                                                                    </section>
+
+
+                                                                </div>                                                                    
+
                                                             </fieldset>
 
                                                             <footer>
