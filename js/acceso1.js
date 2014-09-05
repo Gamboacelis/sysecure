@@ -27,11 +27,11 @@ function revisarVisitantesAsignados(codPpl){
             }
         });
 }
-function permitirAccesoVisitante(codVisita,nomVisita){
+function permitirAccesoVisitante(codVisita,nomVisita,horario){
     $.ajax({
             url: "./includes/controles/acceso1/acceso1_model.php?opcion=permitirAccesoVisitante",
             type: 'post',
-            data: {codVisita: codVisita},
+            data: {codVisita: codVisita,horario:horario},
             success: function(respuesta) {
                 switch (respuesta){
                     case '0':

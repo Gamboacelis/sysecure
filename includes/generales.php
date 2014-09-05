@@ -70,26 +70,39 @@ class general {
         return $val;
     }
 
-    function obtenerDia(){
-        setlocale(LC_ALL,"es_ES");
-        $dias = array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado");
+    function obtenerDia() {
+        setlocale(LC_ALL, "es_ES");
+        $dias = array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado");
         return $dias[date("w")];
-        
     }
-    function obtenerHorario($pabellon,$obtenerDia,$hora){
+
+    function obtenerHorario($pabellon, $obtenerDia, $hora) {
         global $dbmysql;
-        $horaActual=$hora;
+        $horaActual = $hora;
         $sql = "SELECT tpv.*,h.* FROM `sys_horarios` h,`sys_tipovisita` tpv WHERE tpv.`TPV_COD`=h.`TPV_COD` AND `PAB_COD` = $pabellon AND `HOR_DIAS` = '$obtenerDia' AND `HOR_HORA_ING`<='$horaActual' AND `HOR_HORA_SAL`>='$horaActual' AND `HOR_ESTADO` ='A'";
         $val = $dbmysql->query($sql);
-        if($val->num_rows>0){return $val;}else{return 0;}
+        if ($val->num_rows > 0) {
+            return $val;
+        } else {
+            return 0;
+        }
     }
-    function obtenerInformacionPPL($codPpl){
+    
+    function obtenerHorarioxCod($codigo) {
+        global $dbmysql;
+        $sql = "SELECT * FROM `sys_horarios` WHERE HOR_COD=$codigo;";
+        $val = $dbmysql->query($sql);
+        return $val;
+    }
+
+    function obtenerInformacionPPL($codPpl) {
         global $dbmysql;
         $sql = "SELECT p.*,pab.* FROM `sys_ppl` p, sys_pabellones pab WHERE p.PAB_COD=pab.PAB_COD AND PPL_COD=$codPpl";
         $val = $dbmysql->query($sql);
         return $val;
     }
-    function obtenerValorParametro($codParametro){
+
+    function obtenerValorParametro($codParametro) {
         global $dbmysql;
         $sql = "SELECT PAR_COD,PAR_MODULO,PAR_DESCRIPCION,PAR_VALOR FROM `sys_parametros`WHERE PAR_COD=$codParametro";
         $val = $dbmysql->query($sql);
@@ -97,4 +110,5 @@ class general {
         $val = $row->PAR_VALOR;
         return $val;
     }
+
 }

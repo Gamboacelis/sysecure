@@ -11,7 +11,7 @@ include_once '../../conexiones/db_local.inc.php';
 include_once( '../../conexiones/config_local.ini.php' );
 
 global $dbmysql;
-        $aColumns = array('CON_COD','VIP_COD','CON_FECHA','CON_ESTADO','GAR_COD','VIS_COD','VIS_NOMBRE','VIS_APELLIDO','PAR_COD','VIS_CEDULA','VIS_DIRECCION','VIS_TELEFONO','VIS_CORREO','VIS_IMAGEN','VIS_ESTADO','PPL_COD','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_ESTADO');
+        $aColumns = array('CON_COD','VIP_COD','CON_FECHA','HOR_COD','CON_ESTADO','GAR_COD','VIS_COD','VIS_NOMBRE','VIS_APELLIDO','PAR_COD','VIS_CEDULA','VIS_DIRECCION','VIS_TELEFONO','VIS_CORREO','VIS_IMAGEN','VIS_ESTADO','PPL_COD','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_ESTADO');
 	/* Campo de Index */
 	$sIndexColumn = "CON_COD";
 	/* Tabla a Usar */
@@ -129,7 +129,7 @@ global $dbmysql;
 //                                                '<img src=".//uploads/imagenes/ppl/'.$aRow['PPL_IMG'].'" style="width: 60px" class="img-thumbnail">',
                                                 '<a class="btn btn-danger" title="Actualizar" href="javascript:negarAcceso3('.$aRow[ 'VIP_COD' ].','.$aRow[ 'VIS_COD' ].')">
                                                     <i class="fa fa-ban"></i> Negar Acceso</a>
-						<a class="btn btn-success" title="Permitir acceso" href="javascript:permitirAcceso3(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'CON_COD' ].')">
+						<a class="btn btn-success" title="Permitir acceso" href="javascript:permitirAcceso3(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'PPL_COD' ].','.$aRow[ 'CON_COD' ].','.$aRow[ 'HOR_COD' ].')">
                                                     <i class="fa fa-check"></i> Permitir Acceso</a>
                                                     ');
         }
