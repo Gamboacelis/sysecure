@@ -20,6 +20,7 @@ class general {
         $activarMenu33 = '';
         $activarMenu34 = '';
         $activarMenu35 = '';
+        $activarMenu36 = '';
         $activarMenu4 = '';
         $activarMenu41 = '';
         $activarMenu42 = '';
@@ -104,7 +105,8 @@ class general {
 
     function obtenerValorParametro($codParametro) {
         global $dbmysql;
-        $sql = "SELECT PAR_COD,PAR_MODULO,PAR_DESCRIPCION,PAR_VALOR FROM `sys_parametros`WHERE PAR_COD=$codParametro";
+        $centro=$_SESSION['usu_centro_cod'];
+        $sql = "SELECT PAR_COD,PAR_MODULO,PAR_DESCRIPCION,PAR_VALOR FROM `sys_parametros`WHERE `CEN_COD` = $centro AND PAR_COD=$codParametro";
         $val = $dbmysql->query($sql);
         $row = $val->fetch_object();
         $val = $row->PAR_VALOR;

@@ -4,6 +4,7 @@
 #cargar_txt{color:#fff;font-size:2.2em;font-weight:bold;position:absolute;right:13px;text-align:center;top:25px}
 #cargar_txt p{border:medium solid;left:2px;opacity:1;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);position:relative;top:-15px}
 .visDatos{display:none;width:80px}
+.visDatosGeneral{display:none;}
 .visBtnGuardar{display:none}
 .cambioClave{display:none}
 .botonesSuperiores{margin:0 0 5px}

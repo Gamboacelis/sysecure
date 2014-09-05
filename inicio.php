@@ -19,6 +19,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             include_once("./includes/horarios/horarios_vistas.php");
             include_once("./includes/ppl/ppl_vistas.php");
             include_once("./includes/visitante/visitantes_vistas.php");
+            include_once("./includes/parametros/parametros_vistas.php");
 
             switch ($option) {
                 case 'horarios':
@@ -43,13 +44,14 @@ if ($_SESSION["autenticado"] == 'SI') {
                     break;
                 case 'visitantes':
                     $titulo='Revisión de Visitantes';
-
                     $activarMenu35='class="active"';
-
                     $contenido = revisarVisitantes();
                     break;
-                    
-                
+                case 'parametros':
+                    $titulo='Revisión de Parametros de Configuracion';
+                    $activarMenu36='class="active"';
+                    $contenido = reporteParametros();
+                    break;
             }
             break;
         case 'controles':
@@ -266,6 +268,7 @@ if ($_SESSION["autenticado"] == 'SI') {
                             <ul>
                                 <li <?php echo $activarMenu31 ?>><a href="?modulo=administrativo&op=horarios">Horarios de Visitas</a></li>
                                 <li <?php echo $activarMenu32 ?>><a href="?modulo=administrativo&op=pabellones">Pabellones</a></li>
+                                <li <?php echo $activarMenu36 ?>><a href="?modulo=administrativo&op=parametros">Parametros</a></li>
                                 <li <?php echo $activarMenu33 ?>><a href="?modulo=administrativo&op=ppl">PPL</a></li>
                                 <li <?php echo $activarMenu34 ?>><a href="?modulo=administrativo&op=usuarios">Usuarios</a></li>
                                 <li <?php echo $activarMenu35 ?>><a href="?modulo=administrativo&op=visitantes">Visitantes</a></li>
@@ -520,6 +523,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/acceso4.js"></script>
             <script src="js/sancionados.js"></script>
             <script src="js/traspaso.js"></script>
+            <script src="js/parametros.js"></script>
 
             <!-- PAGE RELATED PLUGIN(S) -->
             <script src="js/plantilla/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>

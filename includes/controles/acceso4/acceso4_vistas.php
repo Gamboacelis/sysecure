@@ -58,7 +58,7 @@ function frmFinalizaVisitante(){
                                                 </header>
                                                 <div>
                                                     <div class="widget-body no-padding">
-                                                        <form id="smart-form-horarios" class="smart-form" action="javascript:guardarHorario()">
+                                                        <form id="smart-form-horarios" class="smart-form" action="javascript:guardarFinVisita()">
                                                             <header>Datos del Visitante</header>
                                                             <fieldset>
                                                                     <section class="col col-6">
@@ -67,16 +67,27 @@ function frmFinalizaVisitante(){
                                                                                 <input id="imagPpl" name="imagPpl" type="hidden" />
                                                                                 <img id="imagenPPL" alt="imagenPPL" src="img/avatars/male.png" class="img-thumbnail" style="width: 200px">
                                                                             </div>
+                                                                            <div class="well well-sm bg-color-teal txt-color-white text-center col-10">
+                                                                                <h5>Ubicación de la cédula</h5>
+                                                                                <h1 id="txtLugarCedula"></h1>
+                                                                            </div>
                                                                     </section>
                                                                     <section class="col col-6">
                                                                         <div class="row">
+                                                                            <section class="col col-12"><input type="hidden" name="valCodVisita" id="valCodVisita"><input type="hidden" name="valCodVisitante" id="valCodVisitante">
+                                                                                    <h1 id="txtSancion"></h1><input type="hidden" name="valSancion" id="valSancion">
+                                                                                    <h2 id="txtNombre" class="text-primary"></h2><input type="hidden" name="valNombre" id="valNombre">
+                                                                                    <h2 id="txtApellido" class="text-primary"></h2><input type="hidden" name="valApellido" id="valApellido">
+                                                                                    <h2 id="txtCedula"><strong></strong></h2><input type="hidden" name="valcedula" id="valcedula">
+                                                                                    <h6 class="col-md-8">Hora de Ingreso: </h6><h6 id="txtHoraIng" class="col-md-3"></h6><input type="hidden" name="valhoraIng" id="valhoraIng">
+                                                                                    <h6 class="col-md-8">Hora de Salida: </h6><h6 id="txtHoraSal" class="col-md-3"></h6><input type="hidden" name="valhoraSal" id="valhoraSal">
+                                                                                    <h6 class="col-md-8">Transcurrido: </h6><h6 id="txtHoraTrans" class="col-md-3"></h6><input type="hidden" name="valtranscurrido" id="valtranscurrido"><input type="hidden" name="valexceso" id="valexceso">
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <header>A quien Visitó:</header>
                                                                             <section class="col col-12">
-                                                                                    <h1 id="txtSancion" class="text-danger">Visitante Sancionado</h1>
-                                                                                    <h2 id="txtNombre" class="text-primary"></h2>
-                                                                                    <h2 id="txtApellido" class="text-primary"></h2>
-                                                                                    <h2 id="txtCedula"><strong></strong></h2>
-                                                                                    <h4>Hora de Ingreso: <p id="txtHoraIng"></p></h4>
-                                                                                    <h4>Hora de Salida: <p id="txtHoraSal"></p></h4>
+                                                                                <h4 id="txtPPLNombre" class="text-primary" style="font-weight: bolder"></h4>
                                                                             </section>
                                                                         </div>
                                                                     </section>
