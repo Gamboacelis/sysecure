@@ -226,14 +226,33 @@ function enviarDatosParentesco() {
 
     global $dbmysql;
 
+    $visitante = $_POST['visitante'];
+
+
     $sql = "SELECT * FROM `sys_parentesco`";
 
     $val = $dbmysql->query($sql);
 
     $retval = '';
+
+    $sqlPariente = "SELECT  PAR_COD FROM `sys_visitante` WHERE VIS_COD = $visitante";
+
+    $valPariente = $dbmysql->query($sqlPariente);
+
+    $rowPariente = $valPariente->fetch_object();
     
     while ($row = $val->fetch_object()) {
-            $retval.='<option value="' . $row->PAR_COD . '">' . $row->PAR_DESCRIPCION . '</option>';
+
+            if($row->PAR_COD == $rowPariente->PAR_COD)
+            {
+                $selected = 'selected';
+            }
+            else
+            {
+                $selected = '';
+            }
+
+            $retval.='<option value="' . $row->PAR_COD . '"  '.$selected.'>' . $row->PAR_DESCRIPCION . '</option>';
     }
 
     echo $retval;

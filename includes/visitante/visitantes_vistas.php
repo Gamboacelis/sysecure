@@ -246,8 +246,8 @@ function frmVisitante() {
 
                                                                     <section class="col col-6">
 
-                                                                            <label class="input">Parentesco</label>
-                                                                            <select id="parentesco" name="parentesco"></select>
+                                                                            <label class="input">Parentesco:  <select id="parentesco" name="parentesco" class="form-control"></select></label>
+                                                                            
 
                                                                     </section>
 
