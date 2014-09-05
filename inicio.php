@@ -88,6 +88,16 @@ if ($_SESSION["autenticado"] == 'SI') {
 
                     $contenido = revisarSanciones();
                     break;    
+
+                case 'traspaso':
+                    include_once("./includes/traspaso/traspaso_vistas.php");
+
+                    $titulo='Traspaso de PPL a otro pabellon';
+
+                    $activarMenu46='class="active"';
+
+                    $contenido = revisarPpl();
+                    break;                    
             }
             break;
         default:
@@ -267,7 +277,8 @@ if ($_SESSION["autenticado"] == 'SI') {
                                 <li <?php echo $activarMenu42 ?>><a href="?modulo=controles&op=acceso2">Acceso 2</a></li>
                                 <li <?php echo $activarMenu43 ?>><a href="?modulo=controles&op=acceso3">Acceso 3</a></li>
                                 <li <?php echo $activarMenu44 ?>><a href="?modulo=controles&op=acceso4">Acceso 4</a></li>
-                                <li <?php echo $activarMenu44 ?>><a href="?modulo=controles&op=sanciones">Sanciones</a></li>
+                                <li <?php echo $activarMenu45 ?>><a href="?modulo=controles&op=sanciones">Sanciones</a></li>
+                                <li <?php echo $activarMenu46 ?>><a href="?modulo=controles&op=traspaso">Traspaso PPL</a></li>                                
 
                             </ul>
                         </li>
@@ -507,6 +518,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/acceso2.js"></script>
             <script src="js/acceso3.js"></script>
             <script src="js/sancionados.js"></script>
+            <script src="js/traspaso.js"></script>
 
             <!-- PAGE RELATED PLUGIN(S) -->
             <script src="js/plantilla/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
