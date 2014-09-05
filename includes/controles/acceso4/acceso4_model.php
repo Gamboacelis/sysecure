@@ -8,8 +8,8 @@ $dbmysql = new database();
 date_default_timezone_set('America/Bogota');
 $funcion = isset($_GET['opcion']) ? $_GET['opcion'] : 'ninguno';
 switch ($funcion) {
-    case 'permitirAcceso2':
-        permitirAcceso3();
+    case 'intervalo':
+        intervalo();
         break;
 
     case 'bloquearAceeso3':
@@ -17,14 +17,36 @@ switch ($funcion) {
         break;
 }
 
-function permitirAcceso3() {
+function intervalo() {
     global $dbmysql;
-    $fecha = date('Y-m-d');
-    $codVisita = $_POST['codigo'];
-
-    $sql2 = "INSERT INTO `sys_control` (`GAR_COD` ,`VIP_COD` ,`CON_FECHA` ,`CON_ESTADO`)VALUES ('3', '$codVisita','$fecha','A');";
+    $codigo = $_POST['codigo'];
+    $hora=date('H:i');
+    //CONSULTA DE HORA INGRESO Y SALIDA Y CALCULO DE TIEMPO TRANSCURRIDO
+    $sql2 = "SELECT VISG_COD,VISG_FECHA,HOR_COD,VISG_HORA_INGRESO,VISG_HORA_SALIDA FROM `sys_visitas` WHERE VISG_COD=$codigo;";
     $val2 = $dbmysql->query($sql2);
-    if ($val2) {echo 1;} else {echo 0;}
+    $row = $val2->fetch_object();
+    $hora_entrada=date ('H:i',strtotime($row->VISG_HORA_INGRESO));
+    $hora_salida=date ('H:i',strtotime($row->VISG_HORA_SALIDA));
+    $tiempoTrans = (strtotime($hora) - strtotime($hora_entrada))/60;
+    //CONSULTA TIMEPO TOTAL DEL HORARIO EN MINUTOS
+    $sql3 = "SELECT * FROM `sys_horarios` WHERE HOR_COD=$row->HOR_COD;";
+    $val3 = $dbmysql->query($sql3);
+    $row3 = $val3->fetch_object();
+    $horario_ingreso=$row3->HOR_HORA_ING;
+    $horario_salida=$row3->HOR_HORA_SAL;
+    $tiempoTotal = (strtotime($horario_salida) - strtotime($hora_entrada))/60;
+    
+    echo $tiempoFinal=($tiempoTrans*100)/$tiempoTotal;
+    
+    
+    
+    
+    
+    
+    
+//    $sql2 = "INSERT INTO `sys_control` (`GAR_COD` ,`VIP_COD` ,`CON_FECHA` ,`CON_ESTADO`)VALUES ('3', '$codVisita','$fecha','A');";
+//    $val2 = $dbmysql->query($sql2);
+//    if ($val2) {echo 1;} else {echo 0;}
 }
 
 function bloquearAceeso3() {
