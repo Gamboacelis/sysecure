@@ -517,6 +517,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/acceso1.js"></script>
             <script src="js/acceso2.js"></script>
             <script src="js/acceso3.js"></script>
+            <script src="js/acceso4.js"></script>
             <script src="js/sancionados.js"></script>
             <script src="js/traspaso.js"></script>
 
