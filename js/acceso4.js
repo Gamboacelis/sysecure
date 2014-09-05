@@ -12,19 +12,49 @@ $(document).ready(function() {
             "sZeroRecords": "No hay registros que mostrar"
         }
     });
-    
-    var numero = 0;
     window.setInterval(function() {
-        numero ++;
-        $("#progresoTiempo").html(numero);
-        $("#progresoTiempo").css({"width": (numero + "%")});
+        intervaloTranscurrido();
     }, 1000);
-//    $.timer(125, function(temporizador){
-//       numero ++;
-//       $("#progresoTiempo").html(numero);
-//       $("#progresoTiempo").css({"width": (numero + "%")});
-//    }) 
 });
+
+function intervaloTranscurrido(){
+    $('#listaAcceso4 >tbody >tr').each(function(){
+        var cod = $(this).find("td").eq(0).children('input').val();
+        $.ajax({
+            url: "./includes/controles/acceso4/acceso4_model.php?opcion=intervalo",
+            type: 'post',
+            data: {codigo: cod},
+            success: function(numero){
+                var valor=Math.round(numero);
+                switch (valor){
+                    case valor < 0:
+                         $("#progresoTiempo"+cod).html( '0 %');
+                         $("#progresoTiempo"+cod).removeClass('bg-color-redLight');
+                         $("#progresoTiempo"+cod).addClass('progress-bar-success');
+                        break;
+                    case valor >= 95:
+                         $("#progresoTiempo"+cod).removeClass('progress-bar-success');
+                         $("#progresoTiempo"+cod).addClass('bg-color-redLight');
+                        break;
+                    case valor ===100:
+                        $("#progresoTiempo"+cod).html(valor+' %');
+                        break;
+                    case valor >100:
+                        $("#progresoTiempo"+cod).html( '100 %');
+                        $("#progresoTiempo"+cod).removeClass('progress-bar-success');
+                        $("#progresoTiempo"+cod).addClass('bg-color-redLight');
+                        break;    
+                    default:
+                        $("#progresoTiempo"+cod).html(valor+' %');
+                        $("#progresoTiempo"+cod).css({"width": (valor + "%")});
+                        break;
+                }
+            }
+        });
+        
+    });   
+    
+}
 
 function permitirAcceso3(nombre, vipcontrol,pplcod,codControl,horario){
     $.SmartMessageBox({

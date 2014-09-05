@@ -122,14 +122,14 @@ global $dbmysql;
                     $nombre_visitante=$aRow[ 'VIS_NOMBRE' ].' '.$aRow[ 'VIS_APELLIDO' ];
                     
                   $estado=($aRow[ 'VISG_ESTADO' ]=='A')?'<span class="label label-success">Activo</span>':'<span class="label label-danger">Inactivo</span>';
-                    $output['aaData'][] =array( ''.utf8_encode($aRow[ 'VIS_COD' ]).'',
+                    $output['aaData'][] =array( '<input type="hidden" class="codVisita" id="cod_'.$aRow[ 'VISG_COD' ].'" name="codVisita" value="'.$aRow[ 'VISG_COD' ].'">'.$aRow[ 'VISG_COD' ].'',
                	                		''.utf8_encode($nombre_visitante).'',
                                                 ''.utf8_encode($aRow[ 'VIS_CEDULA' ]).'',
                                                 ''.utf8_encode($aRow[ 'VISG_FECHA' ]).'',
                                                 ''.utf8_encode($aRow[ 'VISG_HORA_INGRESO' ]).'',
                                                 ''.utf8_encode($aRow[ 'VISG_HORA_SALIDA' ]).'<div id="hola"></div>',
                                                 '<div class="progress progress-striped active no-margin">'
-                        . '                         <div id="progresoTiempo" class="progress-bar progress-bar-success" style="width: 65%" role="progressbar">'.utf8_encode($aRow[ 'VISG_TRANSCURRIDO' ]).'</div>'
+                        . '                         <div id="progresoTiempo'.$aRow[ 'VISG_COD' ].'" class="progress-bar progress-bar-success" style="width: 0%" role="progressbar">'.utf8_encode($aRow[ 'VISG_TRANSCURRIDO' ]).'</div>'
                         . '                      </div>',
                                                 ''.$aRow[ 'VISG_POSCHAR' ].$aRow[ 'VISG_POSNUM' ].'',
                                                 ''.$estado.'');
