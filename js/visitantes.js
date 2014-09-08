@@ -14,7 +14,17 @@ $(document).ready(function() {
     });
 });
 
-         
+
+
+function tomarFoto()
+{
+    Webcam.snap( function(data_uri) {
+            document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
+        } );   
+
+    $("#codeImage").val($('#my_result img').attr('src'));          
+}
+
 function editarVisitante(visitante) {
 
     var url = './includes/visitante/visitantes_model.php?opcion=enviarDatosVisitante';
@@ -46,6 +56,28 @@ function editarVisitante(visitante) {
 
 
 
+            $("#my_result").html("<img src='uploads/imagenes/visitante/"+visitante+".jpg' >");
+
+
+            $('#my_result img')
+                .load(function(){
+                   
+                })
+                .error(function(){
+                    $("#my_result img").attr('src','img/avatars/male.png');
+                });            
+
+
+            Webcam.set({
+                width: 220,
+                height: 190,
+                image_format: "jpeg",
+                jpeg_quality: 90
+            });
+            Webcam.attach( "#my_camera" );
+                                                                        
+
+
         }
 
     });
@@ -74,6 +106,8 @@ function carga_DatosIncialesUsuarios(edt,vis) {
 
 
 
+
+
 }
 
 function guardarVisitante() {
@@ -90,9 +124,9 @@ function guardarVisitante() {
 
             datetype: "json",
 
-            type: 'POST',
+            type: 'POST', 
 
-            data: $("#smart-form-register").serialize(),
+            data: $("#smart-form-register").serialize(),  
 
             success: function(res) { 
 
@@ -179,11 +213,22 @@ function nuevoVisitante() {
 
     $('#frmVisitanteModal').modal('show');
 
+    cargarParentesco(0);
+
+
     limpiarFormulario();
 
     $('#smart-form-register >header').text('Registro Nuevo Usuario')
 
     $('#IDvisitante').val('');
+
+    Webcam.set({
+    width: 220,
+    height: 190,
+    image_format: "jpeg",
+    jpeg_quality: 90
+    });
+    Webcam.attach( "#my_camera" );
 
 }
 
@@ -235,7 +280,9 @@ function limpiarFormulario() {
     $("#direccion").val('');  /*E-Mail*/
     $("#telefono").val('');/*Celular*/
     $("#cedula").val('');/*Cedula*/
-    $("#huella").val('');/*Cedula*/    
+    $("#huella").val('');/*Cedula*/   
+    $("#my_result").html(''); 
+    $("#codeImage").val(''); 
 }
 
 
