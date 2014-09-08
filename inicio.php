@@ -4,7 +4,7 @@ if ($_SESSION["autenticado"] == 'SI') {
     $titulo = '';
     $contenido = '';
     $usuario = '';
-    
+
     $usuario = $_SESSION["usu_real_nombre"];
     $modulos = isset($_GET['modulo']) ? $_GET['modulo'] : 'ninguno';
     include_once("./includes/visitas.php");
@@ -23,33 +23,33 @@ if ($_SESSION["autenticado"] == 'SI') {
 
             switch ($option) {
                 case 'horarios':
-                    $titulo='Revisión de Horarios';
-                    $activarMenu31='class="active"';
+                    $titulo = 'Revisión de Horarios';
+                    $activarMenu31 = 'class="active"';
                     $contenido = frm_asignacionPabellones();
                     break;
                 case 'pabellones':
-                    $titulo='Revisión de Pabellones';
-                    $activarMenu32='class="active"';
+                    $titulo = 'Revisión de Pabellones';
+                    $activarMenu32 = 'class="active"';
                     $contenido = reporte_pabellones();
                     break;
                 case 'ppl':
-                    $titulo='Revisión de Personas Privadas de Libertad';
-                    $activarMenu33='class="active"';
+                    $titulo = 'Revisión de Personas Privadas de Libertad';
+                    $activarMenu33 = 'class="active"';
                     $contenido = revisarPpl();
                     break;
                 case 'usuarios':
-                    $titulo='Revisión de Usuarios';
-                    $activarMenu34='class="active"';
+                    $titulo = 'Revisión de Usuarios';
+                    $activarMenu34 = 'class="active"';
                     $contenido = revisarUsuarios();
                     break;
                 case 'visitantes':
-                    $titulo='Revisión de Visitantes';
-                    $activarMenu35='class="active"';
+                    $titulo = 'Revisión de Visitantes';
+                    $activarMenu35 = 'class="active"';
                     $contenido = revisarVisitantes();
                     break;
                 case 'parametros':
-                    $titulo='Revisión de Parametros de Configuracion';
-                    $activarMenu36='class="active"';
+                    $titulo = 'Revisión de Parametros de Configuracion';
+                    $activarMenu36 = 'class="active"';
                     $contenido = reporteParametros();
                     break;
             }
@@ -59,52 +59,45 @@ if ($_SESSION["autenticado"] == 'SI') {
             switch ($option) {
                 case 'acceso1':
                     include_once("./includes/controles/acceso1/acceso1_vistas.php");
-                    $titulo='Revisión de Accesos Primer Nivel';
-                    $activarMenu41='class="active"';
+                    $titulo = 'Revisión de Accesos Primer Nivel';
+                    $activarMenu41 = 'class="active"';
                     $contenido = revisarPpl();
                     break;
                 case 'acceso2':
                     include_once("./includes/controles/acceso2/acceso2_vistas.php");
-                    $titulo='Revisión de Accesos Segundo Nivel';
-                    $activarMenu42='class="active"';
-                    $contenido = frm_revisarAcceso2(); 
+                    $titulo = 'Revisión de Accesos Segundo Nivel';
+                    $activarMenu42 = 'class="active"';
+                    $contenido = frm_revisarAcceso2();
                     break;
                 case 'acceso3':
                     include_once("./includes/controles/acceso3/acceso3_vistas.php");
-                    $titulo='Revisión de Accesos Tercer Nivel';
-                    $activarMenu43='class="active"';
+                    $titulo = 'Revisión de Accesos Tercer Nivel';
+                    $activarMenu43 = 'class="active"';
                     $contenido = frm_revisarAcceso3();
                     break;
                 case 'acceso4':
                     include_once("./includes/controles/acceso4/acceso4_vistas.php");
-                    $titulo='Revisión de Accesos Cuarto Nivel';
-                    $activarMenu44='class="active"';
+                    $titulo = 'Revisión de Accesos Cuarto Nivel';
+                    $activarMenu44 = 'class="active"';
                     $contenido = frm_revisarAcceso4();
                     break;
                 case 'sanciones':
                     include_once("./includes/sanciones/sancion_vistas.php");
-
-                    $titulo='Revisión de Visitantes sancionados';
-
-                    $activarMenu45='class="active"';
-
+                    $titulo = 'Revisión de Visitantes sancionados';
+                    $activarMenu45 = 'class="active"';
                     $contenido = revisarSanciones();
-                    break;    
-
+                    break;
                 case 'traspaso':
                     include_once("./includes/traspaso/traspaso_vistas.php");
-
-                    $titulo='Traspaso de PPL a otro pabellon';
-
-                    $activarMenu46='class="active"';
-
+                    $titulo = 'Traspaso de PPL a otro pabellon';
+                    $activarMenu46 = 'class="active"';
                     $contenido = revisarPpl();
-                    break;                    
+                    break;
             }
             break;
         default:
             $titulo = 'Dashboard';
-            $activarMenu1='class="active"';
+            $activarMenu1 = 'class="active"';
             $contenido = reporte_visitantes();
             break;
     }
@@ -120,22 +113,15 @@ if ($_SESSION["autenticado"] == 'SI') {
             <!-- Basic Styles -->
             <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css">
             <link rel="stylesheet" type="text/css" media="screen" href="css/font-awesome.min.css">
-            <!-- SmartAdmin Styles : Please note (smartadmin-production.css) was created using LESS variables -->
             <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-production.min.css">
             <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-skins.min.css">
-            <!-- SmartAdmin RTL Support is under construction
-                     This RTL CSS will be released in version 1.5
-            <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-rtl.min.css"> -->
             <link rel="stylesheet" type="text/css" media="screen" href="css/generales.css"> 
-            <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
             <link rel="stylesheet" type="text/css" media="screen" href="css/demo.min.css">
             <!-- FAVICONS -->
             <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
             <link rel="icon" href="img/favicon/favicon.ico" type="image/x-icon">
             <!-- GOOGLE FONT -->
             <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
-            <!-- Specifying a Webpage Icon for Web Clip 
-                     Ref: https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html -->
             <link rel="apple-touch-icon" href="img/splash/sptouch-icon-iphone.png">
             <link rel="apple-touch-icon" sizes="76x76" href="img/splash/touch-icon-ipad.png">
             <link rel="apple-touch-icon" sizes="120x120" href="img/splash/touch-icon-iphone-retina.png">
@@ -194,7 +180,7 @@ if ($_SESSION["autenticado"] == 'SI') {
 
                     <!-- logout button -->
                     <div id="logout" class="btn-header transparent pull-right">
-                        <span> <a href="index.php" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i></a> </span>
+                        <span> <a href="logout.php" title="Sign Out" data-action="userLogout" data-logout-msg="Usted puede mejorar su seguridad aún más después de cerrar la sesión al cerrar este navegador abierto"><i class="fa fa-sign-out"></i></a> </span>
                     </div>
                     <!-- end logout button -->
                     <!-- fullscreen button -->
@@ -210,7 +196,7 @@ if ($_SESSION["autenticado"] == 'SI') {
                 <div class="login-info">
                     <span> <!-- User image size is adjusted inside CSS, it should stay as it --> 
                         <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-                            <img src="img/avatars/sunny.png" alt="me" class="online" /> 
+                            <img src="img/avatars/male.png" alt="<?php echo $usuario; ?>" class="online" /> 
                             <span>
                                 <?php echo $usuario; ?>
                             </span>
@@ -244,24 +230,6 @@ if ($_SESSION["autenticado"] == 'SI') {
 
                             </ul>
                         </li>
-
-                        <!--li class="top-menu-hidden">
-                            <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i> <span class="menu-item-parent">SmartAdmin Intel</span></a>
-                            <ul>
-                                <li>
-                                    <a href="difver.html"><i class="fa fa-stack-overflow"></i> Different Versions</a>
-                                </li>
-                                <li>
-                                    <a href="applayout.html"><i class="fa fa-cube"></i> App Settings</a>
-                                </li>
-                                <li>
-                                    <a href="http://bootstraphunter.com/smartadmin/BUGTRACK/track_/documentation/index.html" target="_blank"><i class="fa fa-book"></i> Documentation</a>
-                                </li>
-                                <li>
-                                    <a href="http://bootstraphunter.com/smartadmin/BUGTRACK/track_/" target="_blank"><i class="fa fa-bug"></i> Bug Tracker</a>
-                                </li>
-                            </ul>
-                        </li-->
                     </ul>
                 </nav>
                 <span class="minifyme" data-action="minifyMenu"> 
@@ -313,61 +281,6 @@ if ($_SESSION["autenticado"] == 'SI') {
 
             </div>
             <!-- END MAIN PANEL -->
-
-            <!-- PAGE FOOTER -->
-            <!--div class="page-footer">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <span class="txt-color-white">Sysecure WebApp © 2014-2015</span>
-                    </div>
-
-                    <div class="col-xs-6 col-sm-6 text-right hidden-xs">
-                        <div class="txt-color-white inline-block">
-                            <i class="txt-color-blueLight hidden-mobile">Última actividad de la cuenta <i class="fa fa-clock-o"></i> <strong>Hace 52 minutos &nbsp;</strong> </i>
-                            <div class="btn-group dropup">
-                                <button class="btn btn-xs dropdown-toggle bg-color-blue txt-color-white" data-toggle="dropdown">
-                                    <i class="fa fa-link"></i> <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu pull-right text-left">
-                                    <li>
-                                        <div class="padding-5">
-                                            <p class="txt-color-darken font-sm no-margin">Download Progress</p>
-                                            <div class="progress progress-micro no-margin">
-                                                <div class="progress-bar progress-bar-success" style="width: 50%;"></div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <div class="padding-5">
-                                            <p class="txt-color-darken font-sm no-margin">Server Load</p>
-                                            <div class="progress progress-micro no-margin">
-                                                <div class="progress-bar progress-bar-success" style="width: 20%;"></div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <div class="padding-5">
-                                            <p class="txt-color-darken font-sm no-margin">Memory Load <span class="text-danger">*critical*</span></p>
-                                            <div class="progress progress-micro no-margin">
-                                                <div class="progress-bar progress-bar-danger" style="width: 70%;"></div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <div class="padding-5">
-                                            <button class="btn btn-block btn-default">refresh</button>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END PAGE FOOTER -->
 
             <!-- SHORTCUT AREA : With large tiles (activated via clicking user name tag)
             Note: These tiles are completely responsive,
@@ -437,10 +350,10 @@ if ($_SESSION["autenticado"] == 'SI') {
 
             <!-- JQUERY VALIDATE -->
             <script src="js/plantilla/plugin/jquery-validate/jquery.validate.min.js"></script>
-            
-             <!-- JQUERY VALIDATE MENSSAGE IN SPANISH -->
+
+            <!-- JQUERY VALIDATE MENSSAGE IN SPANISH -->
             <script src="js/plantilla/plugin/jquery-validate/jqueryvalidatemessage.min.js"></script>
-                
+
             <!-- JQUERY MASKED INPUT -->
             <script src="js/plantilla/plugin/masked-input/jquery.maskedinput.min.js"></script>
 
@@ -455,7 +368,7 @@ if ($_SESSION["autenticado"] == 'SI') {
 
             <!-- FastClick: For mobile devices -->
             <script src="js/plantilla/plugin/fastclick/fastclick.min.js"></script>
-            
+
             <!-- Generador de MD5 -->
             <script src="js/plantilla/plugin/jquery-md5/jquery.md5.min.js"></script>
             <!--[if IE 8]>
@@ -500,19 +413,18 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/plantilla/plugin/datatables/dataTables.tableTools.min.js"></script>
             <script src="js/plantilla/plugin/datatables/dataTables.bootstrap.min.js"></script>
             <script src="js/plantilla/plugin/knob/jquery.knob.min.js"></script>
-            
-            
+
+
             <script>
                 $(document).ready(function() {
                     // DO NOT REMOVE : GLOBAL FUNCTIONS!
                     pageSetUp();
-                    
+
                 });
             </script>
         </body>
     </html>
     <?php
-    
 } else {
     header('Location: index.php');
 }
