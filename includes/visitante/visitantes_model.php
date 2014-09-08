@@ -107,7 +107,7 @@ function guardaDatosVisitante() {
     
     $parentesco = $_POST["parentesco"];     
 
-    $codeImage = $_POST["codeImage"];
+    $codeImage = $_POST["codeImage"]; 
 
 
 
@@ -118,7 +118,7 @@ function guardaDatosVisitante() {
 
     $val = $dbmysql->query($sql);
 
-    $id = $dbmysql->maxid('VIS_COD','sys_visitante');
+    $id = $dbmysql->maxid('VIS_COD','sys_visitante'); 
 
    if ($val) {
 

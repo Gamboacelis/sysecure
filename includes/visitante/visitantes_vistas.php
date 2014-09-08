@@ -170,7 +170,7 @@ function frmVisitante() {
                                                                     <section class="col-md-2" style="width:50%;text-align:center;">
                                                                         <label class="input">Foto Actual:</label>
                                                                         
-                                                                        <div id="my_result"></div>
+                                                                        <div id="my_result"></div> 
 
                                                                     </section>
                                                                 </div>    

@@ -124,9 +124,9 @@ function guardarVisitante() {
 
             datetype: "json",
 
-            type: 'POST',
+            type: 'POST', 
 
-            data: $("#smart-form-register").serialize(),
+            data: $("#smart-form-register").serialize(),  
 
             success: function(res) { 
 
