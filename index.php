@@ -48,7 +48,7 @@ date_default_timezone_set('America/Bogota');
 		<header id="header">
 
 			<div id="logo-group">
-				<span id="logo"> <img src="img/logo.png" alt="SmartAdmin"> </span>
+                            <span id="logo"> <img src="img/logo/Logo.png" alt="Sysecure"> </span>
 			</div>
 		</header>
 
