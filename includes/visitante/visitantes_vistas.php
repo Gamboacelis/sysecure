@@ -154,7 +154,29 @@ function frmVisitante() {
 
                                                             <fieldset>
 
+
                                                                 <div class="row">
+
+                                                                
+
+                                                                    <section class="col-md-2" style="width:50%;text-align:center;" >
+                                                                        <label class="input">Foto:</label>
+                                                                        <div id="my_camera" ></div>
+                                                                        <a class="btn btn-danger btn-xs 4 eliminaParticipante" href="javascript:tomarFoto()"><i class="fa fa fa-camera"></i> Tomar Foto</a>
+                                                                        <script type="text/javascript" src="js/webcam.js"></script>
+                                                                        <input type="hidden" id="codeImage" name="codeImage">
+                                                                                               
+                                                                    </section>
+                                                                    <section class="col-md-2" style="width:50%;text-align:center;">
+                                                                        <label class="input">Foto Actual:</label>
+                                                                        
+                                                                        <div id="my_result"></div>
+
+                                                                    </section>
+                                                                </div>    
+                                                                <div class="row">
+
+
 
                                                                     <section class="col col-6">
 

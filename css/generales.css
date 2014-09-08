@@ -14,3 +14,5 @@
 .cargar_txt span{margin:0 0 0 12px;z-index:2}
 .tablaPabellonesDetalle:hover{color:#058dc7;cursor:pointer}
 .txtPabellonHorario{color:#f00;font-size:1.2em;font-weight:bolder}
+#my_camera video{margin-left: 28px;}
+#my_result img {width: 142px;margin-top: 23px;}

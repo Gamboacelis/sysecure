@@ -107,6 +107,9 @@ function guardaDatosVisitante() {
     
     $parentesco = $_POST["parentesco"];     
 
+    $codeImage = $_POST["codeImage"];
+
+
 
 
     $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_TELEFONO,VIS_CEDULA, VIS_DIRECCION,VIS_CORREO,VIS_ESTADO,PAR_COD)VALUES
@@ -115,7 +118,15 @@ function guardaDatosVisitante() {
 
     $val = $dbmysql->query($sql);
 
+    $id = $dbmysql->maxid('VIS_COD','sys_visitante');
+
    if ($val) {
+
+
+    if($codeImage != "")
+    {    
+        saveImage($codeImage,$id);
+    }    
 
     echo 1;
 
@@ -150,6 +161,8 @@ function actualizarDatosVisitante() {
 
     $parentesco = $_POST["parentesco"];    
 
+    $codeImage = $_POST["codeImage"];
+
 
 
     $sql = "UPDATE `sys_visitante` SET 
@@ -179,7 +192,14 @@ function actualizarDatosVisitante() {
 
     $val = $dbmysql->query($sql);
 
+    
+
    if ($val) {
+
+        if($codeImage != "")
+        {    
+            saveImage($codeImage,$codigo);
+        }    
 
         echo 1;
 
@@ -221,6 +241,13 @@ function eliminarVisitante()
 
 }
 
+function saveImage($base64img,$id){
+    define('UPLOAD_DIR', '../../uploads/imagenes/visitante/');
+    $base64img = str_replace('data:image/jpeg;base64,', '', $base64img);
+    $data = base64_decode($base64img);
+    $file = UPLOAD_DIR . $id .'.jpg';
+    file_put_contents($file, $data);
+}
 
 function enviarDatosParentesco() {
 
@@ -229,21 +256,33 @@ function enviarDatosParentesco() {
     $visitante = $_POST['visitante'];
 
 
+
     $sql = "SELECT * FROM `sys_parentesco`";
 
     $val = $dbmysql->query($sql);
 
     $retval = '';
 
+
+
     $sqlPariente = "SELECT  PAR_COD FROM `sys_visitante` WHERE VIS_COD = $visitante";
 
     $valPariente = $dbmysql->query($sqlPariente);
 
     $rowPariente = $valPariente->fetch_object();
+
+    if ($visitante == 0 )
+    {
+        $codigoPariente = "";
+    }
+    else
+    {
+        $codigoPariente = $rowPariente->PAR_COD;
+    }
     
     while ($row = $val->fetch_object()) {
 
-            if($row->PAR_COD == $rowPariente->PAR_COD)
+            if($row->PAR_COD == $codigoPariente )
             {
                 $selected = 'selected';
             }
@@ -257,3 +296,4 @@ function enviarDatosParentesco() {
 
     echo $retval;
 }
+
