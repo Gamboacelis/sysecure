@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.13
+-- version 4.2.0
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 03-09-2014 a las 07:37:28
--- Versión del servidor: 5.5.24-log
--- Versión de PHP: 5.3.13
+-- Tiempo de generación: 06-09-2014 a las 00:17:19
+-- Versión del servidor: 5.6.17
+-- Versión de PHP: 5.3.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de datos: `sysecure`
+-- Base de datos: `bulkenco_sysecure`
 --
 
 -- --------------------------------------------------------
