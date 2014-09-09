@@ -155,7 +155,101 @@ function nuevoTipoSancion()
     $('#frmTipoSancion').modal('show');
 }
 
-function gestionarSancion()
+function gestionarSancion(codigoTipoSancion)
 {
-     $('#frmSancionesModal').modal('show');
+        $('#IDtipoSancion1').val(codigoTipoSancion);
+        $.ajax({
+        url: './includes/sanciones/mantenimiento/sancion_model.php?opcion=mostrarSanciones',
+        datetype: "json",
+        type: 'POST',
+        data: {codigoTipoSancion: codigoTipoSancion},
+        success: function(res) {
+            $('#listaSanciones >tbody').html(res);
+            $('#frmSancionesModal').modal('show');
+        }
+    });
+    
+}
+
+
+function GuardarCambioSancion(codigoSancion, tipo) {
+    codigoTipoSancion =  $('#IDtipoSancion1').val();
+
+    if (tipo === 'N') {
+        var url = './includes/sanciones/mantenimiento/sancion_model.php?opcion=guardarNuevaSanciones';
+        var codigo = $('#IDpplNew').val();
+        var sancion = $('#new').children('td').children('#DescripcionSancion').val();
+        var tiempo = $('#new').children('td').children('#TiempoSancion').val();
+
+    } else {
+        var url = './includes/sanciones/mantenimiento/sancion_model.php?opcion=guardarEdicionSancion';
+        var codigoSancion = codigoSancion;
+        var sancion = $('#sancion' + codigoSancion).children('td').children('#DescripcionSancion').val();
+        var tiempo = $('#sancion' + codigoSancion).children('td').children('#TiempoSancion').val();
+    }
+    $.ajax({
+        url: url,
+        datetype: "json",
+        type: 'POST',
+        data: {codigoSancion: codigoSancion, sancion: sancion, tiempo: tiempo, codigoTipoSancion:codigoTipoSancion},
+        success: function(res) {
+            if (res != '0') {
+                var json_obj = $.parseJSON(res);
+                if (tipo === 'N') {
+                    $('#new').children('td').children('#txtDescripcionSancion').text(json_obj.datosActualizados.nombre);
+                    $('#new').children('td').children('#txtTiempoSancion').text(json_obj.datosActualizados.apellido);
+                } else {
+                    $('#sancion' + codigoSancion).children('td').children('#txtDescripcionSancion').text(json_obj.datosActualizados.sancion);
+                    $('#sancion' + codigoSancion).children('td').children('#txtTiempoSancion').text(json_obj.datosActualizados.tiempo);
+                }
+            }
+            if (tipo === 'N') {
+                gestionarSancion(json_obj.datosActualizados.codigoTipoSancion);
+            } else {
+                $('#sancion' + codigoSancion).children('td').children('#DescripcionSancion').val(json_obj.datosActualizados.sancion);
+                $('#sancion' + codigoSancion).children('td').children('#TiempoSancion').val(json_obj.datosActualizados.tiempo);
+                $('#sancion' + codigoSancion).children('td').children('.txtVisDatos').show();
+                $('#sancion' + codigoSancion).children('td').children('.visDatos').hide();
+                $('#sancion' + codigoSancion).children('td').children('.visBtnGuardar').hide();
+                $('#sancion' + codigoSancion).children('td').children('.visBtnDatos').show();
+            }
+            $.smallBox({
+                title: "Actualización",
+                content: "<i class='fa fa-clock-o'></i> <i>Sancion Actualizada correctamente...</i>",
+                color: "#659265",
+                iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                timeout: 4000
+            });
+        }
+    });
+}
+
+function nuevaSancion()
+{
+
+                var tds = $("#listaSanciones tr:first td").length; // Obtenemos el total de columnas (tr) del id "tabla" 
+                var trs = $("#listaSanciones tr").length;
+                var alerta = 1;
+                var tr = $("tr#new").attr("id");
+                if (tr === undefined) {
+                    var nuevaFila = '<tr id="new">';
+                    nuevaFila += "<td>" + (trs);
+                    nuevaFila += '<td><div class="txtVisDatos" id="txtDescripcionSancion"></div><input type="text" id="DescripcionSancion" name="DescripcionSancion" style="width: 180px;" class="visDatos">';
+                    nuevaFila += '<td><div class="txtVisDatos" id="txtTiempoSancion"></div><input type="text" id="TiempoSancion" name="TiempoSancion" class="visDatos">';
+
+                    var valida = 'N', nada = '';
+                    nuevaFila += '<td><a class="btn btn-primary btn-xs visBtnGuardar" title="Guardar Cambio" href="javascript:GuardarCambioSancion(\'' + nada + '\',\'' + valida + '\')"><i class="fa fa-save"></i></a>';
+                    nuevaFila += "</tr>";
+                    $("#listaSanciones").append(nuevaFila);
+                    $('#new').children('td').children('.visDatos').show();
+                    $('#new').children('td').children('.visBtnGuardar').show();
+                }
+         
+}
+
+function editarSancion(cod) {
+    $('#sancion' + cod).children('td').children('.txtVisDatos').hide();
+    $('#sancion' + cod).children('td').children('.visDatos').show();
+    $('#sancion' + cod).children('td').children('.visBtnGuardar').show();
+    $('#sancion' + cod).children('td').children('.visBtnDatos').hide();
 }

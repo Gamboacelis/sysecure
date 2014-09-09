@@ -193,7 +193,7 @@ $i = 0;
 
 
 
-while ($aRow = mysql_fetch_array($rResult)) {
+while ($aRow = mysql_fetch_array($rResult)) { 
 
     /* General output */
 

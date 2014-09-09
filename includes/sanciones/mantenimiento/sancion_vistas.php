@@ -196,6 +196,7 @@ function frmSanciones(){
                                 <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
                                                 <header>
                                                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                        <input type="hidden" id="IDtipoSancion1" name="IDtipoSancion1">
                                                 </header>
                                                 <div>
                                                     <div class="widget-body">
@@ -206,7 +207,7 @@ function frmSanciones(){
                                                                         <h2>Listado de Sanciones <spam id="totalSeleccionados"></spam></h2>
                                                                         <div class="widget-toolbar">
                                                                             <div class="btn-group">
-                                                                                    <button class="btn btn-xs btn-success btn-personal" data-toggle="modal" onclick="javascript:nuevoVisitantePpl()">
+                                                                                    <button class="btn btn-xs btn-success btn-personal" data-toggle="modal" onclick="javascript:nuevaSancion()">
                                                                                         <i class="fa fa-fw fa-plus"></i>  Agregar Sanci&oacute;n
                                                                                     </button>
                                                                             </div>
@@ -215,12 +216,12 @@ function frmSanciones(){
                                                                 <div>
                                                                     <div class="widget-body no-padding">
                                                                         <div class="table-responsive">
-                                                                            <table id="litaVisitantesPpl" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox" style="text-align:center">
+                                                                            <table id="listaSanciones" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox" style="text-align:center">
                                                                                 <thead>
                                                                                     <tr>
                                                                                         <th><i class="fa fa-check"></i><input type="hidden" id="IDpplNew" name="IDpplNew"></th>
-                                                                                        <th><i class="fa fa-user"></i> Tiempo</th>
-                                                                                        <th><i class="fa fa-user"></i> Descripcion tiempo</th>
+                                                                                         <th><i class="fa fa-user"></i> Sanci&oacute;n</th>
+                                                                                        <th><i class="fa fa-user"></i> d&iacute;as</th>
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody>
