@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    $('#vistaCentros').dataTable();
     var $registerForm = $("#smart-form-centro").validate({
         rules: {
             ciudad: {required: true},

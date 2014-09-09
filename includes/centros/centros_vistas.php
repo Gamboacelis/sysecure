@@ -29,7 +29,7 @@ function reporteCentros() {
                                     </div>
                                     <div class="widget-body no-padding">
                                             <div class="table-responsive">
-                                                    <table id="vistaparametros" class="table table-bordered table-striped table-hover">
+                                                    <table id="vistaCentros" class="table table-bordered table-striped table-hover">
                                                             <thead>
                                                                     <tr>
                                                                             <th>#</th>
@@ -118,7 +118,7 @@ function frm_Centros() {
                                                                     <section class="col col-6">
                                                                             <label class="label">Teléfono</label>
                                                                             <label class="input"> <i class="icon-append fa fa-phone"></i>
-                                                                                    <input type="number" name="telefono" id="telefono" placeholder="Teléfono del Centro" max="10">
+                                                                                    <input type="number" name="telefono" id="telefono" placeholder="Teléfono del Centro">
                                                                                     <b class="tooltip tooltip-bottom-right">Ingrese un Número Telefónico</b> </label>
                                                                     </section>
                                                                     
