@@ -26,7 +26,7 @@ function permitirAcceso3(nombre, vipcontrol,pplcod,codControl,horario){
                 type: 'post',
                 data: {vipcontrol: vipcontrol,pplcod:pplcod,codControl:codControl,horario:horario},
                 success: function(respuesta){
-                    if (respuesta === '1') {
+                    if (respuesta !== '0') {
                         $.smallBox({
                             title: nombre,
                             content: "<i class='fa fa-clock-o'></i> <i>Acceso del visitante Permitido...</i>",
@@ -34,7 +34,11 @@ function permitirAcceso3(nombre, vipcontrol,pplcod,codControl,horario){
                             iconSmall: "fa fa-check fa-2x fadeInRight animated",
                             timeout: 4000
                         });
-                        location.reload();
+                        $("#verlugarCedula").html('<strong>'+respuesta+'</strong>');
+                        $("#txtCedula").html('<i> Visitante: '+nombre+'</i>');
+                        $("#frmCedulaModal").modal('show');
+//                             
+                       $('#closeModalCedula').click(function(){location.reload();});
                     }
                 },
                 error:function(){
@@ -49,6 +53,9 @@ function permitirAcceso3(nombre, vipcontrol,pplcod,codControl,horario){
             });
         }
     });
+}
+function closeModalCedula() {
+        location.reload();
 }
 
 function negarAcceso3(codVisita, codVisitante){
