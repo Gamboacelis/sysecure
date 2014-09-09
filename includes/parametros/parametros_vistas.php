@@ -9,14 +9,6 @@ function reporteParametros() {
     $sql = "SELECT * FROM `sys_parametros` WHERE CEN_COD={$_SESSION['usu_centro_cod']}";
     $val_s = $dbmysql->query($sql);
     $retval = '<article class="col-sm-12 col-md-12 col-lg-6">
-                    <div class="botonesSuperiores">
-                    <fieldset>
-                            <button id="agregarPabellon" class="btn btn-labeled btn-primary btn-personal"  data-toggle="modal" onclick="javascript:nuevoPabellon()">
-                                <span class="btn-label"><i class="glyphicon glyphicon-plus"></i></span>
-                                Agregar Pabellon
-                            </button>
-                        </fieldset>
-                    </div>
                     <div class="jarviswidget jarviswidget-color-darken" id="wid-id-2" data-widget-editbutton="false">
                             <header>
                                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
@@ -39,17 +31,15 @@ function reporteParametros() {
                                                             </thead>
                                                             <tbody>';
                                                         while ($row = $val_s->fetch_object()) {
-                                                            $a = 'A';
-                                                            $parametros = $row->VIS_COD . ',\'' . $a . '\'';
                                                             $retval .= '<tr id="vis' . $row->PAR_COD . '">
                                                                             <td>' . $row->PAR_COD . '</td>
-                                                                            <td><div class="txtVisDatos" id="txtVisModulo">' . $row->PAR_MODULO . '</div><input type="text" id="visModulo" name="visModulo" class="visDatosGeneral" value="' . $row->PAR_MODULO . '"></td>
-                                                                            <td><div class="txtVisDatos" id="txtVisDescripcion">' . $row->PAR_DESCRIPCION . '</div><input type="text" id="visDescripcion" name="visDescripcion" class="visDatosGeneral" value="' . $row->PAR_DESCRIPCION . '"></td>
-                                                                            <td><div class="txtVisDatos" id="txtVisValor">' . $row->PAR_VALOR . '</div><input type="text" id="VisValor" name="VisValor" class="visDatosGeneral" value="' . $row->PAR_VALOR . '"></td>
-                                                                            <td><a class="btn btn-primary btn-xs visBtnGuardar" title="Guardar Cambio" href="javascript:GuardarCambioParametro(' . $parametros . ')">
+                                                                            <td><div  id="txtVisModulo">' . $row->PAR_MODULO . '</div></td>
+                                                                            <td><div  id="txtVisDescripcion">' . $row->PAR_DESCRIPCION . '</div></td>
+                                                                            <td><div class="txtVisDatos" id="txtVisValor">' . $row->PAR_VALOR . '</div><input type="text" id="VisValor" name="VisValor" class="visDatosGeneral" value="' . $row->PAR_VALOR . '" style="width:60px;"></td>
+                                                                            <td><a class="btn btn-primary btn-xs visBtnGuardar" title="Guardar Cambio" href="javascript:GuardarCambioParametro(' . $row->PAR_COD . ')">
                                                                                     <i class="fa fa-save"></i>
                                                                                 </a>
-                                                                                <a class="btn btn-success btn-xs" title="Editar parametro" href="javascript:editarParametro(' . $row->PAR_COD . ')"><i class="fa fa-pencil"></i></a></td>    
+                                                                                <a class="btn btn-success btn-xs visBtnDatos" title="Editar parametro" href="javascript:editarParametro(' . $row->PAR_COD . ')"><i class="fa fa-pencil"></i></a></td>    
                                                                     </tr>';
     }
     $retval .= '</tbody>

@@ -85,7 +85,7 @@ function guardaDatosHorario() {
 function eliminarHorario() {
     global $dbmysql;
     $codigo = $_POST['codigo'];
-    $sql = "UPDATE `sys_horarios` SET HOR_ESTADO = 'I' WHERE HOR_COD=$codigo;";
+    $sql = "DELETE FROM `sys_horarios` WHERE HOR_COD=$codigo;";
     $val = $dbmysql->query($sql);
     if ($val) {
         echo 1;

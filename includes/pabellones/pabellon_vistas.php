@@ -1,4 +1,6 @@
 <?php
+include_once '../generales.php';
+$clGeneral = new general();
 include_once PATH_PROD.SISTEM_NAME.'/includes/conexiones/db_local.inc.php';
 $dbmysql = new database();
 date_default_timezone_set('America/Bogota');
@@ -15,7 +17,7 @@ switch ($funcion) {
 }
 
 function reporte_pabellones() {
-    global $dbmysql;
+    global $dbmysql,$clGeneral;
     $sql="SELECT e.*,p.* FROM `sys_pabellones` p, sys_etapas e WHERE e.`NVL_COD`=p.`NVL_COD` AND p.CEN_COD={$_SESSION['usu_centro_cod']}";
      $val_s = $dbmysql->query($sql);
         $retval = '<article class="col-sm-12 col-md-12 col-lg-6">
@@ -44,19 +46,22 @@ function reporte_pabellones() {
                                                                             <th>Nivel</th>
                                                                             <th>Descripción</th>
                                                                             <th>Capacidad</th>
+                                                                            <th>Cantidad Actual</th>
                                                                             <th>Ala</th>
                                                                             <th>Acción</th>
                                                                     </tr>
                                                             </thead>
                                                             <tbody>';
                                                     while($row = $val_s->fetch_object()){
+                                                        $cantidadActual=$clGeneral->obtenerCantidadActualPPL($row->PAB_COD);
                                                         $cadenaParametros=utf8_encode($row->PAB_COD.','."'$row->PAB_DESCRIPCION'");
                                                          $retval .= '<tr>
                                                                             <td>'.$row->PAB_COD.'</td>
                                                                             <td>'.$row->NVL_DESCRIPCION.'</td>
                                                                             <td>'.$row->PAB_DESCRIPCION.'</td>
-                                                                            <td>'.$row->PAB_CAPACIDAD.'</td>
-                                                                            <td>'.$row->PAB_ALA.'</td>
+                                                                            <td align="center">'.$row->PAB_CAPACIDAD.'</td>
+                                                                            <td align="center">'.$cantidadActual.'</td>
+                                                                            <td align="center">'.$row->PAB_ALA.'</td>
                                                                             <td>
                                                                                 <a class="btn btn-success btn-xs" title="Editar Pabellon" href="javascript:editarPabellon('.$row->PAB_COD.')">
                                                                                     <i class="fa fa-pencil"></i>

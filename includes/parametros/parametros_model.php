@@ -12,8 +12,8 @@ switch ($funcion) {
     case 'guardaDatosPabellon':
         guardaDatosPabellon();
         break;
-    case 'actualizarDatosPabellon':
-        actualizarDatosPabellon();
+    case 'actualizaValorParametro':
+        actualizaValorParametro();
         break;
     case 'eliminarPabellon':
         eliminarPabellon();
@@ -38,22 +38,13 @@ function enviarDatosPabellon() {
     echo $encode = json_encode($lista);
 }
 
-function actualizarDatosPabellon() {
+function actualizaValorParametro() {
     global $dbmysql;
-    $codigo = $_POST['IDpabellon'];
-    $ala = $_POST["ala"];
-    $descripcion = $_POST["descripcion"];
-    $capacidad = $_POST["capacidad"];
-    $detalles = $_POST["detalles"];
-    $nivel = $_POST["nivel"];
-
-    $sql = "UPDATE `sys_pabellones` SET 
-                NVL_COD    = '$nivel',
-                PAB_ALA  = '$ala',
-                PAB_DESCRIPCION   = '$descripcion',
-                PAB_CAPACIDAD     = '$capacidad',
-                PAB_DETALLES   = '$detalles'
-            WHERE PAB_COD=$codigo;";
+    $parCod = $_POST['parCod'];
+    $valor = $_POST["valor"];
+    $sql = "UPDATE `sys_parametros` SET 
+                PAR_VALOR    = '$valor'
+            WHERE PAR_COD=$parCod;";
     $val = $dbmysql->query($sql);
     if ($val) {
         echo 1;

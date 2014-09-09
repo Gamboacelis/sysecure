@@ -50,13 +50,8 @@ if ($_SESSION["autenticado"] == 'SI') {
                     break;
                 case 'ppl':
                     $titulo = 'Revisión de Personas Privadas de Libertad';
-                    $activarMenu35_1 = 'class="active"';
+                    $activarMenu35 = 'class="active"';
                     $contenido = revisarPpl();
-                    break;
-                case 'traspaso':
-                    $titulo = 'Traspaso de PPL a otro pabellon';
-                    $activarMenu35_2 = 'class="active"';
-                    $contenido = revisarTraspasoPpl();
                     break;
                 case 'usuarios':
                     $titulo = 'Revisión de Usuarios';
@@ -243,6 +238,7 @@ if ($_SESSION["autenticado"] == 'SI') {
                                 <li <?php echo $activarMenu32 ?>><a href="?modulo=administrativo&op=horarios">Horarios de Visitas</a></li>
                                 <li <?php echo $activarMenu33 ?>><a href="?modulo=administrativo&op=pabellones">Pabellones</a></li>
                                 <li <?php echo $activarMenu34 ?>><a href="?modulo=administrativo&op=parametros">Parametros</a></li>
+<<<<<<< HEAD
                                 <li <?php echo $activarMenu36 ?>><a href="?modulo=administrativo&op=sanciones">Sanciones</a></li>
 
                                 <li><a href="#">PPL</a>
@@ -250,6 +246,9 @@ if ($_SESSION["autenticado"] == 'SI') {
                                         <li <?php echo $activarMenu35_1 ?>><a href="?modulo=administrativo&op=ppl"><i class="fa fa-pencil"></i>  Mantenimiento PPL</a></li>
                                     </ul>
                                 </li>
+=======
+                                <li <?php echo $activarMenu35 ?>><a href="?modulo=administrativo&op=ppl">PPL</a></li>
+>>>>>>> 93a0cc4b43e3e724a212d2811d1c4ce50c819d86
                                 <li <?php echo $activarMenu36 ?>><a href="?modulo=administrativo&op=usuarios">Usuarios</a></li>
                                 <li <?php echo $activarMenu37 ?>><a href="?modulo=administrativo&op=visitantes">Visitantes</a></li>
                                 

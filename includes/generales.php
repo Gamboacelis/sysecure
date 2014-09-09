@@ -116,4 +116,14 @@ class general {
         return $val;
     }
 
+    function obtenerCantidadActualPPL($pabellon){
+        global $dbmysql;
+        $sql = "SELECT MAX(`PPL_COD`) AS CantPPL FROM `sys_ppl` where `PAB_COD`=$pabellon";
+        $val = $dbmysql->query($sql);
+        if($val->num_rows>0){
+            $row = $val->fetch_object();
+            $val = $row->CantPPL;
+            return $val;
+        }
+    }    
 }
