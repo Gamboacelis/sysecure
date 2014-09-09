@@ -225,7 +225,7 @@ if ($_SESSION["autenticado"] == 'SI') {
                                 <li><a href="#">PPL</a>
                                     <ul>
                                         <li <?php echo $activarMenu35_1 ?>><a href="?modulo=administrativo&op=ppl"><i class="fa fa-pencil"></i>  Mantenimiento PPL</a></li>
-                                        <li <?php echo $activarMenu35_2 ?>><a href="?modulo=administrativo&op=traspaso"><i class="fa fa-flag"></i>  Movimientos PPL</a></li>
+                                        <!--<li <?php echo $activarMenu35_2 ?>><a href="?modulo=administrativo&op=traspaso"><i class="fa fa-flag"></i>  Movimientos PPL</a></li>-->
                                     </ul>
                                 </li>
                                 <li <?php echo $activarMenu36 ?>><a href="?modulo=administrativo&op=usuarios">Usuarios</a></li>

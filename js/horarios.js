@@ -1,6 +1,6 @@
- $(document).ready(function() {
-    
-var $cambioClaveForm = $("#smart-form-horarios").validate({
+$(document).ready(function() {
+
+    var $cambioClaveForm = $("#smart-form-horarios").validate({
         // Rules for form validation
         rules: {
             dias: {
@@ -42,14 +42,14 @@ var $cambioClaveForm = $("#smart-form-horarios").validate({
             error.insertAfter(element.parent());
         }
     });
- });
+});
 function mostrarHoraiosPabellon(pabellon) {
     $('#IDpabellon').val(pabellon);
     $('#IDpabellonFrm').val(pabellon);
-    $('#listaPabellones').children('tbody').children('tr').each(function(){
+    $('#listaPabellones').children('tbody').children('tr').each(function() {
         $(this).removeClass('info');
     });
-    $('#'+pabellon).addClass('info');
+    $('#' + pabellon).addClass('info');
     $.ajax({
         url: "./includes/horarios/horarios_model.php?opcion=buscarHorariosPabellon",
         type: 'post',
@@ -60,14 +60,14 @@ function mostrarHoraiosPabellon(pabellon) {
     });
 }
 function nuevoHorario() {
-    var codPabellon=$('#IDpabellon').val();
+    var codPabellon = $('#IDpabellon').val();
     $('.checkbox').hide();
-    if(codPabellon!==''){
+    if (codPabellon !== '') {
         $('#frmHorariosModal').modal('show');
         limpiarFormularioHorario();
         $('#smart-form-horarios >header').text('Registro Nuevo Horario')
         $('#IDhorario').val('');
-    }else{
+    } else {
         $.smallBox({
             title: "Error..!!",
             content: "<i class='fa fa-clock-o'></i> <i>Seleccione un Pabellon</i>",
@@ -159,7 +159,7 @@ function editarHorario(horario) {
     });
 
 }
-function eliminarHorario(codPar, nomCod,codPab) {
+function eliminarHorario(codPar, nomCod, codPab) {
 
     $.SmartMessageBox({
         title: "Confirmación!",
@@ -183,7 +183,7 @@ function eliminarHorario(codPar, nomCod,codPab) {
                         });
                         $.smallBox({
                             title: nomCod,
-                            content: "<i class='fa fa-clock-o'></i> <i>Horario Deshabilitado...</i>",
+                            content: "<i class='fa fa-clock-o'></i> <i>Horario Eliminado...</i>",
                             color: "#659265",
                             iconSmall: "fa fa-check fa-2x fadeInRight animated",
                             timeout: 4000
@@ -203,8 +203,8 @@ function carga_DatosIncialesHorario(edt) {
     $("#horaSalida").val(edt.datosHorario.HOR_HORA_SAL);  /*Hora de Salida*/
     $('#tipoVisitas').prop('selectedIndex', edt.datosHorario.TPV_COD);
     $('#dias option[value="' + edt.datosHorario.HOR_DIAS + '"]').attr("selected", true);/*Tipo de Usuario*/
-    edt.datosHorario.HOR_ESTADO=='A'?$("#estado").prop("checked", true):$("#estado").prop("checked", false); 
-    
+    edt.datosHorario.HOR_ESTADO == 'A' ? $("#estado").prop("checked", true) : $("#estado").prop("checked", false);
+
 }
 function limpiarFormularioHorario() {
     $('#dias').prop('selectedIndex', 0);  /*Dias*/
