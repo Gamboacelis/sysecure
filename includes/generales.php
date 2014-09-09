@@ -20,7 +20,10 @@ class general {
         $activarMenu33 = '';
         $activarMenu34 = '';
         $activarMenu35 = '';
+        $activarMenu35_1='';
+        $activarMenu35_2='';
         $activarMenu36 = '';
+        $activarMenu37 = '';
         $activarMenu4 = '';
         $activarMenu41 = '';
         $activarMenu42 = '';

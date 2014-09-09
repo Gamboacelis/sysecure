@@ -48,11 +48,8 @@ date_default_timezone_set('America/Bogota');
 		<header id="header">
 
 			<div id="logo-group">
-				<span id="logo"> <img src="img/logo.png" alt="SmartAdmin"> </span>
+                            <span id="logo"> <img src="img/logo/Logo.png" alt="Sysecure"> </span>
 			</div>
-
-			<span id="extr-page-header-space"> <span class="hidden-mobile">Need an account?</span> <a href="register.html" class="btn btn-danger">Create account</a> </span>
-
 		</header>
 
 		<div id="main" role="main">
@@ -69,22 +66,16 @@ date_default_timezone_set('America/Bogota');
 								<h4 class="paragraph-header">Control de Visitas de PPL, MultiCentros</h4>
 							</div>
 							
-							<img src="img/demo/iphoneview.png" class="pull-right display-image" alt="" style="width:210px">
+                                                    <img src="img/justicia.jpg" class="pull-right img-thumbnail" alt="" style="width:350px">
 
 						</div>
 
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-								<h5 class="about-heading">About SmartAdmin - Are you up to date?</h5>
-								<p>
-									Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa.
-								</p>
+								<img src="img/logo_minJus.png" class="pull-right display-image" alt="" width="300px">
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-								<h5 class="about-heading">Not just your average template!</h5>
-								<p>
-									Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi voluptatem accusantium!
-								</p>
+                                                                <img src="img/ealv.png" class="pull-right display-image" alt="" width="300px">
 							</div>
 						</div>
 
@@ -137,21 +128,6 @@ date_default_timezone_set('America/Bogota');
 							</form>
 
 						</div>
-						
-						<h5 class="text-center"> - Or sign in using -</h5>
-															
-							<ul class="list-inline text-center">
-								<li>
-									<a href="javascript:void(0);" class="btn btn-primary btn-circle"><i class="fa fa-facebook"></i></a>
-								</li>
-								<li>
-									<a href="javascript:void(0);" class="btn btn-info btn-circle"><i class="fa fa-twitter"></i></a>
-								</li>
-								<li>
-									<a href="javascript:void(0);" class="btn btn-warning btn-circle"><i class="fa fa-linkedin"></i></a>
-								</li>
-							</ul>
-						
 					</div>
 				</div>
 			</div>

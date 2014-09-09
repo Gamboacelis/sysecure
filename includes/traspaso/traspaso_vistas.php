@@ -21,7 +21,7 @@ switch ($modulos) {
 }
 
 
-function revisarPpl() {
+function revisarTraspasoPpl() {
     $retval = '';
     $retval = '<article class="col-xs-12 col-sm-12 col-md-12 col-lg-10" id="viewPPL">
 

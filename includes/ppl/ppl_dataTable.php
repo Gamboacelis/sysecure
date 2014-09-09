@@ -84,7 +84,7 @@ global $dbmysql;
 	 * SQL queries
 	 * Get data to display
 	 */
-        $sWhere=($sWhere=='')?" WHERE PPL_ESTADO!='E' ":" AND PPL_ESTADO!='E' ";
+        $sWhere=($sWhere=='')?" WHERE PPL_ESTADO='A' ":" AND PPL_ESTADO='A' ";
         
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."
@@ -117,29 +117,22 @@ global $dbmysql;
         $i=0;
         
 	while ( $aRow = mysql_fetch_array( $rResult ) ){
+//            Consulta descripcion de Pabellon
+            $sql1 = "SELECT PAB_DESCRIPCION FROM `sys_pabellones` WHERE PAB_COD = {$aRow[ 'PAB_COD' ]};";
+            $val1 = $dbmysql->query($sql1);
+            $row = $val1->fetch_object();
+            //Consulta Pabellon Anterior
+            $sql2 = "SELECT h.*,p.PAB_DESCRIPCION FROM sys_historia_ppl h,`sys_pabellones` p WHERE h.PAB_COD=p.PAB_COD AND h.PPL_COD = {$aRow[ 'PPL_COD' ]} ORDER BY h.`HIS_COD` DESC LIMIT 0,1";
+            $val2 = $dbmysql->query($sql2);
+            $row2 = $val2->fetch_object();
                 /* General output */
-                switch ($aRow[ 'PPL_ESTADO' ]) {
-                    case 'L':
-                            $estado='<span class="label label-success">Libre</span>';
-                        break;
-                    case 'T':
-                            $estado='<span class="label label-warning">Traslado</span>';
-                        break;
-                    case 'D':
-                            $estado='<span class="label label-info">Audiencia</span>';
-                        break;
-                    default:
-                        $estado='<span class="label label-primary">Privado Livertad</span>';
-                        break;
-                }
                     $img=($aRow[ 'PPL_IMG' ]!='')?''.SISTEM_NAME.PATH_PPL.$aRow[ 'PPL_IMG' ]:SISTEM_NAME.'/img/avatars/male.png';
                     $nombre=$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ];
                     $cadenaParametros=utf8_encode($aRow[ 'PPL_COD' ].','."'$nombre'");
                     $output['aaData'][] =array( ''.utf8_encode($aRow[ 'PPL_COD' ]).'',
                                                 ''.utf8_encode($nombre).'',
                                                 '<img src="/'.$img.'" class="img-thumbnail" style="width: 60px">',
-                                                ''.utf8_encode($aRow[ 'PPL_CEDULA' ]).'',
-                                                ''.$estado.'',
+                                                '<div style="text-align:center;"><span class="badge bg-color-blue">'.$row->PAB_DESCRIPCION.'</span></div>',
                                                 '<a class="btn btn-success btn-xs" title="Visitantes Habilitados" href="javascript:revisarVisitantesDisponibles('.$aRow[ 'PPL_COD' ].')">
                                                     <i class="fa fa-group"></i>
                                                 </a>
@@ -148,6 +141,9 @@ global $dbmysql;
                                                 </a>
                                                 <a class="btn btn-danger btn-xs '.$aRow[ 'PPL_COD' ].' eliminaParticipante" title="Anular PPL" href="javascript:eliminarPpl('.$cadenaParametros.')">
                                                     <i class="fa fa-trash-o"></i>
+                                                </a>
+                                                <a class="btn btn-warning btn-xs '.$aRow[ 'PPL_COD' ].'" title="Traspaso de PPL" href="javascript:aplicarTraspaso('.$aRow[ 'PAB_COD'].','.$aRow[ 'PPL_COD' ].')">
+                                                    <i class="fa fa fa-exchange"></i>  Traspaso
                                                 </a>');
         }
 //        print_r($output);
