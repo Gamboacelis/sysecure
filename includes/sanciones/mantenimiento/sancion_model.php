@@ -19,6 +19,17 @@ switch ($funcion) {
         enviarDatosTipoSanciones();
 
         break;
+    case 'guardaDatosTipoSancion':
+
+        guardaDatosTipoSancion();
+
+        break;
+    case 'editaDatosTipoSancion':
+
+        editaDatosTipoSancion();
+
+        break;
+
 
    
 
@@ -47,4 +58,57 @@ function enviarDatosTipoSanciones() {
 }
 
 
+function guardaDatosTipoSancion()
+{
+    global $dbmysql;
+
+    $tipoSancion = $_POST["tipoSancion"];
+
+    $sql = "INSERT INTO `sys_tipo_sancion`(TPS_DESCRIPCION) VALUES ('$tipoSancion');";
+
+    $val = $dbmysql->query($sql);
+
+    if ($val) {
+
+        echo 1;
+
+    } else {
+
+        echo 0;
+
+    }    
+}
+
+
+function editaDatosTipoSancion()
+{
+    global $dbmysql;
+
+    $IDtipoSancion = $_POST['IDtipoSancion'];
+
+    $tipoSancion = $_POST["tipoSancion"];
+
+   
+    $sql = "UPDATE `sys_tipo_sancion` SET 
+
+                TPS_DESCRIPCION    = '$tipoSancion'
+
+            WHERE TPS_COD = $IDtipoSancion;";
+
+
+
+    $val = $dbmysql->query($sql);
+
+    if ($val) {
+
+
+        echo 1;
+
+    } else {
+
+        echo 0;
+
+    }  
+      
+}
 

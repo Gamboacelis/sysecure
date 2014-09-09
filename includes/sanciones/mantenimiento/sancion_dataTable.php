@@ -200,10 +200,7 @@ while ($aRow = mysql_fetch_array($rResult)) {
     $estado=($aRow['VIS_ESTADO']=='A')?'<span class="label label-primary">Activo</span>':'<span class="label label-danger">Sancionado</span>';
     $output['aaData'][] = array('' . utf8_encode($aRow['TPS_COD']) . '',
                                 '' . utf8_encode($aRow['TPS_DESCRIPCION']) . '',
-        '<a class="btn btn-danger btn-xs ' . $aRow['TPS_COD'] . ' eliminaParticipante" title="Eliminar Tipo Sancion" href="javascript:eliminarTipoSancion(' . $aRow['TPS_COD'] . ')">
-            <i class="fa fa-trash-o"></i>
-        </a>
-        <a class="btn btn-success btn-xs " title="Editar Tipo de sancion" href="javascript:editarTipoSancion(' . $aRow['TPS_COD'] . ')">
+        '<a class="btn btn-success btn-xs " title="Editar Tipo de sancion" href="javascript:editarTipoSancion(' . $aRow['TPS_COD'] . ')">
             <i class="fa fa-pencil"></i>
         </a>
         <a class="btn btn-success btn-xs " title="Gestionar sanciones" href="javascript:gestionarSancion(' . $aRow['TPS_COD'] . ')">

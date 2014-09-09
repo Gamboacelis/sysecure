@@ -27,6 +27,17 @@ function revisarTipoSanciones() {
 
                 <div class="botonesSuperiores">
 
+                    <fieldset>
+
+                        <button id="agregarEvento" class="btn btn-labeled btn-primary btn-personal"  data-toggle="modal" onclick="javascript:nuevoTipoSancion()">
+
+                            <span class="btn-label"><i class="glyphicon glyphicon-plus"></i></span>
+
+                            Agregar Tipo Sanci&oacute;n
+
+                        </button>
+
+                    </fieldset>
 
 
                 </div>
@@ -73,6 +84,7 @@ function revisarTipoSanciones() {
         </article>';
 
     $retval .= editTipoSancion();    
+    $retval .= frmSanciones();
     return $retval;
 }
 
@@ -166,5 +178,66 @@ function editTipoSancion() {
 
                 </div>';
 
+    return $retval;
+}
+
+
+function frmSanciones(){
+    $retval = '';
+    $retval = '<div class="modal fade" id="frmSancionesModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                                                <header>
+                                                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                </header>
+                                                <div>
+                                                    <div class="widget-body">
+                                                        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <div id="wid-id-4" class="jarviswidget jarviswidget-color-darken" data-widget-editbutton="false" style="" role="widget" data-widget-attstyle="jarviswidget-color-teal">
+                                                                <header>
+                                                                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                                                        <h2>Listado de Sanciones <spam id="totalSeleccionados"></spam></h2>
+                                                                        <div class="widget-toolbar">
+                                                                            <div class="btn-group">
+                                                                                    <button class="btn btn-xs btn-success btn-personal" data-toggle="modal" onclick="javascript:nuevoVisitantePpl()">
+                                                                                        <i class="fa fa-fw fa-plus"></i>  Agregar Sanci&oacute;n
+                                                                                    </button>
+                                                                            </div>
+                                                                        </div>
+                                                                </header>
+                                                                <div>
+                                                                    <div class="widget-body no-padding">
+                                                                        <div class="table-responsive">
+                                                                            <table id="litaVisitantesPpl" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox" style="text-align:center">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th><i class="fa fa-check"></i><input type="hidden" id="IDpplNew" name="IDpplNew"></th>
+                                                                                        <th><i class="fa fa-user"></i> Tiempo</th>
+                                                                                        <th><i class="fa fa-user"></i> Descripcion tiempo</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </div>
+                                                    </article>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>';
     return $retval;
 }

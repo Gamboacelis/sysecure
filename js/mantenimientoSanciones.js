@@ -55,12 +55,12 @@ function guardarTipoSancion() {
 
     var tipoSancion = $('#IDtipoSancion').val();
 
-    if (visitante === '') {
+    if (tipoSancion != '') {
 
         $.ajax({
             
 
-            url: './includes/visitante/visitantes_model.php?opcion=guardaDatosVisitante',
+            url: './includes/sanciones/mantenimiento/sancion_model.php?opcion=editaDatosTipoSancion',
 
             datetype: "json",
 
@@ -74,9 +74,9 @@ function guardarTipoSancion() {
 
                     $.smallBox({
 
-                        title: "Visitante Almacenado",
+                        title: "Tipo de sancion actualizada",
 
-                        content: "<i class='fa fa-clock-o'></i> <i>Visitante Agregado correctamente...</i>",
+                        content: "<i class='fa fa-clock-o'></i> <i>Tipo de sancion actualizada correctamente...</i>",
 
                         color: "#659265",
 
@@ -107,7 +107,7 @@ function guardarTipoSancion() {
 
         $.ajax({
 
-            url: './includes/visitante/visitantes_model.php?opcion=actualizarDatosVisitante',
+            url: './includes/sanciones/mantenimiento/sancion_model.php?opcion=guardaDatosTipoSancion',
 
             datetype: "json",
 
@@ -121,9 +121,9 @@ function guardarTipoSancion() {
 
                     $.smallBox({
 
-                        title: "Actualización",
+                        title: "Creacion",
 
-                        content: "<i class='fa fa-clock-o'></i> <i>Visitante Actualizado correctamente...</i>",
+                        content: "<i class='fa fa-clock-o'></i> <i>Tipo de sancion Creado correctamente...</i>",
 
                         color: "#659265",
 
@@ -145,6 +145,17 @@ function guardarTipoSancion() {
 
     }
 
-    $('#frmVisitanteModal').modal('hide');
+    $('#frmTipoSancion').modal('hide');
 
+}
+
+function nuevoTipoSancion()
+{
+    limpiarFormularioPpl();
+    $('#frmTipoSancion').modal('show');
+}
+
+function gestionarSancion()
+{
+     $('#frmSancionesModal').modal('show');
 }

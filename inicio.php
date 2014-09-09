@@ -20,12 +20,12 @@ if ($_SESSION["autenticado"] == 'SI') {
             include_once("./includes/ppl/ppl_vistas.php");
             include_once("./includes/visitante/visitantes_vistas.php");
             include_once("./includes/parametros/parametros_vistas.php");
-<<<<<<< HEAD
+
             include_once("./includes/sanciones/mantenimiento/sancion_vistas.php");
 
-=======
+
             include_once("./includes/traspaso/traspaso_vistas.php");
->>>>>>> 43d648eea34fe60ed2e63814168c4ed181dfae21
+
 
             switch ($option) {
                 case 'centros':
@@ -68,7 +68,7 @@ if ($_SESSION["autenticado"] == 'SI') {
                     $activarMenu37 = 'class="active"';
                     $contenido = revisarVisitantes();
                     break;
-<<<<<<< HEAD
+
                 case 'parametros':
                     $titulo='Revisión de Parametros de Configuracion';
                     $activarMenu36='class="active"';
@@ -80,9 +80,7 @@ if ($_SESSION["autenticado"] == 'SI') {
                     $activarMenu37='class="active"';
                     $contenido = revisarTipoSanciones();
                     break;                    
-=======
-                
->>>>>>> 43d648eea34fe60ed2e63814168c4ed181dfae21
+
             }
             break;
         case 'controles':
@@ -237,30 +235,25 @@ if ($_SESSION["autenticado"] == 'SI') {
                         <li <?php echo $activarMenu2 ?>><a href="#"><i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent">Visitas</span></a></li>
                         <li <?php echo $activarMenu3 ?>><a href="#"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Administracion</span></a>
                             <ul>
-<<<<<<< HEAD
-                                <li <?php echo $activarMenu31 ?>><a href="?modulo=administrativo&op=horarios">Horarios de Visitas</a></li>
-                                <li <?php echo $activarMenu32 ?>><a href="?modulo=administrativo&op=pabellones">Pabellones</a></li>
-                                <li <?php echo $activarMenu36 ?>><a href="?modulo=administrativo&op=parametros">Parametros</a></li>
-                                <li <?php echo $activarMenu33 ?>><a href="?modulo=administrativo&op=ppl">PPL</a></li>
-                                <li <?php echo $activarMenu34 ?>><a href="?modulo=administrativo&op=usuarios">Usuarios</a></li>
-                                <li <?php echo $activarMenu35 ?>><a href="?modulo=administrativo&op=visitantes">Visitantes</a></li>
-                                <li <?php echo $activarMenu36 ?>><a href="?modulo=administrativo&op=sanciones">Sanciones</a></li>
 
-=======
+
+
+
                                 <li <?php echo $activarMenu31 ?>><a href="?modulo=administrativo&op=centros">Centros</a></li>
                                 <li <?php echo $activarMenu32 ?>><a href="?modulo=administrativo&op=horarios">Horarios de Visitas</a></li>
                                 <li <?php echo $activarMenu33 ?>><a href="?modulo=administrativo&op=pabellones">Pabellones</a></li>
                                 <li <?php echo $activarMenu34 ?>><a href="?modulo=administrativo&op=parametros">Parametros</a></li>
+                                <li <?php echo $activarMenu36 ?>><a href="?modulo=administrativo&op=sanciones">Sanciones</a></li>
+
                                 <li><a href="#">PPL</a>
                                     <ul>
                                         <li <?php echo $activarMenu35_1 ?>><a href="?modulo=administrativo&op=ppl"><i class="fa fa-pencil"></i>  Mantenimiento PPL</a></li>
-                                        <li <?php echo $activarMenu35_2 ?>><a href="?modulo=administrativo&op=traspaso"><i class="fa fa-flag"></i>  Movimientos PPL</a></li>
                                     </ul>
                                 </li>
                                 <li <?php echo $activarMenu36 ?>><a href="?modulo=administrativo&op=usuarios">Usuarios</a></li>
                                 <li <?php echo $activarMenu37 ?>><a href="?modulo=administrativo&op=visitantes">Visitantes</a></li>
                                 
->>>>>>> 43d648eea34fe60ed2e63814168c4ed181dfae21
+
                             </ul>
 
                         </li>
