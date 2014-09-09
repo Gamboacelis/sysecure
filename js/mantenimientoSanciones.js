@@ -151,7 +151,7 @@ function guardarTipoSancion() {
 
 function nuevoTipoSancion()
 {
-    limpiarFormularioPpl();
+    limpiarFormulario();
     $('#frmTipoSancion').modal('show');
 }
 
@@ -253,3 +253,4 @@ function editarSancion(cod) {
     $('#sancion' + cod).children('td').children('.visBtnGuardar').show();
     $('#sancion' + cod).children('td').children('.visBtnDatos').hide();
 }
+
