@@ -74,7 +74,7 @@ function frmAccesoVisitante() {
 
                                                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 
-                                                        <h2>Formulario de Registro </h2>				
+                                                        <h2>Formulario de Registro </h2>                
 
                                                 </header>
 
@@ -102,7 +102,29 @@ function frmAccesoVisitante() {
 
                                                             <fieldset>
 
+
                                                                 <div class="row">
+
+                                                                
+
+                                                                    <section class="col-md-2" style="width:50%;text-align:center;" >
+                                                                        <label class="input">Foto:</label>
+                                                                        <div id="my_camera" ></div>
+                                                                        <a class="btn btn-danger btn-xs 4 eliminaParticipante" href="javascript:tomarFoto()"><i class="fa fa fa-camera"></i> Tomar Foto</a>
+                                                                        <script type="text/javascript" src="js/webcam.js"></script>
+                                                                        <input type="hidden" id="codeImage" name="codeImage">
+                                                                                               
+                                                                    </section>
+                                                                    <section class="col-md-2" style="width:50%;text-align:center;">
+                                                                        <label class="input">Foto Actual:</label>
+                                                                        
+                                                                        <div id="my_result"></div> 
+
+                                                                    </section>
+                                                                </div>    
+                                                                <div class="row">
+
+
 
                                                                     <section class="col col-6">
 
@@ -156,7 +178,7 @@ function frmAccesoVisitante() {
 
                                                                             <label class="input">
 
-                                                                                    <input type="telf" id="huella" name="huella" placeholder="Codigo de Huella">
+                                                                                    <label class="input">Parentesco:  <select id="parentesco" name="parentesco" class="form-control"></select></label>
 
                                                                             </label>
 
@@ -190,6 +212,11 @@ function frmAccesoVisitante() {
 
                                                                 </div>    
 
+
+                                                                            
+                                                                            
+                                                               
+
                                                             </fieldset>
 
                                                             <footer>
@@ -202,7 +229,7 @@ function frmAccesoVisitante() {
 
                                                             </footer>
 
-                                                        </form>						
+                                                        </form>                     
 
                                                 </div>
 

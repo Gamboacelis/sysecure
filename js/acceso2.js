@@ -14,42 +14,6 @@ $(document).ready(function() {
     });
 });
 
-function actualizarInformacion(visitante) {
-
-    var url = './includes/visitante/visitantes_model.php?opcion=enviarDatosVisitante';
-
-    $.ajax({
-
-        url: url,
-
-        datetype: "json",
-
-        type: 'POST',
-
-        data: {codigoVis: visitante},
-
-        success: function(res) {
-
-            var json_obj = $.parseJSON(res);
-
-            limpiarFormulario();
-
-            carga_DatosIncialesUsuarios(json_obj);
-
-            $('#frmVisitanteModal').modal('show');
-
-
-            $('#smart-form-register >header').text('Actualización de Visitante');
-
-            $('#IDvisitante').val(visitante);
-
-
-
-        }
-
-    });
-   }
-
 
 function permitirAcceso(nombre, cod,contr,horario)
 {

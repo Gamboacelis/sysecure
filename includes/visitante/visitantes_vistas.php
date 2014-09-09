@@ -230,7 +230,7 @@ function frmVisitante() {
 
                                                                             <label class="input">
 
-                                                                                    <input type="telf" id="huella" name="huella" placeholder="Codigo de Huella">
+                                                                                    <label class="input">Parentesco:  <select id="parentesco" name="parentesco" class="form-control"></select></label>
 
                                                                             </label>
 
@@ -264,17 +264,10 @@ function frmVisitante() {
 
                                                                 </div>    
 
-                                                            <div class="row">
 
-                                                                    <section class="col col-6">
-
-                                                                            <label class="input">Parentesco:  <select id="parentesco" name="parentesco" class="form-control"></select></label>
                                                                             
-
-                                                                    </section>
-
-
-                                                                </div>                                                                    
+                                                                            
+                                                               
 
                                                             </fieldset>
 

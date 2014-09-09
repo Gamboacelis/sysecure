@@ -125,16 +125,31 @@ global $dbmysql;
         
 	while ( $aRow = mysql_fetch_array( $rResult ) ){
                 /* General output */
+/*
+                	$sqlDatosVisitante = 'SELECT VIS_COD FROM sys_visitante WHERE VIS_NOMBRE != "" AND VIS_APELLIDO != "" AND PAR_COD != "" AND VIS_CEDULA != "" AND VIS_DIRECCION != "" AND VIS_TELEFONO != "" AND VIS_CORREO != "" AND VIS_IMAGEN != "" AND VIS_COD = '.$aRow[ 'VIS_COD' ];
+                	$valDatosVisitante = $dbmysql->query($sqlDatosVisitante);
+    				$rowPDatosVisitante = $valDatosVisitante->fetch_object();
+    			
+    				if ($rowPDatosVisitante->VIS_COD != "")
+    				{
+    					$editar = '';
+    				}
+    				else
+    				{
+    					$editar = '<a class="btn btn-info" title="Actualizar" href="javascript:editarVisitante('.$aRow[ 'VIS_COD' ].')">
+                                                    <i class="fa fa-pencil"></i> Editar Visitante</a>';
+    				}
+*/
                     $nombre_visitante=$aRow[ 'VIS_NOMBRE' ].' '.$aRow[ 'VIS_APELLIDO' ];
-                    $nombre_ppl =$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ];
+                    $nombre_ppl =$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ].$rowPDatosVisitante->VIS_COD;
                     $output['aaData'][] =array( ''.utf8_encode($aRow[ 'CON_COD' ]).'',
                     	                	''.utf8_encode($nombre_visitante).'',
                                                 ''.utf8_encode($aRow[ 'VIS_CEDULA' ]).'',
                                                 ''.utf8_encode($nombre_ppl).'',
 //                                                '<img src=".//uploads/imagenes/ppl/'.$aRow['PPL_IMG'].'" class="img-thumbnail" style="width: 60px">',
-                                                '<a class="btn btn-info" title="Actualizar" href="javascript:actualizarInformacion('.$aRow[ 'VIS_COD' ].')">
-                                                    <i class="fa fa-pencil"></i> Editar Visitante</a>
-							<a class="btn btn-success" title="Permitir acceso" href="javascript:permitirAcceso(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'CON_COD' ].','.$aRow[ 'HOR_COD'].')">
+                                                '<a class="btn btn-info" title="Actualizar" href="javascript:editarVisitante('.$aRow[ 'VIS_COD' ].')">
+                                                    <i class="fa fa-pencil"></i> Editar Visitante</a> 
+                                                <a class="btn btn-success" title="Permitir acceso" href="javascript:permitirAcceso(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'CON_COD' ].','.$aRow[ 'HOR_COD'].')">
                                                     <i class="fa fa-check"></i>Permitir Acceso</a>
                                                     ');
         }
