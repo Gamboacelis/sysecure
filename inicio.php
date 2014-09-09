@@ -20,38 +20,50 @@ if ($_SESSION["autenticado"] == 'SI') {
             include_once("./includes/ppl/ppl_vistas.php");
             include_once("./includes/visitante/visitantes_vistas.php");
             include_once("./includes/parametros/parametros_vistas.php");
+            include_once("./includes/traspaso/traspaso_vistas.php");
 
             switch ($option) {
-                case 'horarios':
+                case 'centros':
                     $titulo = 'Revisión de Horarios';
                     $activarMenu31 = 'class="active"';
+                    $contenido = reporteCentros();
+                    break;
+                case 'horarios':
+                    $titulo = 'Revisión de Horarios';
+                    $activarMenu32 = 'class="active"';
                     $contenido = frm_asignacionPabellones();
                     break;
                 case 'pabellones':
                     $titulo = 'Revisión de Pabellones';
-                    $activarMenu32 = 'class="active"';
+                    $activarMenu33 = 'class="active"';
                     $contenido = reporte_pabellones();
+                    break;
+                case 'parametros':
+                    $titulo = 'Revisión de Parametros de Configuracion';
+                    $activarMenu34 = 'class="active"';
+                    $contenido = reporteParametros();
                     break;
                 case 'ppl':
                     $titulo = 'Revisión de Personas Privadas de Libertad';
-                    $activarMenu33 = 'class="active"';
+                    $activarMenu35_1 = 'class="active"';
                     $contenido = revisarPpl();
+                    break;
+                case 'traspaso':
+                    $titulo = 'Traspaso de PPL a otro pabellon';
+                    $activarMenu35_2 = 'class="active"';
+                    $contenido = revisarTraspasoPpl();
                     break;
                 case 'usuarios':
                     $titulo = 'Revisión de Usuarios';
-                    $activarMenu34 = 'class="active"';
+                    $activarMenu36 = 'class="active"';
                     $contenido = revisarUsuarios();
                     break;
                 case 'visitantes':
                     $titulo = 'Revisión de Visitantes';
-                    $activarMenu35 = 'class="active"';
+                    $activarMenu37 = 'class="active"';
                     $contenido = revisarVisitantes();
                     break;
-                case 'parametros':
-                    $titulo = 'Revisión de Parametros de Configuracion';
-                    $activarMenu36 = 'class="active"';
-                    $contenido = reporteParametros();
-                    break;
+                
             }
             break;
         case 'controles':
@@ -87,12 +99,7 @@ if ($_SESSION["autenticado"] == 'SI') {
                     $activarMenu45 = 'class="active"';
                     $contenido = revisarSanciones();
                     break;
-                case 'traspaso':
-                    include_once("./includes/traspaso/traspaso_vistas.php");
-                    $titulo = 'Traspaso de PPL a otro pabellon';
-                    $activarMenu46 = 'class="active"';
-                    $contenido = revisarPpl();
-                    break;
+                
             }
             break;
         default:
@@ -211,12 +218,19 @@ if ($_SESSION["autenticado"] == 'SI') {
                         <li <?php echo $activarMenu2 ?>><a href="#"><i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent">Visitas</span></a></li>
                         <li <?php echo $activarMenu3 ?>><a href="#"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Administracion</span></a>
                             <ul>
-                                <li <?php echo $activarMenu31 ?>><a href="?modulo=administrativo&op=horarios">Horarios de Visitas</a></li>
-                                <li <?php echo $activarMenu32 ?>><a href="?modulo=administrativo&op=pabellones">Pabellones</a></li>
-                                <li <?php echo $activarMenu36 ?>><a href="?modulo=administrativo&op=parametros">Parametros</a></li>
-                                <li <?php echo $activarMenu33 ?>><a href="?modulo=administrativo&op=ppl">PPL</a></li>
-                                <li <?php echo $activarMenu34 ?>><a href="?modulo=administrativo&op=usuarios">Usuarios</a></li>
-                                <li <?php echo $activarMenu35 ?>><a href="?modulo=administrativo&op=visitantes">Visitantes</a></li>
+                                <li <?php echo $activarMenu31 ?>><a href="?modulo=administrativo&op=centros">Centros</a></li>
+                                <li <?php echo $activarMenu32 ?>><a href="?modulo=administrativo&op=horarios">Horarios de Visitas</a></li>
+                                <li <?php echo $activarMenu33 ?>><a href="?modulo=administrativo&op=pabellones">Pabellones</a></li>
+                                <li <?php echo $activarMenu34 ?>><a href="?modulo=administrativo&op=parametros">Parametros</a></li>
+                                <li><a href="#">PPL</a>
+                                    <ul>
+                                        <li <?php echo $activarMenu35_1 ?>><a href="?modulo=administrativo&op=ppl"><i class="fa fa-pencil"></i>  Mantenimiento PPL</a></li>
+                                        <li <?php echo $activarMenu35_2 ?>><a href="?modulo=administrativo&op=traspaso"><i class="fa fa-flag"></i>  Movimientos PPL</a></li>
+                                    </ul>
+                                </li>
+                                <li <?php echo $activarMenu36 ?>><a href="?modulo=administrativo&op=usuarios">Usuarios</a></li>
+                                <li <?php echo $activarMenu37 ?>><a href="?modulo=administrativo&op=visitantes">Visitantes</a></li>
+                                
                             </ul>
                         </li>
                         <li <?php echo $activarMenu4 ?>><a href="#"><i class="fa fa-lg fa-fw fa-table"></i> <span class="menu-item-parent">Controles</span></a>
@@ -226,7 +240,7 @@ if ($_SESSION["autenticado"] == 'SI') {
                                 <li <?php echo $activarMenu43 ?>><a href="?modulo=controles&op=acceso3">Acceso 3</a></li>
                                 <li <?php echo $activarMenu44 ?>><a href="?modulo=controles&op=acceso4">Acceso 4</a></li>
                                 <li <?php echo $activarMenu45 ?>><a href="?modulo=controles&op=sanciones">Sanciones</a></li>
-                                <li <?php echo $activarMenu46 ?>><a href="?modulo=controles&op=traspaso">Traspaso PPL</a></li>                                
+                                                                
 
                             </ul>
                         </li>

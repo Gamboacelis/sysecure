@@ -30,8 +30,7 @@ function revisarPpl() {
                                         <th>ID</th>
                                         <th><i class="fa fa-fw fa-male txt-color-blue hidden-md hidden-sm hidden-xs"></i> Nombre</th>
                                         <th><i class="fa fa-fw fa-user txt-color-blue hidden-md hidden-sm hidden-xs"></i> Imagen</th>
-                                        <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Cédula</th>
-                                        <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Estado</th>
+                                        <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Pabellon Actual</th>
                                         <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Acción</th>
                                     </tr>
                                 </thead>
@@ -42,6 +41,7 @@ function revisarPpl() {
         </article>';
     $retval .=frmPpl();
     $retval .=frmVisitantes();
+    $retval .=frmAplicarTraspaso();
     return $retval;
 }
 function frmPpl(){
@@ -223,6 +223,116 @@ function frmVisitantes(){
                         </div>
                     </div>
                 </div>';
+    return $retval;
+}
+function frmAplicarTraspaso(){
+    $retval = '';
+    $retval = '<div class="modal fade" id="frmAplicarTraspaso" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                                    <header>
+                                            <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                            <h2>Realizar Traspaso de PPL</h2>                
+                                    </header>
+                                        <div> 
+                                            <div class="widget-body no-padding">
+                                                <hr class="simple">
+                                                <ul id="myTab1" class="nav nav-tabs bordered">
+                                                        <li class="active"><a href="#s1" data-toggle="tab">Movimiento PPL</a></li>
+                                                        <li> <a href="#s2" data-toggle="tab"><i class="fa fa-fw fa-lg fa-gear"></i> Historia de movimientos</a></li>
+                                                </ul>
+                                                <div id="myTabContent1" class="tab-content padding-10">
+                                                        <div class="tab-pane fade in active" id="s1">
+                                                               <form id="form-traspasoPabellon" class="smart-form" action="javascript:guardarTraspaso()">
+                                                                    <fieldset>
+                                                                            <input type="hidden" id="IDppl" name="IDppl">
+                                                                    </fieldset> 
+                                                                    <fieldset>
+                                                                        <div class="row">
+                                                                            <section class="col col-10">
+                                                                                <div class="alert alert-block alert-success">
+                                                                                    <h4 class="alert-heading">
+                                                                                        <i class="fa fa-check-square-o"></i>
+                                                                                        <label class="input" id="pabellonActual"> </label>
+                                                                                        <input type="hidden" id="IDpabellon" name="IDpabellon">
+                                                                                    </h4>
+                                                                                    <p> Último traspaso: <i id="fechaUltimoTras">08-09-2014</i>, Pabellon anterior: <i id="pabellonUltimoTras">A </i></p>
+                                                                                </div>
+                                                                            </section>                                                                    
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-6">
+                                                                                    <label class="input" id="tiempo_sancion"><strong>Pabellon a transferir:</strong></label>
+                                                                                        <select id="nuevoPabellon"  name="nuevoPabellon" onchange="transferirApabellon()"  class="form-control" required>
+                                                                                        </select>                                                                            
+                                                                           </section>
+                                                                        </div>      
+                                                                        <div class="row">
+                                                                            <section class="col col-10">
+                                                                                <label class="input" >Motivo del traspaso</label>
+                                                                                <label class="textarea">
+                                                                                    <i class="icon-append fa fa-comment"></i>
+                                                                                    <textarea name="comment" rows="4" id="motivo" name="motivo" required></textarea>
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>                                                                                                                                  
+                                                                    </fieldset>
+                                                                    <footer>
+                                                                            <button type="submit" class="btn btn-primary">
+                                                                                    Transferir
+                                                                            </button>
+                                                                    </footer>
+                                                                </form>    
+                                                        </div>
+                                                        <div class="tab-pane fade" id="s2">
+                                                                <div class="jarviswidget jarviswidget-color-greenDark" id="wid-id-2" data-widget-editbutton="false">
+                                                                    <header>
+                                                                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                                                            <h2>HISTORICOS DE MOVIMIENTOS DEL PPL </h2>
+                                                                    </header>
+                                                                    <div>
+                                                                        <div class="widget-body no-padding">
+                                                                            <div class="table-responsive">
+                                                                                <table id="datosHistoriaPpl" class="table table-hover">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>Usuario</th>
+                                                                                            <th>Pabellon</th>
+                                                                                            <th>Fecha Cambio</th>
+                                                                                            <th>Motivo</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td>1</td>
+                                                                                            <td>Mark</td>
+                                                                                            <td>Otto</td>
+                                                                                            <td>@mdo</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                            </table>
+                                                                                    </div>
+                                                                            </div>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                                                 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>';
+
     return $retval;
 }
 function comboPabellon() {

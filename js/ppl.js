@@ -32,6 +32,15 @@ $(document).ready(function() {
             error.insertAfter(element.parent());
         }
     });
+    var $registerForm2 = $("#form-traspasoPabellon").validate({
+        rules: {
+            nuevoPabellon: {required: true},
+            motivo: {required: true}
+        },
+        errorPlacement: function(error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
         $('select#estado').on('change',function(){
             var valorEstado = $(this).val();
             var ppl = $('#IDppl').val();
