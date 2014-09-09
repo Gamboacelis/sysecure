@@ -1,5 +1,6 @@
 <?php
-include_once '../generales.php';
+session_start();
+include_once PATH_PROD.SISTEM_NAME.'/includes/generales.php';
 $clGeneral = new general();
 include_once PATH_PROD.SISTEM_NAME.'/includes/conexiones/db_local.inc.php';
 $dbmysql = new database();

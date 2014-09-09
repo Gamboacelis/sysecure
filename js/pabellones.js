@@ -1,30 +1,14 @@
 $(document).ready(function() {
     var $registerForm = $("#smart-form-pabellon").validate({
         rules: {
-            nivel: {
-                required: true,
-            },
-            ala: {
-                required: true,
-            },
-            descripcion: {
-                required: true,
-            }
-        },
-        // Messages for form validation
-        messages: {
-            nivel: {
-                required: 'Seleecione el Nivel del Pabellon'
-            },
-            ala: {
-                required: 'Indique el Ala en el que se encuentra',
-            },
-            descripcion: {
-                required: 'Coloque una descripción Valida'
-            }
-        },
-        // Do not change code below
-        errorPlacement: function(error, element) {
+            nivel: {required: true},
+            ala: {required: true},
+            descripcion: {required: true}
+        },messages: {
+            nivel: {required: 'Seleecione el Nivel del Pabellon'},
+            ala: {required: 'Indique el Ala en el que se encuentra'},
+            descripcion: {required: 'Coloque una descripción Valida'}
+        },errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
         }
     });

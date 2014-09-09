@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 include_once '../conexiones/db_local.inc.php';
 $dbmysql = new database();

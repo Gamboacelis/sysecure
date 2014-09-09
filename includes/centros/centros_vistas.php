@@ -1,17 +1,19 @@
 <?php
-
+session_start();
+include_once PATH_PROD.SISTEM_NAME.'/includes/generales.php';
+$clGeneral = new general();
 include_once PATH_PROD . SISTEM_NAME . '/includes/conexiones/db_local.inc.php';
 $dbmysql = new database();
 date_default_timezone_set('America/Bogota');
 
 function reporteCentros() {
     global $dbmysql;
-    $sql = "SELECT * FROM `sys_parametros` WHERE CEN_COD={$_SESSION['usu_centro_cod']}";
+    $sql = "SELECT ce.`CEN_COD`,ce.`CIU_COD`,c.`CIU_DESCRIPCION`,ce.`CEN_DESCRIPCION`,ce.`CEN_DIRECCION`,ce.`CEN_TELEFONO` FROM `sys_centro` ce, sys_ciudad c WHERE c.`CIU_COD`= ce.`CIU_COD`;";
     $val_s = $dbmysql->query($sql);
     $retval = '<article class="col-sm-12 col-md-12 col-lg-6">
                     <div class="botonesSuperiores">
                     <fieldset>
-                            <button id="agregarPabellon" class="btn btn-labeled btn-primary btn-personal"  data-toggle="modal" onclick="javascript:nuevoPabellon()">
+                            <button id="agregarPabellon" class="btn btn-labeled btn-primary btn-personal"  data-toggle="modal" onclick="javascript:nuevoCentro()">
                                 <span class="btn-label"><i class="glyphicon glyphicon-plus"></i></span>
                                 Agregar Centros
                             </button>
@@ -33,108 +35,120 @@ function reporteCentros() {
                                                                             <th>#</th>
                                                                             <th>Ciudad</th>
                                                                             <th>Descripción</th>
+                                                                            <th>Teléfono</th>
                                                                             <th>Dirección</th>
                                                                             <th>Acción</th>
                                                                     </tr>
                                                             </thead>
                                                             <tbody>';
                                                         while ($row = $val_s->fetch_object()) {
-                                                            $a = 'A';
-                                                            $parametros = $row->VIS_COD . ',\'' . $a . '\'';
-                                                            $retval .= '<tr id="vis' . $row->PAR_COD . '">
-                                                                            <td>' . $row->PAR_COD . '</td>
-                                                                            <td><div class="txtVisDatos" id="txtVisModulo">' . $row->PAR_MODULO . '</div><input type="text" id="visModulo" name="visModulo" class="visDatosGeneral" value="' . $row->PAR_MODULO . '"></td>
-                                                                            <td><div class="txtVisDatos" id="txtVisDescripcion">' . $row->PAR_DESCRIPCION . '</div><input type="text" id="visDescripcion" name="visDescripcion" class="visDatosGeneral" value="' . $row->PAR_DESCRIPCION . '"></td>
-                                                                            <td><div class="txtVisDatos" id="txtVisValor">' . $row->PAR_VALOR . '</div><input type="text" id="VisValor" name="VisValor" class="visDatosGeneral" value="' . $row->PAR_VALOR . '"></td>
-                                                                            <td><a class="btn btn-primary btn-xs visBtnGuardar" title="Guardar Cambio" href="javascript:GuardarCambioParametro(' . $parametros . ')">
-                                                                                    <i class="fa fa-save"></i>
+                                                            $cadenaParametros=utf8_encode($row->CEN_COD.','."'$row->CEN_DESCRIPCION'");
+                                                            $retval .= '<tr id="vis' . $row->CEN_COD . '">
+                                                                            <td>' . $row->CEN_COD . '</td>
+                                                                            <td>' . $row->CIU_DESCRIPCION . '</td>
+                                                                            <td>' . $row->CEN_DESCRIPCION . '</div></td>
+                                                                            <td>' . $row->CEN_TELEFONO . '</div></td>
+                                                                            <td>' . $row->CEN_DIRECCION . '</div></td>
+                                                                            <td><a class="btn btn-success btn-xs" title="Editar Centro" href="javascript:editarCentro(' . $row->CEN_COD . ')">
+                                                                                    <i class="fa fa-pencil"></i>
                                                                                 </a>
-                                                                                <a class="btn btn-success btn-xs" title="Editar parametro" href="javascript:editarParametro(' . $row->PAR_COD . ')"><i class="fa fa-pencil"></i></a></td>    
+                                                                                <a class="btn btn-danger btn-xs '.$row->CEN_COD.'" title="Eliminar Centro" href="javascript:eliminarCentro('.$cadenaParametros.')">
+                                                                                    <i class="fa fa-trash-o"></i>
+                                                                                </a>
+                                                                            </td>    
                                                                     </tr>';
-    }
-    $retval .= '</tbody>
+                                                    }
+                                                    $retval .= '</tbody>
                                                     </table>
                                             </div>
                                     </div>
                             </div>
                     </div>
             </article>';
-//      $retval .= frmPabellon();         
+      $retval .= frm_Centros();         
     return $retval;
 }
 
-//function frmPabellon() {
-//    $retval = '';
-//    $retval = '<div class="modal fade" id="frmPabellonModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
-//                    <div class="modal-dialog">
-//                        <div class="modal-content">
-//                            <div class="modal-header">
-//                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-//                                        &times;
-//                                </button>
-//                            </div>
-//                            <div class="modal-body">
-//                                <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
-//                                                <header>
-//                                                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-//                                                        <h2>Formulario de Registro </h2>				
-//                                                </header>
-//                                                <div>
-//                                                    <div class="widget-body no-padding">
-//                                                        <form id="smart-form-pabellon" class="smart-form" action="javascript:guardarPabellon()">
-//                                                            <header>
-//                                                                    Formulario de Registro
-//                                                            </header>
-//                                                            <fieldset>
-//                                                                    <input type="hidden" id="IDpabellon" name="IDpabellon">
-//                                                                    <div class="row">
-//                                                                        <section class="col col-6">
-//                                                                                <label class="label">Nivel</label>
-//                                                                                <label class="select">
-//                                                                                        <select id="nivel" name="nivel">
-//                                                                                                <option value="0" selected="" disabled="">-- Niveles --</option>
-//                                                                                        </select> <i></i> 
-//                                                                                </label>
-//                                                                        </section>
-//                                                                        <section class="col col-6">
-//                                                                                <label class="label">Ala</label>
-//                                                                                <label class="input"> <i class="icon-append fa fa-user"></i>
-//                                                                                    <input type="text" id="ala" name="ala" placeholder="Ala">
-//                                                                                    <b class="tooltip tooltip-bottom-right">Ingese el Ala en el que se encuentra</b> 
-//                                                                                </label>
-//                                                                        </section>
-//                                                                    </div>
-//                                                                    <section>
-//                                                                            <label class="label">Descripción</label>
-//                                                                            <label class="input"> <i class="icon-append fa fa-envelope-o"></i>
-//                                                                                    <input type="text" id="descripcion" name="descripcion" placeholder="Descripción del Pabellon">
-//                                                                                    <b class="tooltip tooltip-bottom-right">Necesario para identificar el Pabellon</b> </label>
-//                                                                    </section>
-//                                                                    <section>
-//                                                                            <label class="label">Capacidad</label>
-//                                                                            <label class="input"> <i class="icon-append fa fa-lock"></i>
-//                                                                                    <input type="number" name="capacidad" placeholder="Capacidad Máxima" id="capacidad">
-//                                                                                    <b class="tooltip tooltip-bottom-right">Debe ingresar la Capacidad de PPL del Pabellon</b> </label>
-//                                                                    </section>
-//                                                                    <section>
-//                                                                            <label class="label">Detalles</label>
-//                                                                            <label class="textarea"> <i class="icon-append fa fa-comment"></i>
-//                                                                                    <textarea id="detalles"  name="detalles" placeholder="Detalles del Pabellon"></textarea>
-//                                                                    </section>
-//                                                            </fieldset>
-//                                                            <footer>
-//                                                                    <button type="submit" class="btn btn-primary">
-//                                                                            Registrar
-//                                                                    </button>
-//                                                            </footer>
-//                                                        </form>						
-//                                                </div>
-//                                            </div>
-//                                        </div>
-//                                </div>
-//                            
-//                        </div>
-//                    </div>
-//                </div>';
-//    return $retval;
-//}
+function frm_Centros() {
+    $retval = '';
+    $retval = '<div class="modal fade" id="frmCentrosModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                                                <header>
+                                                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                        <h2>Formulario de Registro </h2>				
+                                                </header>
+                                                <div>
+                                                    <div class="widget-body no-padding">
+                                                        <form id="smart-form-centro" class="smart-form" action="javascript:guardarCentro()">
+                                                            <header>
+                                                                    Formulario de Registro Centros
+                                                            </header>
+                                                            <fieldset>
+                                                                    <input type="hidden" id="IDcentro" name="IDcentro">
+                                                                    <div class="row">
+                                                                        <section class="col col-6">
+                                                                                <label class="label">Ciudad</label>
+                                                                                <label class="select">
+                                                                                        <select id="ciudad" name="ciudad">
+                                                                                                <option value="0" selected="" disabled="">-- Ciudad --</option>
+                                                                                                '.  comboCiudad().'
+                                                                                        </select> <i></i> 
+                                                                                </label>
+                                                                        </section>
+                                                                    </div>
+                                                                    <section>
+                                                                            <label class="label">Descripción</label>
+                                                                            <label class="input"> <i class="icon-append fa fa-envelope-o"></i>
+                                                                                    <input type="text" id="descripcion" name="descripcion" placeholder="Descripción del Centro" style="text-transform:uppercase;">
+                                                                                    <b class="tooltip tooltip-bottom-right">Necesario para identificar el Centro</b> </label>
+                                                                    </section>
+                                                                    <section>
+                                                                            <label class="label">Dirección</label>
+                                                                            <label class="textarea"> <i class="icon-append fa fa-comment"></i>
+                                                                                    <textarea id="direccion"  name="direccion" placeholder="Ingrese la Dirección o referencia del Centro"></textarea>
+                                                                    </section>
+                                                                    <section class="col col-6">
+                                                                            <label class="label">Teléfono</label>
+                                                                            <label class="input"> <i class="icon-append fa fa-phone"></i>
+                                                                                    <input type="number" name="telefono" id="telefono" placeholder="Teléfono del Centro" max="10">
+                                                                                    <b class="tooltip tooltip-bottom-right">Ingrese un Número Telefónico</b> </label>
+                                                                    </section>
+                                                                    
+                                                            </fieldset>
+                                                            <footer>
+                                                                    <button type="submit" class="btn btn-primary">
+                                                                            Registrar
+                                                                    </button>
+                                                            </footer>
+                                                        </form>						
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>';
+    return $retval;
+}
+
+function comboCiudad() {
+    global $dbmysql;
+    $retval = '';
+    $sql = "SELECT * FROM `sys_ciudad`;";
+    $val = $dbmysql->query($sql);
+    if ($val->num_rows > 0) {
+        while ($row = $val->fetch_object()) {
+            $retval.='<option value="' . $row->CIU_COD . '">' . $row->CIU_DESCRIPCION . '</option>';
+        }
+    }
+    return $retval;
+}

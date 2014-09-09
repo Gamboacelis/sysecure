@@ -20,10 +20,8 @@ if ($_SESSION["autenticado"] == 'SI') {
             include_once("./includes/ppl/ppl_vistas.php");
             include_once("./includes/visitante/visitantes_vistas.php");
             include_once("./includes/parametros/parametros_vistas.php");
-
+            include_once("./includes/centros/centros_vistas.php");
             include_once("./includes/sanciones/mantenimiento/sancion_vistas.php");
-
-
             include_once("./includes/traspaso/traspaso_vistas.php");
 
 
@@ -427,6 +425,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/acceso4.js"></script>
             <script src="js/sancionados.js"></script>
             <script src="js/traspaso.js"></script>
+            <script src="js/centros.js"></script>
             <script src="js/parametros.js"></script>
             <script src="js/mantenimientoSanciones.js"></script>
 
