@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#listaAcceso1').dataTable({
+    var dtTable =$('#listaAcceso1').dataTable({
         "bServerSide": true,
         "sAjaxSource": "./includes/controles/acceso1/acceso1_dataTable.php",
         "oLanguage": {
@@ -11,8 +11,18 @@ $(document).ready(function() {
             "sZeroRecords": "No hay registros que mostrar"
         }
     });
-    $('#listaAcceso1 tbody tr').click(function(){
-        alert();
+    $('#listaAcceso1_filter').append( '<label><a href="#" id="buscar" class="btn btn-default">Buscar</a></label>' );
+    $('#listaAcceso1_filter').append( '<label><a href="#" id="reset" class="btn btn-default">Reset</a></label>' );
+    $("div.dataTables_filter input").unbind();
+    $('#reset').click(function(e) {
+        $("div.dataTables_filter input").val('');
+        dtTable.fnFilter($("div.dataTables_filter input").val());
+    });
+    $('#buscar').click(function(e) {
+        dtTable.fnFilter($("div.dataTables_filter input").val());
+    });
+     $('div.dataTables_filter input').focusout(function(e) {
+        dtTable.fnFilter($("div.dataTables_filter input").val());
     });
 });
 
