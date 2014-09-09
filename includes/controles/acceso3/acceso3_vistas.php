@@ -33,6 +33,7 @@ function frm_revisarAcceso3() {
         </article>';
     
     $retval .= frmBloqueoVisitante();
+    $retval .= frmmostrarCedula();
     return $retval;
 }
 
@@ -146,6 +147,34 @@ function frmBloqueoVisitante() {
 
                     </div>
 
+                </div>';
+
+    return $retval;
+
+}
+
+function frmmostrarCedula() {
+
+    $retval = '';
+    $retval = '<div class="modal fade" id="frmCedulaModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" id="closeModalCedula" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                                <header>
+                                        <h1>Lugar de Almacenamiento de la Cédula</h1>	
+                                        <h4 id="txtCedula"></h4>
+                                </header>
+                                <div>
+                                    <div id="verlugarCedula"></div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>';
 
     return $retval;

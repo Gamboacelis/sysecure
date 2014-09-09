@@ -35,7 +35,7 @@ function permitirAcceso3() {
     $sql2 = "INSERT INTO `sys_visitas` (`PPL_COD`,`VIP_COD` ,`HOR_COD`,`VISG_FECHA`,`VISG_HORA_INGRESO`,`VISG_HORA_SALIDA`,`VISG_POSCHAR`,`VISG_POSNUM`,`VISG_ESTADO`)
                                 VALUES ('$codPpl', '$codVisita','$horario','$fecha','$horaIng','$horaSal->HOR_HORA_SAL','$poscedula[0]','$poscedula[1]','A');";
     $val2 = $dbmysql->query($sql2);
-    if ($val1 and $val2 and $val3) {echo 1;} else {echo 0;}
+    if ($val1 and $val2 and $val3) {echo $poscedula[0].$poscedula[1];} else {echo 0;}
 }
 
 function obtenerPosicioncedula(){
