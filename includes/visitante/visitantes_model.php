@@ -152,7 +152,7 @@ function enviarDatosParentesco() {
     $rowPariente = $valPariente->fetch_object();
     if ($visitante == 0 ){$codigoPariente = "";
     }else{$codigoPariente = $rowPariente->PAR_COD;}
-    
+    $retval.='<option value="">-- Seleccione --</option>';
     while ($row = $val->fetch_object()) {
 
             if($row->PAR_COD == $codigoPariente )

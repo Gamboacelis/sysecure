@@ -128,7 +128,7 @@ function frmSanciones() {
                                                                 <div>
                                                                     <div class="widget-body no-padding">
                                                                         <div class="table-responsive">
-                                                                            <table id="listaSanciones" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox" style="text-align:center">
+                                                                            <table id="listaSancionesxTipo" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox" style="text-align:center">
                                                                                 <thead>
                                                                                     <tr>
                                                                                         <th><i class="fa fa-check"></i><input type="hidden" id="IDpplNew" name="IDpplNew"></th>
