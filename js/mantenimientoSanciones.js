@@ -1,6 +1,5 @@
 $(document).ready(function() {
-//    pageSetUp();
-    $('#listaTipoSanciones').dataTable({
+$('#listaTipoSanciones').dataTable({
         "bServerSide": true,
         "sAjaxSource": "includes/sanciones/mantenimiento/sancion_dataTable.php",
         "oLanguage": {
@@ -11,12 +10,11 @@ $(document).ready(function() {
 //            "sSearch": "Buscar: ",
             "sZeroRecords": "No hay registros que mostrar"
         }
-    });
+    });    
 });
 
 
-function editarTipoSancion(codigoTipoSancion)
-{
+function editarTipoSancion(codigoTipoSancion){
     var url = './includes/sanciones/mantenimiento/sancion_model.php?opcion=enviarDatosTipoSanciones';
     $.ajax({
         url: url,
@@ -51,106 +49,56 @@ function cargaDatosIncialesTipoSancion(edt) {
 
 
 function guardarTipoSancion() {
-
-
     var tipoSancion = $('#IDtipoSancion').val();
-
     if (tipoSancion != '') {
-
         $.ajax({
-            
-
             url: './includes/sanciones/mantenimiento/sancion_model.php?opcion=editaDatosTipoSancion',
-
             datetype: "json",
-
             type: 'POST', 
-
             data: $("#smart-form-register").serialize(),  
-
             success: function(res) { 
-
                 if (res === '1') {
-
                     $.smallBox({
-
                         title: "Tipo de sancion actualizada",
-
                         content: "<i class='fa fa-clock-o'></i> <i>Tipo de sancion actualizada correctamente...</i>",
-
                         color: "#659265",
-
                         iconSmall: "fa fa-check fa-2x fadeInRight animated",
-
                         timeout: 4000
-
                     });
-
                     limpiarFormulario();
-
                     location.reload();
-
                 }
-
-
             },
             error: function (res)
             {
                 alert("error al guardar la informacion en la base de datos.")
             }
-            
-
         });
-
     } else {
-
-
         $.ajax({
-
             url: './includes/sanciones/mantenimiento/sancion_model.php?opcion=guardaDatosTipoSancion',
-
             datetype: "json",
-
             type: 'POST',
-
             data: $("#smart-form-register").serialize(),
-
             success: function(res) {
-
                 if (res === '1') {
-
                     $.smallBox({
-
                         title: "Creacion",
-
                         content: "<i class='fa fa-clock-o'></i> <i>Tipo de sancion Creado correctamente...</i>",
-
                         color: "#659265",
-
                         iconSmall: "fa fa-check fa-2x fadeInRight animated",
-
                         timeout: 4000
-
                     });
-
                     limpiarFormulario();
-
                     location.reload();
-
                 }
-
             }
-
         });
-
     }
-
     $('#frmTipoSancion').modal('hide');
-
 }
 
-function nuevoTipoSancion()
-{
+function nuevoTipoSancion(){
     limpiarFormulario();
     $('#frmTipoSancion').modal('show');
 }
@@ -164,7 +112,7 @@ function gestionarSancion(codigoTipoSancion)
         type: 'POST',
         data: {codigoTipoSancion: codigoTipoSancion},
         success: function(res) {
-            $('#listaSanciones >tbody').html(res);
+            $('#listaSancionesxTipo >tbody').html(res);
             $('#frmSancionesModal').modal('show');
         }
     });
@@ -173,7 +121,7 @@ function gestionarSancion(codigoTipoSancion)
 
 
 function GuardarCambioSancion(codigoSancion, tipo) {
-    codigoTipoSancion =  $('#IDtipoSancion1').val();
+    var codigoTipoSancion =  $('#IDtipoSancion1').val();
 
     if (tipo === 'N') {
         var url = './includes/sanciones/mantenimiento/sancion_model.php?opcion=guardarNuevaSanciones';
@@ -193,33 +141,43 @@ function GuardarCambioSancion(codigoSancion, tipo) {
         type: 'POST',
         data: {codigoSancion: codigoSancion, sancion: sancion, tiempo: tiempo, codigoTipoSancion:codigoTipoSancion},
         success: function(res) {
-            if (res != '0') {
-                var json_obj = $.parseJSON(res);
-                if (tipo === 'N') {
-                    $('#new').children('td').children('#txtDescripcionSancion').text(json_obj.datosActualizados.nombre);
-                    $('#new').children('td').children('#txtTiempoSancion').text(json_obj.datosActualizados.apellido);
-                } else {
-                    $('#sancion' + codigoSancion).children('td').children('#txtDescripcionSancion').text(json_obj.datosActualizados.sancion);
-                    $('#sancion' + codigoSancion).children('td').children('#txtTiempoSancion').text(json_obj.datosActualizados.tiempo);
+            if(res!=='2'){
+                if (res !== '0') {
+                    var json_obj = $.parseJSON(res);
+                    if (tipo === 'N') {
+                        $('#new').children('td').children('#txtDescripcionSancion').text(json_obj.datosActualizados.nombre);
+                        $('#new').children('td').children('#txtTiempoSancion').text(json_obj.datosActualizados.apellido);
+                    } else {
+                        $('#sancion' + codigoSancion).children('td').children('#txtDescripcionSancion').text(json_obj.datosActualizados.sancion);
+                        $('#sancion' + codigoSancion).children('td').children('#txtTiempoSancion').text(json_obj.datosActualizados.tiempo);
+                    }
                 }
+                if (tipo === 'N') {
+                    gestionarSancion(json_obj.datosActualizados.codigoTipoSancion);
+                } else {
+                    $('#sancion' + codigoSancion).children('td').children('#DescripcionSancion').val(json_obj.datosActualizados.sancion);
+                    $('#sancion' + codigoSancion).children('td').children('#TiempoSancion').val(json_obj.datosActualizados.tiempo);
+                    $('#sancion' + codigoSancion).children('td').children('.txtVisDatos').show();
+                    $('#sancion' + codigoSancion).children('td').children('.visDatos').hide();
+                    $('#sancion' + codigoSancion).children('td').children('.visBtnGuardar').hide();
+                    $('#sancion' + codigoSancion).children('td').children('.visBtnDatos').show();
+                }
+                $.smallBox({
+                    title: "Actualización",
+                    content: "<i class='fa fa-clock-o'></i> <i>Sancion Actualizada correctamente...</i>",
+                    color: "#659265",
+                    iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                    timeout: 4000
+                });
+            }else{
+                 $.smallBox({
+                        title: "Error..!!",
+                        content: "<i class='fa fa-clock-o'></i> <i>Debe Ingresar Todos los Campos..!</i>",
+                        color: "#C46A69",
+                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                        timeout: 6000
+                    });
             }
-            if (tipo === 'N') {
-                gestionarSancion(json_obj.datosActualizados.codigoTipoSancion);
-            } else {
-                $('#sancion' + codigoSancion).children('td').children('#DescripcionSancion').val(json_obj.datosActualizados.sancion);
-                $('#sancion' + codigoSancion).children('td').children('#TiempoSancion').val(json_obj.datosActualizados.tiempo);
-                $('#sancion' + codigoSancion).children('td').children('.txtVisDatos').show();
-                $('#sancion' + codigoSancion).children('td').children('.visDatos').hide();
-                $('#sancion' + codigoSancion).children('td').children('.visBtnGuardar').hide();
-                $('#sancion' + codigoSancion).children('td').children('.visBtnDatos').show();
-            }
-            $.smallBox({
-                title: "Actualización",
-                content: "<i class='fa fa-clock-o'></i> <i>Sancion Actualizada correctamente...</i>",
-                color: "#659265",
-                iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                timeout: 4000
-            });
         }
     });
 }
@@ -227,8 +185,8 @@ function GuardarCambioSancion(codigoSancion, tipo) {
 function nuevaSancion()
 {
 
-                var tds = $("#listaSanciones tr:first td").length; // Obtenemos el total de columnas (tr) del id "tabla" 
-                var trs = $("#listaSanciones tr").length;
+                var tds = $("#listaSancionesxTipo tr:first td").length; // Obtenemos el total de columnas (tr) del id "tabla" 
+                var trs = $("#listaSancionesxTipo tr").length;
                 var alerta = 1;
                 var tr = $("tr#new").attr("id");
                 if (tr === undefined) {
@@ -240,7 +198,7 @@ function nuevaSancion()
                     var valida = 'N', nada = '';
                     nuevaFila += '<td><a class="btn btn-primary btn-xs visBtnGuardar" title="Guardar Cambio" href="javascript:GuardarCambioSancion(\'' + nada + '\',\'' + valida + '\')"><i class="fa fa-save"></i></a>';
                     nuevaFila += "</tr>";
-                    $("#listaSanciones").append(nuevaFila);
+                    $("#listaSancionesxTipo").append(nuevaFila);
                     $('#new').children('td').children('.visDatos').show();
                     $('#new').children('td').children('.visBtnGuardar').show();
                 }

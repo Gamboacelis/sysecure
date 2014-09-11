@@ -68,7 +68,7 @@ function bloquearAceeso3() {
     $fecha = date('Y-m-d');
     $codVisita = $_POST['codigo'];
     $codVisitante = $_POST['visitante'];
-    $descripcionBloqueo = $_POST['razon'];
+    $descripcionBloqueo = strtoupper($_POST['razon']);
     $usuario=$_SESSION["user_id"];
     $sql1="INSERT INTO `sys_visitante_sancion` (
             `VIS_COD` ,

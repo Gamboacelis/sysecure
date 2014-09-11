@@ -79,8 +79,8 @@ function cambioEstadoPpl() {
 function actualizarDatosPpl() {
     global $dbmysql;
     $codigo = $_POST['IDppl'];
-    $nombre = $_POST["nombre"];
-    $apellido = $_POST["apellido"];
+    $nombre = strtoupper($_POST["nombre"]);
+    $apellido = strtoupper($_POST["apellido"]);
     $cedula = $_POST["cedula"];
     $imagPpl= $_POST["imagPpl"];
     $imagen = explode('/', $imagPpl);
@@ -126,18 +126,16 @@ function mostrarVisitantesPpl() {
     $codigoPpl = $_POST["codPpl"];
     $retval = '';
     $x = 0;
-    $sql = "SELECT vp.*,v.*,p.* FROM `sys_visitante_ppl` vp, sys_visitante v,sys_parentesco p WHERE vp.`VIS_COD`=v.`VIS_COD` AND p.PAR_COD=v.PAR_COD AND v.VIS_ESTADO='A' AND vp.`PPL_COD`=$codigoPpl ORDER BY v.VIS_COD;";
+    $sql = "SELECT vp.*,v.*,p.* FROM `sys_visitante_ppl` vp, sys_visitante v,sys_parentesco p WHERE vp.`VIS_COD`=v.`VIS_COD` AND p.PAR_COD=v.PAR_COD AND v.VIS_ESTADO !='E' AND vp.`PPL_COD`=$codigoPpl ORDER BY v.VIS_COD;";
     $val = $dbmysql->query($sql);
     if ($val->num_rows > 0) {
         while ($row = $val->fetch_object()) {
             $x++;
-            $img = ($row->VIS_IMAGEN == '') ? 'img/avatars/male.png' : SISTEM_NAME . PATH_VISITAS . $row->VIS_IMAGEN;
             $cadenaParametros = $row->VIS_COD . ',\'' . $row->VIS_NOMBRE . ' ' . $row->VIS_APELLIDO . '\'';
             $a = 'A';
             $parametros = $row->VIS_COD . ',\'' . $a . '\'';
             $retval.='<tr id="vis' . $row->VIS_COD . '">
                         <td>' . $x . '</td>
-                        <td><img src="' . $img . '" class="img-thumbnail" style="width: 60px"/></td>
                         <td><div class="txtVisDatos" id="txtVisNombre">' . $row->VIS_NOMBRE . '</div><input type="text" id="visNombre" name="visNombre" class="visDatos" value="' . $row->VIS_NOMBRE . '"></td>
                         <td><div class="txtVisDatos" id="txtVisApellido">' . $row->VIS_APELLIDO . '</div><input type="text" id="visApellido" name="visApellido" class="visDatos" value="' . $row->VIS_APELLIDO . '"></td>
                         <td><div class="txtVisDatos" id="txtVisParentesco">' . $row->PAR_DESCRIPCION . '</div><select id="visParentesco" name="visParentesco" class="visDatos">' . comboParentesco() . '</select></td>
@@ -162,8 +160,8 @@ function guardaDatosPpl() {
     global $dbmysql;
     $pabellon = $_POST["pabellon"];
     $celda = $_POST["celda"];
-    $nombre = $_POST["nombre"];
-    $apellido = $_POST["apellido"];
+    $nombre = strtoupper($_POST["nombre"]);
+    $apellido = strtoupper($_POST["apellido"]);
     $cedula = $_POST["cedula"];
     $imagen = explode('/', $_POST["imagPpl"]);
     $img = $imagen[3];
@@ -184,8 +182,8 @@ function guardaDatosPpl() {
 
 function actualizaListaVisitante() {
     global $dbmysql;
-    $nombre = $_POST["nombre"];
-    $apellido = $_POST["apellido"];
+    $nombre = strtoupper($_POST["nombre"]);
+    $apellido = strtoupper($_POST["apellido"]);
     $visCod = $_POST["visCod"];
     $parCod = $_POST["parentesco"];
     $sql = "UPDATE `sys_visitante` SET VIS_NOMBRE='$nombre',VIS_APELLIDO='$apellido',PAR_COD='$parCod' WHERE VIS_COD=$visCod;";
@@ -203,12 +201,12 @@ function actualizaListaVisitante() {
 
 function guardarListaVisitante() {
     global $dbmysql;
-    $nombre = $_POST["nombre"];
-    $apellido = $_POST["apellido"];
+    $nombre = strtoupper($_POST["nombre"]);
+    $apellido = strtoupper($_POST["apellido"]);
     $parCod = $_POST["parentesco"];
     $codPpl = $_POST["visCod"];
     $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,PAR_COD,VIS_ESTADO)
-            VALUES('$nombre','$apellido','$parCod','A');";
+            VALUES('$nombre','$apellido','$parCod','N');";
     $val = $dbmysql->query($sql);
     if ($val) {
         $IdVisita = $dbmysql->maxid('VIS_COD', 'sys_visitante');

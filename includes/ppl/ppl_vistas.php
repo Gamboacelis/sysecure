@@ -200,7 +200,6 @@ function frmVisitantes(){
                                                                                 <thead>
                                                                                     <tr>
                                                                                         <th><i class="fa fa-check"></i><input type="hidden" id="IDpplNew" name="IDpplNew"></th>
-                                                                                        <th><i class="fa fa-picture-o"></i> Imagen</th>
                                                                                         <th><i class="fa fa-user"></i> Nombre</th>
                                                                                         <th><i class="fa fa-user"></i> Apellido</th>
                                                                                         <th><i class="fa fa-lock"></i> Parentesco</th>

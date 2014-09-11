@@ -7,7 +7,14 @@ opacity(n)
   opacity n
   if support-for-ie
     filter unquote('progid:DXImageTransform.Microsoft.Alpha(Opacity=' + round(n * 100) + ')')
-
+input
+    text-transform:uppercase;
+#agregarVisitantesTable
+    display: none
+#guardarVisitanteNuevo
+    display: none
+.bootstrap-timepicker-widget
+    z-index: 10000 !important;
 .smart-style-3 #header
     background-color: #3EA7D1;
     background-image: linear-gradient(to bottom, #3EA7D1, #058DC7);

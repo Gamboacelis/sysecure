@@ -1,6 +1,5 @@
 $(document).ready(function() {
-//    pageSetUp();
-    $('#listaVisitantes').dataTable({
+    var dtTable=$('#listaVisitantes').dataTable({
         "bServerSide": true,
         "sAjaxSource": "includes/visitante/visitantes_dataTable.php",
         "oLanguage": {
@@ -10,6 +9,31 @@ $(document).ready(function() {
             "sInfoFiltered": " - Filtrado de registros _MAX_",
 //            "sSearch": "Buscar: ",
             "sZeroRecords": "No hay registros que mostrar"
+        }
+    });
+    $('#listaVisitantes_filter').append( '<label><a href="#" id="buscar" class="btn btn-default">Buscar</a></label>' );
+    $('#listaVisitantes_filter').append( '<label><a href="#" id="reset" class="btn btn-default">Reset</a></label>' );
+    $("div.dataTables_filter input").unbind();
+    $('#reset').click(function(e) {
+        $("div.dataTables_filter input").val('');
+        dtTable.fnFilter($("div.dataTables_filter input").val());
+    });
+    $('#buscar').click(function(e) {
+        dtTable.fnFilter($("div.dataTables_filter input").val());
+    });
+     $('div.dataTables_filter input').focusout(function(e) {
+        dtTable.fnFilter($("div.dataTables_filter input").val());
+    });
+    var $registerForm = $("#form-visitante").validate({
+        rules: {
+            cedula: {required: true},
+            nombre: {required: true},
+            apellido: {required: true},
+            telefono: {required: true},
+            parentesco: {required: true},
+        },
+        errorPlacement: function(error, element) {
+            error.insertAfter(element.parent());
         }
     });
 });
@@ -210,23 +234,17 @@ function guardarVisitante() {
 }
 
 function nuevoVisitante() {
-
-    $('#frmVisitanteModal').modal('show');
-
     cargarParentesco(0);
-
-
     limpiarFormulario();
-
+    $('#frmVisitanteModal').modal('show');
     $('#smart-form-register >header').text('Registro Nuevo Usuario')
-
     $('#IDvisitante').val('');
-
+    
     Webcam.set({
-    width: 220,
-    height: 190,
-    image_format: "jpeg",
-    jpeg_quality: 90
+        width: 220,
+        height: 190,
+        image_format: "jpeg",
+        jpeg_quality: 90
     });
     Webcam.attach( "#my_camera" );
 

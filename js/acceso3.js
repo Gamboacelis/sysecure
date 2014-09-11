@@ -1,5 +1,4 @@
 $(document).ready(function() {
-//    pageSetUp();
     $('#listaAcceso3').dataTable({
         "bServerSide": true,
         "sAjaxSource": "includes/controles/acceso3/acceso3_dataTable.php",
@@ -66,8 +65,11 @@ function negarAcceso3(codVisita, codVisitante){
                 content : mensaje,
                 buttons : "[Aceptar][Cancelar]",
                 input : "text",
-                placeholder : "Describa la razón"
+                placeholder : "Describa la razón",
+                inputValue:"",
+                 
         }, function(ButtonPress, Value) {
+           
             if (ButtonPress === "Aceptar") {
                 if (Value !== '') {
                     $.ajax({

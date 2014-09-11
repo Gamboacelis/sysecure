@@ -91,8 +91,7 @@ global $dbmysql;
 	 * SQL queries
 	 * Get data to display
 	 */
-        
-//        $sWhere =($sWhere=='')?" WHERE GAR_COD = 1 AND CON_ESTADO='A'":" AND GAR_COD = 1 AND CON_ESTADO='A'";
+        $sWhere =($sWhere=='')?" WHERE VIS_ESTADO!='E'":$sWhere." AND VIS_ESTADO!='E'";
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."
 		FROM   $sTable
@@ -141,16 +140,27 @@ global $dbmysql;
     				}
 */
                     $nombre_visitante=$aRow[ 'VIS_NOMBRE' ].' '.$aRow[ 'VIS_APELLIDO' ];
+<<<<<<< HEAD
                     $nombre_ppl =$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ].$rowPDatosVisitante->VIS_COD;
+=======
+                    $nombre_ppl =$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ];
+                    $estado=($aRow['VIS_ESTADO']=='A')?'<span class="label label-success"><i class="fa fa fa-check"></i>  Validado</span>':'<span class="label label-warning"><i class="fa fa-question-circle"></i>  No Validado</span>';
+                    $btn=($aRow['VIS_ESTADO']=='N')?'<a class="btn btn-info" title="Actualizar" href="javascript:actualizarInformacion('.$aRow[ 'VIS_COD' ].')"><i class="fa fa-pencil"></i> Editar Visitante</a>':'<a class="btn btn-success" title="Permitir acceso" href="javascript:permitirAcceso(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'CON_COD' ].','.$aRow[ 'HOR_COD'].')"><i class="fa fa-check"></i>Permitir Acceso</a>';
+>>>>>>> 01788de0ef43a6fe735c20e3def6f83a3211b656
                     $output['aaData'][] =array( ''.utf8_encode($aRow[ 'CON_COD' ]).'',
                     	                	''.utf8_encode($nombre_visitante).'',
                                                 ''.utf8_encode($aRow[ 'VIS_CEDULA' ]).'',
                                                 ''.utf8_encode($nombre_ppl).'',
+<<<<<<< HEAD
 //                                                '<img src=".//uploads/imagenes/ppl/'.$aRow['PPL_IMG'].'" class="img-thumbnail" style="width: 60px">',
                                                 '<a class="btn btn-info" title="Actualizar" href="javascript:editarVisitante('.$aRow[ 'VIS_COD' ].')">
                                                     <i class="fa fa-pencil"></i> Editar Visitante</a> 
                                                 <a class="btn btn-success" title="Permitir acceso" href="javascript:permitirAcceso(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'CON_COD' ].','.$aRow[ 'HOR_COD'].')">
                                                     <i class="fa fa-check"></i>Permitir Acceso</a>
+=======
+                                                ''.$estado.'',
+                                                ''.$btn.'
+>>>>>>> 01788de0ef43a6fe735c20e3def6f83a3211b656
                                                     ');
         }
 //        print_r($output);

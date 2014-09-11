@@ -42,7 +42,7 @@ function enviarDatosCentro() {
 
 function guardaDatosCentro() {
     global $dbmysql;
-    $descripcion = $_POST["descripcion"];
+    $descripcion = strtoupper($_POST["descripcion"]);
     $telefono = $_POST["telefono"];
     $direccion = $_POST["direccion"];
     $ciudad = $_POST["ciudad"];
@@ -59,7 +59,7 @@ function guardaDatosCentro() {
 function actualizarDatosCentro() {
     global $dbmysql;
     $codigo = $_POST['IDcentro'];
-    $descripcion = $_POST["descripcion"];
+    $descripcion = strtoupper($_POST["descripcion"]);
     $telefono = $_POST["telefono"];
     $direccion = $_POST["direccion"];
     $ciudad = $_POST["ciudad"];

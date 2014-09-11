@@ -1,7 +1,5 @@
 <?php
 
-
-
 session_start();
 
 include_once '../../conexiones/db_local.inc.php';
@@ -39,16 +37,13 @@ switch ($funcion) {
 
         guardarEdicionSancion();
 
-        break;        
+        break;
 
     case 'guardarNuevaSanciones':
 
         guardarNuevaSanciones();
 
-        break;        
-
-   
-
+        break;
 }
 
 function enviarDatosTipoSanciones() {
@@ -60,54 +55,45 @@ function enviarDatosTipoSanciones() {
     $sql = "SELECT * FROM `sys_tipo_sancion` WHERE TPS_COD = $codigoTipoSancion";
 
     $val = $dbmysql->query($sql);
-     $row = $val->fetch_object();
+    $row = $val->fetch_object();
 
     $listaTipoSancion['datosTipoSancion'] = array(
-
         "TPS_COD" => $row->TPS_COD,
-
         "TPS_DESCRIPCION" => $row->TPS_DESCRIPCION,
-
     );
 
     echo $encode = json_encode($listaTipoSancion);
 }
 
-
-function guardaDatosTipoSancion()
-{
+function guardaDatosTipoSancion() {
     global $dbmysql;
 
     $tipoSancion = $_POST["tipoSancion"];
 
-    $sql = "INSERT INTO `sys_tipo_sancion`(TPS_DESCRIPCION) VALUES ('$tipoSancion');";
+    $sql = "INSERT INTO `sys_tipo_sancion`(TPS_DESCRIPCION) VALUES ('".strtoupper($tipoSancion)."');";
 
     $val = $dbmysql->query($sql);
 
     if ($val) {
 
         echo 1;
-
     } else {
 
         echo 0;
-
-    }    
+    }
 }
 
-
-function editaDatosTipoSancion()
-{
+function editaDatosTipoSancion() {
     global $dbmysql;
 
     $IDtipoSancion = $_POST['IDtipoSancion'];
 
     $tipoSancion = $_POST["tipoSancion"];
 
-   
+
     $sql = "UPDATE `sys_tipo_sancion` SET 
 
-                TPS_DESCRIPCION    = '$tipoSancion'
+                TPS_DESCRIPCION    = '".strtoupper($tipoSancion)."'
 
             WHERE TPS_COD = $IDtipoSancion;";
 
@@ -119,18 +105,13 @@ function editaDatosTipoSancion()
 
 
         echo 1;
-
     } else {
 
         echo 0;
-
-    }  
-
+    }
 }
 
-
-function mostrarSanciones()
-{
+function mostrarSanciones() {
 
     global $dbmysql;
     $codigoTipoSancion = $_POST["codigoTipoSancion"];
@@ -155,10 +136,9 @@ function mostrarSanciones()
                       </tr>';
         }
     } else {
-        $retval.='<tr><td collspan="5"> No Existen Sanciones pertenecientes al tipo</td></tr>';
+        $retval.='<tr><td colspan="4"> No Existen Sanciones pertenecientes al tipo</td></tr>';
     }
     echo $retval;
-
 }
 
 function guardarEdicionSancion() {
@@ -167,35 +147,36 @@ function guardarEdicionSancion() {
     $sancion = $_POST["sancion"];
     $tiempo = $_POST["tiempo"];
 
-    $sql = "UPDATE `sys_sanciones` SET SAN_DESCRIPCION = '$sancion', SAN_TIEMPO='$tiempo'  WHERE SAN_COD=$codigoSancion;";
+    $sql = "UPDATE `sys_sanciones` SET SAN_DESCRIPCION = '".strtoupper($sancion)."', SAN_TIEMPO='$tiempo'  WHERE SAN_COD=$codigoSancion;";
     $val = $dbmysql->query($sql);
     if ($val) {
 
-        $datos['datosActualizados'] = array("codigoSancion" => $codigoSancion, "sancion" => $sancion, "tiempo" => $tiempo);
+        $datos['datosActualizados'] = array("codigoSancion" => $codigoSancion, "sancion" => strtoupper($sancion), "tiempo" => $tiempo);
         echo json_encode($datos);
     } else {
         echo 0; //NO SE EJECUTO EL QUERY
     }
 }
 
-
 function guardarNuevaSanciones() {
     global $dbmysql;
-    $sancion = $_POST["sancion"];
+    $sancion = strtoupper($_POST["sancion"]);
     $tiempo = $_POST["tiempo"];
     $codigoTipoSancion = $_POST["codigoTipoSancion"];
+    if($sancion!='' && $tiempo!='' && $codigoTipoSancion!=''){
+        $sql = "INSERT INTO `sys_sanciones`(SAN_DESCRIPCION,SAN_TIEMPO,TPS_COD)
+                VALUES('$sancion','$tiempo',$codigoTipoSancion);";
 
-    $sql = "INSERT INTO `sys_sanciones`(SAN_DESCRIPCION,SAN_TIEMPO,TPS_COD)
-            VALUES('$sancion','$tiempo',$codigoTipoSancion);";
-       
-    $val = $dbmysql->query($sql);
-    if ($val) {
-        $codigoSancion = $dbmysql->maxid('SAN_COD', 'sys_sanciones');
-       
-        $datos['datosActualizados'] = array("codigoSancion" => $codigoSancion, "sancion" => $sancion, "tiempo" => $tiempo, "codigoTipoSancion" => $codigoTipoSancion);
-        echo json_encode($datos); // RESULTADO EXITOSO
-    } else {
-        echo 0; //NO SE EJECUTO EL QUERY
+        $val = $dbmysql->query($sql);
+        if ($val) {
+            $codigoSancion = $dbmysql->maxid('SAN_COD', 'sys_sanciones');
+
+            $datos['datosActualizados'] = array("codigoSancion" => $codigoSancion, "sancion" => $sancion, "tiempo" => $tiempo, "codigoTipoSancion" => $codigoTipoSancion);
+            echo json_encode($datos); // RESULTADO EXITOSO
+        } else {
+            echo 0; //NO SE EJECUTO EL QUERY
+        }
+    }else{
+        echo 2;
     }
-    
 }

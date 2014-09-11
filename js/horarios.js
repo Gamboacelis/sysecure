@@ -1,43 +1,21 @@
 $(document).ready(function() {
-
+    $('#horaIngreso').timepicker();
+    $('#horaSalida').timepicker();
     var $cambioClaveForm = $("#smart-form-horarios").validate({
-        // Rules for form validation
         rules: {
-            dias: {
-                required: true,
-            },
-            descripcion: {
-                required: true,
-            },
-            horaIngreso: {
-                required: true,
-            },
-            horaSalida: {
-                required: true,
-            },
-            tipoVisitas: {
-                required: true
-            }
+            dias: {required: true},
+            descripcion: {required: true},
+            horaIngreso: {required: true},
+            horaSalida: {required: true},
+            tipoVisitas: {required: true}
         },
-        // Messages for form validation
         messages: {
-            dias: {
-                required: 'Por favor seleccione el Día de Visita'
-            },
-            descripcion: {
-                required: 'Por favor, introduzca el nombre del Horario',
-            },
-            horaIngreso: {
-                required: 'Por favor, Indique desde que hora la Visita',
-            },
-            horaSalida: {
-                required: 'Por favor, Indique hasta que hora la Visita',
-            },
-            tipoVisitas: {
-                required: 'Por favor, Indique que Tipos de Visita pueden Acceder en ese Horario'
-            }
+            dias: {required: 'Por favor seleccione el Día de Visita'},
+            descripcion: {required: 'Por favor, introduzca el nombre del Horario'},
+            horaIngreso: {required: 'Por favor, Indique desde que hora la Visita'},
+            horaSalida: {required: 'Por favor, Indique hasta que hora la Visita'},
+            tipoVisitas: {required: 'Por favor, Indique que Tipos de Visita pueden Acceder en ese Horario'}
         },
-        // Do not change code below
         errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
         }
@@ -63,10 +41,12 @@ function nuevoHorario() {
     var codPabellon = $('#IDpabellon').val();
     $('.checkbox').hide();
     if (codPabellon !== '') {
+        
         $('#frmHorariosModal').modal('show');
         limpiarFormularioHorario();
         $('#smart-form-horarios >header').text('Registro Nuevo Horario')
         $('#IDhorario').val('');
+        
     } else {
         $.smallBox({
             title: "Error..!!",

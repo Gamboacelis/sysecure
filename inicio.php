@@ -27,7 +27,7 @@ if ($_SESSION["autenticado"] == 'SI') {
 
             switch ($option) {
                 case 'centros':
-                    $titulo = 'Revisión de Horarios';
+                    $titulo = 'Revisión de Centros';
                     $activarMenu31 = 'class="active"';
                     $contenido = reporteCentros();
                     break;
@@ -61,16 +61,9 @@ if ($_SESSION["autenticado"] == 'SI') {
                     $activarMenu37 = 'class="active"';
                     $contenido = revisarVisitantes();
                     break;
-
-                case 'parametros':
-                    $titulo='Revisión de Parametros de Configuracion';
-                    $activarMenu36='class="active"';
-                    $contenido = reporteParametros();
-                    break;
-
                 case 'sanciones':
                     $titulo='Mantenimiento de sanciones';
-                    $activarMenu37='class="active"';
+                    $activarMenu38='class="active"';
                     $contenido = revisarTipoSanciones();
                     break;                    
 
@@ -237,7 +230,7 @@ if ($_SESSION["autenticado"] == 'SI') {
                                 <li <?php echo $activarMenu33 ?>><a href="?modulo=administrativo&op=pabellones">Pabellones</a></li>
                                 <li <?php echo $activarMenu34 ?>><a href="?modulo=administrativo&op=parametros">Parametros</a></li>
 
-                                <li <?php echo $activarMenu36 ?>><a href="?modulo=administrativo&op=sanciones">Sanciones</a></li>
+                                <li <?php echo $activarMenu38 ?>><a href="?modulo=administrativo&op=sanciones">Sanciones</a></li>
 
 
                                 <li <?php echo $activarMenu35 ?>><a href="?modulo=administrativo&op=ppl">PPL</a></li>
@@ -401,6 +394,12 @@ if ($_SESSION["autenticado"] == 'SI') {
 
             <!-- Generador de MD5 -->
             <script src="js/plantilla/plugin/jquery-md5/jquery.md5.min.js"></script>
+            
+            <!-- SOAP JS -->
+            <script src="js/plantilla/plugin/jquery-soap/jquery.soap.js"></script>
+            
+            <!-- XML2JSON JS -->
+            <script src="js/plantilla/plugin/jquery-soap/jquery.xml2json.js"></script>
             <!--[if IE 8]>
 
             <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>

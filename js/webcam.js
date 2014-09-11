@@ -48,7 +48,11 @@ var Webcam = {
 		live: null,
 		uploadcomplete: null,
 		uploadprogress: null,
-		error: function(msg) { alert("Webcam.js Error: " + msg); }
+		error: function(msg) { 
+                    $('#my_camera').append( '<img src="img/camara.png" class="img-thumbnail" style="width: 160px; position: absolute; left: 50px; top: 50px;"/>' );
+                    $('#botonCamara').addClass('disabled');
+//                      alert("Webcam.js Error: " + msg); 
+                }
 	}, // callback hook functions
 	
 	init: function() {

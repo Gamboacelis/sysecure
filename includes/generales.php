@@ -118,7 +118,18 @@ class general {
 
     function obtenerCantidadActualPPL($pabellon){
         global $dbmysql;
-        $sql = "SELECT MAX(`PPL_COD`) AS CantPPL FROM `sys_ppl` where `PAB_COD`=$pabellon";
+        $sql = "SELECT count(*) AS CantPPL FROM `sys_ppl` where `PAB_COD`=$pabellon WHERE PPL_ESTADO='A';";
+        $val = $dbmysql->query($sql);
+        if($val->num_rows>0){
+            $row = $val->fetch_object();
+            $val = $row->CantPPL;
+            return $val;
+        }
+    }    
+    function revisarDatosVisitante($codVisitante){
+        global $dbmysql;
+        $sql = "SELECT VIS_COD,VIS_NOMBRE,VIS_APELLIDO,PAR_COD,VIS_CEDULA,VIS_DIRECCION,VIS_TELEFONO,VIS_CORREO,VIS_IMAGEN,VIS_ESTADO
+                FROM `sys_visitante` where `VIS_COD`=$codVisitante WHERE VIS_ESTADO='E';";
         $val = $dbmysql->query($sql);
         if($val->num_rows>0){
             $row = $val->fetch_object();
