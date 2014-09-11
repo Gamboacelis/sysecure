@@ -85,7 +85,7 @@ function guardaDatosHorario() {
 function eliminarHorario() {
     global $dbmysql;
     $codigo = $_POST['codigo'];
-    $sql = "DELETE FROM `sys_horarios` WHERE HOR_COD=$codigo;";
+    $sql = "UPDATE `sys_horarios` SET HOR_ESTADO = 'E' WHERE HOR_COD=$codigo;";
     $val = $dbmysql->query($sql);
     if ($val) {
         echo 1;
@@ -99,7 +99,7 @@ function buscarHorariosPabellon() {
     $codPabellon = $_POST['pabellon'];
     $sql = "SELECT * FROM `sys_horarios` h
             INNER JOIN sys_tipovisita tp
-            ON h.TPV_COD=tp.TPV_COD WHERE h.PAB_COD='$codPabellon';";
+            ON h.TPV_COD=tp.TPV_COD WHERE h.HOR_ESTADO='A' AND h.PAB_COD='$codPabellon';";
     $val = $dbmysql->query($sql);
     if ($val->num_rows > 0) {
         while ($row = $val->fetch_object()) {
