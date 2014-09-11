@@ -394,6 +394,12 @@ if ($_SESSION["autenticado"] == 'SI') {
 
             <!-- Generador de MD5 -->
             <script src="js/plantilla/plugin/jquery-md5/jquery.md5.min.js"></script>
+            
+            <!-- SOAP JS -->
+            <script src="js/plantilla/plugin/jquery-soap/jquery.soap.js"></script>
+            
+            <!-- XML2JSON JS -->
+            <script src="js/plantilla/plugin/jquery-soap/jquery.xml2json.js"></script>
             <!--[if IE 8]>
 
             <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>

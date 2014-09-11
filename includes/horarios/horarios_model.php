@@ -45,9 +45,9 @@ function enviarDatosHorario() {
 function actualizarDatosHorario() {
     global $dbmysql;
     $codigo = $_POST['IDhorario'];
-    $dias= $_POST["dias"];
+    $dias= strtoupper($_POST["dias"]);
     $tipoVisitas=$_POST["tipoVisitas"]; 
-    $descripcion = $_POST["descripcion"];
+    $descripcion = strtoupper($_POST["descripcion"]);
     $horaIngreso = $_POST["horaIngreso"];
     $horaSalida = $_POST["horaSalida"];
     $estado = $_POST["estado"];
@@ -70,8 +70,8 @@ function actualizarDatosHorario() {
 
 function guardaDatosHorario() {
     global $dbmysql;
-    $dias= $_POST["dias"];
-    $descripcion = $_POST["descripcion"];
+    $dias= strtoupper($_POST["dias"]);
+    $descripcion = strtoupper($_POST["descripcion"]);
     $horaIngreso = $_POST["horaIngreso"];
     $horaSalida = $_POST["horaSalida"];
     $pabellon = $_POST["IDpabellonFrm"];

@@ -84,7 +84,7 @@ global $dbmysql;
 	 * SQL queries
 	 * Get data to display
 	 */
-        $sWhere=($sWhere=='')?" WHERE PPL_ESTADO='A' ":" AND PPL_ESTADO='A' ";
+        $sWhere=($sWhere=='')?" WHERE PPL_ESTADO='A' ":$sWhere." AND PPL_ESTADO='A' ";
         
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."

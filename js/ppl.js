@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#listaPpl').dataTable({
+    var dtTable =$('#listaPpl').dataTable({
         "bPaginate": true,
         "iDisplayLength": 5,
         "bServerSide": true,
@@ -12,6 +12,19 @@ $(document).ready(function() {
 //            "sSearch": "Buscar: ",
             "sZeroRecords": "No hay registros que mostrar"
         }
+    });
+    $('#listaPpl_filter').append( '<label><a href="#" id="buscar" class="btn btn-default">Buscar</a></label>' );
+    $('#listaPpl_filter').append( '<label><a href="#" id="reset" class="btn btn-default">Reset</a></label>' );
+    $("div.dataTables_filter input").unbind();
+    $('#reset').click(function(e) {
+        $("div.dataTables_filter input").val('');
+        dtTable.fnFilter($("div.dataTables_filter input").val());
+    });
+    $('#buscar').click(function(e) {
+        dtTable.fnFilter($("div.dataTables_filter input").val());
+    });
+     $('div.dataTables_filter input').focusout(function(e) {
+        dtTable.fnFilter($("div.dataTables_filter input").val());
     });
     var dataTableDiv = $('#viewPPL').height();
     var mainDiv = $('#main').height();
