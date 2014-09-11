@@ -131,13 +131,11 @@ function mostrarVisitantesPpl() {
     if ($val->num_rows > 0) {
         while ($row = $val->fetch_object()) {
             $x++;
-            $img = ($row->VIS_IMAGEN == '') ? 'img/avatars/male.png' : SISTEM_NAME . PATH_VISITAS . $row->VIS_IMAGEN;
             $cadenaParametros = $row->VIS_COD . ',\'' . $row->VIS_NOMBRE . ' ' . $row->VIS_APELLIDO . '\'';
             $a = 'A';
             $parametros = $row->VIS_COD . ',\'' . $a . '\'';
             $retval.='<tr id="vis' . $row->VIS_COD . '">
                         <td>' . $x . '</td>
-                        <td><img src="' . $img . '" class="img-thumbnail" style="width: 60px"/></td>
                         <td><div class="txtVisDatos" id="txtVisNombre">' . $row->VIS_NOMBRE . '</div><input type="text" id="visNombre" name="visNombre" class="visDatos" value="' . $row->VIS_NOMBRE . '"></td>
                         <td><div class="txtVisDatos" id="txtVisApellido">' . $row->VIS_APELLIDO . '</div><input type="text" id="visApellido" name="visApellido" class="visDatos" value="' . $row->VIS_APELLIDO . '"></td>
                         <td><div class="txtVisDatos" id="txtVisParentesco">' . $row->PAR_DESCRIPCION . '</div><select id="visParentesco" name="visParentesco" class="visDatos">' . comboParentesco() . '</select></td>

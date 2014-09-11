@@ -21,7 +21,7 @@ function reporte_pabellones() {
     global $dbmysql,$clGeneral;
     $sql="SELECT e.*,p.* FROM `sys_pabellones` p, sys_etapas e WHERE e.`NVL_COD`=p.`NVL_COD` AND p.CEN_COD={$_SESSION['usu_centro_cod']}";
      $val_s = $dbmysql->query($sql);
-        $retval = '<article class="col-sm-12 col-md-12 col-lg-6">
+        $retval = '<article class="col-sm-12 col-md-12 col-lg-8">
                     <div class="botonesSuperiores">
                     <fieldset>
                             <button id="agregarPabellon" class="btn btn-labeled btn-primary btn-personal"  data-toggle="modal" onclick="javascript:nuevoPabellon()">
@@ -54,7 +54,7 @@ function reporte_pabellones() {
                                                             </thead>
                                                             <tbody>';
                                                     while($row = $val_s->fetch_object()){
-                                                        $cantidadActual=$clGeneral->obtenerCantidadActualPPL($row->PAB_COD);
+                                                        $cantidadActual=($clGeneral->obtenerCantidadActualPPL($row->PAB_COD)!='')?$clGeneral->obtenerCantidadActualPPL($row->PAB_COD):0;
                                                         $cadenaParametros=utf8_encode($row->PAB_COD.','."'$row->PAB_DESCRIPCION'");
                                                          $retval .= '<tr>
                                                                             <td>'.$row->PAB_COD.'</td>

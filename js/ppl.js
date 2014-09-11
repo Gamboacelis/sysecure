@@ -347,7 +347,6 @@ function nuevoVisitantePpl() {
                 if (tr === undefined) {
                     var nuevaFila = '<tr id="new">';
                     nuevaFila += "<td>" + (trs);
-                    nuevaFila += '<td><img src="img/avatars/male.png" class="img-thumbnail" style="width: 60px" />';
                     nuevaFila += '<td><div class="txtVisDatos" id="txtVisNombre"></div><input type="text" id="visNombre" name="visNombre" class="visDatos">';
                     nuevaFila += '<td><div class="txtVisDatos" id="txtVisApellido"></div><input type="text" id="visApellido" name="visApellido" class="visDatos">';
                     nuevaFila += '<td><div class="txtVisDatos" id="txtVisParentesco"></div><select id="visParentesco" name="visParentesco" class="visDatos"></select>';
