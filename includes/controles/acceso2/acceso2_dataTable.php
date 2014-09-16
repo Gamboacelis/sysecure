@@ -124,45 +124,18 @@ global $dbmysql;
         
 	while ( $aRow = mysql_fetch_array( $rResult ) ){
                 /* General output */
-/*
-                	$sqlDatosVisitante = 'SELECT VIS_COD FROM sys_visitante WHERE VIS_NOMBRE != "" AND VIS_APELLIDO != "" AND PAR_COD != "" AND VIS_CEDULA != "" AND VIS_DIRECCION != "" AND VIS_TELEFONO != "" AND VIS_CORREO != "" AND VIS_IMAGEN != "" AND VIS_COD = '.$aRow[ 'VIS_COD' ];
-                	$valDatosVisitante = $dbmysql->query($sqlDatosVisitante);
-    				$rowPDatosVisitante = $valDatosVisitante->fetch_object();
-    			
-    				if ($rowPDatosVisitante->VIS_COD != "")
-    				{
-    					$editar = '';
-    				}
-    				else
-    				{
-    					$editar = '<a class="btn btn-info" title="Actualizar" href="javascript:editarVisitante('.$aRow[ 'VIS_COD' ].')">
-                                                    <i class="fa fa-pencil"></i> Editar Visitante</a>';
-    				}
-*/
                     $nombre_visitante=$aRow[ 'VIS_NOMBRE' ].' '.$aRow[ 'VIS_APELLIDO' ];
-<<<<<<< HEAD
-                    $nombre_ppl =$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ].$rowPDatosVisitante->VIS_COD;
-=======
+//                    $nombre_ppl =$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ].$rowPDatosVisitante->VIS_COD;
                     $nombre_ppl =$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ];
                     $estado=($aRow['VIS_ESTADO']=='A')?'<span class="label label-success"><i class="fa fa fa-check"></i>  Validado</span>':'<span class="label label-warning"><i class="fa fa-question-circle"></i>  No Validado</span>';
                     $btn=($aRow['VIS_ESTADO']=='N')?'<a class="btn btn-info" title="Actualizar" href="javascript:actualizarInformacion('.$aRow[ 'VIS_COD' ].')"><i class="fa fa-pencil"></i> Editar Visitante</a>':'<a class="btn btn-success" title="Permitir acceso" href="javascript:permitirAcceso(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'CON_COD' ].','.$aRow[ 'HOR_COD'].')"><i class="fa fa-check"></i>Permitir Acceso</a>';
->>>>>>> 01788de0ef43a6fe735c20e3def6f83a3211b656
                     $output['aaData'][] =array( ''.utf8_encode($aRow[ 'CON_COD' ]).'',
                     	                	''.utf8_encode($nombre_visitante).'',
                                                 ''.utf8_encode($aRow[ 'VIS_CEDULA' ]).'',
                                                 ''.utf8_encode($nombre_ppl).'',
-<<<<<<< HEAD
-//                                                '<img src=".//uploads/imagenes/ppl/'.$aRow['PPL_IMG'].'" class="img-thumbnail" style="width: 60px">',
-                                                '<a class="btn btn-info" title="Actualizar" href="javascript:editarVisitante('.$aRow[ 'VIS_COD' ].')">
-                                                    <i class="fa fa-pencil"></i> Editar Visitante</a> 
-                                                <a class="btn btn-success" title="Permitir acceso" href="javascript:permitirAcceso(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'CON_COD' ].','.$aRow[ 'HOR_COD'].')">
-                                                    <i class="fa fa-check"></i>Permitir Acceso</a>
-=======
                                                 ''.$estado.'',
                                                 ''.$btn.'
->>>>>>> 01788de0ef43a6fe735c20e3def6f83a3211b656
                                                     ');
         }
-//        print_r($output);
 	echo json_encode( $output );
 ?>
