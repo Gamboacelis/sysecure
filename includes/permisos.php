@@ -20,7 +20,7 @@ class Permisos
 		$this->CodigoUsuario = $codigoUsuario;
 	}
 
-	function getCodigoPerfil()
+	function getCodigoPerfil() 
 	{
 
         $sql = "SELECT ID_PERFIL FROM `sys_usuarios` WHERE USU_COD = $this->CodigoUsuario";
