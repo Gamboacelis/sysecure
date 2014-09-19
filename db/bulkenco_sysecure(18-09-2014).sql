@@ -295,16 +295,16 @@ CREATE TABLE IF NOT EXISTS `sys_item_tipos` (
 --
 
 CREATE TABLE IF NOT EXISTS `sys_opciones_rol` (
-`OPU_COD` int(11) NOT NULL COMMENT 'Codigo secuencial de pciones usuario',
+  `OPR_COD` int(11) DEFAULT NULL COMMENT 'Codigo secuencial de las opciones del Rol',
   `ROL_COD` int(11) DEFAULT NULL COMMENT 'Codigo del Rol',
-  `OPP_COD` int(11) DEFAULT NULL COMMENT 'Codigo secuencial de las opciones del Perfil'
+  `OPU_COD` int(11) NOT NULL COMMENT 'Codigo secuencial de pciones usuario',
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Tabla que contiene la relacion del Rol con las Opciones del ' AUTO_INCREMENT=17 ;
 
 --
 -- Volcado de datos para la tabla `sys_opciones_rol`
 --
 
-INSERT INTO `sys_opciones_rol` (`OPU_COD`, `ROL_COD`, `OPP_COD`) VALUES
+INSERT INTO `sys_opciones_rol` (`OPP_COD`, `ROL_COD`, `OPU_COD`) VALUES
 (1, 1, 1),
 (2, 1, 2),
 (3, 1, 3),
@@ -1032,7 +1032,7 @@ ALTER TABLE `sys_item_tipos`
 -- Indices de la tabla `sys_opciones_rol`
 --
 ALTER TABLE `sys_opciones_rol`
- ADD PRIMARY KEY (`OPU_COD`), ADD KEY `FK_REFERENCE_42` (`ROL_COD`);
+ ADD PRIMARY KEY (`OPR_COD`), ADD KEY `FK_REFERENCE_42` (`ROL_COD`);
 
 --
 -- Indices de la tabla `sys_opciones_usuario`

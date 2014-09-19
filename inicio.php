@@ -27,7 +27,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             include_once("./includes/centros/centros_vistas.php");
             include_once("./includes/sanciones/mantenimiento/sancion_vistas.php");
             include_once("./includes/traspaso/traspaso_vistas.php");
-
+            include_once("./includes/roles/roles_vistas.php");
 
             switch ($option) {
                 case 'centros':
@@ -70,7 +70,11 @@ if ($_SESSION["autenticado"] == 'SI') {
                     $titulo='Mantenimiento de sanciones';
                     $activarMenu38='class="active"';
                     $contenido = revisarTipoSanciones();
-                    break;                    
+                    break;
+                case 'roles':
+                    $titulo='Asignación de Permisos';
+                    $contenido = frm_asignacionPermisos();
+                    break;
 
             }
             break;
@@ -440,6 +444,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/centros.js"></script>
             <script src="js/parametros.js"></script>
             <script src="js/mantenimientoSanciones.js"></script>
+            <script src="js/roles.js"></script>
 
             <!-- PAGE RELATED PLUGIN(S) -->
             <script src="js/plantilla/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>

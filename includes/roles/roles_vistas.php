@@ -8,36 +8,49 @@ date_default_timezone_set('America/Bogota');
 function frm_asignacionPermisos() {
     global $dbmysql;
     $retval = '';
-    $sql = "SELECT e.*,p.* FROM `sys_pabellones` p, sys_etapas e WHERE e.`NVL_COD`=p.`NVL_COD` AND p.CEN_COD={$_SESSION['usu_centro_cod']}";
+    $sql = "SELECT ROL_COD,ROL_DESCRIPCION,ROL_ESTADO,ROL_OBSERVACION FROM `sys_roles` WHERE ROL_ESTADO='A';";
     $val_s = $dbmysql->query($sql);
     $retval = '<article class="col-sm-12 col-md-12 col-lg-6">
                     <div class="jarviswidget jarviswidget-color-darken" id="wid-id-2" data-widget-editbutton="false">
                             <header>
                                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                                    <h2>Pabellones ' . $_SESSION["usu_centro_descrip"] . ' </h2>
+                                    <h2>Roles o Perfiles de usuario</h2>
+                                    <div class="widget-toolbar">
+                                        <div class="btn-group">
+                                                <button class="btn btn-xs btn-success btn-personal" data-toggle="modal" onclick="javascript:nuevoHorario()">
+                                                    <i class="fa fa-fw fa-plus"></i>  Agregar Rol
+                                                </button>
+                                        </div>
+                                    </div>
                             </header>
                             <div>
                                 <div class="jarviswidget-editbox">
                                 </div>
                                 <div class="widget-body no-padding">
                                     <div class="table-responsive">
-                                            <table id="listaPabellones" class="table table-bordered table-striped table-hover">
+                                            <table id="listaRoles" class="table table-bordered table-striped table-hover">
                                                 <thead>
                                                     <tr>
                                                             <th>#</th>
-                                                            <th>Nivel</th>
-                                                            <th>Pabellon</th>
-                                                            <th>Ala</th>
+                                                            <th>Descripción</th>
+                                                            <th>Observación</th>
+                                                            <th>Acción</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>';
-    while ($row = $val_s->fetch_object()) {
-        $retval .= '<tr class="tablaPabellonesDetalle" id="' . $row->PAB_COD . '" onclick="javascript:mostrarHoraiosPabellon(\'' . $row->PAB_COD . '\')">
-                                                        <td>' . $row->PAB_COD . '</td>
-                                                        <td>' . $row->NVL_DESCRIPCION . '</td>
-                                                        <td>' . $row->PAB_DESCRIPCION . '</td>
-                                                        <td>' . $row->PAB_ALA . '</td>
-                                                    </tr>';
+                                        while ($row = $val_s->fetch_object()) {
+                                            $cadenaParametros=utf8_encode($row->ROL_COD.','."'$row->ROL_DESCRIPCION'");
+                                            $retval .= '<tr class="tablaPabellonesDetalle" id="' . $row->ROL_COD . '" onclick="javascript:mostrarPermisosUsuario(\'' . $row->ROL_COD . '\')">
+                                                            <td>' . $row-> ROL_COD. '</td>
+                                                            <td>' . $row-> ROL_DESCRIPCION. '</td>
+                                                            <td>' . $row->ROL_OBSERVACION  . '</td>
+                                                            <td><a class="btn btn-success btn-xs" title="Editar Pabellon" href="javascript:editarPabellon('.$row->ROL_COD.')">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                                <a class="btn btn-danger btn-xs '.$row->ROL_COD.'" title="Eliminar Pabellon" href="javascript:eliminarPabellon('.$cadenaParametros.')">
+                                                                    <i class="fa fa-trash-o"></i>
+                                                                </a></td>
+                                                        </tr>';
     }
     $retval .= '</tbody>
                                             </table>
@@ -50,28 +63,25 @@ function frm_asignacionPermisos() {
                     <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                             <header>
                                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                                    <h2>Listado de Horarios asignados al Pabellon</h2>
+                                    <h2>Listado de permisos por Rol</h2>
                                     <div class="widget-toolbar">
                                         <div class="btn-group">
-                                                <button class="btn btn-xs btn-success btn-personal" data-toggle="modal" onclick="javascript:nuevoHorario()">
-                                                    <i class="fa fa-fw fa-plus"></i>  Agregar Horario
+                                                <button class="btn btn-xs btn-success btn-personal" data-toggle="modal" onclick="javascript:nuevoPermiso()">
+                                                    <i class="fa fa-fw fa-plus"></i>  Agregar Permiso
                                                 </button>
                                         </div>
                                     </div>
                             </header>
                             <div>
                                 <div class="widget-body no-padding">
-                                <input type="hidden" id="IDpabellon" name="IDpabellon">
-                                    <table id="tbPabellonesHorarios" class="table table-striped table-bordered table-hover">
+                                <input type="hidden" id="IDRol" name="IDRol">
+                                    <table id="tbPermisosUsuarios" class="table table-striped table-bordered table-hover">
                                         <thead>
                                             <tr id="tablaHorarios">
-                                                    <th>Dia</th>
-                                                    <th>Tipo Visita</th>
-                                                    <th>Descripción</th>
-                                                    <th>Hora Ingreso</th>
-                                                    <th>Hora Salida</th>
-                                                    <th>Estado</th>
-                                                    <th>Acciones</th>
+                                                    <th width="45px">Asignado</th>
+                                                    <th>Código</th>
+                                                    <th>Nombre</th>
+                                                    <th>Acción</th>
                                             </tr>
                                         </thead>
                                         <tbody>';
@@ -80,13 +90,14 @@ function frm_asignacionPermisos() {
                                                 </div>
                                             </div>
                                         </div></article>';
-//    $retval .=frmHorarios();
+    $retval .=frmAgregarPermisos();
+    $retval .=frmAgregarRoles();
     return $retval;
 }
 
-function frmHorarios() {
+function frmAgregarPermisos() {
     $retval = '';
-    $retval = '<div class="modal fade" id="frmHorariosModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+    $retval = '<div class="modal fade" id="frmPermisosModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -98,73 +109,32 @@ function frmHorarios() {
                                 <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
                                                 <header>
                                                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                                        <h2>Formulario de Registro </h2>				
+                                                        <h2>Lista de Permisos</h2>				
                                                 </header>
                                                 <div>
                                                     <div class="widget-body no-padding">
-                                                        <form id="smart-form-horarios" class="smart-form" action="javascript:guardarHorario()">
+                                                        <form id="smart-form-permisos" class="smart-form" action="javascript:guardarAsignaPermisos()">
                                                             <header>
                                                                     Formulario de Registro
                                                             </header>
                                                             <fieldset>
-                                                                    <input type="hidden" id="IDhorario" name="IDhorario">
-                                                                    <input type="hidden" id="IDpabellonFrm" name="IDpabellonFrm">
-                                                                    <div class="row">
-                                                                        <section class="col col-6">
-                                                                                <label>Días:</label>
-                                                                                <label class="select">
-                                                                                        <select id="dias" name="dias">
-                                                                                                <option value="0" selected="" disabled="">-- Dias --</option>
-                                                                                                <option value="Lunes">Lunes</option>
-                                                                                                <option value="Martes">Martes</option>
-                                                                                                <option value="Miércoles">Miércoles</option>
-                                                                                                <option value="Jueves">Jueves</option>
-                                                                                                <option value="Viernes">Viernes</option>
-                                                                                                <option value="Sábado">Sábado</option>
-                                                                                                <option value="Domingo">Domingo</option>
-                                                                                        </select> <i></i> </label>
-                                                                        </section>
-                                                                        <section class="col col-6">
-                                                                                <label>Descripción:</label>
-                                                                                <label class="input"> <i class="icon-append fa fa-comment-o"></i>
-                                                                                        <input type="text" id="descripcion" name="descripcion" placeholder="Descripción">
-                                                                                        <b class="tooltip tooltip-bottom-right">Necesario para Validar la Cuenta</b> </label>
-                                                                        </section>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <section class="col col-6">
-                                                                                <label>Hora de Inicio:</label>
-                                                                                <label class="input"> <i class="icon-append fa fa-clock-o "></i>
-                                                                                        <input type="text" class="form-control" id="horaIngreso" name="horaIngreso" placeholder="00:00" readonly>
-                                                                                        <b class="tooltip tooltip-bottom-right">Necesario para Validar la Cuenta</b> </label>
-                                                                        </section>
-                                                                        <section class="col col-6">
-                                                                                <label>Hora de Salida:</label>
-                                                                                <label class="input"> <i class="icon-append fa fa-clock-o "></i>
-                                                                                        <input type="text" class="form-control" id="horaSalida" name="horaSalida" placeholder="00:00" readonly>
-                                                                                        <b class="tooltip tooltip-bottom-right">Necesario para Validar la Cuenta</b> </label>
-                                                                        </section>
-                                                                        
-                                                                        
-                                                                    </div>
-                                                                    <section>
-                                                                                <label>Tipo de Visitas</label>
-                                                                                <label class="select">
-                                                                                        <select id="tipoVisitas" placeholder="Seleccione Tipo de Visita" name="tipoVisitas">
-                                                                                                <option value="0" selected="" disabled="">-- Tipo de Visita --</option>
-                                                                                                ' . comboTipoVisitas() . '
-                                                                                        </select> <i></i> </label>
-                                                                        </section>
-                                                                    <section>
-                                                                        <label class="checkbox">
-                                                                            <input id="estado" type="checkbox" name="estado" value="A">
-                                                                            <i></i>Activo
-                                                                        </label>
-                                                                    </section>
+                                                                    <table id="tbPermisosDisponibles" class="table table-striped table-bordered table-hover">
+                                                                        <thead>
+                                                                            <tr id="tablaPermisos">
+                                                                                    <th width="45px">
+                                                                                        Asignar
+                                                                                    </th>
+                                                                                    <th>Código</th>
+                                                                                    <th>Nombre</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        </tbody>
+                                                                    </table>
                                                             </fieldset>
                                                             <footer>
                                                                     <button type="submit" class="btn btn-primary">
-                                                                            Registrar
+                                                                            Asignar
                                                                     </button>
                                                             </footer>
                                                         </form>						
@@ -172,22 +142,83 @@ function frmHorarios() {
                                             </div>
                                         </div>
                                 </div>
-                            
                         </div>
                     </div>
                 </div>';
     return $retval;
 }
-
-function comboTipoVisitas() {
-    global $dbmysql;
+function frmAgregarRoles() {
     $retval = '';
-    $sql = "SELECT * FROM `sys_tipovisita`;";
-    $val = $dbmysql->query($sql);
-    if ($val->num_rows > 0) {
-        while ($row = $val->fetch_object()) {
-            $retval.='<option value="' . $row->TPV_COD . '">' . $row->TPV_DESCRIPCION . '</option>';
-        }
-    }
+    $retval = '<div class="modal fade" id="frmPermisosModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                                                <header>
+                                                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                        <h2>Lista de Permisos</h2>				
+                                                </header>
+                                                <div>
+                                                    <div class="widget-body no-padding">
+                                                        <form id="smart-form-permisos" class="smart-form" action="javascript:guardarAsignaPermisos()">
+                                                            <header>
+                                                                    Formulario de Registro
+                                                            </header>
+                                                            <fieldset>
+                                                                    <input type="hidden" id="IDpabellon" name="IDpabellon">
+                                                                    <div class="row">
+                                                                        <section class="col col-6">
+                                                                                <label class="label">Nivel</label>
+                                                                                <label class="select">
+                                                                                        <select id="nivel" name="nivel">
+                                                                                                <option value="0" selected="" disabled="">-- Niveles --</option>
+                                                                                                ' . comboNiveles() . '
+                                                                                        </select> <i></i> 
+                                                                                </label>
+                                                                        </section>
+                                                                        <section class="col col-6">
+                                                                                <label class="label">Ala</label>
+                                                                                <label class="input"> <i class="icon-append fa fa-user"></i>
+                                                                                    <input type="text" id="ala" name="ala" placeholder="Ala">
+                                                                                    <b class="tooltip tooltip-bottom-right">Ingese el Ala en el que se encuentra</b> 
+                                                                                </label>
+                                                                        </section>
+                                                                    </div>
+                                                                    <section>
+                                                                            <label class="label">Descripción</label>
+                                                                            <label class="input"> <i class="icon-append fa fa-envelope-o"></i>
+                                                                                    <input type="text" id="descripcion" name="descripcion" placeholder="Descripción del Pabellon">
+                                                                                    <b class="tooltip tooltip-bottom-right">Necesario para identificar el Pabellon</b> </label>
+                                                                    </section>
+                                                                    <section>
+                                                                            <label class="label">Capacidad</label>
+                                                                            <label class="input"> <i class="icon-append fa fa-lock"></i>
+                                                                                    <input type="number" name="capacidad" placeholder="Capacidad Máxima" id="capacidad">
+                                                                                    <b class="tooltip tooltip-bottom-right">Debe ingresar la Capacidad de PPL del Pabellon</b> </label>
+                                                                    </section>
+                                                                    <section>
+                                                                            <label class="label">Detalles</label>
+                                                                            <label class="textarea"> <i class="icon-append fa fa-comment"></i>
+                                                                                    <textarea id="detalles"  name="detalles" placeholder="Detalles del Pabellon"></textarea>
+                                                                    </section>
+                                                            </fieldset>
+                                                            <footer>
+                                                                    <button type="submit" class="btn btn-primary">
+                                                                            Asignar
+                                                                    </button>
+                                                            </footer>
+                                                        </form>						
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>';
     return $retval;
 }

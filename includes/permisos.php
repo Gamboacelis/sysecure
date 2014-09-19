@@ -38,7 +38,13 @@ class Permisos {
         }
         echo $retval;
     }
-
+    function getTipoCentro(){
+        global $dbmysql;
+        $sql = "SELECT CEN_TIPO FROM `sys_centro` WHERE CEN_COD = ".$_SESSION["usu_centro_cod"];
+        $val = $dbmysql->query($sql);
+        $row = $val->fetch_object();
+        return $row->CEN_TIPO;
+     }
 }
 
 
