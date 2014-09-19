@@ -66,13 +66,15 @@ function obtenerVisitantesAsignados() {
                     } else {
                         $autorizado = '<span class="label label-warning">Límite Máximo Autorizado</span>';
                     }
+
+                    if(getTipoCentro()==1){ $visitante = "<button>Editar visitante</button>";}else{$visitante="";}
                 
                 $retval.='<tr>
                                 <td>' . $row->VIS_NOMBRE . '</td>
                                 <td>' . $row->VIS_APELLIDO . '</td>
                                 <td>' . $row->PAR_DESCRIPCION . '</td>
                                 <td>' . $horario->TPV_DESCRIPCION . '</td>
-                                <td>' . $estado=($row->VIS_ESTADO =='S')?'<span class="label label-danger">Visitante Sancionado</span>':$autorizado. '</td>
+                                <td>' . $estado=($row->VIS_ESTADO =='S')?'<span class="label label-danger">Visitante Sancionado</span>':$autorizado.' '.$visitante.'</td>
                             </tr>';
             }
         }else{
@@ -119,14 +121,41 @@ function permitirAccesoVisitante() {
     $sql = "SELECT * FROM `sys_control` WHERE `GAR_COD`=1 AND `VIP_COD` = '$codVisita' AND `CON_FECHA` ='$fecha' AND CON_ESTADO='A';";
     $val = $dbmysql->query($sql);
     if ($val->num_rows == 0) {
-        $sql2 = "INSERT INTO `sys_control` (`GAR_COD` ,`VIP_COD` ,`HOR_COD`,`CON_FECHA` ,`CON_ESTADO`)VALUES ('1', '$codVisita','$horario','$fecha','A');";
-        $val2 = $dbmysql->query($sql2);
-        if ($val2) {
-            echo 1;
-        } else {
-            echo 0;
-        }
+
+        if (getTipoCentro() == 2 )
+        {    
+            $sql2 = "INSERT INTO `sys_control` (`GAR_COD` ,`VIP_COD` ,`HOR_COD`,`CON_FECHA` ,`CON_ESTADO`)VALUES ('1', '$codVisita','$horario','$fecha','A');";
+            $val2 = $dbmysql->query($sql2);
+            if ($val2) {
+                echo 1;
+            } else {
+                echo 0;
+            }
+        }   
+        elseif(getTipoCentro() == 1)
+        {
+
+            $sql2 = "INSERT INTO `sys_control` (`GAR_COD` ,`VIP_COD` ,`HOR_COD`,`CON_FECHA` ,`CON_ESTADO`)VALUES ('2', '$codVisita','$horario','$fecha','O');";
+            $val2 = $dbmysql->query($sql2);
+            if ($val2) {
+                echo 1;
+            } else {
+                echo 0;
+            }
+
+        }    
     } else {
         echo 2;
     }
+}
+
+
+function getTipoCentro()
+{
+
+    global $dbmysql;
+    $sql = "SELECT CEN_TIPO FROM `sys_centro` WHERE CEN_COD = ".$_SESSION["usu_centro_cod"];
+    $val = $dbmysql->query($sql);
+    $row = $val->fetch_object();
+    return $row->CEN_TIPO;
 }

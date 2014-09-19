@@ -6,11 +6,15 @@ if ($_SESSION["autenticado"] == 'SI') {
     $usuario = '';
 
     $usuario = $_SESSION["usu_real_nombre"];
+    $codUsu = $_SESSION["user_id"];
     $modulos = isset($_GET['modulo']) ? $_GET['modulo'] : 'ninguno';
+    include_once("./includes/permisos.php");
+    $permisos = new Permisos($codUsu);
     include_once("./includes/visitas.php");
     include_once("./includes/generales.php");
     $clGeneral = new general();
     $clGeneral->inicializaMenu();
+    
     switch ($modulos) {
         case 'administrativo':
             $option = isset($_GET['op']) ? $_GET['op'] : 0;
@@ -56,6 +60,7 @@ if ($_SESSION["autenticado"] == 'SI') {
                     $activarMenu36 = 'class="active"';
                     $contenido = revisarUsuarios();
                     break;
+                
                 case 'visitantes':
                     $titulo = 'Revisión de Visitantes';
                     $activarMenu37 = 'class="active"';
@@ -96,6 +101,12 @@ if ($_SESSION["autenticado"] == 'SI') {
                     $activarMenu44 = 'class="active"';
                     $contenido = frm_revisarAcceso4();
                     break;
+                 case 'acceso5':
+                    include_once("./includes/controles/acceso5/acceso5_vistas.php");
+                    $titulo = 'Revisión de Accesos Primer Nivel';
+                    $activarMenu46 = 'class="active"';
+                    $contenido = frm_revisarAcceso5();
+                    break;
                 case 'sanciones':
                     include_once("./includes/sanciones/sancion_vistas.php");
                     $titulo = 'Revisión de Visitantes sancionados';
@@ -107,7 +118,8 @@ if ($_SESSION["autenticado"] == 'SI') {
             break;
         default:
             $titulo = 'Dashboard';
-            $activarMenu1 = 'class="active"';
+            $codMenu=$_SESSION["menu"]= 1;
+            $activarMenu.$codMenu = 'class="active"';
             $contenido = reporte_visitantes();
             break;
     }
@@ -217,7 +229,8 @@ if ($_SESSION["autenticado"] == 'SI') {
                 <!-- NAVIGATION -->
                 <nav>
                     <ul id="sysMenu">
-                        <li <?php echo $activarMenu1 ?>><a href="inicio.php" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Principal</span></a></li>
+                        <?php echo $permisos->construirMenu();?>
+                        <!--li <?php echo $activarMenu1 ?>><a href="inicio.php" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Principal</span></a></li>
                         <li <?php echo $activarMenu2 ?>><a href="#"><i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent">Visitas</span></a></li>
                         <li <?php echo $activarMenu3 ?>><a href="#"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Administracion</span></a>
                             <ul>
@@ -252,7 +265,7 @@ if ($_SESSION["autenticado"] == 'SI') {
                                                                 
 
                             </ul>
-                        </li>
+                        </li-->
                     </ul>
                 </nav>
                 <span class="minifyme" data-action="minifyMenu"> 
