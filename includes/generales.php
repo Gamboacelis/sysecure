@@ -118,7 +118,7 @@ class general {
 
     function obtenerCantidadActualPPL($pabellon){
         global $dbmysql;
-        $sql = "SELECT count(*) AS CantPPL FROM `sys_ppl` where `PAB_COD`=$pabellon WHERE PPL_ESTADO='A';";
+        $sql = "SELECT count(*) AS CantPPL FROM `sys_ppl` WHERE `PAB_COD`=$pabellon AND PPL_ESTADO='A';";
         $val = $dbmysql->query($sql);
         if($val->num_rows>0){
             $row = $val->fetch_object();

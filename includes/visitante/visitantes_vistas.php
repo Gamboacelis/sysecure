@@ -100,11 +100,13 @@ function frmVisitante() {
                                                                 </div>    
                                                                 <div class="row">
                                                                     <section class="col col-6">
+                                                                            <label>Número de Cédula:</label>
                                                                             <label class="input">
                                                                                     <input type="telf" id="cedula" name="cedula" placeholder="Número de Cédula">
                                                                             </label>
                                                                     </section>
                                                                     <section class="col col-6">
+                                                                            <label>Huella Dactilar:</label>
                                                                             <label class="input">
                                                                                     <input type="telf" id="huella" name="huella" placeholder="Codigo de Huella">
                                                                             </label>
@@ -112,11 +114,13 @@ function frmVisitante() {
                                                                 </div>
                                                                 <div class="row">
                                                                     <section class="col col-6">
+                                                                            <label>Nombre:</label>
                                                                             <label class="input">
                                                                                     <input type="text" id="nombre" name="nombre" placeholder="Nombre">
                                                                             </label>
                                                                     </section>
                                                                     <section class="col col-6">
+                                                                            <label>Apellido:</label>
                                                                             <label class="input">
                                                                                     <input type="text" id="apellido" name="apellido" placeholder="Apellido">
                                                                             </label>
@@ -124,43 +128,32 @@ function frmVisitante() {
                                                                 </div>
                                                                 <div class="row">
                                                                     <section class="col col-6">
-                                                                            <label class="input">
-<<<<<<< HEAD
-
-                                                                                    <label class="input">Parentesco:  <select id="parentesco" name="parentesco" class="form-control"></select></label>
-
-=======
-                                                                                    <input type="telf" id="telefono" name="telefono" placeholder="Teléfono Celular">
->>>>>>> 01788de0ef43a6fe735c20e3def6f83a3211b656
+                                                                            <label>Parentesco:</label>
+                                                                            <label class="select">
+                                                                                    <select id="parentesco" name="parentesco" class="form-control"></select>
                                                                             </label>
                                                                     </section>
                                                                     <section class="col col-6">
+                                                                        <label>Teléfono:</label>
+                                                                        <label class="input">
+                                                                            <input type="telf" id="telefono" name="telefono" placeholder="Teléfono Celular">
+                                                                        </label>
+                                                                    </section>
+                                                                    <section class="col col-6">
                                                                             <label class="input">
+                                                                                    <label>Correo Electrónico:</label>
                                                                                     <input type="telf" id="correo" name="correo" placeholder="Correo Electrónico">
                                                                             </label>
                                                                     </section>
                                                                 </div>     
                                                                 <div class="row">
                                                                     <section class="col col-6">
+                                                                            <label>Dirección:</label>
                                                                             <label class="input">
                                                                                     <input type="telf" id="direccion" name="direccion" placeholder="Direccion" style=" width: 527px; ">
                                                                             </label>
                                                                     </section>
                                                                 </div>    
-<<<<<<< HEAD
-
-
-                                                                            
-                                                                            
-                                                               
-
-=======
-                                                            <div class="row">
-                                                                    <section class="col col-6">
-                                                                            <label class="input">Parentesco:  <select id="parentesco" name="parentesco" class="form-control"></select></label>
-                                                                    </section>
-                                                                </div>                                                                    
->>>>>>> 01788de0ef43a6fe735c20e3def6f83a3211b656
                                                             </fieldset>
                                                             <footer>
                                                                     <button type="submit" class="btn btn-primary">
