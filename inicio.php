@@ -20,6 +20,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             $option = isset($_GET['op']) ? $_GET['op'] : 0;
             include_once("./includes/pabellones/pabellon_vistas.php");
             include_once("./includes/usuario/Usuarios_vistas.php");
+            include_once("./includes/roles/roles_vistas.php");
             include_once("./includes/horarios/horarios_vistas.php");
             include_once("./includes/ppl/ppl_vistas.php");
             include_once("./includes/visitante/visitantes_vistas.php");
@@ -42,32 +43,30 @@ if ($_SESSION["autenticado"] == 'SI') {
                     break;
                 case 'pabellones':
                     $titulo = 'Revisión de Pabellones';
-                    $activarMenu33 = 'class="active"';
                     $contenido = reporte_pabellones();
                     break;
                 case 'parametros':
                     $titulo = 'Revisión de Parametros de Configuracion';
-                    $activarMenu34 = 'class="active"';
                     $contenido = reporteParametros();
                     break;
                 case 'ppl':
                     $titulo = 'Revisión de Personas Privadas de Libertad';
-                    $activarMenu35 = 'class="active"';
                     $contenido = revisarPpl();
                     break;
                 case 'usuarios':
                     $titulo = 'Revisión de Usuarios';
-                    $activarMenu36 = 'class="active"';
                     $contenido = revisarUsuarios();
+                    break;
+                case 'roles':
+                    $titulo = 'Revisión de Roles para usuarios';
+                    $contenido = frm_asignacionPermisos();
                     break;
                 case 'visitantes':
                     $titulo = 'Revisión de Visitantes';
-                    $activarMenu37 = 'class="active"';
                     $contenido = revisarVisitantes();
                     break;
                 case 'sanciones':
                     $titulo='Mantenimiento de sanciones';
-                    $activarMenu38='class="active"';
                     $contenido = revisarTipoSanciones();
                     break;                    
 
@@ -117,7 +116,8 @@ if ($_SESSION["autenticado"] == 'SI') {
             break;
         default:
             $titulo = 'Dashboard';
-            $activarMenu1 = 'class="active"';
+            $codMenu=$_SESSION["menu"]= 1;
+            $activarMenu.$codMenu = 'class="active"';
             $contenido = reporte_visitantes();
             break;
     }

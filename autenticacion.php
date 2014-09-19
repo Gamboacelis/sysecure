@@ -16,6 +16,7 @@ $row = $consulta->fetch_object();
 if($consulta->num_rows>0){
 	session_start();
             $_SESSION["autenticado"]= "SI";
+            $_SESSION["menu"]= 1;
             $_SESSION["user_id"]=$row->USU_COD;
             $_SESSION["usu_real_nombre"]=$row->USU_NOMBRE.' '.$row->USU_APELLIDO;
             $_SESSION["usu_usuario"]=$row->USU_USUARIO;
