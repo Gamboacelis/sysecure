@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    $('#horaIngreso').timepicker();
-    $('#horaSalida').timepicker();
+    $('#horaIngreso').timepicker({ timeFormat: 'HH:mm' });
+    $('#horaSalida').timepicker({ timeFormat: 'HH:mm' });
     var $cambioClaveForm = $("#smart-form-horarios").validate({
         rules: {
             dias: {required: true},
