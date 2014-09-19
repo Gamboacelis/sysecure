@@ -67,14 +67,14 @@ function obtenerVisitantesAsignados() {
                         $autorizado = '<span class="label label-warning">Límite Máximo Autorizado</span>';
                     }
 
-                    if(getTipoCentro()==1){ $visitante = "<button>Editar visitante</button>";}else{$visitante="";}
+                    if(getTipoCentro()==1){ $visitante = "<a style='margin-top: 10px;' class='btn btn-success' title='Editar visitante'><i class='fa fa-pencil-square-o'></i> Editar Visitante</a>";  }else{$visitante="";}
                 
                 $retval.='<tr>
                                 <td>' . $row->VIS_NOMBRE . '</td>
                                 <td>' . $row->VIS_APELLIDO . '</td>
                                 <td>' . $row->PAR_DESCRIPCION . '</td>
                                 <td>' . $horario->TPV_DESCRIPCION . '</td>
-                                <td>' . $estado=($row->VIS_ESTADO =='S')?'<span class="label label-danger">Visitante Sancionado</span>':$autorizado.' '.$visitante.'</td>
+                                <td >' . $estado=($row->VIS_ESTADO =='S')?'<span class="label label-danger">Visitante Sancionado</span>':$autorizado.' '.$visitante.'</td>
                             </tr>';
             }
         }else{
@@ -135,9 +135,12 @@ function permitirAccesoVisitante() {
         elseif(getTipoCentro() == 1)
         {
 
+            $sql1 = "INSERT INTO `sys_control` (`GAR_COD` ,`VIP_COD` ,`HOR_COD`,`CON_FECHA` ,`CON_ESTADO`)VALUES ('1', '$codVisita','$horario','$fecha','A');";
+            $val1 = $dbmysql->query($sql1);
+
             $sql2 = "INSERT INTO `sys_control` (`GAR_COD` ,`VIP_COD` ,`HOR_COD`,`CON_FECHA` ,`CON_ESTADO`)VALUES ('2', '$codVisita','$horario','$fecha','O');";
             $val2 = $dbmysql->query($sql2);
-            if ($val2) {
+            if ($val2 and $val1) {
                 echo 1;
             } else {
                 echo 0;
@@ -145,7 +148,7 @@ function permitirAccesoVisitante() {
 
         }    
     } else {
-        echo 2;
+        echo getTipoCentro();
     }
 }
 
@@ -159,3 +162,4 @@ function getTipoCentro()
     $row = $val->fetch_object();
     return $row->CEN_TIPO;
 }
+
