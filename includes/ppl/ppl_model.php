@@ -151,7 +151,7 @@ function mostrarVisitantesPpl() {
                       </tr>';
         }
     } else {
-        $retval.='<tr><td collspan="5"> No Existen Visitantes Asignados </td></tr>';
+        $retval.='<tr><td colspan="5"> No Existen Visitantes Asignados </td></tr>';
     }
     echo $retval;
 }
