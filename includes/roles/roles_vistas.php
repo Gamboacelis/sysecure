@@ -17,7 +17,7 @@ function frm_asignacionPermisos() {
                                     <h2>Roles o Perfiles de usuario</h2>
                                     <div class="widget-toolbar">
                                         <div class="btn-group">
-                                                <button class="btn btn-xs btn-success btn-personal" data-toggle="modal" onclick="javascript:nuevoHorario()">
+                                                <button class="btn btn-xs btn-success btn-personal" data-toggle="modal" onclick="javascript:nuevoRol()">
                                                     <i class="fa fa-fw fa-plus"></i>  Agregar Rol
                                                 </button>
                                         </div>
@@ -44,10 +44,10 @@ function frm_asignacionPermisos() {
                                                             <td>' . $row-> ROL_COD. '</td>
                                                             <td>' . $row-> ROL_DESCRIPCION. '</td>
                                                             <td>' . $row->ROL_OBSERVACION  . '</td>
-                                                            <td><a class="btn btn-success btn-xs" title="Editar Pabellon" href="javascript:editarPabellon('.$row->ROL_COD.')">
+                                                            <td><a class="btn btn-success btn-xs" title="Editar Rol" href="javascript:editarRol('.$row->ROL_COD.')">
                                                                     <i class="fa fa-pencil"></i>
                                                                 </a>
-                                                                <a class="btn btn-danger btn-xs '.$row->ROL_COD.'" title="Eliminar Pabellon" href="javascript:eliminarPabellon('.$cadenaParametros.')">
+                                                                <a class="btn btn-danger btn-xs '.$row->ROL_COD.'" title="Anular Rol" href="javascript:eliminarRol('.$cadenaParametros.')">
                                                                     <i class="fa fa-trash-o"></i>
                                                                 </a></td>
                                                         </tr>';
@@ -149,7 +149,7 @@ function frmAgregarPermisos() {
 }
 function frmAgregarRoles() {
     $retval = '';
-    $retval = '<div class="modal fade" id="frmPermisosModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+    $retval = '<div class="modal fade" id="frmRolesModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -161,55 +161,31 @@ function frmAgregarRoles() {
                                 <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
                                                 <header>
                                                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                                        <h2>Lista de Permisos</h2>				
+                                                        <h2>Formulario de registro</h2>				
                                                 </header>
                                                 <div>
                                                     <div class="widget-body no-padding">
-                                                        <form id="smart-form-permisos" class="smart-form" action="javascript:guardarAsignaPermisos()">
+                                                        <form id="smart-form-Roles" class="smart-form" action="javascript:guardarRol()">
                                                             <header>
                                                                     Formulario de Registro
                                                             </header>
                                                             <fieldset>
-                                                                    <input type="hidden" id="IDpabellon" name="IDpabellon">
-                                                                    <div class="row">
-                                                                        <section class="col col-6">
-                                                                                <label class="label">Nivel</label>
-                                                                                <label class="select">
-                                                                                        <select id="nivel" name="nivel">
-                                                                                                <option value="0" selected="" disabled="">-- Niveles --</option>
-                                                                                                ' . comboNiveles() . '
-                                                                                        </select> <i></i> 
-                                                                                </label>
-                                                                        </section>
-                                                                        <section class="col col-6">
-                                                                                <label class="label">Ala</label>
-                                                                                <label class="input"> <i class="icon-append fa fa-user"></i>
-                                                                                    <input type="text" id="ala" name="ala" placeholder="Ala">
-                                                                                    <b class="tooltip tooltip-bottom-right">Ingese el Ala en el que se encuentra</b> 
-                                                                                </label>
-                                                                        </section>
-                                                                    </div>
+                                                                    <input type="hidden" id="IDrol" name="IDrol">
                                                                     <section>
                                                                             <label class="label">Descripción</label>
                                                                             <label class="input"> <i class="icon-append fa fa-envelope-o"></i>
-                                                                                    <input type="text" id="descripcion" name="descripcion" placeholder="Descripción del Pabellon">
+                                                                                    <input type="text" id="descripcion" name="descripcion" placeholder="Descripción del Rol">
                                                                                     <b class="tooltip tooltip-bottom-right">Necesario para identificar el Pabellon</b> </label>
                                                                     </section>
                                                                     <section>
-                                                                            <label class="label">Capacidad</label>
-                                                                            <label class="input"> <i class="icon-append fa fa-lock"></i>
-                                                                                    <input type="number" name="capacidad" placeholder="Capacidad Máxima" id="capacidad">
-                                                                                    <b class="tooltip tooltip-bottom-right">Debe ingresar la Capacidad de PPL del Pabellon</b> </label>
-                                                                    </section>
-                                                                    <section>
-                                                                            <label class="label">Detalles</label>
+                                                                            <label class="label">Observaciones</label>
                                                                             <label class="textarea"> <i class="icon-append fa fa-comment"></i>
-                                                                                    <textarea id="detalles"  name="detalles" placeholder="Detalles del Pabellon"></textarea>
+                                                                                    <textarea id="observacion"  name="observacion" placeholder="Observaciones"></textarea>
                                                                     </section>
                                                             </fieldset>
                                                             <footer>
                                                                     <button type="submit" class="btn btn-primary">
-                                                                            Asignar
+                                                                            Agregar
                                                                     </button>
                                                             </footer>
                                                         </form>						

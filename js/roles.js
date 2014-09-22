@@ -72,7 +72,57 @@ function nuevoPermiso() {
         });
     }
 }
-
+function nuevoRol() {
+    var codRol = $('#IDrol').val();
+    limpiarFormularioRol();
+    $('#frmRolesModal').modal('show');
+    $('#smart-form-Roles >header').text('Creación de Rol');
+}
+function guardarRol(){
+   var pabellon = $('#IDrol').val();
+    if (pabellon === '') {
+        $.ajax({
+            url: './includes/roles/roles_model.php?opcion=guardaDatosRol',
+            datetype: "json",
+            type: 'POST',
+            data: $("#smart-form-Roles").serialize(),
+            success: function(res) {
+                if (res === '1') {
+                    $.smallBox({
+                        title: "Rol Almacenado",
+                        content: "<i class='fa fa-clock-o'></i> <i>Rol Agregado correctamente...</i>",
+                        color: "#659265",
+                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                        timeout: 4000
+                    });
+                    limpiarFormularioRol();
+                    location.reload();
+                }
+            }
+        });
+    } else {
+        $.ajax({
+            url: './includes/roles/roles_model.php?opcion=actualizarDatosRol',
+            datetype: "json",
+            type: 'POST',
+            data: $("#smart-form-Roles").serialize(),
+            success: function(res) {
+                if (res === '1') {
+                    $.smallBox({
+                        title: "Actualización",
+                        content: "<i class='fa fa-clock-o'></i> <i>Rol Actualizado correctamente...</i>",
+                        color: "#659265",
+                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                        timeout: 4000
+                    });
+                    limpiarFormularioRol();
+                    location.reload();
+                }
+            }
+        });
+    }
+    $('#frmPabellonModal').modal('hide'); 
+}
 function guardarAsignaPermisos(){
     var permisos='';
     var codRol=$('#codRol').val();
@@ -97,6 +147,64 @@ function guardarAsignaPermisos(){
                     timeout: 4000
                 });
             }
+        }
+    });
+}
+function limpiarFormularioRol() {
+    $("#IDrol").val('');  /*Codigo rol*/
+    $("#descripcion").val('');  /*Descripcion*/
+    $("#observacion").val('');  /*Observacion*/
+}
+function editarRol(rol) {
+    var url = './includes/roles/roles_model.php?opcion=enviarDatosRoles';
+    $.ajax({
+        url: url,
+        datetype: "json",
+        type: 'POST',
+        data: {rol: rol},
+        success: function(res) {
+            var json_obj = $.parseJSON(res);
+            limpiarFormularioRol();
+            carga_DatosIncialesRol(json_obj);
+            $('#frmRolesModal').modal('show');
+            $('#smart-form-Roles >header').text('Actualización de Datos del Rol')
+            $('#IDrol').val(rol);
+
+        }
+    });
+
+}
+function carga_DatosIncialesRol(edt) {
+    $("#descripcion").val(edt.datosRol.ROL_DESCRIPCION);  /*Nombre*/
+    $("#observacion").val(edt.datosRol.ROL_OBSERVACION);  /*Apellido*/
+}
+function eliminarRol(codPab, nomPab) {
+
+    $.SmartMessageBox({
+        title: "Confirmación!",
+        content: "Esta seguro de eliminar el Rol <span class='txt-color-orangeDark'><strong>" + nomPab + " </strong></span>?",
+        buttons: '[No][Si]'
+    }, function(ButtonPressed) {
+        if (ButtonPressed === "Si") {
+            $.ajax({
+                url: "./includes/roles/roles_model.php?opcion=eliminarRol",
+                type: 'post',
+                data: {codigo: codPab},
+                success: function(respuesta) {
+                    if (respuesta === '1') {
+                        $('.' + codPab).parent('td').parent('tr').addClass('paraEliminarUsuario');
+                        $('.paraEliminarUsuario').fadeOut('tr');
+                        $.smallBox({
+                            title: 'Pabellon: '+nomPab,
+                            content: "<i class='fa fa-clock-o'></i> <i>Rol Eliminado...</i>",
+                            color: "#659265",
+                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                            timeout: 4000
+                        });
+                    }
+                }
+            });
+
         }
     });
 }
