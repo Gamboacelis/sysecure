@@ -6,17 +6,17 @@ $dbmysql = new database();
 date_default_timezone_set('America/Bogota');
 $funcion = isset($_GET['opcion']) ? $_GET['opcion'] : 'ninguno';
 switch ($funcion) {
-    case 'enviarDatosHorario':
-        enviarDatosHorario();
+    case 'enviarDatosRoles':
+        enviarDatosRoles();
         break;
-    case 'guardaDatosHorario':
-        guardaDatosHorario();
+    case 'guardaDatosRol':
+        guardaDatosRol();
         break;
-    case 'actualizarDatosHorario':
-        actualizarDatosHorario();
+    case 'eliminarRol':
+        eliminarRol();
         break;
-    case 'eliminarHorario':
-        eliminarHorario();
+    case 'actualizarDatosRol':
+        actualizarDatosRol();
         break;
     case 'eliminarPermisoAcceso':
         eliminarPermisoAcceso();
@@ -31,44 +31,28 @@ switch ($funcion) {
         guardarAsignaPermisos();
         break;
 }
-
-function enviarDatosHorario() {
+function enviarDatosRoles() {
     global $dbmysql;
-    $idHorario = $_POST['horario'];
-    $sql = "SELECT * FROM `sys_horarios` WHERE HOR_COD =$idHorario";
+    $idRol= $_POST['rol'];
+    $sql = "SELECT * FROM `sys_roles` WHERE ROL_COD =$idRol";
     $val = $dbmysql->query($sql);
     $row = $val->fetch_object();
-    $lista['datosHorario'] = array(
-        "HOR_COD" => $row->HOR_COD,
-        "TPV_COD" => $row->TPV_COD,
-        "HOR_DESCRIPCION" => $row->HOR_DESCRIPCION,
-        "HOR_DIAS" => $row->HOR_DIAS,
-        "HOR_HORA_ING" => $row->HOR_HORA_ING,
-        "HOR_HORA_SAL" => $row->HOR_HORA_SAL,
-        "HOR_ESTADO" => $row->HOR_ESTADO
+    $lista['datosRol'] = array(
+        "ROL_COD" => $row->ROL_COD,
+        "ROL_DESCRIPCION" => $row->ROL_DESCRIPCION,
+        "ROL_ESTADO" => $row->ROL_ESTADO,
+        "ROL_OBSERVACION" => $row->ROL_OBSERVACION
     );
 
     echo $encode = json_encode($lista);
 }
-
-function actualizarDatosHorario() {
+function guardaDatosRol() {
     global $dbmysql;
-    $codigo = $_POST['IDhorario'];
-    $dias= strtoupper($_POST["dias"]);
-    $tipoVisitas=$_POST["tipoVisitas"]; 
     $descripcion = strtoupper($_POST["descripcion"]);
-    $horaIngreso = $_POST["horaIngreso"];
-    $horaSalida = $_POST["horaSalida"];
-    $estado = $_POST["estado"];
-
-    $sql = "UPDATE `sys_horarios` SET 
-                TPV_COD             = '$tipoVisitas',
-                HOR_DESCRIPCION     = '$descripcion',
-                HOR_DIAS            = '$dias',
-                HOR_HORA_ING        = '$horaIngreso',
-                HOR_HORA_SAL        = '$horaSalida',
-                HOR_ESTADO          ='$estado'
-            WHERE HOR_COD=$codigo;";
+    $observacion = $_POST["observacion"];
+    
+    $sql = "INSERT INTO `sys_roles`(ROL_DESCRIPCION,ROL_ESTADO,ROL_OBSERVACION)VALUES
+            ('$descripcion','A','$observacion');";
     $val = $dbmysql->query($sql);
     if ($val) {
         echo 1;
@@ -76,25 +60,27 @@ function actualizarDatosHorario() {
         echo 0;
     }
 }
-
-function guardaDatosHorario() {
-    global $dbmysql;
-    $dias= strtoupper($_POST["dias"]);
-    $descripcion = strtoupper($_POST["descripcion"]);
-    $horaIngreso = $_POST["horaIngreso"];
-    $horaSalida = $_POST["horaSalida"];
-    $pabellon = $_POST["IDpabellonFrm"];
-    $tipoVisitas=$_POST["tipoVisitas"]; 
-    $sql = "INSERT INTO `sys_horarios`(PAB_COD,TPV_COD,HOR_DESCRIPCION,HOR_DIAS,HOR_HORA_ING,HOR_HORA_SAL,HOR_ESTADO)VALUES
-            ('$pabellon','$tipoVisitas','$descripcion','$dias','$horaIngreso','$horaSalida','A');";
-    $val = $dbmysql->query($sql);
-    if ($val) {echo 1;} else {echo 0;}
-}
-
-function eliminarHorario() {
+function eliminarRol() {
     global $dbmysql;
     $codigo = $_POST['codigo'];
-    $sql = "UPDATE `sys_horarios` SET HOR_ESTADO = 'E' WHERE HOR_COD=$codigo;";
+    $sql = "UPDATE `sys_roles` SET ROL_ESTADO='E' WHERE ROL_COD=$codigo;";
+    $val = $dbmysql->query($sql);
+    if ($val) {
+        echo 1;
+    } else {
+        echo 0;
+    }
+}
+function actualizarDatosRol() {
+    global $dbmysql;
+    $codigo = $_POST['IDrol'];
+    $descripcion = strtoupper($_POST["descripcion"]);
+    $observacion = $_POST["observacion"];
+
+    $sql = "UPDATE `sys_roles` SET 
+                ROL_DESCRIPCION    = '$descripcion',
+                ROL_OBSERVACION  = '$observacion'
+            WHERE ROL_COD=$codigo;";
     $val = $dbmysql->query($sql);
     if ($val) {
         echo 1;
@@ -174,7 +160,6 @@ function mostrarPermisosDisponibles() {
 //    $retval .=buscarArchivosProducto();
     echo $retval;
 }
-
 function guardarAsignaPermisos(){
     global $dbmysql;
     $x=0;
