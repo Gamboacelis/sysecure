@@ -59,7 +59,7 @@ function revisarVisitantes() {
     return $retval;
 }
 
-function frmVisitante() {
+function frmVisitante() { 
     $retval = '';
     $retval = '<div class="modal fade" id="frmVisitanteModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
