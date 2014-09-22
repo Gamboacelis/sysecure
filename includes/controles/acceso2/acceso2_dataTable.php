@@ -128,7 +128,7 @@ global $dbmysql;
 //                    $nombre_ppl =$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ].$rowPDatosVisitante->VIS_COD;
                     $nombre_ppl =$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ];
                     $estado=($aRow['VIS_ESTADO']=='A')?'<span class="label label-success"><i class="fa fa fa-check"></i>  Validado</span>':'<span class="label label-warning"><i class="fa fa-question-circle"></i>  No Validado</span>';
-                    $btn=($aRow['VIS_ESTADO']=='N')?'<a class="btn btn-info" title="Actualizar" href="javascript:actualizarInformacion('.$aRow[ 'VIS_COD' ].')"><i class="fa fa-pencil"></i> Editar Visitante</a>':'<a class="btn btn-success" title="Permitir acceso" href="javascript:permitirAcceso(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'CON_COD' ].','.$aRow[ 'HOR_COD'].')"><i class="fa fa-check"></i>Permitir Acceso</a>';
+                    $btn=($aRow['VIS_ESTADO']=='N')?'<a class="btn btn-info" title="Actualizar" href="javascript:editarVisitante('.$aRow[ 'VIS_COD' ].')"><i class="fa fa-pencil"></i> Editar Visitante</a>':'<a class="btn btn-success" title="Permitir acceso" href="javascript:permitirAcceso(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'CON_COD' ].','.$aRow[ 'HOR_COD'].')"><i class="fa fa-check"></i>Permitir Acceso</a>';
                     $output['aaData'][] =array( ''.utf8_encode($aRow[ 'CON_COD' ]).'',
                     	                	''.utf8_encode($nombre_visitante).'',
                                                 ''.utf8_encode($aRow[ 'VIS_CEDULA' ]).'',
