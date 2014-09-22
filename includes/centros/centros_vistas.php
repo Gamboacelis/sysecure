@@ -125,7 +125,7 @@ function frm_Centros() {
                                                                             <label class="label">Tipo de centro</label>
                                                                                 <label class="select state-success">
                                                                                         <select id="tipo" name="tipo" class="valid">
-                                                                                                <option value="0">-- Seleccione --</option>
+                                                                                                <option value="">-- Seleccione --</option>
                                                                                                 <option value="1">Peque&ntilde;o</option>
                                                                                                 <option value="2">Grande</option> 
                                                                                         </select> <i></i>

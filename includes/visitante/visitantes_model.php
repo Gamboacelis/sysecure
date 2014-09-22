@@ -55,7 +55,7 @@ function guardaDatosVisitante() {
 
     $direccion = $_POST["direccion"];
 
-    $correo = $_POST["correo"];
+    $correo = strtolower($_POST["correo"]);
     
     $parentesco = $_POST["parentesco"];     
 
@@ -99,11 +99,19 @@ function actualizarDatosVisitante() {
     $telefono = $_POST["telefono"];
     $cedula = $_POST["cedula"];
     $direccion = $_POST["direccion"];
-    $correo = $_POST["correo"];   
+    $correo = strtolower($_POST["correo"]);   
     $parentesco = $_POST["parentesco"];    
     $codeImage = $_POST["codeImage"];
-
-    $sql = "UPDATE `sys_visitante` SET 
+    if(obtenerVisitanteValido($codigo)==1){
+            $estado=',VIS_ESTADO = "A"';
+    }else{
+        if($nombre!='' &&$apellido!='' && $cedula!='' && $telefono!=''){
+                $estado=',VIS_ESTADO = "A"';
+            }else{
+                $estado='';
+            }
+    }
+    echo $sql = "UPDATE `sys_visitante` SET 
                 VIS_NOMBRE    = '$nombre',
                 VIS_APELLIDO  = '$apellido',
                 VIS_TELEFONO   = '$telefono',
@@ -111,6 +119,7 @@ function actualizarDatosVisitante() {
                 VIS_DIRECCION   = '$direccion',
                 VIS_CORREO    = '$correo',
                 PAR_COD =  $parentesco
+                $estado
             WHERE VIS_COD=$codigo;";
     $val = $dbmysql->query($sql);
    if ($val) {
@@ -170,3 +179,18 @@ function enviarDatosParentesco() {
     echo $retval;
 }
 
+function obtenerVisitanteValido($codigo){
+    global $dbmysql;
+    $sql = "SELECT * FROM sys_visitante WHERE VIS_COD=$codigo;";
+    $val = $dbmysql->query($sql);
+    $row = $val->fetch_object();
+    $nombre = $row->VIS_NOMBRE;
+    $apellido = $row->VIS_APELLIDO;
+    $cedula = $row->VIS_CEDULA;
+    $telefono = $row->VIS_TELEFONO;
+    if($nombre!='' && $apellido!='' && $cedula!='' && $telefono!=''){
+        return 1;
+    }else{
+        return 0;
+    }
+}

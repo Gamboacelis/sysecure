@@ -142,7 +142,7 @@ function frmVisitante() {
                                                                     <section class="col col-6">
                                                                             <label class="input">
                                                                                     <label>Correo Electrónico:</label>
-                                                                                    <input type="telf" id="correo" name="correo" placeholder="Correo Electrónico">
+                                                                                    <input type="telf" id="correo" name="correo" placeholder="Correo Electrónico" style="text-transform:lowercase;">
                                                                             </label>
                                                                     </section>
                                                                 </div>     

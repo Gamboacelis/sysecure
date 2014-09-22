@@ -59,7 +59,7 @@ function obtenerVisitantesAsignados() {
                 $cadenaParametros = $row->VIP_COD . ',\'' . $row->VIS_NOMBRE . ' ' . $row->VIS_APELLIDO . '\'' . ',' . $horario->HOR_COD;
                 $visAutorizado = consultaVisitanteAutorizado($row->VIP_COD);
                 $visCantidad = consultaCantidadAutorizados($codPpl);
-                $estadoFinal = ($aRow['VIS_ESTADO'] == 'A') ? '<span class="label label-success"><i class="fa fa fa-check"></i>  Validado</span>' : '<span class="label label-warning"><i class="fa fa-question-circle"></i>  No Validado</span>';
+                $estadoFinal = ($row->VIS_ESTADO == 'A') ? '<span class="label label-success"><i class="fa fa fa-check"></i>  Validado</span>' : '<span class="label label-warning"><i class="fa fa-question-circle"></i>  No Validado</span>';
                 $canParametro = $clGeneral->obtenerValorParametro(2); // Consulta cantidad de Visitas simultaneas de la tabla Parametros (VISITANTES)
                 if ($visAutorizado == '1') {
                     $autorizado = '<span class="label label-primary">Ingreso Autorizado: ' . $fecha . '</span>';
@@ -140,7 +140,7 @@ function permitirAccesoVisitante() {
             } else {
                 echo 0;
             }
-        } elseif (getTipoCentro() == 1) {
+        } elseif ($clGeneral->getTipoCentro() == 1) {
 
             $sql1 = "INSERT INTO `sys_control` (`GAR_COD` ,`VIP_COD` ,`HOR_COD`,`CON_FECHA` ,`CON_ESTADO`)VALUES ('1', '$codVisita','$horario','$fecha','A');";
             $val1 = $dbmysql->query($sql1);

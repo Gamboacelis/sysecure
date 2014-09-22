@@ -49,7 +49,7 @@ function tomarFoto(){
 }
 
 function editarVisitante(visitante) {
-    $('#frmVisitasModal').modal('hide');
+    
     var url = './includes/visitante/visitantes_model.php?opcion=enviarDatosVisitante';
     $.ajax({
         url: url,
@@ -117,46 +117,25 @@ function guardarVisitante() {
         });
 
     } else {
-
-
         $.ajax({
-
             url: './includes/visitante/visitantes_model.php?opcion=actualizarDatosVisitante',
-
             datetype: "json",
-
             type: 'POST',
-
             data: $("#form-visitante").serialize(),
-
             success: function(res) {
-
                 if (res === '1') {
-
                     $.smallBox({
-
                         title: "Actualización",
-
                         content: "<i class='fa fa-clock-o'></i> <i>Visitante Actualizado correctamente...</i>",
-
                         color: "#659265",
-
                         iconSmall: "fa fa-check fa-2x fadeInRight animated",
-
                         timeout: 4000
-
                     });
-
                     limpiarFormulario();
-
                     location.reload();
-
                 }
-
             }
-
         });
-
     }
 
     $('#frmVisitanteModal').modal('hide');

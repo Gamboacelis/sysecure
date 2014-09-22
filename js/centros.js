@@ -4,6 +4,7 @@ $(document).ready(function() {
         rules: {
             ciudad: {required: true},
             descripcion: {required: true},
+            tipo: {required: true}
         }, errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
         }
