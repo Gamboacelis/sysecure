@@ -197,7 +197,7 @@ function guardarVisitante() {
 
             type: 'POST',
 
-            data: $("#smart-form-register").serialize(),
+            data: $("#form-visitante").serialize(),
 
             success: function(res) {
 
