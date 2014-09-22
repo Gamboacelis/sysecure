@@ -120,7 +120,7 @@ global $dbmysql;
                     $cadenaParametros=utf8_encode($aRow[ 'PPL_COD' ].','."'$nombre'");
                     $estado=($aRow['PPL_ESTADO']=='A')?'<span class="label label-primary">Privado Livertad</span>':'<span class="label label-danger">Inactivo</span>';
                     $output['aaData'][] =array( ''.utf8_encode($aRow[ 'PPL_COD' ]).'',
-                                                ''.$aRow[ 'PAB_DESCRIPCION' ].'',
+                                                '<div style="text-align:center;"><span class="badge bg-color-blue">'.$aRow[ 'PAB_DESCRIPCION' ].'</span></div>',
                                                 ''.utf8_encode($nombre).'',
 //                                                '<img src="'.'./'.PATH_PPL.$aRow[ 'PPL_IMG' ].'" class="img-thumbnail" style="width: 60px">',
                                                 ''.utf8_encode($aRow[ 'PPL_CEDULA' ]).'',

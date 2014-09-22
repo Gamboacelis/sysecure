@@ -28,6 +28,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             include_once("./includes/sanciones/mantenimiento/sancion_vistas.php");
             include_once("./includes/traspaso/traspaso_vistas.php");
             include_once("./includes/roles/roles_vistas.php");
+            include_once("./includes/busquedas/busquedas_vistas.php");
 
             switch ($option) {
                 case 'centros':
@@ -74,6 +75,10 @@ if ($_SESSION["autenticado"] == 'SI') {
                 case 'roles':
                     $titulo='Asignación de Permisos';
                     $contenido = frm_asignacionPermisos();
+                    break;
+                case 'busquedas':
+                    $titulo='Buscar Todo...';
+                    $contenido = frm_busquedasGenerales();
                     break;
 
             }
@@ -234,42 +239,6 @@ if ($_SESSION["autenticado"] == 'SI') {
                 <nav>
                     <ul id="sysMenu">
                         <?php echo $permisos->construirMenu();?>
-                        <!--li <?php echo $activarMenu1 ?>><a href="inicio.php" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Principal</span></a></li>
-                        <li <?php echo $activarMenu2 ?>><a href="#"><i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent">Visitas</span></a></li>
-                        <li <?php echo $activarMenu3 ?>><a href="#"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Administracion</span></a>
-                            <ul>
-
-
-
-
-                                <li <?php echo $activarMenu31 ?>><a href="?modulo=administrativo&op=centros">Centros</a></li>
-                                <li <?php echo $activarMenu32 ?>><a href="?modulo=administrativo&op=horarios">Horarios de Visitas</a></li>
-                                <li <?php echo $activarMenu33 ?>><a href="?modulo=administrativo&op=pabellones">Pabellones</a></li>
-                                <li <?php echo $activarMenu34 ?>><a href="?modulo=administrativo&op=parametros">Parametros</a></li>
-
-                                <li <?php echo $activarMenu38 ?>><a href="?modulo=administrativo&op=sanciones">Sanciones</a></li>
-
-
-                                <li <?php echo $activarMenu35 ?>><a href="?modulo=administrativo&op=ppl">PPL</a></li>
-
-                                <li <?php echo $activarMenu36 ?>><a href="?modulo=administrativo&op=usuarios">Usuarios</a></li>
-                                <li <?php echo $activarMenu37 ?>><a href="?modulo=administrativo&op=visitantes">Visitantes</a></li>
-                                
-
-                            </ul>
-
-                        </li>
-                        <li <?php echo $activarMenu4 ?>><a href="#"><i class="fa fa-lg fa-fw fa-table"></i> <span class="menu-item-parent">Controles</span></a>
-                            <ul>
-                                <li <?php echo $activarMenu41 ?>><a href="?modulo=controles&op=acceso1">Acceso 1</a></li>
-                                <li <?php echo $activarMenu42 ?>><a href="?modulo=controles&op=acceso2">Acceso 2</a></li>
-                                <li <?php echo $activarMenu43 ?>><a href="?modulo=controles&op=acceso3">Acceso 3</a></li>
-                                <li <?php echo $activarMenu44 ?>><a href="?modulo=controles&op=acceso4">Acceso 4</a></li>
-                                <li <?php echo $activarMenu45 ?>><a href="?modulo=controles&op=sanciones">Sanciones</a></li>
-                                                                
-
-                            </ul>
-                        </li-->
                     </ul>
                 </nav>
                 <span class="minifyme" data-action="minifyMenu"> 
@@ -293,6 +262,11 @@ if ($_SESSION["autenticado"] == 'SI') {
                     <ol class="breadcrumb">
                         <li>Inicio</li><li>Dashboard</li>
                     </ol>
+                    <form action="javascript:busquedas();" class="header-search pull-right">
+                            <input type="text" placeholder="Buscar Visitante" id="search-visitante">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                            <a href="javascript:void(0);" id="cancel-search-js" title="Cancel Search"><i class="fa fa-times"></i></a>
+                    </form>
                 </div>
                 <!-- END RIBBON -->
 
@@ -436,6 +410,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/parametros.js"></script>
             <script src="js/mantenimientoSanciones.js"></script>
             <script src="js/roles.js"></script>
+            <script src="js/busquedas.js"></script>
 
             <!-- PAGE RELATED PLUGIN(S) -->
             <script src="js/plantilla/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
