@@ -69,7 +69,7 @@ function editarVisitante(visitante) {
 
             limpiarFormulario();
 
-            carga_DatosIncialesUsuarios(json_obj,visitante);
+            carga_DatosIncialesVisitantes(json_obj,visitante);
 
             $('#frmVisitanteModal').modal('show');
 
@@ -110,7 +110,7 @@ function editarVisitante(visitante) {
 
 }
 
-function carga_DatosIncialesUsuarios(edt,vis) {
+function carga_DatosIncialesVisitantes(edt,vis) {
 
     $("#nombre").val(edt.datosVisitante.VIS_NOMBRE);  
 
