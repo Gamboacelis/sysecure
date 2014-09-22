@@ -33,7 +33,8 @@ function enviarDatosCentro() {
         "CIU_COD"           => $row->CIU_COD,
         "CEN_DESCRIPCION"   => $row->CEN_DESCRIPCION,
         "CEN_DIRECCION"     => $row->CEN_DIRECCION,
-        "CEN_TELEFONO"      => $row->CEN_TELEFONO
+        "CEN_TELEFONO"      => $row->CEN_TELEFONO,
+        "CEN_TIPO"          => $row->CEN_TIPO
     );
 
     echo $encode = json_encode($lista);
@@ -46,8 +47,9 @@ function guardaDatosCentro() {
     $telefono = $_POST["telefono"];
     $direccion = $_POST["direccion"];
     $ciudad = $_POST["ciudad"];
-    $sql = "INSERT INTO `sys_centro`(CIU_COD,CEN_DESCRIPCION,CEN_DIRECCION,CEN_TELEFONO)VALUES
-            ('$ciudad','$descripcion','$direccion','$telefono');";
+    $tipo = $_POST["tipo"];
+    $sql = "INSERT INTO `sys_centro`(CIU_COD,CEN_DESCRIPCION,CEN_DIRECCION,CEN_TELEFONO,CEN_TIPO)VALUES
+            ('$ciudad','$descripcion','$direccion','$telefono','$tipo');";
     $val = $dbmysql->query($sql);
     if ($val) {
         echo 1;
@@ -63,12 +65,14 @@ function actualizarDatosCentro() {
     $telefono = $_POST["telefono"];
     $direccion = $_POST["direccion"];
     $ciudad = $_POST["ciudad"];
+    $tipo = $_POST["tipo"];
 
     $sql = "UPDATE `sys_centro` SET 
                 CIU_COD         = '$ciudad',
                 CEN_DESCRIPCION = '$descripcion',
                 CEN_DIRECCION   = '$direccion',
-                CEN_TELEFONO    = '$telefono'
+                CEN_TELEFONO    = '$telefono',
+                CEN_TIPO = '$tipo'
             WHERE CEN_COD=$codigo;";
     $val = $dbmysql->query($sql);
     if ($val) {
