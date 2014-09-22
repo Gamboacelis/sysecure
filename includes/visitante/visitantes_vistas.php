@@ -59,7 +59,7 @@ function revisarVisitantes() {
     return $retval;
 }
 
-function frmVisitante() {
+function frmVisitante() { 
     $retval = '';
     $retval = '<div class="modal fade" id="frmVisitanteModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -90,7 +90,7 @@ function frmVisitante() {
                                                                         <label class="input">Foto:</label>
                                                                         <div id="my_camera" >asas</div>
                                                                         <a id="botonCamara" class="btn btn-danger btn-xs" href="javascript:tomarFoto()"><i class="fa fa fa-camera"></i> Tomar Foto</a>
-                                                                        <script type="text/javascript" src="js/webcam.js"></script>
+                                                                        
                                                                         <input type="hidden" id="codeImage" name="codeImage">
                                                                     </section>
                                                                     <section class="col-md-2" style="width:50%;text-align:center;">

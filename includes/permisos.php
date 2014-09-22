@@ -32,7 +32,21 @@ class Permisos {
             $retval .= '<ul>';
             while ($rowOpciones = $valOpciones->fetch_object()) {
                 $activarMenu=($opM==$rowOpciones->OPU_COD)?'class="active"':'';
-                $retval.='<li '.$activarMenu.'> <a  href="' . $rowOpciones->OPU_LINK .'&opMenu='.$rowOpciones->OPU_COD. '" ><span class="menu-item-parent">' . $rowOpciones->OPU_NOMBRE . '</span></a></li>';
+                if($rowOpciones->OPU_COD==12 )
+                {
+                    if($this->getTipoCentro() != 1)
+                    {
+                        $retval .= '<li '.$activarMenu.'> <a  href="' . $rowOpciones->OPU_LINK .'&opMenu='.$rowOpciones->OPU_COD. '" ><span class="menu-item-parent">' . $rowOpciones->OPU_NOMBRE . '</span></a></li>'; 
+                    }
+                    else
+                    {
+                        $retval .= '';
+                    }
+                }
+                else
+                {
+                    $retval.='<li '.$activarMenu.'> <a  href="' . $rowOpciones->OPU_LINK .'&opMenu='.$rowOpciones->OPU_COD. '" ><span class="menu-item-parent">' . $rowOpciones->OPU_NOMBRE . '</span></a></li>';
+                }    
             }
             $retval .= '</ul></li>';
         }

@@ -20,6 +20,7 @@ function limpiarFormularioCentro() {
     $("#telefono").val('');  /*Telefono*/
     $("#direccion").val('');  /*Direccion*/
     $('#ciudad').prop('selectedIndex', 0);/*Ciudad*/
+    $('#tipo').prop('selectedIndex', 0);/*Ciudad*/
 }
 function guardarCentro() {
     var centro = $('#IDcentro').val();
@@ -90,6 +91,7 @@ function cargaDatosIncialesCentro(edt) {
     $("#telefono").val(edt.datosCentro.CEN_TELEFONO);  /*Telefono*/
     $("#direccion").val(edt.datosCentro.CEN_DIRECCION);  /*Direccion*/
     $('#ciudad').prop('selectedIndex', edt.datosCentro.CIU_COD);/*Ciudad*/
+    $('#tipo').prop('selectedIndex', edt.datosCentro.CEN_TIPO);/*Tipo*/
 }
 function eliminarCentro(codPab, nomPab) {
     $.ajax({

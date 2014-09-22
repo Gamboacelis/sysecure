@@ -20,8 +20,8 @@ class general {
         $activarMenu33 = '';
         $activarMenu34 = '';
         $activarMenu35 = '';
-        $activarMenu35_1='';
-        $activarMenu35_2='';
+        $activarMenu35_1 = '';
+        $activarMenu35_2 = '';
         $activarMenu36 = '';
         $activarMenu37 = '';
         $activarMenu4 = '';
@@ -91,7 +91,7 @@ class general {
             return 0;
         }
     }
-    
+
     function obtenerHorarioxCod($codigo) {
         global $dbmysql;
         $sql = "SELECT * FROM `sys_horarios` WHERE HOR_COD=$codigo;";
@@ -108,7 +108,7 @@ class general {
 
     function obtenerValorParametro($codParametro) {
         global $dbmysql;
-        $centro=$_SESSION['usu_centro_cod'];
+        $centro = $_SESSION['usu_centro_cod'];
         $sql = "SELECT PAR_COD,PAR_MODULO,PAR_DESCRIPCION,PAR_VALOR FROM `sys_parametros`WHERE `CEN_COD` = $centro AND PAR_COD=$codParametro";
         $val = $dbmysql->query($sql);
         $row = $val->fetch_object();
@@ -116,25 +116,35 @@ class general {
         return $val;
     }
 
-    function obtenerCantidadActualPPL($pabellon){
+    function obtenerCantidadActualPPL($pabellon) {
         global $dbmysql;
         $sql = "SELECT count(*) AS CantPPL FROM `sys_ppl` WHERE `PAB_COD`=$pabellon AND PPL_ESTADO='A';";
         $val = $dbmysql->query($sql);
-        if($val->num_rows>0){
+        if ($val->num_rows > 0) {
             $row = $val->fetch_object();
             $val = $row->CantPPL;
             return $val;
         }
-    }    
-    function revisarDatosVisitante($codVisitante){
+    }
+
+    function revisarDatosVisitante($codVisitante) {
         global $dbmysql;
         $sql = "SELECT VIS_COD,VIS_NOMBRE,VIS_APELLIDO,PAR_COD,VIS_CEDULA,VIS_DIRECCION,VIS_TELEFONO,VIS_CORREO,VIS_IMAGEN,VIS_ESTADO
                 FROM `sys_visitante` where `VIS_COD`=$codVisitante WHERE VIS_ESTADO='E';";
         $val = $dbmysql->query($sql);
-        if($val->num_rows>0){
+        if ($val->num_rows > 0) {
             $row = $val->fetch_object();
             $val = $row->CantPPL;
             return $val;
         }
-    }    
+    }
+
+    function getTipoCentro() {
+        global $dbmysql;
+        $sql = "SELECT CEN_TIPO FROM `sys_centro` WHERE CEN_COD = " . $_SESSION["usu_centro_cod"];
+        $val = $dbmysql->query($sql);
+        $row = $val->fetch_object();
+        return $row->CEN_TIPO;
+    }
+
 }

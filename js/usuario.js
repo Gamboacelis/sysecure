@@ -213,7 +213,7 @@ function editarUsuario(usuario) {
         data: {codigoUsu: usuario},
         success: function(res) {
             var json_obj = $.parseJSON(res);
-            limpiarFormulario();
+            limpiarFormularioUsuario();
             carga_DatosIncialesUsuarios(json_obj);
             $('#frmUsuarioModal').modal('show');
             $("#centro").hide();
@@ -243,7 +243,7 @@ function guardarUsuario() {
                         iconSmall: "fa fa-check fa-2x fadeInRight animated",
                         timeout: 4000
                     });
-                    limpiarFormulario();
+                    limpiarFormularioUsuario();
                     location.reload();
                 }
             }
@@ -263,7 +263,7 @@ function guardarUsuario() {
                         iconSmall: "fa fa-check fa-2x fadeInRight animated",
                         timeout: 4000
                     });
-                    limpiarFormulario();
+                    limpiarFormularioUsuario();
                     location.reload();
                 }
             }
@@ -272,8 +272,8 @@ function guardarUsuario() {
     $('#frmUsuarioModal').modal('hide');
 }
 function nuevoUsuario() {
+    limpiarFormularioUsuario();
     $('#frmUsuarioModal').modal('show');
-    limpiarFormulario();
     $("#centro").show();
     $("#password").show();
     $("#passwordConfirm").show();
@@ -312,7 +312,7 @@ function eliminarUsuario(codPar, nomCod) {
         }
     });
 }
-function limpiarFormulario() {
+function limpiarFormularioUsuario() {
     $("#nombre").val('');  /*Nombre*/
     $("#apellido").val('');  /*Apellido*/
     $("#usuario").val('');  /*Usuario*/

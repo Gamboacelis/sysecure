@@ -86,7 +86,6 @@ global $dbmysql;
 	 * Get data to display
 	 */
         
-       $sWhere =($sWhere=='')?" WHERE CON_ESTADO='A' OR CON_ESTADO='O' ":" AND CON_ESTADO='A' OR CON_ESTADO='O'";
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."
 		FROM   $sTable
@@ -94,7 +93,7 @@ global $dbmysql;
 		$sOrder
 		$sLimit";
 	$rResult = mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
-//	echo $sQuery;
+	
 	/* Data set length after filtering */
 	$sQuery = "SELECT FOUND_ROWS()";
 	$rResultFilterTotal = mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
