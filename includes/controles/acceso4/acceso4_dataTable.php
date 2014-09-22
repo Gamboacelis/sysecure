@@ -93,7 +93,7 @@ global $dbmysql;
 		$sOrder
 		$sLimit";
 	$rResult = mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
-//	echo $sQuery;
+	echo $sQuery;
 	/* Data set length after filtering */
 	$sQuery = "SELECT FOUND_ROWS()";
 	$rResultFilterTotal = mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());

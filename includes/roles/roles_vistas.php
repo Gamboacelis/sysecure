@@ -47,11 +47,11 @@ function frm_asignacionPermisos() {
                                                             <td><a class="btn btn-success btn-xs" title="Editar Rol" href="javascript:editarRol('.$row->ROL_COD.')">
                                                                     <i class="fa fa-pencil"></i>
                                                                 </a>
-                                                                <a class="btn btn-danger btn-xs '.$row->ROL_COD.'" title="Anular Rol" href="javascript:eliminarRol('.$cadenaParametros.')">
-                                                                    <i class="fa fa-trash-o"></i>
-                                                                </a></td>
                                                         </tr>';
     }
+//    <a class="btn btn-danger btn-xs '.$row->ROL_COD.'" title="Anular Rol" href="javascript:eliminarRol('.$cadenaParametros.')">
+//        <i class="fa fa-trash-o"></i>
+//    </a></td>
     $retval .= '</tbody>
                                             </table>
                                     </div>

@@ -15,8 +15,7 @@ $(document).ready(function() {
 });
 
 
-function permitirAcceso(nombre, cod,contr,horario)
-{
+function permitirAcceso(nombre, cod,contr,horario){
     $.SmartMessageBox({
     title: "Confirmación!",
     content: "Esta seguro que desea permitir el aceeso del visitante "+nombre+ "?",
@@ -59,8 +58,6 @@ function permitirAcceso(nombre, cod,contr,horario)
             });
 
 
-        }
-        if (ButtonPressed === "No") {
         }
     });
 }
