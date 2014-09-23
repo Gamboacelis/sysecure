@@ -23,7 +23,7 @@ function revisarVisitantes() {
 
     $retval = '';
 
-    $retval = '<article class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+    $retval = '<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="botonesSuperiores">
                     <fieldset>
                         <button id="agregarEvento" class="btn btn-labeled btn-primary btn-personal"  data-toggle="modal" onclick="javascript:nuevoVisitante()">
@@ -115,6 +115,14 @@ function frmVisitante() {
                                                                             </label>
                                                                     </section>
                                                                 </div>
+                                                                    <section>
+                                                                        <div class="alert alert-success fade in">
+                                                                            <button class="close" data-dismiss="alert"> × </button>
+                                                                            <i class="fa-fw fa fa-check"></i>
+                                                                            <strong>Success</strong>
+                                                                            The page has been added.
+                                                                        </div>
+                                                                    </section>
                                                                 <div class="row">
                                                                     <section class="col col-6">
                                                                             <label>Nombre:</label>

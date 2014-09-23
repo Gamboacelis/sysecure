@@ -22,13 +22,17 @@ switch ($funcion) {
          break;
     case 'enviarDatosPpl':
          enviarDatosPpl();         
-         break;     
+         break;  
+    case 'buscarVisitante':
+         buscarVisitante();         
+         break;  
 }
 
 function enviarDatosVisitante() {
     global $dbmysql;
-    $idpro = $_POST['codigoVis'];
-    $sql = "SELECT * FROM `sys_visitante` WHERE VIS_COD =$idpro";
+    $idpro = ($_POST['tipo']=='C')?"VIS_CEDULA={$_POST['cedula']}":"VIS_COD ={$_POST['codigoVis']}";
+    
+    $sql = "SELECT * FROM `sys_visitante` WHERE $idpro";
     $val = $dbmysql->query($sql);
     $row = $val->fetch_object();
     $lista['datosVisitante'] = array(
@@ -133,12 +137,22 @@ function actualizarDatosVisitante() {
 
 function eliminarVisitante(){
     global $dbmysql;
-    $codigo = $_POST['codigo'];
-    $sql = "UPDATE `sys_visitante` SET 
-            VIS_ESTADO   = 'E'
-        WHERE VIS_COD=$codigo";
-    $val = $dbmysql->query($sql);
-   if ($val) {
+    $codVisitante = $_POST['codigo'];
+    $codPpl= $_POST['ppl'];
+    $sql1 = "SELECT * FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante;";
+    $val1 = $dbmysql->query($sql1);
+    if($val1->num_rows>1){
+        $sql2 = "DELETE FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante AND PPL_COD=$codPpl;";
+        $val2 = $dbmysql->query($sql2);
+    }elseif($val1->num_rows==1){
+        $sql3 ="UPDATE `sys_visitante` SET 
+                    VIS_ESTADO   = 'E'
+                WHERE VIS_COD=$codVisitante AND PPL_COD=$codPpl;";
+        $val3 = $dbmysql->query($sql3);
+        $sql2 = "DELETE FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante AND PPL_COD=$codPpl;";
+        $val2 = $dbmysql->query($sql2);
+    }
+   if ($val2) {
         echo 1;
     } else {
         echo 0;
@@ -198,6 +212,24 @@ function obtenerVisitanteValido($codigo){
     $sql = "SELECT * FROM sys_visitante WHERE VIS_COD=$codigo;";
     $val = $dbmysql->query($sql);
     $row = $val->fetch_object();
+    $nombre = $row->VIS_NOMBRE;
+    $apellido = $row->VIS_APELLIDO;
+    $cedula = $row->VIS_CEDULA;
+    $telefono = $row->VIS_TELEFONO;
+    if($nombre!='' && $apellido!='' && $cedula!='' && $telefono!=''){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+function buscarVisitante(){
+    global $dbmysql;
+    $cedula=$_POST['cedula'];
+    $sql = "SELECT * FROM sys_visitante WHERE VIS_CEDULA='$cedula';";
+    $val = $dbmysql->query($sql);
+    $row = $val->fetch_object();
+    
     $nombre = $row->VIS_NOMBRE;
     $apellido = $row->VIS_APELLIDO;
     $cedula = $row->VIS_CEDULA;

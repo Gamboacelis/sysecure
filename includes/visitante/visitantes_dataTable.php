@@ -139,7 +139,7 @@ while ($aRow = mysql_fetch_array($rResult)) {
         '<a class="btn btn-success btn-xs" title="Editar Visitante" href="javascript:editarVisitante(' . $aRow['VIS_COD'] . ', ' . $aRow['PPL_COD'] . ')">
             <i class="fa fa-pencil"></i>
         </a>
-        <a class="btn btn-danger btn-xs ' . $aRow['VIS_COD'] . ' eliminaParticipante" title="Eliminar Visitante" href="javascript:eliminarVisitante(' . $aRow['VIS_COD'] . ')">
+        <a class="btn btn-danger btn-xs ' . $aRow['VIS_COD'] . ' eliminaParticipante" title="Eliminar Visitante" href="javascript:eliminarVisitante(' . $aRow['VIS_COD'] . ', ' . $aRow['PPL_COD'] . ')">
             <i class="fa fa-trash-o"></i>
         </a>');
 }

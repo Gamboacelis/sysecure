@@ -1,4 +1,31 @@
 $(document).ready(function() {
+    $('#cedula').focusout(function(){
+        var idVisitante=$('#IDvisitante').val();
+        if(idVisitante===''){
+            var tipo='C',ppl=0;
+            var url = './includes/visitante/visitantes_model.php?opcion=enviarDatosVisitante';
+            $.ajax({
+                url: url,
+                datetype: "json",
+                type: 'POST',
+                data: {cedula:$(this).val(),ppl:ppl,tipo:tipo},
+                success: function(res) {
+                    var json_obj = $.parseJSON(res);
+                    carga_DatosIncialesVisitantes(json_obj,0,0);
+                    $('#IDvisitante').val(json_obj.datosVisitante.VIS_COD);
+                    $("#my_result").html("<img src='uploads/imagenes/visitante/"+json_obj.datosVisitante.VIS_COD+".jpg' >");
+                    $('#my_result img').load(function(){}).error(function(){$("#my_result img").attr('src','img/avatars/male.png');});            
+                    Webcam.set({
+                        width: 220,
+                        height: 190,
+                        image_format: "jpeg",
+                        jpeg_quality: 90
+                    });
+                    Webcam.attach( "#my_camera" );
+                }
+            });
+        }
+    });
     var dtTable=$('#listaVisitantes').dataTable({
         "bServerSide": true,
         "sAjaxSource": "includes/visitante/visitantes_dataTable.php",
@@ -54,13 +81,13 @@ function tomarFoto(){
 }
 
 function editarVisitante(visitante,ppl) {
-    
+    var tipo='A';
     var url = './includes/visitante/visitantes_model.php?opcion=enviarDatosVisitante';
     $.ajax({
         url: url,
         datetype: "json",
         type: 'POST',
-        data: {codigoVis: visitante,ppl:ppl},
+        data: {codigoVis: visitante,ppl:ppl,tipo:tipo},
         success: function(res) {
             var json_obj = $.parseJSON(res);
             limpiarFormulario();
@@ -82,6 +109,8 @@ function editarVisitante(visitante,ppl) {
 }
 
 function carga_DatosIncialesVisitantes(edt,vis,ppl) {
+    var codVis=(vis===0)?edt.datosVisitante.VIS_COD:vis;
+    var codPpl=(ppl===0)?edt.datosVisitante.PPL_COD:ppl;
     $("#nombre").val(edt.datosVisitante.VIS_NOMBRE);  
     $("#apellido").val(edt.datosVisitante.VIS_APELLIDO);  
     $("#telefono").val(edt.datosVisitante.VIS_TELEFONO); 
@@ -89,8 +118,8 @@ function carga_DatosIncialesVisitantes(edt,vis,ppl) {
     $("#huella").val(edt.datosVisitante.VIS_HUELLA);  
     $("#direccion").val(edt.datosVisitante.VIS_DIRECCION); 
     $("#correo").val(edt.datosVisitante.VIS_CORREO);  
-    cargarParentesco(vis,ppl);
-    cargarPpl(ppl);
+    cargarParentesco(codVis,codPpl);
+    cargarPpl(codPpl);
 }
 
 function guardarVisitante() {
@@ -168,7 +197,7 @@ function nuevoVisitante() {
 }
 
 
-function eliminarVisitante(cod){
+function eliminarVisitante(cod,ppl){
     $.SmartMessageBox({
     title: "Confirmación!",
     content: "Esta seguro de eliminar al Visitante",
@@ -178,7 +207,7 @@ function eliminarVisitante(cod){
             $.ajax({
                 url: "./includes/visitante/visitantes_model.php?opcion=eliminarVisitante",
                 type: 'post',
-                data: {codigo: cod},
+                data: {codigo: cod,ppl:ppl},
                 success: function(respuesta) {
 
                     if (respuesta === '1') {
