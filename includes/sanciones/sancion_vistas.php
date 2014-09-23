@@ -95,7 +95,7 @@ function editSancion() {
 
     $retval = '';
 
-    $retval = '<div class="modal fade" id="frmAsignarSancion" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+    $retval = '<div class="modal fade" id="frmTipoSancion" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
 
                     <div class="modal-dialog">
 
