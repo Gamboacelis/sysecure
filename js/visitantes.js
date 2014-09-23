@@ -36,6 +36,11 @@ $(document).ready(function() {
             error.insertAfter(element.parent());
         }
     });
+    
+    $("#comboPpl").select2({
+        placeholder: "Select a State",
+        allowClear: true
+    });
 });
 
 
@@ -48,18 +53,18 @@ function tomarFoto(){
     $("#codeImage").val($('#my_result img').attr('src'));          
 }
 
-function editarVisitante(visitante) {
+function editarVisitante(visitante,ppl) {
     
     var url = './includes/visitante/visitantes_model.php?opcion=enviarDatosVisitante';
     $.ajax({
         url: url,
         datetype: "json",
         type: 'POST',
-        data: {codigoVis: visitante},
+        data: {codigoVis: visitante,ppl:ppl},
         success: function(res) {
             var json_obj = $.parseJSON(res);
             limpiarFormulario();
-            carga_DatosIncialesVisitantes(json_obj,visitante);
+            carga_DatosIncialesVisitantes(json_obj,visitante,ppl);
             $('#frmVisitanteModal').modal('show');
             $('#smart-form-register >header').text('Actualización de Visitante');
             $('#IDvisitante').val(visitante);
@@ -76,7 +81,7 @@ function editarVisitante(visitante) {
     });
 }
 
-function carga_DatosIncialesVisitantes(edt,vis) {
+function carga_DatosIncialesVisitantes(edt,vis,ppl) {
     $("#nombre").val(edt.datosVisitante.VIS_NOMBRE);  
     $("#apellido").val(edt.datosVisitante.VIS_APELLIDO);  
     $("#telefono").val(edt.datosVisitante.VIS_TELEFONO); 
@@ -84,66 +89,69 @@ function carga_DatosIncialesVisitantes(edt,vis) {
     $("#huella").val(edt.datosVisitante.VIS_HUELLA);  
     $("#direccion").val(edt.datosVisitante.VIS_DIRECCION); 
     $("#correo").val(edt.datosVisitante.VIS_CORREO);  
-    cargarParentesco(vis);
+    cargarParentesco(vis,ppl);
+    cargarPpl(ppl);
 }
 
 function guardarVisitante() {
     var visitante = $('#IDvisitante').val();
-    if (visitante === '') {
-        $.ajax({
-            url: './includes/visitante/visitantes_model.php?opcion=guardaDatosVisitante',
-            datetype: "json",
-            type: 'POST', 
-            data: $("#smart-form-register").serialize(),  
-            success: function(res) { 
-                if (res === '1') {
-                    $.smallBox({
-                        title: "Visitante Almacenado",
-                        content: "<i class='fa fa-clock-o'></i> <i>Visitante Agregado correctamente...</i>",
-                        color: "#659265",
-                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                        timeout: 4000
-                    });
-                    limpiarFormulario();
-                    location.reload();
-                }
-             },
-            error: function (res)
-            {
-                alert("error al guardar la informacion en la base de datos.")
-            }
-            
-
-        });
-
-    } else {
-        $.ajax({
-            url: './includes/visitante/visitantes_model.php?opcion=actualizarDatosVisitante',
-            datetype: "json",
-            type: 'POST',
-            data: $("#form-visitante").serialize(),
-            success: function(res) {
-                if (res === '1') {
-                    $.smallBox({
-                        title: "Actualización",
-                        content: "<i class='fa fa-clock-o'></i> <i>Visitante Actualizado correctamente...</i>",
-                        color: "#659265",
-                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                        timeout: 4000
-                    });
-                    limpiarFormulario();
-                    location.reload();
-                }
-            }
-        });
-    }
+    alert($('#comboPpl').val());
+    
+//    if (visitante === '') {
+//        $.ajax({
+//            url: './includes/visitante/visitantes_model.php?opcion=guardaDatosVisitante',
+//            datetype: "json",
+//            type: 'POST', 
+//            data: $("#smart-form-register").serialize(),  
+//            success: function(res) { 
+//                if (res === '1') {
+//                    $.smallBox({
+//                        title: "Visitante Almacenado",
+//                        content: "<i class='fa fa-clock-o'></i> <i>Visitante Agregado correctamente...</i>",
+//                        color: "#659265",
+//                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
+//                        timeout: 4000
+//                    });
+//                    limpiarFormulario();
+//                    location.reload();
+//                }
+//             },
+//            error: function (res)
+//            {
+//                alert("error al guardar la informacion en la base de datos.")
+//            }
+//            
+//
+//        });
+//
+//    } else {
+//        $.ajax({
+//            url: './includes/visitante/visitantes_model.php?opcion=actualizarDatosVisitante',
+//            datetype: "json",
+//            type: 'POST',
+//            data: $("#form-visitante").serialize(),
+//            success: function(res) {
+//                if (res === '1') {
+//                    $.smallBox({
+//                        title: "Actualización",
+//                        content: "<i class='fa fa-clock-o'></i> <i>Visitante Actualizado correctamente...</i>",
+//                        color: "#659265",
+//                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
+//                        timeout: 4000
+//                    });
+//                    limpiarFormulario();
+//                    location.reload();
+//                }
+//            }
+//        });
+//    }
 
     $('#frmVisitanteModal').modal('hide');
 
 }
 
 function nuevoVisitante() {
-    cargarParentesco(0);
+    cargarParentesco(0,0);
     limpiarFormulario();
     $('#frmVisitanteModal').modal('show');
     $('#smart-form-register >header').text('Registro Nuevo Usuario')
@@ -160,8 +168,7 @@ function nuevoVisitante() {
 }
 
 
-function eliminarVisitante(cod)
-{
+function eliminarVisitante(cod){
     $.SmartMessageBox({
     title: "Confirmación!",
     content: "Esta seguro de eliminar al Visitante",
@@ -213,18 +220,23 @@ function limpiarFormulario() {
 }
 
 
-function cargarParentesco(visitante)
-{
+function cargarParentesco(visitante,ppl){
     $.ajax({
         url: "./includes/visitante/visitantes_model.php?opcion=enviarDatosParentesco",
         type: 'post',
-        data: {visitante:visitante},
+        data: {visitante:visitante,ppl:ppl},
         success: function(respuesta) {
-
                 $('#parentesco').html(respuesta);
-
         }
-        
     });
-
+}
+function cargarPpl(ppl){
+    $.ajax({
+        url: "./includes/visitante/visitantes_model.php?opcion=enviarDatosPpl",
+        type: 'post',
+        data: {ppl:ppl},
+        success: function(respuesta) {
+                $('#comboPpl').html(respuesta);
+        }
+    });
 }

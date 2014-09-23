@@ -11,11 +11,11 @@ date_default_timezone_set('America/Bogota');
 include_once( '../conexiones/config_local.ini.php' );
 global $dbmysql;
 
-$aColumns = array('VIS_COD', 'VIS_NOMBRE', 'VIS_APELLIDO', 'VIS_CEDULA', 'VIS_DIRECCION', 'VIS_TELEFONO', 'VIS_ESTADO');
+$aColumns = array('VIS_COD', 'VIS_NOMBRE', 'VIS_APELLIDO', 'VIS_CEDULA', 'VIS_DIRECCION', 'VIS_TELEFONO', 'VIS_ESTADO','PPL_COD','PPL_NOMBRE','PPL_APELLIDO','PAB_DESCRIPCION','PAR_DESCRIPCION');
 /* Campo de Index */
 $sIndexColumn = "VIS_COD";
 /* Tabla a Usar */
-$sTable = "sys_visitante";
+$sTable = "sys_vw_visitante";
 /* Conexion a la Base */
 $gaSql['link'] =  mysql_pconnect( HOST_NAME, USER_NAME, USER_PASSWD  ) or
 		die( 'Could not open connection to server' );
@@ -113,7 +113,7 @@ $i = 0;
 while ($aRow = mysql_fetch_array($rResult)) {
 
     /* General output */
-
+    $nombreppl= $aRow['PPL_NOMBRE'] . ' ' . $aRow['PPL_APELLIDO'];
     $nombre = $aRow['VIS_NOMBRE'] . ' ' . $aRow['VIS_APELLIDO'];
     $cadenaParametros = utf8_encode($aRow['VIS_COD'] . ',' . "'$nombre'");
     //'VIS_COD', 'VIS_NOMBRE', 'VIS_APELLIDO', 'VIS_CEDULA', 'VIS_DIRECCION', 'VIS_TELEFONO', 'VIS_ESTADO'
@@ -132,8 +132,11 @@ while ($aRow = mysql_fetch_array($rResult)) {
         '' . utf8_encode($nombre) . '',
         '' . utf8_encode($aRow['VIS_CEDULA']) . '',
         '' . utf8_encode($aRow['VIS_TELEFONO']) . '',
+        '' . utf8_encode($aRow['PAR_DESCRIPCION']).'',
+        '' . utf8_encode($nombreppl) . '',
+        '<div style="text-align:center;"><span class="badge bg-color-blue">'.$aRow['PAB_DESCRIPCION'].'</span></div>',
         ''.$estado.'',
-        '<a class="btn btn-success btn-xs" title="Editar Visitante" href="javascript:editarVisitante(' . $aRow['VIS_COD'] . ')">
+        '<a class="btn btn-success btn-xs" title="Editar Visitante" href="javascript:editarVisitante(' . $aRow['VIS_COD'] . ', ' . $aRow['PPL_COD'] . ')">
             <i class="fa fa-pencil"></i>
         </a>
         <a class="btn btn-danger btn-xs ' . $aRow['VIS_COD'] . ' eliminaParticipante" title="Eliminar Visitante" href="javascript:eliminarVisitante(' . $aRow['VIS_COD'] . ')">

@@ -46,6 +46,9 @@ function revisarVisitantes() {
                                         <th><i class="fa fa-fw fa-male txt-color-blue hidden-md hidden-sm hidden-xs"></i> Nombre</th>
                                         <th><i class="fa fa-fw fa-user txt-color-blue hidden-md hidden-sm hidden-xs"></i> Cédula</th>
                                         <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Teléfono</th>
+                                        <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Parentesco</th>
+                                        <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> PPL</th>
+                                        <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Pabellon</th>
                                         <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Estado</th>
                                         <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Acción</th>                                        
                                     </tr>
@@ -126,6 +129,12 @@ function frmVisitante() {
                                                                             </label>
                                                                     </section>
                                                                 </div>
+                                                                    <section>
+                                                                            <div class="form-group">
+                                                                                <label>PPL:</label>
+                                                                                <select style="width:100%" class="select2" name="comboPpl"  id="comboPpl"></select>
+                                                                            </div>
+                                                                    </section>
                                                                 <div class="row">
                                                                     <section class="col col-6">
                                                                             <label>Parentesco:</label>

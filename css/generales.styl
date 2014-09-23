@@ -9,6 +9,8 @@ opacity(n)
     filter unquote('progid:DXImageTransform.Microsoft.Alpha(Opacity=' + round(n * 100) + ')')
 input
     text-transform:uppercase;
+.select2-search
+    z-index: 999999;
 #agregarVisitantesTable
     display: none
 #guardarVisitanteNuevo
@@ -37,7 +39,8 @@ div.dataTables_filter label
 
 .header-search > button 
     top: 5px;
-
+.search-results + .search-results
+    border-top: 1px dashed #666;
 @import "index.styl"
 @import "usuarios.styl"
 @import "horarios.styl"

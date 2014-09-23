@@ -330,9 +330,18 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plantilla/plugin/pace/pace.min.js"></script>
 
             <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-            <script src="js/plantilla/libs/jquery-2.1.1.min.js"></script>
+            <script>
+			if (!window.jQuery) {
+				document.write('<script src="js/plantilla/libs/jquery-2.0.2.min.js"><\/script>');
+			}
+		</script>
 
-            <script src="js/plantilla/libs/jquery-ui.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+		<script>
+			if (!window.jQuery.ui) {
+				document.write('<script src="js/plantilla/libs/jquery-ui-1.10.3.min.js"><\/script>');
+			}
+		</script>
 
             <!-- JS TOUCH : include this plugin for mobile drag / drop touch events
             <script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script> -->

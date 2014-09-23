@@ -19,7 +19,10 @@ switch ($funcion) {
          break;
     case 'enviarDatosParentesco':
          enviarDatosParentesco();         
-         break;         
+         break;
+    case 'enviarDatosPpl':
+         enviarDatosPpl();         
+         break;     
 }
 
 function enviarDatosVisitante() {
@@ -153,32 +156,43 @@ function saveImage($base64img,$id){
 function enviarDatosParentesco() {
     global $dbmysql;
     $visitante = $_POST['visitante'];
+    $codPpl = $_POST['ppl'];
     $sql = "SELECT * FROM `sys_parentesco`";
     $val = $dbmysql->query($sql);
     $retval = '';
-    $sqlPariente = "SELECT  PAR_COD FROM `sys_visitante` WHERE VIS_COD = $visitante";
+    $sqlPariente = "SELECT  PAR_COD FROM `sys_visitante_ppl` WHERE VIS_COD = $visitante AND PPL_COD=$codPpl";
     $valPariente = $dbmysql->query($sqlPariente);
     $rowPariente = $valPariente->fetch_object();
     if ($visitante == 0 ){$codigoPariente = "";
     }else{$codigoPariente = $rowPariente->PAR_COD;}
     $retval.='<option value="">-- Seleccione --</option>';
     while ($row = $val->fetch_object()) {
-
-            if($row->PAR_COD == $codigoPariente )
-            {
+            if($row->PAR_COD == $codigoPariente ){
                 $selected = 'selected';
-            }
-            else
-            {
+            }else{
                 $selected = '';
             }
-
             $retval.='<option value="' . $row->PAR_COD . '"  '.$selected.'>' . $row->PAR_DESCRIPCION . '</option>';
     }
-
     echo $retval;
 }
-
+function enviarDatosPpl() {
+    global $dbmysql;
+    $codPpl = $_POST['ppl'];
+    $sql = "SELECT * FROM `sys_ppl`";
+    $val = $dbmysql->query($sql);
+    $retval = '';
+    $retval.='<option value="">-- Seleccione --</option>';
+    while ($row = $val->fetch_object()) {
+            if($row->PPL_COD == $codPpl ){
+                $selected = 'selected="selected"';
+            }else{
+                $selected = '';
+            }
+            $retval.='<option value="' . $row->PPL_COD . '"  '.$selected.'>' . $row->PPL_NOMBRE . ' '. $row->PPL_APELLIDO .'</option>';
+    }
+    echo $retval;
+}
 function obtenerVisitanteValido($codigo){
     global $dbmysql;
     $sql = "SELECT * FROM sys_visitante WHERE VIS_COD=$codigo;";
