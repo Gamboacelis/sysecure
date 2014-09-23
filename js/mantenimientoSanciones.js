@@ -205,7 +205,7 @@ function nuevaSancion()
          
 }
 
-function editarSancion(cod) {
+function editarSancionMantenimiento(cod) {
     $('#sancion' + cod).children('td').children('.txtVisDatos').hide();
     $('#sancion' + cod).children('td').children('.visDatos').show();
     $('#sancion' + cod).children('td').children('.visBtnGuardar').show();

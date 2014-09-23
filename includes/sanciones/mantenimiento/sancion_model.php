@@ -129,7 +129,7 @@ function mostrarSanciones() {
                         <td><a class="btn btn-primary btn-xs visBtnGuardar" title="Guardar Cambio" href="javascript:GuardarCambioSancion(' . $row->SAN_COD . ')">
                                 <i class="fa fa-save"></i>
                             </a>
-                            <a class="btn btn-success btn-xs visBtnDatos" title="Editar Sancion" href="javascript:editarSancion(' . $row->SAN_COD . ')">
+                            <a class="btn btn-success btn-xs visBtnDatos" title="Editar Sancion" href="javascript:editarSancionMantenimiento(' . $row->SAN_COD . ')">
                                 <i class="fa fa-pencil"></i>
                             </a>
                             </td>    
