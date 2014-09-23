@@ -14,7 +14,8 @@ function frm_busquedasGenerales() {
     global $dbmysql;
     $retval = '';
     $valBusqueda=$_POST['valBusqueda'];
-    $sql="SELECT * FROM `sys_visitante` WHERE `VIS_NOMBRE` LIKE '%$valBusqueda%' OR `VIS_APELLIDO` LIKE '%$valBusqueda%' OR `VIS_CEDULA` = '$valBusqueda'";
+    $sql="SELECT vp.*,v.*,par.* FROM  sys_visitante_ppl vp,`sys_visitante` v, `sys_parentesco` par 
+          WHERE vp.VIS_COD=v.VIS_COD AND vp.PAR_COD=par.PAR_COD  AND `VIS_NOMBRE` LIKE '%$valBusqueda%' OR `VIS_APELLIDO` LIKE '%$valBusqueda%' OR `VIS_CEDULA` = '$valBusqueda'";
     $val = $dbmysql->query($sql);
     
     $retval = '<div class="row">
@@ -52,28 +53,24 @@ function frm_busquedasGenerales() {
                                     <h1> Search <span class="semi-bold">Everything</span></h1>
                                     <br>
                                     <h1 class="font-md"> Resultados para la Busqueda <small class="text-danger"> &nbsp;&nbsp;('.$val->num_rows.' resultados)</small></h1>';
-                             while($row = $val->fetch_object()){                
+                             while($row = $val->fetch_object()){     
+                                    $sql1="SELECT vp.*,p.PPL_COD,p.PAB_COD,p.PPL_NOMBRE, p.PPL_APELLIDO, p.PPL_CEDULA, p.PPL_NACIONALIDAD,v.`VISG_COD`,v.`VIP_COD`,v.`HOR_COD`,MAX(v.`VISG_FECHA`) AS FechaVisita,v.`VISG_HORA_INGRESO`,v.`VISG_HORA_SALIDA`,v.`VISG_ESTADO` FROM   `sys_ppl` p,`sys_visitante_ppl` vp,  `sys_visitas` v WHERE p.PPL_COD = vp.PPL_COD AND vp.VIP_COD=v.VIP_COD  AND vp.VIP_COD = '$row->VIP_COD'";
+                                    $val1 = $dbmysql->query($sql1);
+                                    $row1 = $val1->fetch_object();
                                    $retval .= '<div class="search-results clearfix smart-form">
-                                                <h4><i class="fa fa-plus-square txt-color-blue"></i>&nbsp;<a href="javascript:void(0);">'.$row->VIS_NOMBRE.'</a></h4>
+                                                <h4><i class="fa fa-plus-square txt-color-blue"></i>&nbsp;<a href="javascript:void(0);">'.$row->VIS_NOMBRE.' '.$row->VIS_APELLIDO.'</a></h4>
+                                                    <img alt="" src="img/demo/'.$row->PAR_DESCRIPCION.'">
                                                     <div>
-                                                        <div class="rating display-inline">
-                                                                <input type="radio" name="stars-rating" id="stars-rating-5">
-                                                                <label for="stars-rating-5"><i class="fa fa-star"></i></label>
-                                                                <input type="radio" name="stars-rating" id="stars-rating-4">
-                                                                <label for="stars-rating-4"><i class="fa fa-star"></i></label>
-                                                                <input type="radio" name="stars-rating" id="stars-rating-3">
-                                                                <label for="stars-rating-3"><i class="fa fa-star"></i></label>
-                                                                <input type="radio" name="stars-rating" id="stars-rating-2">
-                                                                <label for="stars-rating-2"><i class="fa fa-star"></i></label>
-                                                                <input type="radio" name="stars-rating" id="stars-rating-1">
-                                                                <label for="stars-rating-1"><i class="fa fa-star"></i></label>
-                                                        </div>
-                                                        <br>
                                                         <div class="url text-success">
-                                                                http://www.wrapbootstrap.com <i class="fa fa-caret-down"></i>
+                                                                '.$row->PAR_DESCRIPCION.' <i class="fa fa-caret-down"></i>
                                                         </div>
                                                         <p class="description">
-                                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book
+                                                            Ultima Visita: '.$row1->FechaVisita.'
+                                                            <br>
+                                                            PPL Visitado: '.$row1->PPL_NOMBRE.' '.$row1->PPL_APELLIDO.'
+                                                            <br>
+                                                            <br>
+                                                            <a class="btn btn-default btn-xs" href="javascript:void(0)">Mas detalles</a>
                                                         </p>
                                                     </div>
                                                 </div>';
