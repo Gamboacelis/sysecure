@@ -122,11 +122,9 @@ global $dbmysql;
                     $nombre_visitante=$aRow[ 'VIS_NOMBRE' ].' '.$aRow[ 'VIS_APELLIDO' ];
                     $nombre_ppl =$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ];
                     $output['aaData'][] =array( ''.utf8_encode($aRow[ 'CON_COD' ]).'',
-//                                                '<img src=".//uploads/imagenes/ppl/'.$aRow['PPL_IMG'].'" style="width: 60px" class="img-thumbnail">',
                	                		''.utf8_encode($nombre_visitante).'',
                                                 ''.utf8_encode($aRow[ 'VIS_CEDULA' ]).'',
                                                 ''.utf8_encode($nombre_ppl).'',
-//                                                '<img src=".//uploads/imagenes/ppl/'.$aRow['PPL_IMG'].'" style="width: 60px" class="img-thumbnail">',
                                                 '<a class="btn btn-danger" title="Actualizar" href="javascript:negarAcceso3('.$aRow[ 'VIP_COD' ].','.$aRow[ 'VIS_COD' ].')">
                                                     <i class="fa fa-ban"></i> Negar Acceso</a>
 						<a class="btn btn-success" title="Permitir acceso" href="javascript:permitirAcceso3(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'PPL_COD' ].','.$aRow[ 'CON_COD' ].','.$aRow[ 'HOR_COD' ].')">

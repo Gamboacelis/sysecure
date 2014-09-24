@@ -57,7 +57,7 @@ function frm_busquedasGenerales() {
                                                             PPL Visitado: '.$row1->PPL_NOMBRE.' '.$row1->PPL_APELLIDO.'
                                                             <br>
                                                             <br>
-                                                            <a class="btn btn-default btn-xs" href="javascript:void(0)">Mas detalles</a>
+                                                            <!--a class="btn btn-default btn-xs" href="javascript:void(0)">Mas detalles</a-->
                                                         </p>
                                                     </div>
                                                 </div>';
