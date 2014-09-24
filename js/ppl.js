@@ -285,7 +285,7 @@ function revisarVisitantesDisponibles(codPpl) {
         }
     });
 }
-function editarVisita(pplCod,cod) {
+function editarVisita(codPpl,cod) {
     $('#vis' + cod).children('td').children('.txtVisDatos').hide();
     $('#vis' + cod).children('td').children('.visDatos').show();
     $('#vis' + cod).children('td').children('.visBtnGuardar').show();
@@ -311,7 +311,7 @@ function GuardarCambioVisita(codppl,codVis, tipo) {
         type: 'POST',
         data: {codPlp: codigo,visCod:codVis, nombre: nombre, apellido: apellido, parentesco: parentesco},
         success: function(res) {
-            if (res != '0') {
+            if (res !== '0') {
                 var json_obj = $.parseJSON(res);
                 if (tipo === 'N') {
                     $('#new').children('td').children('#txtVisNombre').text(json_obj.datosActualizados.nombre);
@@ -323,6 +323,7 @@ function GuardarCambioVisita(codppl,codVis, tipo) {
                     $('#vis' + codVis).children('td').children('#txtVisParentesco').text(json_obj.datosActualizados.parentesco);
                 }
             }
+       
             if (tipo === 'N') {
                 revisarVisitantesDisponibles(json_obj.datosActualizados.codigoPPL);
             } else {
@@ -373,7 +374,7 @@ function nuevoVisitantePpl() {
                         }
                     });
                     var valida = 'N', nada = '';
-                    nuevaFila += '<td><a class="btn btn-primary btn-xs visBtnGuardar" title="Guardar Cambio" href="javascript:GuardarCambioVisita(\'' + nada + '\',\'' + valida + '\')"><i class="fa fa-save"></i></a>';
+                    nuevaFila += '<td><a class="btn btn-primary btn-xs visBtnGuardar" title="Guardar Cambio" href="javascript:GuardarCambioVisita(\''+codigo+'\',\'' + nada + '\',\'' + valida + '\')"><i class="fa fa-save"></i></a>';
                     nuevaFila += "</tr>";
                     $("#litaVisitantesPpl").append(nuevaFila);
                     $('#new').children('td').children('.visDatos').show();
