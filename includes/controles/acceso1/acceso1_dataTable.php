@@ -125,7 +125,7 @@ global $dbmysql;
 //                                                '<img src="'.'./'.PATH_PPL.$aRow[ 'PPL_IMG' ].'" class="img-thumbnail" style="width: 60px">',
                                                 ''.utf8_encode($aRow[ 'PPL_CEDULA' ]).'',
                                                 ''.$estado.'',
-                                                '<a class="btn btn-info" title="Visitantes Asignados" href="javascript:revisarVisitantesAsignados('.$aRow[ 'PPL_COD' ].')">
+                                                '<a class="btn btn-info" title="Visitantes Asignados" href="javascript:revisarVisitantesAsignados('.$aRow[ 'PPL_COD' ].', 1)">
                                                     <i class="fa fa-child"></i> Visitantes
                                                 </a>');
         }

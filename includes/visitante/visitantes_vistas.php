@@ -25,12 +25,12 @@ function revisarVisitantes() {
 
     $retval = '<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="botonesSuperiores">
-                    <fieldset>
+                    <!--fieldset>
                         <button id="agregarEvento" class="btn btn-labeled btn-primary btn-personal"  data-toggle="modal" onclick="javascript:nuevoVisitante()">
                             <span class="btn-label"><i class="glyphicon glyphicon-plus"></i></span>
                             Agregar Visitante
                         </button>
-                    </fieldset>
+                    </fieldset-->
                 </div>
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
@@ -80,12 +80,13 @@ function frmVisitante() {
                                                 </header>
                                                 <div>
                                                     <div class="widget-body no-padding">
-                                                        <form id="form-visitante" class="smart-form" action="javascript:guardarVisitante()">
+                                                        <form id="form-visitante" class="smart-form" action="javascript:guardarVisitante(1)">
                                                             <header>
                                                                     Formulario de Registro
                                                             </header>
                                                             <fieldset>
                                                                     <input type="hidden" id="IDvisitante" name="IDvisitante">
+                                                                    <input type="hidden" id="IDvisPpl" name="IDvisPpl">
                                                             </fieldset>
                                                             <fieldset>
                                                                 <div class="row">
@@ -115,12 +116,12 @@ function frmVisitante() {
                                                                             </label>
                                                                     </section>
                                                                 </div>
-                                                                    <section>
+                                                                    <section id="encuentraCedula">
                                                                         <div class="alert alert-success fade in">
                                                                             <button class="close" data-dismiss="alert"> × </button>
                                                                             <i class="fa-fw fa fa-check"></i>
-                                                                            <strong>Success</strong>
-                                                                            The page has been added.
+                                                                            <strong>Satisfactorio</strong>
+                                                                            El número de Cédula si existe con los siguientes datos:
                                                                         </div>
                                                                     </section>
                                                                 <div class="row">
@@ -138,10 +139,10 @@ function frmVisitante() {
                                                                     </section>
                                                                 </div>
                                                                     <section>
-                                                                            <div class="form-group">
-                                                                                <label>PPL:</label>
-                                                                                <select style="width:100%" class="select2" name="comboPpl"  id="comboPpl"></select>
-                                                                            </div>
+                                                                            <label>PPL:</label>
+                                                                            <label class="input">
+                                                                                    <input type="text" id="nombrePpl" name="nombrePpl" placeholder="Nombre PPL"  disabled="disabled">
+                                                                            </label>
                                                                     </section>
                                                                 <div class="row">
                                                                     <section class="col col-6">

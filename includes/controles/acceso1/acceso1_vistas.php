@@ -99,12 +99,13 @@ function frmVisitante2() {
                                                 </header>
                                                 <div>
                                                     <div class="widget-body no-padding">
-                                                        <form id="form-visitante" class="smart-form" action="javascript:guardarVisitante()">
+                                                        <form id="form-visitante" class="smart-form" action="javascript:guardarVisitante(2)">
                                                             <header>
                                                                     Formulario de Registro
                                                             </header>
                                                             <fieldset>
                                                                     <input type="hidden" id="IDvisitante" name="IDvisitante">
+                                                                    <input type="hidden" id="IDvisPpl" name="IDvisPpl">
                                                             </fieldset>
                                                             <fieldset>
                                                                 <div class="row">
@@ -134,6 +135,14 @@ function frmVisitante2() {
                                                                             </label>
                                                                     </section>
                                                                 </div>
+                                                                    <section id="encuentraCedula">
+                                                                        <div class="alert alert-success fade in">
+                                                                            <button class="close" data-dismiss="alert"> × </button>
+                                                                            <i class="fa-fw fa fa-check"></i>
+                                                                            <strong>Satisfactorio</strong>
+                                                                            El número de Cédula si existe con los siguientes datos:
+                                                                        </div>
+                                                                    </section>
                                                                 <div class="row">
                                                                     <section class="col col-6">
                                                                             <label>Nombre:</label>
@@ -148,6 +157,12 @@ function frmVisitante2() {
                                                                             </label>
                                                                     </section>
                                                                 </div>
+                                                                    <section>
+                                                                            <label>PPL:</label>
+                                                                            <label class="input">
+                                                                                    <input type="text" id="nombrePpl" name="nombrePpl" placeholder="Nombre PPL"  disabled="disabled">
+                                                                            </label>
+                                                                    </section>
                                                                 <div class="row">
                                                                     <section class="col col-6">
                                                                             <label>Parentesco:</label>

@@ -11,6 +11,7 @@ div.dataTables_filter label{float:left}
 .header-search > input[type="text"]{margin-top:5px;min-width:282px}
 .header-search > button{top:5px}
 .search-results + .search-results{border-top:1px dashed #666}
+#encuentraCedula{display:none}
 #imgCambio{display:none;text-align:center;background:none repeat scroll 0 0 #666;bottom:0;height:200px;opacity:.7;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";filter:alpha(opacity=70);position:absolute;width:200px}
 #imgPpl{position:relative;width:200px}
 #imgPpl:hover{opacity:.7;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";filter:alpha(opacity=70)}

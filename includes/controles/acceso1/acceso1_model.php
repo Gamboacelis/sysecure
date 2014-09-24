@@ -35,7 +35,7 @@ function obtenerVisitantesAsignados() {
         $horaInicio = $horario->HOR_HORA_ING;
         $horaFin = $horario->HOR_HORA_SAL;
 
-        $sql = "SELECT vp.*,v.*, p.* FROM sys_visitante_ppl vp,`sys_visitante` v, sys_parentesco p WHERE v.VIS_ESTADO != 'E' AND p.PAR_COD=v.PAR_COD AND vp.`VIS_COD`=v.`VIS_COD` AND p.TPV_COD=$tipoVisita AND  vp.PPL_COD= $codPpl;";
+        $sql = "SELECT vp.*,v.*, p.* FROM sys_visitante_ppl vp,`sys_visitante` v, sys_parentesco p WHERE v.VIS_ESTADO != 'E' AND p.PAR_COD=vp.PAR_COD AND vp.`VIS_COD`=v.`VIS_COD` AND p.TPV_COD=$tipoVisita AND  vp.PPL_COD= $codPpl;";
         $val = $dbmysql->query($sql);
         $retval .='<div class="alert alert-info no-margin fade in">
                             <button class="close" data-dismiss="alert"> × </button><i class="fa-fw fa fa-info"></i>
@@ -76,7 +76,7 @@ function obtenerVisitantesAsignados() {
                         $estado = '<span class="label label-danger">Visitante Sancionado</span>';
                         break;
                     case 'N':
-                        $estado = ($clGeneral->getTipoCentro() == 1)?"<a style='margin-top: 10px;' class='btn btn-success' title='Editar visitante' href='javascript:editarVisitante(".$row->VIS_COD.")'><i class='fa fa-pencil-square-o'></i> Editar Visitante</a>":$autorizado;
+                        $estado = ($clGeneral->getTipoCentro() == 1)?"<a style='margin-top: 10px;' class='btn btn-success' title='Editar visitante' href='javascript:editarVisitante(".$row->VIS_COD.",".$codPpl.")'><i class='fa fa-pencil-square-o'></i> Editar Visitante</a>":$autorizado;
                 }
                 $retval.='<tr>
                                 <td>' . $row->VIS_NOMBRE . '</td>

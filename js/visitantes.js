@@ -11,7 +11,16 @@ $(document).ready(function() {
                 data: {cedula:$(this).val(),ppl:ppl,tipo:tipo},
                 success: function(res) {
                     var json_obj = $.parseJSON(res);
-                    carga_DatosIncialesVisitantes(json_obj,0,0);
+                    $('#encuentraCedula').toggle();
+                    $("#nombre").val(json_obj.datosVisitante.VIS_NOMBRE);  
+                    $("#apellido").val(json_obj.datosVisitante.VIS_APELLIDO);  
+                    $("#telefono").val(json_obj.datosVisitante.VIS_TELEFONO); 
+                    $("#cedula").val(json_obj.datosVisitante.VIS_CEDULA);  
+                    $("#huella").val(json_obj.datosVisitante.VIS_HUELLA);  
+                    $("#direccion").val(json_obj.datosVisitante.VIS_DIRECCION); 
+                    $("#correo").val(json_obj.datosVisitante.VIS_CORREO);  
+                    cargarParentesco(json_obj.datosVisitante.VIS_COD,ppl);
+                    cargarPpl(json_obj.datosVisitante.VIS_COD);
                     $('#IDvisitante').val(json_obj.datosVisitante.VIS_COD);
                     $("#my_result").html("<img src='uploads/imagenes/visitante/"+json_obj.datosVisitante.VIS_COD+".jpg' >");
                     $('#my_result img').load(function(){}).error(function(){$("#my_result img").attr('src','img/avatars/male.png');});            
@@ -57,16 +66,11 @@ $(document).ready(function() {
             nombre: {required: true},
             apellido: {required: true},
             telefono: {required: true},
-            parentesco: {required: true},
+            parentesco: {required: true}
         },
         errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
         }
-    });
-    
-    $("#comboPpl").select2({
-        placeholder: "Select a State",
-        allowClear: true
     });
 });
 
@@ -90,7 +94,7 @@ function editarVisitante(visitante,ppl) {
         data: {codigoVis: visitante,ppl:ppl,tipo:tipo},
         success: function(res) {
             var json_obj = $.parseJSON(res);
-            limpiarFormulario();
+            limpiarFrmVisitante();
             carga_DatosIncialesVisitantes(json_obj,visitante,ppl);
             $('#frmVisitanteModal').modal('show');
             $('#smart-form-register >header').text('Actualización de Visitante');
@@ -118,62 +122,69 @@ function carga_DatosIncialesVisitantes(edt,vis,ppl) {
     $("#huella").val(edt.datosVisitante.VIS_HUELLA);  
     $("#direccion").val(edt.datosVisitante.VIS_DIRECCION); 
     $("#correo").val(edt.datosVisitante.VIS_CORREO);  
+    $("#IDvisPpl").val(edt.datosVisitante.PPL_COD);  
+    $("#nombrePpl").val(edt.datosVisitante.PPL_NOMBRE+' '+edt.datosVisitante.PPL_APELLIDO);  
     cargarParentesco(codVis,codPpl);
     cargarPpl(codPpl);
 }
 
-function guardarVisitante() {
+function guardarVisitante(tipo) {
     var visitante = $('#IDvisitante').val();
-    alert($('#comboPpl').val());
     
-//    if (visitante === '') {
-//        $.ajax({
-//            url: './includes/visitante/visitantes_model.php?opcion=guardaDatosVisitante',
-//            datetype: "json",
-//            type: 'POST', 
-//            data: $("#smart-form-register").serialize(),  
-//            success: function(res) { 
-//                if (res === '1') {
-//                    $.smallBox({
-//                        title: "Visitante Almacenado",
-//                        content: "<i class='fa fa-clock-o'></i> <i>Visitante Agregado correctamente...</i>",
-//                        color: "#659265",
-//                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
-//                        timeout: 4000
-//                    });
-//                    limpiarFormulario();
-//                    location.reload();
-//                }
-//             },
-//            error: function (res)
-//            {
-//                alert("error al guardar la informacion en la base de datos.")
-//            }
-//            
-//
-//        });
-//
-//    } else {
-//        $.ajax({
-//            url: './includes/visitante/visitantes_model.php?opcion=actualizarDatosVisitante',
-//            datetype: "json",
-//            type: 'POST',
-//            data: $("#form-visitante").serialize(),
-//            success: function(res) {
-//                if (res === '1') {
-//                    $.smallBox({
-//                        title: "Actualización",
-//                        content: "<i class='fa fa-clock-o'></i> <i>Visitante Actualizado correctamente...</i>",
-//                        color: "#659265",
-//                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
-//                        timeout: 4000
-//                    });
-//                    limpiarFormulario();
-//                    location.reload();
-//                }
-//            }
-//        });
-//    }
+    if (visitante === '') {
+        $.ajax({
+            url: './includes/visitante/visitantes_model.php?opcion=guardaDatosVisitante',
+            datetype: "json",
+            type: 'POST', 
+            data: $("#smart-form-register").serialize(),  
+            success: function(res) { 
+                if (res === '1') {
+                    $.smallBox({
+                        title: "Visitante Almacenado",
+                        content: "<i class='fa fa-clock-o'></i> <i>Visitante Agregado correctamente...</i>",
+                        color: "#659265",
+                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                        timeout: 4000
+                    });
+                    limpiarFormulario();
+                    location.reload();
+                }
+             },
+            error: function (res)
+            {
+                alert("error al guardar la informacion en la base de datos.")
+            }
+            
+
+        });
+
+    } else {
+        $.ajax({
+            url: './includes/visitante/visitantes_model.php?opcion=actualizarDatosVisitante',
+            datetype: "json",
+            type: 'POST',
+            data: $("#form-visitante").serialize(),
+            success: function(res) {
+                if (res === '1') {
+                    $.smallBox({
+                        title: "Actualización",
+                        content: "<i class='fa fa-clock-o'></i> <i>Visitante Actualizado correctamente...</i>",
+                        color: "#659265",
+                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                        timeout: 4000
+                    });
+                    limpiarFrmVisitante();
+                    if(tipo===1){
+                        location.reload();
+                    }else{
+                        var codPpl = $('#IDvisPpl').val();
+                        revisarVisitantesAsignados(codPpl,2);
+                        $('#frmVisitanteModal').modal('hide');
+                    }
+                }
+            }
+        });
+    }
 
     $('#frmVisitanteModal').modal('hide');
 
@@ -181,11 +192,10 @@ function guardarVisitante() {
 
 function nuevoVisitante() {
     cargarParentesco(0,0);
-    limpiarFormulario();
+    limpiarFrmVisitante();
     $('#frmVisitanteModal').modal('show');
     $('#smart-form-register >header').text('Registro Nuevo Usuario')
     $('#IDvisitante').val('');
-    
     Webcam.set({
         width: 220,
         height: 190,
@@ -193,9 +203,7 @@ function nuevoVisitante() {
         jpeg_quality: 90
     });
     Webcam.attach( "#my_camera" );
-
 }
-
 
 function eliminarVisitante(cod,ppl){
     $.SmartMessageBox({
@@ -209,9 +217,7 @@ function eliminarVisitante(cod,ppl){
                 type: 'post',
                 data: {codigo: cod,ppl:ppl},
                 success: function(respuesta) {
-
                     if (respuesta === '1') {
-
                         $.smallBox({
                             title: cod,
                             content: "<i class='fa fa-clock-o'></i> <i>Visitante Eliminado...</i>",
@@ -219,24 +225,15 @@ function eliminarVisitante(cod,ppl){
                             iconSmall: "fa fa-check fa-2x fadeInRight animated",
                             timeout: 4000
                         });
-
                         location.reload();
-
                     }
                 }
-
-                
             });
-
-
-        }
-        if (ButtonPressed === "No") {
         }
     });
 }
 
-
-function limpiarFormulario() {
+function limpiarFrmVisitante() {
     $("#nombre").val('');  /*Nombre*/
     $("#apellido").val('');  /*Apellido*/
     $("#correo").val('');  /*Usuario*/
@@ -247,7 +244,6 @@ function limpiarFormulario() {
     $("#my_result").html(''); 
     $("#codeImage").val(''); 
 }
-
 
 function cargarParentesco(visitante,ppl){
     $.ajax({

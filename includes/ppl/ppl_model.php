@@ -126,14 +126,14 @@ function mostrarVisitantesPpl() {
     $codigoPpl = $_POST["codPpl"];
     $retval = '';
     $x = 0;
-    $sql = "SELECT vp.*,v.*,p.* FROM `sys_visitante_ppl` vp, sys_visitante v,sys_parentesco p WHERE vp.`VIS_COD`=v.`VIS_COD` AND p.PAR_COD=v.PAR_COD AND v.VIS_ESTADO !='E' AND vp.`PPL_COD`=$codigoPpl ORDER BY v.VIS_COD;";
+    $sql = "SELECT vp.*,v.*,p.* FROM `sys_visitante_ppl` vp, sys_visitante v,sys_parentesco p WHERE vp.`VIS_COD`=v.`VIS_COD` AND p.PAR_COD=vp.PAR_COD AND v.VIS_ESTADO !='E' AND vp.`PPL_COD`=$codigoPpl ORDER BY v.VIS_COD;";
     $val = $dbmysql->query($sql);
     if ($val->num_rows > 0) {
         while ($row = $val->fetch_object()) {
             $x++;
-            $cadenaParametros = $row->VIS_COD . ',\'' . $row->VIS_NOMBRE . ' ' . $row->VIS_APELLIDO . '\'';
+            $cadenaParametros = $codigoPpl.','.$row->VIS_COD . ',\'' . $row->VIS_NOMBRE . ' ' . $row->VIS_APELLIDO . '\'';
             $a = 'A';
-            $parametros = $row->VIS_COD . ',\'' . $a . '\'';
+            $parametros = $codigoPpl.','.$row->VIS_COD . ',\'' . $a . '\'';
             $retval.='<tr id="vis' . $row->VIS_COD . '">
                         <td>' . $x . '</td>
                         <td><div class="txtVisDatos" id="txtVisNombre">' . $row->VIS_NOMBRE . '</div><input type="text" id="visNombre" name="visNombre" class="visDatos" value="' . $row->VIS_NOMBRE . '"></td>
@@ -142,7 +142,7 @@ function mostrarVisitantesPpl() {
                         <td><a class="btn btn-primary btn-xs visBtnGuardar" title="Guardar Cambio" href="javascript:GuardarCambioVisita(' . $parametros . ')">
                                 <i class="fa fa-save"></i>
                             </a>
-                            <a class="btn btn-success btn-xs visBtnDatos" title="Editar Visitante" href="javascript:editarVisita(' . $row->VIS_COD . ')">
+                            <a class="btn btn-success btn-xs visBtnDatos" title="Editar Visitante" href="javascript:editarVisita('.$codigoPpl.',' . $row->VIS_COD . ')">
                                 <i class="fa fa-pencil"></i>
                             </a>
                             <a class="btn btn-danger btn-xs ' . $row->VIS_COD . ' eliminaVisitante visBtnDatos" title="Anular Visitante" href="javascript:eliminarVisitantePpl(' . $cadenaParametros . ')">
@@ -186,8 +186,11 @@ function actualizaListaVisitante() {
     $apellido = strtoupper($_POST["apellido"]);
     $visCod = $_POST["visCod"];
     $parCod = $_POST["parentesco"];
-    $sql = "UPDATE `sys_visitante` SET VIS_NOMBRE='$nombre',VIS_APELLIDO='$apellido',PAR_COD='$parCod' WHERE VIS_COD=$visCod;";
+    $codPpl = $_POST["codPlp"];
+    $sql = "UPDATE `sys_visitante` SET VIS_NOMBRE='$nombre',VIS_APELLIDO='$apellido' WHERE VIS_COD=$visCod;";
     $val = $dbmysql->query($sql);
+    $sql1 = "UPDATE `sys_visitante_ppl` SET PAR_COD='$parCod' WHERE VIS_COD=$visCod AND PPL_COD=$codPpl;";
+    $val1 = $dbmysql->query($sql1);
     if ($val) {
         $sql2 = "SELECT * FROM `sys_parentesco` WHERE PAR_COD='$parCod';";
         $val2 = $dbmysql->query($sql2);
@@ -253,10 +256,20 @@ function comboParentesco() {
 
 function eliminarVisitantePpl() {
     global $dbmysql;
-    $codigo = $_POST['codigo'];
-    $sql = "UPDATE `sys_visitante` SET VIS_ESTADO='E' WHERE VIS_COD=$codigo;";
-    $val = $dbmysql->query($sql);
-    if ($val) {
+    $codVisitante = $_POST['codigo'];
+    $codPpl= $_POST['codPpl'];
+    $sql1 = "SELECT * FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante;";
+    $val1 = $dbmysql->query($sql1);
+    if($val1->num_rows>1){
+        $sql2 = "DELETE FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante AND PPL_COD=$codPpl;";
+        $val2 = $dbmysql->query($sql2);
+    }elseif($val1->num_rows==1){
+        $sql3 ="UPDATE `sys_visitante` SET VIS_ESTADO   = 'E' WHERE VIS_COD=$codVisitante;";
+        $dbmysql->query($sql3);
+        $sql2 = "DELETE FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante AND PPL_COD=$codPpl;";
+        $val2 = $dbmysql->query($sql2);
+    }
+   if ($val2) {
         echo 1;
     } else {
         echo 0;

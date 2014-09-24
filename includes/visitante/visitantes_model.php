@@ -32,11 +32,15 @@ function enviarDatosVisitante() {
     global $dbmysql;
     $idpro = ($_POST['tipo']=='C')?"VIS_CEDULA={$_POST['cedula']}":"VIS_COD ={$_POST['codigoVis']}";
     
-    $sql = "SELECT * FROM `sys_visitante` WHERE $idpro";
+   $sql = "SELECT * FROM `sys_vw_visitante` WHERE $idpro";
     $val = $dbmysql->query($sql);
     $row = $val->fetch_object();
     $lista['datosVisitante'] = array(
         "VIS_COD" => $row->VIS_COD,
+        "PPL_COD" => $row->PPL_COD, 
+        "PPL_NOMBRE" => $row->PPL_NOMBRE,
+        "PPL_APELLIDO" => $row->PPL_APELLIDO,
+        "PAR_COD" => $row->PAR_COD,
         "VIS_NOMBRE" => $row->VIS_NOMBRE,
         "VIS_APELLIDO" => $row->VIS_APELLIDO,
         "VIS_CEDULA" => $row->VIS_CEDULA,
@@ -101,6 +105,7 @@ function guardaDatosVisitante() {
 function actualizarDatosVisitante() {
     global $dbmysql;
     $codigo = $_POST['IDvisitante'];
+    $codPpl = $_POST["IDvisPpl"];
     $nombre = strtoupper($_POST["nombre"]);
     $apellido = strtoupper($_POST["apellido"]);
     $telefono = $_POST["telefono"];
@@ -109,6 +114,7 @@ function actualizarDatosVisitante() {
     $correo = strtolower($_POST["correo"]);   
     $parentesco = $_POST["parentesco"];    
     $codeImage = $_POST["codeImage"];
+    
     if(obtenerVisitanteValido($codigo)==1){
             $estado=',VIS_ESTADO = "A"';
     }else{
@@ -118,18 +124,22 @@ function actualizarDatosVisitante() {
                 $estado='';
             }
     }
-    echo $sql = "UPDATE `sys_visitante` SET 
+    $sql = "UPDATE `sys_visitante` SET 
                 VIS_NOMBRE    = '$nombre',
                 VIS_APELLIDO  = '$apellido',
                 VIS_TELEFONO   = '$telefono',
                 VIS_CEDULA    = '$cedula',
                 VIS_DIRECCION   = '$direccion',
-                VIS_CORREO    = '$correo',
-                PAR_COD =  $parentesco
+                VIS_CORREO    = '$correo'
                 $estado
             WHERE VIS_COD=$codigo;";
     $val = $dbmysql->query($sql);
-   if ($val) {
+    
+    $sql1 = "UPDATE `sys_visitante_ppl` SET 
+                PAR_COD =  $parentesco
+            WHERE VIS_COD=$codigo AND PPL_COD=$codPpl;";
+    $val1 = $dbmysql->query($sql1);
+   if ($val && $val1) {
         if($codeImage != ""){saveImage($codeImage,$codigo);}    
         echo 1;
     } else {echo 0;}
@@ -182,7 +192,7 @@ function enviarDatosParentesco() {
     $retval.='<option value="">-- Seleccione --</option>';
     while ($row = $val->fetch_object()) {
             if($row->PAR_COD == $codigoPariente ){
-                $selected = 'selected';
+                $selected = 'selected="selected"';
             }else{
                 $selected = '';
             }

@@ -26,14 +26,15 @@ $(document).ready(function() {
     });
 });
 
-function revisarVisitantesAsignados(codPpl){
+function revisarVisitantesAsignados(codPpl,op){
     $.ajax({
             url: "./includes/controles/acceso1/acceso1_model.php?opcion=obtenerVisitantesAsignados",
             type: 'post',
             data: {codPpl: codPpl},
             success: function(respuesta) {
                 $('#tablaVisitantes').html(respuesta);
-                $('#frmVisitasModal').modal('show');
+                if(op===1)
+                    $('#frmVisitasModal').modal('show');
             }
         });
 }
