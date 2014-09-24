@@ -119,17 +119,16 @@ global $dbmysql;
         
 	while ( $aRow = mysql_fetch_array( $rResult ) ){
                 /* General output */
-                    $nombre_visitante=$aRow[ 'VIS_NOMBRE' ].' '.$aRow[ 'VIS_APELLIDO' ];
+                    $nombre_visitante=utf8_encode($aRow[ 'VIS_NOMBRE' ].' '.$aRow[ 'VIS_APELLIDO' ]);
                     $nombre_ppl =$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ];
+                    $boton='<a class="btn btn-danger" title="Actualizar" href="javascript:negarAcceso3('.$aRow[ 'VIP_COD' ].','.$aRow[ 'VIS_COD' ].')"><i class="fa fa-ban"></i> Negar Acceso</a>
+                            <a class="btn btn-success" title="Permitir acceso" href="javascript:permitirAcceso3(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'PPL_COD' ].','.$aRow[ 'CON_COD' ].','.$aRow[ 'HOR_COD' ].')"><i class="fa fa-check"></i> Permitir Acceso</a>';
                     $output['aaData'][] =array( ''.utf8_encode($aRow[ 'CON_COD' ]).'',
                	                		''.utf8_encode($nombre_visitante).'',
                                                 ''.utf8_encode($aRow[ 'VIS_CEDULA' ]).'',
                                                 ''.utf8_encode($nombre_ppl).'',
-                                                '<a class="btn btn-danger" title="Actualizar" href="javascript:negarAcceso3('.$aRow[ 'VIP_COD' ].','.$aRow[ 'VIS_COD' ].')">
-                                                    <i class="fa fa-ban"></i> Negar Acceso</a>
-						<a class="btn btn-success" title="Permitir acceso" href="javascript:permitirAcceso3(\''.$nombre_visitante.'\','.$aRow[ 'VIP_COD' ].','.$aRow[ 'PPL_COD' ].','.$aRow[ 'CON_COD' ].','.$aRow[ 'HOR_COD' ].')">
-                                                    <i class="fa fa-check"></i> Permitir Acceso</a>
-                                                    ');
+                                                ''.$boton.'',
+                                                );
         }
 //        print_r($output);
 	echo json_encode( $output );
