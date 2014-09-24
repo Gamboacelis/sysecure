@@ -139,7 +139,7 @@ function mostrarVisitantesPpl() {
                         <td><div class="txtVisDatos" id="txtVisNombre">' . $row->VIS_NOMBRE . '</div><input type="text" id="visNombre" name="visNombre" class="visDatos" value="' . $row->VIS_NOMBRE . '"></td>
                         <td><div class="txtVisDatos" id="txtVisApellido">' . $row->VIS_APELLIDO . '</div><input type="text" id="visApellido" name="visApellido" class="visDatos" value="' . $row->VIS_APELLIDO . '"></td>
                         <td><div class="txtVisDatos" id="txtVisParentesco">' . $row->PAR_DESCRIPCION . '</div><select id="visParentesco" name="visParentesco" class="visDatos">' . comboParentesco() . '</select></td>
-                        <td><a class="btn btn-primary btn-xs visBtnGuardar" title="Guardar Cambio" href="javascript:GuardarCambioVisita(' . $parametros . ')">
+                        <td><a class="btn btn-primary btn-xs visBtnGuardar" title="Guardar Cambios" href="javascript:GuardarCambioVisita(' . $parametros . ')">
                                 <i class="fa fa-save"></i>
                             </a>
                             <a class="btn btn-success btn-xs visBtnDatos" title="Editar Visitante" href="javascript:editarVisita('.$codigoPpl.',' . $row->VIS_COD . ')">
@@ -191,7 +191,7 @@ function actualizaListaVisitante() {
     $val = $dbmysql->query($sql);
     $sql1 = "UPDATE `sys_visitante_ppl` SET PAR_COD='$parCod' WHERE VIS_COD=$visCod AND PPL_COD=$codPpl;";
     $val1 = $dbmysql->query($sql1);
-    if ($val) {
+    if ($val && $val1) {
         $sql2 = "SELECT * FROM `sys_parentesco` WHERE PAR_COD='$parCod';";
         $val2 = $dbmysql->query($sql2);
         $row = $val2->fetch_object();
@@ -207,14 +207,14 @@ function guardarListaVisitante() {
     $nombre = strtoupper($_POST["nombre"]);
     $apellido = strtoupper($_POST["apellido"]);
     $parCod = $_POST["parentesco"];
-    $codPpl = $_POST["visCod"];
-    $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,PAR_COD,VIS_ESTADO)
-            VALUES('$nombre','$apellido','$parCod','N');";
+    $codPpl = $_POST["codPlp"];
+    $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_ESTADO)
+            VALUES('$nombre','$apellido','N');";
     $val = $dbmysql->query($sql);
     if ($val) {
         $IdVisita = $dbmysql->maxid('VIS_COD', 'sys_visitante');
-        $sql = "INSERT INTO `sys_visitante_ppl` (PPL_COD,VIS_COD)
-                    VALUES($codPpl,$IdVisita);";
+        $sql = "INSERT INTO `sys_visitante_ppl` (PPL_COD,VIS_COD,PAR_COD)
+                    VALUES($codPpl,$IdVisita,$parCod);";
         $val = $dbmysql->query($sql);
         $sql2 = "SELECT * FROM `sys_parentesco` WHERE PAR_COD='$parCod';";
         $val2 = $dbmysql->query($sql2);
