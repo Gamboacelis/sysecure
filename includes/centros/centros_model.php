@@ -2,6 +2,8 @@
 session_start();
 include_once '../conexiones/db_local.inc.php';
 $dbmysql = new database();
+include_once PATH_PROD.SISTEM_NAME.'/includes/generales.php';
+$clGeneral = new general();
 date_default_timezone_set('America/Bogota');
 $funcion = isset($_GET['opcion']) ? $_GET['opcion'] : 'ninguno';
 switch ($funcion) {
@@ -36,13 +38,13 @@ function enviarDatosCentro() {
         "CEN_TELEFONO"      => $row->CEN_TELEFONO,
         "CEN_TIPO"          => $row->CEN_TIPO
     );
-
+     
     echo $encode = json_encode($lista);
 }
 
 
 function guardaDatosCentro() {
-    global $dbmysql;
+    global $dbmysql,$clGeneral;
     $descripcion = strtoupper($_POST["descripcion"]);
     $telefono = $_POST["telefono"];
     $direccion = $_POST["direccion"];
@@ -51,7 +53,13 @@ function guardaDatosCentro() {
     $sql = "INSERT INTO `sys_centro`(CIU_COD,CEN_DESCRIPCION,CEN_DIRECCION,CEN_TELEFONO,CEN_TIPO)VALUES
             ('$ciudad','$descripcion','$direccion','$telefono','$tipo');";
     $val = $dbmysql->query($sql);
+//    $array=$clGeneral->obtenerParamInciales();
+//    echo count($array);
+//    for ($i = 0; $i < count($array); $i++) {
+//        echo $array[$i];
+//    } 
     if ($val) {
+        
         echo 1;
     } else {
         echo 0;
@@ -85,7 +93,7 @@ function actualizarDatosCentro() {
 function eliminarCentro() {
     global $dbmysql;
     $codigo = $_POST['codigo'];
-    $sql = "DELETE  FROM `sys_centro` WHERE CIU_COD=$codigo;";
+    $sql = "DELETE  FROM `sys_centro` WHERE CEN_COD=$codigo;";
     $val = $dbmysql->query($sql);
     if ($val) {
         echo 1;
