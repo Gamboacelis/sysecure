@@ -1,7 +1,7 @@
 <?php
 session_start();
 date_default_timezone_set('America/Bogota');
-include_once 'D:/Compartida/htdocs/sysecure/includes/conexiones/db_local.inc.php';
+include_once PATH_PROD.SISTEM_NAME.'/includes/conexiones/db_local.inc.php';
 $dbmysql = new database();
 $funcion = isset($_GET['opcion']) ? $_GET['opcion'] : 'ninguno';
 switch ($funcion) {

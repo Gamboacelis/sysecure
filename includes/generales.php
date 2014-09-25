@@ -30,7 +30,19 @@ class general {
         $activarMenu43 = '';
         $activarMenu44 = '';
     }
-
+    
+    function obtenerParamInciales(){
+        $parametros=array();
+        
+        $parametros[]=array(
+            array("id"=>1,"modulo"=>'PPL', "descripcion"=>'Cantidad de visitantes por PPL', "valor"=>10),
+            array("id"=>2,"modulo"=>'VISITANTES', "descripcion"=>'Cantidad de Visitas por horario', "valor"=>3),
+            array("id"=>3,"modulo"=>'ACCESO 3', "descripcion"=>'Numero de Cedulas por Literal', "valor"=>30),
+            array("id"=>4,"modulo"=>'ACCESO 4', "descripcion"=>'Tiempo de espera para finalizar Visita', "valor"=>15)
+        );
+        return $encode = json_encode($parametros);
+    }
+    
     function registrar_acceso() {
         global $dbmysql;
         $usuario = $_SESSION["user_id"];
