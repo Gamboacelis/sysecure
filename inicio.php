@@ -423,6 +423,7 @@ if ($_SESSION["autenticado"] == 'SI') {
 
             <!-- PAGE RELATED PLUGIN(S) -->
             <script src="js/plantilla/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+            <script src="js/plantilla/plugin/clockpicker/clockpicker.min.js"></script>
             <!-- Flot Chart Plugin: Flot Engine, Flot Resizer, Flot Tooltip -->
             <script src="js/plantilla/plugin/flot/jquery.flot.cust.min.js"></script>
             <script src="js/plantilla/plugin/flot/jquery.flot.resize.min.js"></script>

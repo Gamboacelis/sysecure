@@ -135,14 +135,12 @@ function frmHorarios() {
                                                                         <section class="col col-6">
                                                                                 <label>Hora de Inicio:</label>
                                                                                 <label class="input"> <i class="icon-append fa fa-clock-o "></i>
-                                                                                        <input type="text" class="form-control" id="horaIngreso" name="horaIngreso" placeholder="00:00" readonly>
-                                                                                        <b class="tooltip tooltip-bottom-right">Necesario para Validar la Cuenta</b> </label>
+                                                                                        <input type="text" class="form-control" id="horaIngreso" name="horaIngreso" placeholder="00:00" data-autoclose="true" readonly>
                                                                         </section>
                                                                         <section class="col col-6">
                                                                                 <label>Hora de Salida:</label>
                                                                                 <label class="input"> <i class="icon-append fa fa-clock-o "></i>
-                                                                                        <input type="text" class="form-control" id="horaSalida" name="horaSalida" placeholder="00:00" readonly>
-                                                                                        <b class="tooltip tooltip-bottom-right">Necesario para Validar la Cuenta</b> </label>
+                                                                                        <input type="text" class="form-control" id="horaSalida" name="horaSalida" placeholder="00:00" data-autoclose="true" readonly>
                                                                         </section>
                                                                         
                                                                         
