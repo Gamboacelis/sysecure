@@ -17,7 +17,7 @@ include_once( '../../conexiones/config_local.ini.php' );
 
 
 global $dbmysql;
-        $aColumns = array('CON_COD','VIP_COD','HOR_COD','CON_FECHA','CON_ESTADO','GAR_COD','VIS_COD','VIS_NOMBRE','VIS_APELLIDO','PAR_COD','VIS_CEDULA','VIS_DIRECCION','VIS_TELEFONO','VIS_CORREO','VIS_IMAGEN','VIS_ESTADO','PPL_COD','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_ESTADO');
+        $aColumns = array('CON_COD','VIP_COD','HOR_COD','CON_FECHA','CON_ESTADO','GAR_COD','VIS_COD','VIS_NOMBRE','VIS_APELLIDO','PAR_COD','VIS_CEDULA','VIS_DIRECCION','VIS_TELEFONO','VIS_CORREO','VIS_IMAGEN','VIS_ESTADO','PPL_COD','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_ESTADO','CEN_COD');
 	/* Campo de Index */
 	$sIndexColumn = "CON_COD";
 	/* Tabla a Usar */
@@ -91,7 +91,7 @@ global $dbmysql;
 	 * SQL queries
 	 * Get data to display
 	 */
-        $sWhere =($sWhere=='')?" WHERE VIS_ESTADO!='E'":$sWhere." AND VIS_ESTADO!='E'";
+        $sWhere =($sWhere=='')?" WHERE VIS_ESTADO!='E' AND CEN_COD = ".$_SESSION['usu_centro_cod']."  ":$sWhere." AND VIS_ESTADO!='E' AND CEN_COD = ".$_SESSION['usu_centro_cod'];
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."
 		FROM   $sTable
