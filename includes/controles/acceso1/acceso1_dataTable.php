@@ -10,7 +10,7 @@ include_once '../../conexiones/db_local.inc.php';
     date_default_timezone_set('America/Bogota');
 include_once( '../../conexiones/config_local.ini.php' );
 global $dbmysql;
-        $aColumns = array('PPL_COD','PPL_COD','PAB_COD','PAB_DESCRIPCION','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_ESTADO');
+        $aColumns = array('PPL_COD','PPL_COD','PAB_COD','PAB_DESCRIPCION','CEL_COD','PPL_NOMBRE','PPL_APELLIDO','PPL_CEDULA','PPL_IMG','PPL_ESTADO','HOR_DIAS');
 	/* Campo de Index */
 	$sIndexColumn = "PPL_COD";
 	/* Tabla a Usar */
@@ -84,6 +84,9 @@ global $dbmysql;
 	 * SQL queries
 	 * Get data to display
 	 */
+	$condicion = " CASE `HOR_DIAS` WHEN 'LUNES' THEN 'Monday' WHEN 'MARTES' THEN 'Tuesday' WHEN 'MIèRCOLES' THEN 'Wednesday' WHEN 'JUEVES' THEN 'Thursday' WHEN 'VIERNES' THEN 'Friday' WHEN 'SáBADO' THEN 'Saturday' WHEN 'DOMINGO' THEN 'Sunday' END = DAYNAME(CURDATE())";
+    $sWhere =($sWhere=='')?" WHERE ".$condicion." ":$sWhere." AND ".$condicion;
+
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."
 		FROM   $sTable
