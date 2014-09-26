@@ -15,6 +15,7 @@ $consulta = $db->query($sql);
 $row = $consulta->fetch_object();
 if($consulta->num_rows>0){
 	session_start();
+        $clGeneral->pulirRegistros();
             $_SESSION["autenticado"]= "SI";
             $_SESSION["menu"]= 1;
             $_SESSION["user_id"]=$row->USU_COD;

@@ -43,6 +43,13 @@ class general {
         return $encode = json_encode($parametros);
     }
     
+    function pulirRegistros(){
+        global $dbmysql;
+        $calcular_dia = date( "Y-m-d", strtotime( "-1 day") ); 
+        $sql = "UPDATE `sys_control` SET CON_ESTADO = 'S' WHERE CON_FECHA = $calcular_dia";
+        $dbmysql->query($sql);
+   }
+    
     function registrar_acceso() {
         global $dbmysql;
         $usuario = $_SESSION["user_id"];
