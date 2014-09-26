@@ -46,7 +46,7 @@ class general {
     function pulirRegistros(){
         global $dbmysql;
         $calcular_dia = date( "Y-m-d", strtotime( "-1 day") ); 
-        echo $sql = "UPDATE `sys_control` SET CON_ESTADO = 'S' WHERE CON_FECHA = '$calcular_dia';";
+        $sql = "UPDATE `sys_control` SET CON_ESTADO = 'S' WHERE CON_FECHA = '$calcular_dia';";
         $dbmysql->query($sql);
    }
     
