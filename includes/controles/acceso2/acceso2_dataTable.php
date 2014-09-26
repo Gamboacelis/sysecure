@@ -124,7 +124,7 @@ global $dbmysql;
         
 	while ( $aRow = mysql_fetch_array( $rResult ) ){
                 /* General output */
-                    $nombre_visitante=$aRow[ 'VIS_NOMBRE' ].' '.$aRow[ 'VIS_APELLIDO' ];
+                    $nombre_visitante=utf8_encode($aRow[ 'VIS_NOMBRE' ].' '.$aRow[ 'VIS_APELLIDO' ]);
 //                    $nombre_ppl =$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ].$rowPDatosVisitante->VIS_COD;
                     $nombre_ppl =$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ];
                     $estado=($aRow['VIS_ESTADO']=='A')?'<span class="label label-success"><i class="fa fa fa-check"></i>  Validado</span>':'<span class="label label-warning"><i class="fa fa-question-circle"></i>  No Validado</span>';
