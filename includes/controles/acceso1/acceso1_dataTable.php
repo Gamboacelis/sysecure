@@ -85,7 +85,7 @@ global $dbmysql;
 	 * Get data to display
 	 */
 	$condicion = " CASE `HOR_DIAS` WHEN 'LUNES' THEN 'Monday' WHEN 'MARTES' THEN 'Tuesday' WHEN 'MIèRCOLES' THEN 'Wednesday' WHEN 'JUEVES' THEN 'Thursday' WHEN 'VIERNES' THEN 'Friday' WHEN 'SáBADO' THEN 'Saturday' WHEN 'DOMINGO' THEN 'Sunday' END = DAYNAME(CURDATE())";
-    $sWhere =($sWhere=='')?" WHERE ".$condicion." ":$sWhere." AND ".$condicion;
+    $sWhere =($sWhere=='')?" WHERE ".$condicion."  AND CEN_COD = ".$_SESSION['usu_centro_cod']." ":$sWhere." AND ".$condicion."  AND CEN_COD = ".$_SESSION['usu_centro_cod'];
 
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."
