@@ -85,7 +85,7 @@ global $dbmysql;
 	 * SQL queries
 	 * Get data to display
 	 */
-        
+	$sWhere =($sWhere=='')?" WHERE CEN_COD = ".$_SESSION['usu_centro_cod']." ":" AND CEN_COD = ".$_SESSION['usu_centro_cod'];        
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."
 		FROM   $sTable
