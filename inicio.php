@@ -14,7 +14,9 @@ if ($_SESSION["autenticado"] == 'SI') {
     include_once("./includes/generales.php");
     $clGeneral = new general();
     $clGeneral->inicializaMenu();
-    
+    $activaVisita=$clGeneral->obtenerTotalVisita('A');
+    $totalVisitaHoy=$clGeneral->obtenerTotalVisita('H');
+    $totalVisita=$clGeneral->obtenerTotalVisita('T');
     switch ($modulos) {
         case 'administrativo':
             $option = isset($_GET['op']) ? $_GET['op'] : 0;
@@ -280,6 +282,33 @@ if ($_SESSION["autenticado"] == 'SI') {
                         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
                             <ul id="sparks" class="">
                                 <li class="sparks-info">
+                                <h5>
+                                    Visitas Activas
+                                    <span class="txt-color-purple" title="Total de Visitas de Hoy Activas">
+                                    <i class="fa fa-bolt"></i>
+                                      <?php echo $activaVisita ?>
+                                    </span>
+                                </h5>
+                                </li>
+                                <li class="sparks-info">
+                                    <h5>
+                                        Visitas Hoy
+                                        <span class="txt-color-greenDark" title="Total de Visitas de Hoy">
+                                            <i class="fa fa-arrow-circle-up"></i>
+                                             <?php echo $totalVisitaHoy ?>
+                                        </span>
+                                    </h5>
+                                </li>
+                                <li class="sparks-info">
+                                    <h5>
+                                        Total Visitas
+                                        <span class="txt-color-blue" title="Total de Visitas General">
+                                            <i class="fa fa-bar-chart-o "></i>
+                                             <?php echo $totalVisita ?>
+                                        </span>
+                                    </h5>
+                                <li class="sparks-info">
+                                    
                                     <h5>
                                         Centro
                                         <span class="txt-color-greenDark"> <?php echo $_SESSION["usu_centro_descrip"]; ?></span>

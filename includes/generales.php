@@ -95,7 +95,7 @@ class general {
 
     function obtenerDia() {
         setlocale(LC_ALL, "es_ES");
-        $dias = array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado");
+        $dias = array("Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado");
         return $dias[date("w")];
     }
 
@@ -146,6 +146,28 @@ class general {
         }
     }
 
+    function obtenerTotalVisita($tipo){
+        global $dbmysql;
+        $valor=0;
+        $fecha=date('Y-m-d');
+        switch ($tipo) {
+            case 'A':
+                $variante=" WHERE VISG_FECHA=$fecha AND VISG_ESTADO='A'";
+                break;
+            case 'T':
+                $variante="";
+                break;
+            case 'H':
+                $variante="WHERE VISG_FECHA=$fecha";
+                break;
+        }
+        $sql = "SELECT count(*) AS CantVisita FROM  `sys_visitas` $variante;";
+        $val = $dbmysql->query($sql);
+        $row = $val->fetch_object();
+        $valor = $row->CantVisita;
+        return $valor;
+    }
+    
     function revisarDatosVisitante($codVisitante) {
         global $dbmysql;
         $sql = "SELECT VIS_COD,VIS_NOMBRE,VIS_APELLIDO,PAR_COD,VIS_CEDULA,VIS_DIRECCION,VIS_TELEFONO,VIS_CORREO,VIS_IMAGEN,VIS_ESTADO

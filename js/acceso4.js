@@ -114,13 +114,15 @@ function guardarFinVisita() {
         success: function(respuesta) {
             if(respuesta==='1'){
                 $.smallBox({
-                        title : "Visita Finalizada",
-                        content : "<i class='fa fa-clock-o'></i> <i>transacción Exitosa ...</i>",
-                        color : "#296191",
-                        iconSmall : "fa fa-thumbs-up bounce animated",
-                        timeout : 4000
+                    title : "Visita Finalizada",
+                    content : "<i class='fa fa-clock-o'></i> <i>transacción Exitosa ...</i>",
+                    color : "#296191",
+                    iconSmall : "fa fa-thumbs-up bounce animated",
+                    timeout : 4000
                 });
-                location.reload();
+                $('#frmTerminarModal').modal('hide');
+                $('#cod_'+codVisita).parent('td').parent('tr').remove();
+//                location.reload();
             }
         }
     });

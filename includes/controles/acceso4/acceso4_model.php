@@ -61,6 +61,7 @@ function traerdatosFin(){
         $horaIng=explode(':',$row->VISG_HORA_INGRESO);
         $horaIngreso = DateTime::createFromFormat('H:i',$horaIng[0].':'.$horaIng[1] );
         $horaIngreso=$horaIngreso->format('H:i');
+//        print_r($horaIngreso); 
         $tt = ((strtotime($hora) - strtotime($horaIngreso))/60)/60;
         $timepotrans =transformarTiempo($tt);
         $mensaje=($tiempoExceso>$tiempoPermitidoEx)?'<p class="text-danger">Visitante Sancionado Excedio: '.$tiempoExceso.' minutos</p>':'<p class="text-success">Visitante Habilitado</p>';
@@ -132,9 +133,9 @@ function finVisita() {
                 `VSA_NOTA`,
                 `VSA_FECHA_INI`
                 )VALUES ('$codVisitante', 1,'$usuario', '$descripcionBloqueo','$fecha');";
-//        $val2 = $dbmysql->query($sql2);
+        $val2 = $dbmysql->query($sql2);
         $sql3 = "UPDATE `sys_visitante` SET `VIS_ESTADO` ='S' WHERE VIS_COD=$codVisitante;";
         $val3 = $dbmysql->query($sql3);
     }
-    if ($val1) {echo 1;} else {echo 0;}
+    if ($val1 && $val2 && $val3) {echo 1;} else {echo 0;}
 }
