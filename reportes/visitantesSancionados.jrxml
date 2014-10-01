@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="visitantesSancionados" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ee6cd127-47d4-497b-b366-6b5aab29acb9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<queryString>
+		<![CDATA[SELECT * FROM sys_visitante WHERE VIS_ESTADO ='S']]>
+	</queryString>
+	<field name="VIS_COD" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Codigo secuencial del Visitante]]></fieldDescription>
+	</field>
+	<field name="VIS_NOMBRE" class="java.lang.String">
+		<fieldDescription><![CDATA[nombre de la Visita]]></fieldDescription>
+	</field>
+	<field name="VIS_APELLIDO" class="java.lang.String">
+		<fieldDescription><![CDATA[Apellido de la Visita]]></fieldDescription>
+	</field>
+	<field name="VIS_CEDULA" class="java.lang.String">
+		<fieldDescription><![CDATA[Cedula de la Visita]]></fieldDescription>
+	</field>
+	<field name="VIS_DIRECCION" class="java.lang.String">
+		<fieldDescription><![CDATA[Direccion del Visitante]]></fieldDescription>
+	</field>
+	<field name="VIS_TELEFONO" class="java.lang.String">
+		<fieldDescription><![CDATA[Telefono del visitante]]></fieldDescription>
+	</field>
+	<field name="VIS_CORREO" class="java.lang.String">
+		<fieldDescription><![CDATA[Correo del Visitante]]></fieldDescription>
+	</field>
+	<field name="VIS_IMAGEN" class="java.lang.String">
+		<fieldDescription><![CDATA[Imagen del visitante]]></fieldDescription>
+	</field>
+	<field name="VIS_ESTADO" class="java.lang.String">
+		<fieldDescription><![CDATA[Estado del Visitante]]></fieldDescription>
+	</field>
+	<group name="Group1">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/15)]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<textField>
+					<reportElement style="SubTitle" x="47" y="13" width="506" height="24" forecolor="#006600" uuid="7528a41e-32fe-4179-b2fa-3700f2039688"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["GroupField"]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Opaque" x="0" y="13" width="36" height="24" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="f062c0cd-e2d1-4109-84ac-d0f36497e9fd"/>
+				</rectangle>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/5)]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<textField>
+					<reportElement style="SubTitle" x="0" y="4" width="460" height="20" uuid="229e4f56-84d8-41ac-b9f1-bace5e282bcd"/>
+					<textElement>
+						<font size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["GroupField"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<image>
+				<reportElement x="275" y="0" width="300" height="64" uuid="4657ade1-f5ef-49f4-befd-b159befad4f1"/>
+				<imageExpression><![CDATA["leaf_banner_green.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="0" y="13" width="274" height="33" uuid="3946916c-362a-4ccb-bb77-1663b4c602bf"/>
+				<textElement verticalAlignment="Middle">
+					<font size="26"/>
+				</textElement>
+				<text><![CDATA[Listado de Visitantes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="100" y="46" width="174" height="22" uuid="5a7e0e68-eee9-41ac-89c5-6052986c158e"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Sancionados]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="2" width="100" height="15" uuid="8a55cae5-9e02-4d14-8738-82c3d20c5a85"/>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="c845009c-ea8a-41d1-bad4-0b9533215bd0"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="142" y="2" width="100" height="20" uuid="50b2eafa-1aa2-4b19-902f-4293f777f423"/>
+				<text><![CDATA[nombre de la Visita]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="255" y="2" width="100" height="20" uuid="dc3926ba-b369-44c0-8400-96739a011546"/>
+				<text><![CDATA[Apellido de la Visita]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="76" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="a935a84d-45ab-490c-970a-1785ea1f812a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="100" height="15" uuid="330ce8f5-a098-4feb-807a-7410b7d289ef"/>
+				<textFieldExpression><![CDATA["Field"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="142" y="0" width="100" height="20" uuid="d847e08e-3f81-4f6c-a777-0696cc98acab"/>
+				<textFieldExpression><![CDATA[$F{VIS_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="0" width="100" height="20" uuid="561846f2-852e-4a5a-8845-a36df7842847"/>
+				<textFieldExpression><![CDATA[$F{VIS_APELLIDO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="51e2fd11-69fe-4fb7-8448-d456f5f0bdbb"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="d0424705-ea63-47b4-8f32-9912bee57918"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="07841232-7fcd-4dcd-aff2-c83dc6e29888"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="cea453c9-09ed-4e18-8759-e4be13e62260"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

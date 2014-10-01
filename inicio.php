@@ -127,6 +127,17 @@ if ($_SESSION["autenticado"] == 'SI') {
                 
             }
             break;
+        case 'reportes':
+            $option = isset($_GET['op']) ? $_GET['op'] : 0;
+            switch ($option) {
+                case 'sancionados':
+                    include_once("./includes/controles/acceso1/acceso1_vistas.php");
+                    $titulo = 'Revisión de Accesos Primer Nivel';
+                    $activarMenu41 = 'class="active"';
+                    $contenido = revisarPpl();
+                    break;
+            }
+            break;
         default:
             $titulo = 'Dashboard';
             $codMenu=$_SESSION["menu"]= 1;
