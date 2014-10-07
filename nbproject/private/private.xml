@@ -3,7 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/Compartida/htdocs/sysecure/includes/reportes/sanciones/Rsanciones_vistas.php</file>
             <file>file:/D:/Compartida/htdocs/sysecure/inicio.php</file>
+            <file>file:/D:/Compartida/htdocs/sysecure/includes/reportes/sanciones/Rsanciones_model.php</file>
+            <file>file:/D:/Compartida/htdocs/sysecure/includes/controles/acceso1/acceso1_dataTable.php</file>
+            <file>file:/D:/Compartida/htdocs/sysecure/js/reportes.js</file>
         </group>
     </open-files>
 </project-private>

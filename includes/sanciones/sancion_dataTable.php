@@ -23,7 +23,7 @@ include_once( '../conexiones/config_local.ini.php' );
 global $dbmysql;
 
 
-$aColumns = array('VIS_COD', 'VIS_NOMBRE', 'VIS_APELLIDO', 'VIS_CEDULA', 'VIS_DIRECCION', 'VIS_TELEFONO', 'VIS_ESTADO', 'SAN_DESCRIPCION', 'VSA_FECHA_INI', 'VSA_FECHA_FIN', 'VSA_COD', 'VSA_NOTA');
+$aColumns = array('VIS_COD', 'VIS_NOMBRE', 'VIS_APELLIDO', 'VIS_CEDULA', 'VIS_DIRECCION', 'SAN_COD','VIS_TELEFONO', 'VIS_ESTADO', 'SAN_DESCRIPCION', 'VSA_FECHA_INI', 'VSA_FECHA_FIN', 'VSA_COD', 'VSA_NOTA');
 
 /* Campo de Index */
 
@@ -80,6 +80,7 @@ if ($_GET['sSearch'] != "") {
  * SQL queries
  * Get data to display
  */
+$sWhere=($sWhere=='')?' WHERE SAN_COD =1':' AND SAN_COD =1 ';
 $sQuery = "SELECT SQL_CALC_FOUND_ROWS " . str_replace(" , ", " ", implode(",", $aColumns)) . "
 		FROM   $sTable
 		$sWhere
@@ -133,7 +134,7 @@ $i = 0;
 while ($aRow = mysql_fetch_array($rResult)) {
 
     /* General output */
-
+$eliminar=($_SESSION["usu_rol_cod"]==2)?'<a class="btn btn-danger btn-xs ' . $aRow['VIS_COD'] . ' eliminaParticipante" title="Eliminar Visitante" href="javascript:eliminarSancion(' . $aRow['VIS_COD'] . ')"><i class="fa fa-trash-o"></i></a>':'';
     $nombre = $aRow['VIS_NOMBRE'] . ' ' . $aRow['VIS_APELLIDO'];
     $cadenaParametros = utf8_encode($aRow['VIS_COD'] . ',' . "'$nombre'");
     //'VIS_COD', 'VIS_NOMBRE', 'VIS_APELLIDO', 'VIS_CEDULA', 'VIS_DIRECCION', 'VIS_TELEFONO', 'VIS_ESTADO'
@@ -146,12 +147,10 @@ while ($aRow = mysql_fetch_array($rResult)) {
         '' . utf8_encode($aRow['VSA_NOTA']) . '',
         '' . utf8_encode($aRow['VSA_FECHA_INI']) . '',
         '' . utf8_encode($aRow['VSA_FECHA_FIN']) . '',
-        '<a class="btn btn-success btn-xs" title="Editar Visitante" href="javascript:editarSancion(' . $aRow['VIS_COD'] . ',' . $aRow['VSA_COD'] . ')">
-            <i class="fa fa-pencil"></i>
-        </a>
-        <a class="btn btn-danger btn-xs ' . $aRow['VIS_COD'] . ' eliminaParticipante" title="Eliminar Visitante" href="javascript:eliminarSancion(' . $aRow['VIS_COD'] . ')">
-            <i class="fa fa-trash-o"></i>
-        </a>');
+        '<a class="btn btn-primary btn-sm" title="Sancionar" href="javascript:editarSancion(' . $aRow['VIS_COD'] . ',' . $aRow['VSA_COD'] . ')">
+            <i class="fa fa-pencil"></i> Sancionar
+        </a>',
+        ''.$eliminar.'');
 }
 echo json_encode($output);
 ?>

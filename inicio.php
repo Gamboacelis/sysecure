@@ -131,10 +131,9 @@ if ($_SESSION["autenticado"] == 'SI') {
             $option = isset($_GET['op']) ? $_GET['op'] : 0;
             switch ($option) {
                 case 'sancionados':
-                    include_once("./includes/controles/acceso1/acceso1_vistas.php");
-                    $titulo = 'Revisión de Accesos Primer Nivel';
-                    $activarMenu41 = 'class="active"';
-                    $contenido = revisarPpl();
+                    include_once("./includes/reportes/sanciones/Rsanciones_vistas.php");
+                    $titulo = 'Reporte de Visitantes Sancionados';
+                    $contenido = reporteSancionados();
                     break;
             }
             break;
@@ -310,7 +309,7 @@ if ($_SESSION["autenticado"] == 'SI') {
                                         </span>
                                     </h5>
                                 </li>
-                                <li class="sparks-info">
+                                <!--li class="sparks-info">
                                     <h5>
                                         Total Visitas
                                         <span class="txt-color-blue" title="Total de Visitas General">
@@ -318,6 +317,7 @@ if ($_SESSION["autenticado"] == 'SI') {
                                              <?php echo $totalVisita ?>
                                         </span>
                                     </h5>
+                                </li-->  
                                 <li class="sparks-info">
                                     
                                     <h5>
@@ -460,6 +460,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/mantenimientoSanciones.js"></script>
             <script src="js/roles.js"></script>
             <script src="js/busquedas.js"></script>
+            <script src="js/reportes.js"></script>
 
             <!-- PAGE RELATED PLUGIN(S) -->
             <script src="js/plantilla/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
@@ -478,6 +479,8 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/plantilla/plugin/datatables/dataTables.tableTools.min.js"></script>
             <script src="js/plantilla/plugin/datatables/dataTables.bootstrap.min.js"></script>
             <script src="js/plantilla/plugin/knob/jquery.knob.min.js"></script>
+            <script src="js/plantilla/plugin/morris/raphael.min.js"></script>
+            <script src="js/plantilla/plugin/morris/morris.min.js"></script>
 
 
             <script>
