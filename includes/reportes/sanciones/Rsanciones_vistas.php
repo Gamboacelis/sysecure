@@ -7,7 +7,7 @@ $dbmysql = new database();
 
 function reporteSancionados() {
     $retval = '';
-    $retval ='<article class="col-sm-12 col-md-12 col-lg-10">
+    $retval ='<article class="col-sm-12 col-md-12 col-lg-12">
                 <div class="jarviswidget" id="wid-id-2" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
@@ -45,21 +45,7 @@ function reporteSancionados() {
                             </form>
                         </div>
                         <div id="muestraReporteSancion">
-                            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false">
-                                        <header>
-                                                <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
-                                                <h2>Bar Graph </h2>
-                                        </header>
-                                        <div>
-                                                <div class="jarviswidget-editbox">
-                                                </div>
-                                                <div class="widget-body no-padding">
-                                                    <div id="bar-graph" class="chart no-padding"></div>
-                                                </div>
-                                        </div>
-                                </div>
-                            </article>
+                            
                         </div>
                     </div>
                 </div>';
