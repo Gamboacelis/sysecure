@@ -135,6 +135,11 @@ if ($_SESSION["autenticado"] == 'SI') {
                     $titulo = 'Reporte de Visitantes Sancionados';
                     $contenido = reporteSancionados();
                     break;
+                case 'visitas':
+                    include_once("./includes/reportes/visitas/Rvisitas_vistas.php");
+                    $titulo = 'Reporte de Visitas';
+                    $contenido = reporteVisitas();
+                    break;                    
             }
             break;
         default:
