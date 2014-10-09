@@ -4,7 +4,6 @@ $(document).ready(function() {
         defaultDate: "+1w",
         changeMonth: true,
         dateFormat:"yy-mm-dd"
-        
     });
     $("#fhasta").datepicker({
         defaultDate: "+1w",
@@ -23,6 +22,20 @@ function reporteSancion(){
             data: {fdesde:fdesde,fhasta:fhasta},
             success: function(res) {
                     $('#muestraReporteSancion').html(res);
+            }
+        });
+}
+
+function reporteVisitas(){
+    var fdesde=$('#fdesde').val();
+    var fhasta=$('#fhasta').val();
+    $.ajax({
+            url: './includes/reportes/visitas/Rvisitas_model.php?opcion=reporteVisitas',
+            datetype: "json",
+            type: 'POST',
+            data: {fdesde:fdesde,fhasta:fhasta},
+            success: function(res) {
+                    $('#muestraReporteVisitas').html(res);
             }
         });
 }
