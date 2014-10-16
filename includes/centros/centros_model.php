@@ -45,6 +45,7 @@ function enviarDatosCentro() {
 
 function guardaDatosCentro() {
     global $dbmysql,$clGeneral;
+    $valInicial='';
     $descripcion = strtoupper($_POST["descripcion"]);
     $telefono = $_POST["telefono"];
     $direccion = $_POST["direccion"];
@@ -53,13 +54,9 @@ function guardaDatosCentro() {
     $sql = "INSERT INTO `sys_centro`(CIU_COD,CEN_DESCRIPCION,CEN_DIRECCION,CEN_TELEFONO,CEN_TIPO)VALUES
             ('$ciudad','$descripcion','$direccion','$telefono','$tipo');";
     $val = $dbmysql->query($sql);
-//    $array=$clGeneral->obtenerParamInciales();
-//    echo count($array);
-//    for ($i = 0; $i < count($array); $i++) {
-//        echo $array[$i];
-//    } 
     if ($val) {
-        
+        $maxCentro=$dbmysql->maxid( 'CEN_COD','sys_centro' );
+        $valInicial=$clGeneral->insertarParamInciales($maxCentro);
         echo 1;
     } else {
         echo 0;

@@ -1,5 +1,4 @@
 $(document).ready(function() {
-//    pageSetUp();
     $('#listaAcceso2').dataTable({
         "bServerSide": true,
         "sAjaxSource": "includes/controles/acceso2/acceso2_dataTable.php",
@@ -8,14 +7,13 @@ $(document).ready(function() {
             "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
             "sInfoEmpty": "No hay entradas para mostrar",
             "sInfoFiltered": " - Filtrado de registros _MAX_",
-//            "sSearch": "Buscar: ",
             "sZeroRecords": "No hay registros que mostrar"
         }
     });
 });
 
 
-function permitirAcceso(nombre, cod,contr,horario){
+function permitirAcceso(nombre, cod,contr,horario,codVisitante){
     $.SmartMessageBox({
     title: "Confirmación!",
     content: "Esta seguro que desea permitir el aceeso del visitante "+nombre+ "?",
@@ -37,9 +35,7 @@ function permitirAcceso(nombre, cod,contr,horario){
                             iconSmall: "fa fa-check fa-2x fadeInRight animated",
                             timeout: 4000
                         });
-
-                        location.reload();
-
+                        $('#cod_'+codVisitante).parent('td').parent('tr').remove();    
                     }
                 },
                 error:function()

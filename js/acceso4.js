@@ -122,7 +122,6 @@ function guardarFinVisita() {
                 });
                 $('#frmTerminarModal').modal('hide');
                 $('#cod_'+codVisita).parent('td').parent('tr').remove();
-//                location.reload();
             }
         }
     });

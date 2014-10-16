@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+include_once("conexiones/parametrosIniciales.php");
 include_once("conexiones/db_local.inc.php");
 $dbmysql = new database();
 /*
@@ -31,16 +32,23 @@ class general {
         $activarMenu44 = '';
     }
     
-    function obtenerParamInciales(){
-        $parametros=array();
-        
-        $parametros[]=array(
-            array("id"=>1,"modulo"=>'PPL', "descripcion"=>'Cantidad de visitantes por PPL', "valor"=>10),
-            array("id"=>2,"modulo"=>'VISITANTES', "descripcion"=>'Cantidad de Visitas por horario', "valor"=>3),
-            array("id"=>3,"modulo"=>'ACCESO 3', "descripcion"=>'Numero de Cedulas por Literal', "valor"=>30),
-            array("id"=>4,"modulo"=>'ACCESO 4', "descripcion"=>'Tiempo de espera para finalizar Visita', "valor"=>15)
-        );
-        return $encode = json_encode($parametros);
+    function insertarParamInciales($centro){
+        global $dbmysql;
+        $ppl=PAR_PPL;
+        $visitante=PAR_VISITANTES;
+        $acceso3=PAR_ACCESO3;
+        $acceso4=PAR_ACCESO4;
+        $sql="INSERT INTO `sys_parametros` (`PAR_COD`, `CEN_COD`, `PAR_MODULO`, `PAR_DESCRIPCION`, `PAR_VALOR`) VALUES
+            (1, $centro, 'PPL', 'Cantidad de visitantes por PPL', '$ppl'),
+            (2, $centro, 'VISITANTES', 'Cantidad de Visitas por horario', '$visitante'),
+            (3, $centro, 'ACCESO 3', 'Numero de Cedulas por Literal', '$acceso3'),
+            (4, $centro, 'ACCESO 4', 'Tiempo de espera para finalizar Visita', '$acceso4');";
+        $val=$dbmysql->query($sql);
+        if ($val) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
     
     function pulirRegistros(){

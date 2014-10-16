@@ -60,115 +60,58 @@ function revisarSanciones() {
 function editSancion() {
 
     $retval = '';
-
     $retval = '<div class="modal fade" id="frmTipoSancion" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
-
                     <div class="modal-dialog">
-
                         <div class="modal-content">
-
                             <div class="modal-header">
-
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-
                                         &times;
-
                                 </button>
-
                             </div>
-
                             <div class="modal-body">
-
                                 <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
-
                                                 <header>
-
                                                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-
                                                         <h2>Asignar Sancion</h2>                
-
                                                 </header>
-
                                                 <div> 
-
                                                     <div class="widget-body no-padding">
-
                                                         <form id="smart-form-register" class="smart-form" action="javascript:guardarSancion()">
-
-
                                                             <fieldset>
-
                                                                     <input type="hidden" id="IDvisitante" name="IDvisitante">
                                                                     <input type="hidden" id="IDsancion" name="IDsancion">
-
-
                                                             </fieldset>
-
                                                             <fieldset>
-
                                                                 <div class="row">
-
                                                                     <section class="col col-6">
-
                                                                             <label class="input" id="select_sancion">Tipo de sanci&oacute;n</label>
-
                                                                                 <select id="sancion" name="sancion" onchange="seleccionSancion()" class="form-control">
                                                                                 </select>
-                                                                            
-
                                                                     </section>
                                                                     <section class="col col-6">
-
                                                                             <label class="input" id="select_sancion">Sanci&oacute;n</label>
-
                                                                                 <select id="sancionItem"  name="sancionItem" onchange="seleccionTiempo()"  class="form-control">
                                                                                 </select>
-                                                                            
-
                                                                     </section>                                                                    
-
                                                                 </div>
                                                                 <div class="row">
-
                                                                     <section class="col col-6">
-
                                                                             <label class="input" id="tiempo_sancion">Dias de  sanci&oacute;n: <small></small></label>
-
-                                                                            
-                                                                            
-    
                                                                    </section>
-                                                         
-
                                                                 </div>                                                                
                                                             </fieldset>
-
                                                             <footer>
-
                                                                     <button type="submit" class="btn btn-primary">
-
                                                                             Generar Sanción
-
                                                                     </button>
-
                                                             </footer>
-
                                                         </form>                     
-
                                                 </div>
-
                                             </div>
-
                                         </div>
-
                                 </div>
-
-                            
-
                         </div>
-
                     </div>
-
                 </div>';
 
     return $retval;
