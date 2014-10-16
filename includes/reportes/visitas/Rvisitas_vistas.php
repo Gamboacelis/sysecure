@@ -11,7 +11,7 @@ function reporteVisitas() {
                 <div class="jarviswidget" id="wid-id-2" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Plugins & Enhancers </h2>
+                        <h2>Reporte de Visitas</h2>
                     </header>
                     <div>
                         <div class="widget-body">
@@ -45,21 +45,6 @@ function reporteVisitas() {
                             </form>
                         </div>
                         <div id="muestraReporteVisitas">
-                            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false">
-                                        <header>
-                                                <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
-                                                <h2>Bar Graph </h2>
-                                        </header>
-                                        <div>
-                                                <div class="jarviswidget-editbox">
-                                                </div>
-                                                <div class="widget-body no-padding">
-                                                    <div id="bar-graph" class="chart no-padding"></div>
-                                                </div>
-                                        </div>
-                                </div>
-                            </article>
                         </div>
                     </div>
                 </div>';

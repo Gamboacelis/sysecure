@@ -17,6 +17,7 @@ date_default_timezone_set('America/Bogota');
         <!-- SmartAdmin Styles : Please note (smartadmin-production.css) was created using LESS variables -->
         <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-production.min.css">
         <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-skins.min.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="css/generales.css"> 
         <!-- SmartAdmin RTL Support is under construction
                  This RTL CSS will be released in version 1.5
         <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-rtl.min.css"> -->
@@ -63,7 +64,9 @@ date_default_timezone_set('America/Bogota');
 						<div class="hero">
 
 							<div class="pull-left login-desc-box-l">
-								<h4 class="paragraph-header">Control de Visitas de PPL, MultiCentros</h4>
+								<h4 class="paragraph-header">Control de Visitas de PPL, MultiCentros</h4><br>
+                                                                <spam class="text-success"><strong>Puede consultar el Horario de Visitas de un PPL, dando click aqui:</strong></spam><br><br>
+                                                                <a class="btn btn-primary btn-lg" href="javascript:consultarHoarios();">Consultar Horarios</a>
 							</div>
 							
                                                     <img src="img/justicia.jpg" class="pull-right img-thumbnail" alt="" style="width:350px">
@@ -115,9 +118,6 @@ date_default_timezone_set('America/Bogota');
 										<label class="input"> <i class="icon-append fa fa-lock"></i>
                                                                                     <input type="password" name="clave" id="clave">
 											<b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Por favor digite su Clave</b> </label>
-										<div class="note">
-											<a href="forgotpassword.html">Olvido su Contraseña?</a>
-										</div>
 									</section>
 								</fieldset>
 								<footer>
@@ -129,6 +129,53 @@ date_default_timezone_set('America/Bogota');
 
 						</div>
 					</div>
+                                        <div class="modal fade" id="frmConsultaModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" style="width: 800px;">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                                &times;
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                                                                        <header>
+                                                                                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                                                <h2>Consulta el Horario de Visitas</h2>				
+                                                                        </header>
+                                                                        <div>
+                                                                            <div class="widget-body">
+                                                                                <form class="smart-form">
+                                                                                    <fieldset>
+                                                                                            <section>
+                                                                                                <label>Nombre del PPL</label>
+                                                                                                <label class="input">
+                                                                                                    <i class="icon-prepend fa fa-user"></i>
+                                                                                                    <input id="nomPpl" name="nomPpl" type="text" placeholder="Nombre del PPL">
+                                                                                                </label>
+                                                                                            </section>
+                                                                                            <section style="text-align: center;">
+                                                                                                <a class="btn btn-success" href="javascript:consultarPPLBusqueda();">
+                                                                                                        <i class="fa fa-check"></i>
+                                                                                                        Consultar
+                                                                                                </a>
+                                                                                            </section>    
+                                                                                        
+                                                                                    </fieldset>
+                                                                                    <fieldset>
+                                                                                                
+                                                                                    </fieldset>
+                                                                                </form>
+                                                                            </div>
+                                                                            <div id="muestraReporte">
+
+                                                                            </div>
+                                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 				</div>
 			</div>
 
@@ -167,6 +214,7 @@ date_default_timezone_set('America/Bogota');
 
 		<!-- MAIN APP JS FILE -->
 		<script src="js/plantilla/app.min.js"></script>
+                <script src="js/general.js"></script>
 
 		<script type="text/javascript">
 			runAllForms();
@@ -230,6 +278,43 @@ date_default_timezone_set('America/Bogota');
                                 }
                             });
                         }
+                        function consultarHoarios(){
+                            $('#frmConsultaModal').modal('show');
+                        }
+                        function consultarPPLBusqueda(){
+                            var nombreppl=$('#nomPpl').val();
+                            if(nombreppl!==''){
+                                $.ajax({
+                                    url: "busqueda.php?opcion=reportePPL",
+                                    type: 'post',
+                                    data:{nombreppl:nombreppl},
+                                    success: function(respuesta) {
+                                        if(respuesta!==''){
+                                            $('#muestraReporte').html(respuesta);
+                                        }else{
+                                            $.smallBox({
+                                                title : "No Valido",
+                                                content : "<i class='icon-remove'></i> <i>Estimado Usuario, digite nuevamente el nombre de la Persona, nuestra base de datos no encuentra coincidencias..!</i>",
+                                                color : "#C46A69",
+                                                iconSmall : "fa fa-check fa-2x fadeInRight animated",
+                                                timeout : 7000
+                                            });
+                                            $("#nomPpl").val('');
+                                        }
+                                    }
+                                });
+                            }else{
+                                $.smallBox({
+                                    title : "Error..!",
+                                    content : "<i class='icon-remove'></i> <i>Debe ingresar el nombre o apellido de la Persona que busca</i>",
+                                    color : "#C46A69",
+                                    iconSmall : "fa fa-check fa-2x fadeInRight animated",
+                                    timeout : 4000
+                                });
+                                $("#nomPpl").val('');
+                            }
+                        }
+                        
 		</script>
 
 	</body>
