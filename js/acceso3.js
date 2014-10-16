@@ -37,7 +37,10 @@ function permitirAcceso3(nombre, vipcontrol,pplcod,codControl,horario){
                         $("#txtCedula").html('<i> Visitante: '+nombre+'</i>');
                         $("#frmCedulaModal").modal('show');
 //                             
-                       $('#closeModalCedula').click(function(){location.reload();});
+                       $('#closeModalCedula').click(function(){
+                           $('#cod_'+vipcontrol).parent('td').parent('tr').remove();
+//                           location.reload();
+                       });
                     }
                 },
                 error:function(){
@@ -54,7 +57,7 @@ function permitirAcceso3(nombre, vipcontrol,pplcod,codControl,horario){
     });
 }
 function closeModalCedula() {
-        location.reload();
+    $("#frmCedulaModal").modal('hide');
 }
 
 function negarAcceso3(codVisita, codVisitante){
@@ -85,7 +88,7 @@ function negarAcceso3(codVisita, codVisitante){
                                     iconSmall: "fa fa-check fa-2x fadeInRight animated",
                                     timeout: 5000
                                 });
-                                location.reload();
+                                $('#cod_'+codVisita).parent('td').parent('tr').remove();
                             }
                         },
                         error:function(){

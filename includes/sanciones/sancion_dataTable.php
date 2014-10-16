@@ -80,7 +80,7 @@ if ($_GET['sSearch'] != "") {
  * SQL queries
  * Get data to display
  */
-$sWhere=($sWhere=='')?' WHERE SAN_COD =1':' AND SAN_COD =1 ';
+//$sWhere=($sWhere=='')?' WHERE SAN_COD =1':' AND SAN_COD =1 ';
 $sQuery = "SELECT SQL_CALC_FOUND_ROWS " . str_replace(" , ", " ", implode(",", $aColumns)) . "
 		FROM   $sTable
 		$sWhere
@@ -139,18 +139,18 @@ $eliminar=($_SESSION["usu_rol_cod"]==2)?'<a class="btn btn-danger btn-xs ' . $aR
     $cadenaParametros = utf8_encode($aRow['VIS_COD'] . ',' . "'$nombre'");
     //'VIS_COD', 'VIS_NOMBRE', 'VIS_APELLIDO', 'VIS_CEDULA', 'VIS_DIRECCION', 'VIS_TELEFONO', 'VIS_ESTADO'
     $estado = ($aRow['VIS_ESTADO'] == 'A') ? '<span class="label label-primary">Activo</span>' : '<span class="label label-danger">Sancionado</span>';
-    $output['aaData'][] = array('' . utf8_encode($aRow['VIS_COD']) . '',
-        '' . utf8_encode($nombre) . '',
-        '' . utf8_encode($aRow['VIS_CEDULA']) . '',
-        '' . utf8_encode($aRow['SAN_DESCRIPCION']) . '',
-        '' . $estado . '',
-        '' . utf8_encode($aRow['VSA_NOTA']) . '',
-        '' . utf8_encode($aRow['VSA_FECHA_INI']) . '',
-        '' . utf8_encode($aRow['VSA_FECHA_FIN']) . '',
-        '<a class="btn btn-primary btn-sm" title="Sancionar" href="javascript:editarSancion(' . $aRow['VIS_COD'] . ',' . $aRow['VSA_COD'] . ')">
-            <i class="fa fa-pencil"></i> Sancionar
-        </a>',
-        ''.$eliminar.'');
+    $output['aaData'][] = array('<input type="hidden" class="codVisSancion" id="cod_'.$aRow[ 'VIS_COD' ].'" name="codVisSancion" value="'.$aRow[ 'VIS_COD' ].'">' . utf8_encode($aRow['VIS_COD']) . '',
+                                '' . utf8_encode($nombre) . '',
+                                '' . utf8_encode($aRow['VIS_CEDULA']) . '',
+                                '' . utf8_encode($aRow['SAN_DESCRIPCION']) . '',
+                                '' . $estado . '',
+                                '' . utf8_encode($aRow['VSA_NOTA']) . '',
+                                '' . utf8_encode($aRow['VSA_FECHA_INI']) . '',
+                                '' . utf8_encode($aRow['VSA_FECHA_FIN']) . '',
+                                '<a class="btn btn-primary btn-sm" title="Sancionar" href="javascript:editarSancion(' . $aRow['VIS_COD'] . ',' . $aRow['VSA_COD'] . ')">
+                                    <i class="fa fa-pencil"></i> Sancionar
+                                </a>',
+                                ''.$eliminar.'');
 }
 echo json_encode($output);
 ?>
