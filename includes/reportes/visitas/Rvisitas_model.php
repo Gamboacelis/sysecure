@@ -39,7 +39,7 @@ function reporteVisitas() {
                                 <table id="listaSanciones" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                     <tr>
-                                        <th style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;border-top:dotted #999999 1px;">ID</th>
+                                        <th style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;border-top:dotted #999999 1px;">Id</th>
                                         <th style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;border-top:dotted #999999 1px;"><i class="fa fa-fw fa-male txt-color-blue hidden-md hidden-sm hidden-xs"></i> Código</th>
                                         <th style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;border-top:dotted #999999 1px;"><i class="fa fa-fw fa-user txt-color-blue hidden-md hidden-sm hidden-xs"></i> Fecha de visita</th>
                                         <th style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;border-top:dotted #999999 1px;"><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Hora de ingreso</th>
