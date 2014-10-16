@@ -446,6 +446,7 @@ if ($_SESSION["autenticado"] == 'SI') {
 
             <!-- MAIN APP JS FILE -->
             <script src="js/plantilla/app.min.js"></script>
+            <script src="js/timeOut.js"></script>
             <script src="js/general.js"></script>
             <script src="js/webcam.js"></script>
             <script src="js/visitas.js"></script>
