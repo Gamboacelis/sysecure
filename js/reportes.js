@@ -15,6 +15,11 @@ function exportarRsanciones(){
     $("#datos_a_enviar").val($("<div>").append($("#listaReporteSancionados").eq(0).clone()).html());
     $("#FormularioExportacion").submit();
 }
+
+function exportarVisitas(){
+    $("#datos_a_enviar").val($("<div>").append($("#listaReporteVisitas").eq(0).clone()).html());
+    $("#FormularioExportacionVisitas").submit();
+}
 function reporteSancion() {
     var fdesde = $('#fdesde').val();
     var fhasta = $('#fhasta').val();
