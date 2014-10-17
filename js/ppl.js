@@ -36,10 +36,12 @@ $(document).ready(function() {
     var $registerForm = $("#smart-form-ppl").validate({
         rules: {
             pabellon: {required: true},
-            nombre: {required: true},
-            apellido: {required: true},
-            cedula: {required: true},
-            filePpl: {required: true},
+            nombre: {required: true,lettersonly: true},
+            apellido: {required: true,lettersonly: true}
+        },
+        message:{
+            nombre: {lettersonly: "Por favor ingrese solo Letras"},
+            apellido: {lettersonly: "Por favor ingrese solo Letras"}
         },
         errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
