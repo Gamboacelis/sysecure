@@ -122,7 +122,7 @@ function frmPpl(){
                                                                     <section class="col col-6">
                                                                             <label class="label">Apellidos</label>
                                                                             <label class="input"> <i class="icon-append fa fa-lock"></i>
-                                                                                    <input type="text" name="apellido" placeholder="Aopellido del PPL" id="apellido">
+                                                                                    <input type="text" name="apellido" placeholder="Apellido del PPL" id="apellido">
                                                                                     <b class="tooltip tooltip-bottom-right">Escriba el Apellido del PPL</b> </label>
                                                                     </section>
                                                                     </div>

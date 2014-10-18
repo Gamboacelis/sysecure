@@ -38,12 +38,9 @@ function consultarDatosPPL() {
         default:
             break;
     }
-    $nom1=$separaNombre[0];
-    $nom2=$separaNombre[1];
-//    $separaNombre = str_replace(" ","%",$nombreppl);
     $sql="SELECT * FROM `sys_ppl` WHERE (`PPL_NOMBRE` LIKE '%$nom1%' OR `PPL_APELLIDO` LIKE '%$nom1%') OR  (`PPL_NOMBRE` LIKE '%$nom2%' OR  `PPL_APELLIDO` LIKE '%$nom2%')";
     $val = $dbmysql->query($sql);
-                    
+    if($val->num_rows>0){                
     $retval = '<div class="row">
                 <div class="well col-sm-12 col-md-12 col-lg-6">
                     <div>
@@ -71,6 +68,15 @@ function consultarDatosPPL() {
                     
                 </div>
             </div>';
+    }else{
+        $retval = '<div class="row">
+                        <div class="well col-sm-12 col-md-12 col-lg-6">
+                            <div>
+                                <p style="color:red;">No existen registros</p>
+                            </div>
+                        </div>    
+                    </div>';
+    }
     echo $retval;
 }
 

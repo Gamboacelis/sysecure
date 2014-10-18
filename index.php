@@ -151,7 +151,7 @@ date_default_timezone_set('America/Bogota');
                                                                                                 <label>Nombre del PPL</label>
                                                                                                 <label class="input">
                                                                                                     <i class="icon-prepend fa fa-user"></i>
-                                                                                                    <input id="nomPpl" name="nomPpl" type="text" placeholder="Nombre del PPL">
+                                                                                                    <input id="nomPpl" name="nomPpl" type="text" placeholder="Nombre y Apellido del PPL">
                                                                                                 </label>
                                                                                             </section>
                                                                                             <section style="text-align: center;">
