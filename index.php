@@ -251,6 +251,11 @@ date_default_timezone_set('America/Bogota');
 						error.insertAfter(element.parent());
 					}
 				});
+
+                $( ".close" ).click(function() {
+                    $('#muestraReporte').html('');
+                    $('#nomPpl').val('');
+                });
 			});
                         function login(){
                             var usuario=$("#usuario").val();
