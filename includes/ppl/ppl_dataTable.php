@@ -16,7 +16,7 @@ global $dbmysql;
 	/* Tabla a Usar */
 	$sTable =  "sys_ppl";
         /* Conexion a la Base */
-	$gaSql['link'] =  mysql_pconnect( HOST_NAME, USER_NAME, USER_PASSWD  ) or
+	$gaSql['link'] =  mysql_pconnect( HOST_NAME, USER_NAME, USER_PASSWD) or
 		die( 'Could not open connection to server' );
             mysql_select_db( DB_NAME, $gaSql['link'] ) or 
 		die( 'Could not select database'. DB_NAME );
