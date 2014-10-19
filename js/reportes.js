@@ -1,4 +1,5 @@
-$(document).ready(function() {
+$(document).ready(function () {
+    $('#listaHorarios').dataTable();
     // Date Range Picker
     $("#fdesde").datepicker({
         defaultDate: "+1w",
@@ -10,15 +11,20 @@ $(document).ready(function() {
         changeMonth: true,
         dateFormat: "yy-mm-dd"
     });
+    
 });
-function exportarRsanciones(){
+function exportarRsanciones() {
     $("#datos_a_enviar").val($("<div>").append($("#listaReporteSancionados").eq(0).clone()).html());
     $("#FormularioExportacion").submit();
 }
 
-function exportarVisitas(){
+function exportarVisitas() {
     $("#datos_a_enviar").val($("<div>").append($("#listaReporteVisitas").eq(0).clone()).html());
     $("#FormularioExportacionVisitas").submit();
+}
+function exportarHorarios() {
+    $("#datos_a_enviar").val($("<div>").append($("#listaReporteHorarios").eq(0).clone()).html());
+    $("#FormularioExportacionHorarios").submit();
 }
 function reporteSancion() {
     var fdesde = $('#fdesde').val();
@@ -28,7 +34,7 @@ function reporteSancion() {
         datetype: "json",
         type: 'POST',
         data: {fdesde: fdesde, fhasta: fhasta},
-        success: function(res) {
+        success: function (res) {
             $('#muestraReporteSancion').html(res);
         }
     });
@@ -42,8 +48,21 @@ function reporteVisitas() {
         datetype: "json",
         type: 'POST',
         data: {fdesde: fdesde, fhasta: fhasta},
-        success: function(res) {
+        success: function (res) {
             $('#muestraReporteVisitas').html(res);
+        }
+    });
+}
+
+function reporteHorarios() {
+    var nivel = $('#nivel').val();
+    $.ajax({
+        url: './includes/reportes/horarios/Rhorarios_model.php?opcion=reporteHorarios',
+        datetype: "json",
+        type: 'POST',
+        data: {nivel: nivel},
+        success: function (res) {
+            $('#muestraReporteHorarios').html(res);
         }
     });
 }

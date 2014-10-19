@@ -139,7 +139,12 @@ if ($_SESSION["autenticado"] == 'SI') {
                     include_once("./includes/reportes/visitas/Rvisitas_vistas.php");
                     $titulo = 'Reporte de Visitas';
                     $contenido = reporteVisitas();
-                    break;                    
+                    break;  
+                case 'horarios':
+                    include_once("./includes/reportes/horarios/Rhorarios_vistas.php");
+                    $titulo = 'Reporte de Visitas';
+                    $contenido = reporteHorarios();
+                    break;   
             }
             break;
         default:
@@ -169,7 +174,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
             <link rel="icon" href="img/favicon/favicon.ico" type="image/x-icon">
             <!-- GOOGLE FONT -->
-            <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
+            
             <link rel="apple-touch-icon" href="img/splash/sptouch-icon-iphone.png">
             <link rel="apple-touch-icon" sizes="76x76" href="img/splash/touch-icon-ipad.png">
             <link rel="apple-touch-icon" sizes="120x120" href="img/splash/touch-icon-iphone-retina.png">
