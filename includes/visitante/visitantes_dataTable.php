@@ -11,7 +11,7 @@ date_default_timezone_set('America/Bogota');
 include_once( '../conexiones/config_local.ini.php' );
 global $dbmysql;
 
-$aColumns = array('VIS_COD', 'VIS_NOMBRE', 'VIS_APELLIDO', 'VIS_CEDULA', 'VIS_DIRECCION', 'VIS_TELEFONO', 'VIS_ESTADO','PPL_COD','PPL_NOMBRE','PPL_APELLIDO','PAB_DESCRIPCION','PAR_DESCRIPCION');
+$aColumns = array('VIS_COD', 'VIS_NOMBRE', 'VIS_APELLIDO', 'VIS_CEDULA', 'VIS_DIRECCION', 'VIS_TELEFONO', 'VIS_ESTADO','PPL_COD','PPL_NOMBRE','PPL_APELLIDO','PAB_DESCRIPCION','PAR_DESCRIPCION','CEN_COD');
 /* Campo de Index */
 $sIndexColumn = "VIS_COD";
 /* Tabla a Usar */
@@ -69,7 +69,8 @@ $gaSql['link'] =  mysql_pconnect( HOST_NAME, USER_NAME, USER_PASSWD  ) or
 	 * SQL queries
 	 * Get data to display
 	 */
-$sWhere = ($sWhere == '') ? ' WHERE VIS_ESTADO != "E"' : $sWhere.' AND VIS_ESTADO != "E"';
+$condicion = "AND CEN_COD = ".$_SESSION['usu_centro_cod'];	
+$sWhere = ($sWhere == '') ? ' WHERE VIS_ESTADO != "E" '.$condicion : $sWhere.' AND VIS_ESTADO != "E" '.$condicion;
 $sQuery = "SELECT SQL_CALC_FOUND_ROWS " . str_replace(" , ", " ", implode(",", $aColumns)) . "
 		FROM   $sTable
 		$sWhere
@@ -144,4 +145,6 @@ while ($aRow = mysql_fetch_array($rResult)) {
         </a>');
 }
 echo json_encode($output);
+
+//ALTER  VIEW `sys_vw_visitante` AS select `vp`.`VIP_COD` AS `VIP_COD`,`vp`.`PPL_COD` AS `PPL_COD`,`p`.`PPL_NOMBRE` AS `PPL_NOMBRE`,`p`.`PPL_APELLIDO` AS `PPL_APELLIDO`,`p`.`PAB_COD` AS `PAB_COD`,`pab`.`PAB_DESCRIPCION` AS `PAB_DESCRIPCION`,`p`.`PPL_NACIONALIDAD` AS `PPL_NACIONALIDAD`,`p`.`PPL_IMG` AS `PPL_IMG`,`vp`.`PAR_COD` AS `PAR_COD`,`par`.`PAR_DESCRIPCION` AS `PAR_DESCRIPCION`,`v`.`VIS_COD` AS `VIS_COD`,`v`.`VIS_NOMBRE` AS `VIS_NOMBRE`,`v`.`VIS_APELLIDO` AS `VIS_APELLIDO`,`v`.`VIS_CEDULA` AS `VIS_CEDULA`,`v`.`VIS_DIRECCION` AS `VIS_DIRECCION`,`v`.`VIS_TELEFONO` AS `VIS_TELEFONO`,`v`.`VIS_CORREO` AS `VIS_CORREO`,`v`.`VIS_IMAGEN` AS `VIS_IMAGEN`,`v`.`VIS_ESTADO` AS `VIS_ESTADO`,`pab`.`CEN_COD` AS `CEN_COD` from ((((`sys_visitante` `v` join `sys_visitante_ppl` `vp` on((`v`.`VIS_COD` = `vp`.`VIS_COD`))) join `sys_ppl` `p` on((`p`.`PPL_COD` = `vp`.`PPL_COD`))) join `sys_parentesco` `par` on((`par`.`PAR_COD` = `vp`.`PAR_COD`))) join `sys_pabellones` `pab` on((`pab`.`PAB_COD` = `p`.`PAB_COD`))) where (`v`.`VIS_ESTADO` <> 'E');
 ?>
