@@ -54,15 +54,32 @@ function reporteSancion() {
                             WHERE VSA_FECHA_INI BETWEEN '$fdesde' AND '$fhasta';";
                     $val = $dbmysql->query($sql);
                     while ($row = $val->fetch_object()){
-                     $retval .='<tr>'
-                             . '    <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->VIS_COD.'</td>'
-                             . '    <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->VIS_NOMBRE.' '.$row->VIS_APELLIDO.'</td>'
-                             . '    <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->VIS_CEDULA.'</td>'
-                             . '    <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->SAN_DESCRIPCION.'</td>'
-                             . '    <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->VSA_NOTA.'</td>'
-                             . '    <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->VSA_FECHA_INI.'</td>'
-                             . '    <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->VSA_FECHA_FIN.'</td>'
-                             . '</tr>';
+
+                        $sql1 = "SELECT vp.`PPL_COD`, pa.`CEN_COD`  FROM `sys_visitante_ppl` vp, `sys_ppl` p, `sys_pabellones` pa  WHERE vp.`PPL_COD` = p.`PPL_COD` AND pa.`PAB_COD` = p.`PAB_COD` AND vp.`VIS_COD` = ".$row->VIS_COD;
+                        $val1 = $dbmysql->query($sql1);
+                        $numeroPplCentroActual = 0;
+                        while ($row1 = $val1->fetch_object()){
+
+                            if($row1->CEN_COD == $_SESSION['usu_centro_cod'])    
+                            {
+                                $numeroPplCentroActual++;
+
+                            }
+                        }        
+
+                        if($numeroPplCentroActual > 0)
+                        {                
+                         $retval .='<tr>'
+                                 . '    <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->VIS_COD.'</td>'
+                                 . '    <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->VIS_NOMBRE.' '.$row->VIS_APELLIDO.'</td>'
+                                 . '    <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->VIS_CEDULA.'</td>'
+                                 . '    <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->SAN_DESCRIPCION.'</td>'
+                                 . '    <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->VSA_NOTA.'</td>'
+                                 . '    <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->VSA_FECHA_INI.'</td>'
+                                 . '    <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->VSA_FECHA_FIN.'</td>'
+                                 . '</tr>';
+                        }         
+
                     }
                      $retval .='<tbody>
                             </table>

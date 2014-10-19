@@ -53,7 +53,7 @@ function reporteVisitas() {
                                 </thead>
                                 <tbody>';
     
-    $sql = "SELECT vi.`VISG_COD`, vi.`VISG_FECHA`, vi.`VISG_HORA_INGRESO`, vi.`VISG_HORA_SALIDA` ,v.`VIS_COD`, v.`VIS_NOMBRE`, v.`VIS_APELLIDO`, v.`VIS_CEDULA`, v.`VIS_ESTADO`, p.`PPL_COD`, p.`PAB_COD`, pa.`PAB_DESCRIPCION`, p. `PPL_NOMBRE`, p.`PPL_APELLIDO`, p.`PPL_CEDULA`, p.`PPL_ESTADO` FROM `sys_visitas` vi , `sys_visitante` v , `sys_ppl` p, `sys_visitante_ppl` vp , `sys_pabellones` pa WHERE vi.`VIP_COD`= vp.`VIP_COD` and v.`VIS_COD` = vp.`VIS_COD` and p.`PPL_COD` = vp.`PPL_COD`and p.`PAB_COD` = pa.`PAB_COD` and vi.`VISG_FECHA` BETWEEN '$fdesde' and '$fhasta' order by vi.`VISG_COD` desc ";
+    $sql = "SELECT vi.`VISG_COD`, vi.`VISG_FECHA`, vi.`VISG_HORA_INGRESO`, vi.`VISG_HORA_SALIDA` ,v.`VIS_COD`, v.`VIS_NOMBRE`, v.`VIS_APELLIDO`, v.`VIS_CEDULA`, v.`VIS_ESTADO`, p.`PPL_COD`, p.`PAB_COD`, pa.`PAB_DESCRIPCION`, p. `PPL_NOMBRE`, p.`PPL_APELLIDO`, p.`PPL_CEDULA`, p.`PPL_ESTADO` FROM `sys_visitas` vi , `sys_visitante` v , `sys_ppl` p, `sys_visitante_ppl` vp , `sys_pabellones` pa WHERE vi.`VIP_COD`= vp.`VIP_COD` and v.`VIS_COD` = vp.`VIS_COD` and p.`PPL_COD` = vp.`PPL_COD`and p.`PAB_COD` = pa.`PAB_COD` and vi.`VISG_FECHA` BETWEEN '$fdesde' and '$fhasta' and pa.`CEN_COD` = ".$_SESSION['usu_centro_cod']."  order by vi.`VISG_COD` desc ";
     $val = $dbmysql->query($sql);
     while ($row = $val->fetch_object()){
         $retval .='<tr>'

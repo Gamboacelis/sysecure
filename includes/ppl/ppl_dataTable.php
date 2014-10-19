@@ -83,7 +83,8 @@ global $dbmysql;
 	/*
 	 * SQL queries
 	 * Get data to display
-	 */
+	 */ 
+		$condicion =
         $sWhere=($sWhere=='')?" WHERE PPL_ESTADO='A' ":$sWhere." AND PPL_ESTADO='A' ";
         
 	$sQuery = "
@@ -118,9 +119,12 @@ global $dbmysql;
         
 	while ( $aRow = mysql_fetch_array( $rResult ) ){
 //            Consulta descripcion de Pabellon
-            $sql1 = "SELECT PAB_DESCRIPCION FROM `sys_pabellones` WHERE PAB_COD = {$aRow[ 'PAB_COD' ]};";
+            $sql1 = "SELECT PAB_DESCRIPCION, CEN_COD FROM `sys_pabellones` WHERE PAB_COD = {$aRow[ 'PAB_COD' ]};";
             $val1 = $dbmysql->query($sql1);
             $row = $val1->fetch_object();
+
+            if($row->CEN_COD == $_SESSION['usu_centro_cod'])
+            {	
             //Consulta Pabellon Anterior
             $sql2 = "SELECT h.*,p.PAB_DESCRIPCION FROM sys_historia_ppl h,`sys_pabellones` p WHERE h.PAB_COD=p.PAB_COD AND h.PPL_COD = {$aRow[ 'PPL_COD' ]} ORDER BY h.`HIS_COD` DESC LIMIT 0,1";
             $val2 = $dbmysql->query($sql2);
@@ -145,6 +149,8 @@ global $dbmysql;
                                                 <a class="btn btn-warning btn-xs '.$aRow[ 'PPL_COD' ].'" title="Traspaso de PPL" href="javascript:aplicarTraspaso('.$aRow[ 'PAB_COD'].','.$aRow[ 'PPL_COD' ].')">
                                                     <i class="fa fa fa-exchange"></i>  Traspaso
                                                 </a>');
+			}
+
         }
 //        print_r($output);
 	echo json_encode( $output );
