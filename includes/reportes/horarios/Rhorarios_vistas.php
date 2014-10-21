@@ -15,16 +15,16 @@ function reporteHorarios() {
                     </header>
                     <div>
                         <div class="widget-body">
-                            <form class="">
+                            <form class="smart-form">
                                 <fieldset>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <div class="form-group">
-                                                    <div class="input-group">
-                                                            <input id="nivel" name="nivel" type="text" placeholder="Niveles">
-                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    </div>
-                                            </div>
+                                            <label class="select">
+                                                    <select id="nivel" name="nivel" placeholder="Niveles">
+                                                            <option disabled="" selected="" value="0">-- Selccione --</option>
+                                                            '.niveles().'
+                                                    </select>
+                                            </label>
                                         </div>
                                        
                                     </div>
@@ -43,5 +43,18 @@ function reporteHorarios() {
                     </div>
                 </div>';
     $retval .= '</article>';
+    return $retval;
+}
+
+function niveles(){
+    global $dbmysql;
+    $retval = '';
+    $sql = "SELECT * FROM  `sys_etapas`;";
+    $val = $dbmysql->query($sql);
+    if ($val->num_rows > 0) {
+        while ($row = $val->fetch_object()) {
+            $retval.='<option value="' . $row->NVL_COD . '">' . $row->NVL_DESCRIPCION . '</option>';
+        }
+    }
     return $retval;
 }

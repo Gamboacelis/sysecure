@@ -56,8 +56,8 @@ function enviarDatosUsuario() {
 function actualizarDatosUsuario() {
     global $dbmysql;
     $codigo = $_POST['IDuser'];
-    $nombre = $_POST["nombre"];
-    $apellido = $_POST["apellido"];
+    $nombre = strtoupper($_POST["nombre"]);
+    $apellido = strtoupper($_POST["apellido"]);
     $usuario = strtolower($_POST["usuario"]);
     $email = strtolower($_POST["email"]);
     $celular = $_POST["celular"];
@@ -83,8 +83,8 @@ function actualizarDatosUsuario() {
 
 function guardaDatosUsuario() {
     global $dbmysql;
-    $nombre = $_POST["nombre"];
-    $apellido = $_POST["apellido"];
+    $nombre = strtoupper($_POST["nombre"]);
+    $apellido = strtoupper($_POST["apellido"]);
     $usuario = strtolower($_POST["usuario"]);
     $password = $_POST["password"];
     $email = strtolower($_POST["email"]);

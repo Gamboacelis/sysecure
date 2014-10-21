@@ -10,7 +10,7 @@ include_once '../conexiones/db_local.inc.php';
     date_default_timezone_set('America/Bogota');
 include_once( '../conexiones/config_local.ini.php' );
 global $dbmysql;
-        $aColumns = array('USU_COD','USU_NOMBRE','USU_APELLIDO','USU_USUARIO','USU_CLAVE','USU_EMAIL','USU_CELULAR','USU_AVATAR','USU_CEDULA');
+        $aColumns = array('USU_COD','USU_NOMBRE','USU_APELLIDO','USU_USUARIO','USU_CLAVE','USU_EMAIL','USU_CELULAR','USU_AVATAR','USU_CEDULA','ROL_COD');
 	/* Campo de Index */
 	$sIndexColumn = "USU_COD";
 	/* Tabla a Usar */
@@ -64,26 +64,17 @@ global $dbmysql;
 		$sWhere = substr_replace( $sWhere, "", -3 );
 		$sWhere .= '  )';
 	}
-	/* Individual column filtering */
-//	for ( $i=0 ; $i<count($aColumns) ; $i++ )
-//	{
-//		if ( $_GET['bSearchable_'.$i] == "true" && $_GET['sSearch_'.$i] != '' )
-//		{
-//			if ( $sWhere == "" )
-//			{
-//				$sWhere = "WHERE ";
-//			}
-//			else
-//			{
-//				$sWhere .= " AND ";
-//			}
-//			$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string($_GET['sSearch_'.$i])."%' ";
-//		}
-//	}
 	/*
 	 * SQL queries
 	 * Get data to display
 	 */
+        if($_SESSION["usu_rol_cod"]==1){
+            $sWhere=$sWhere;
+        }else{
+            $sWhere=($sWhere=='')?' WHERE ROL_COD !=1':$sWhere.' AND ROL_COD !=1 ';
+        }
+        
+        
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , "," ", implode(",", $aColumns))."
 		FROM   $sTable

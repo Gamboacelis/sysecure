@@ -40,6 +40,7 @@ function frm_asignacionPermisos() {
                                                 <tbody>';
                                         while ($row = $val_s->fetch_object()) {
                                             $cadenaParametros=utf8_encode($row->ROL_COD.','."'$row->ROL_DESCRIPCION'");
+                                            if($row-> ROL_COD!=1){
                                             $retval .= '<tr class="tablaPabellonesDetalle" id="' . $row->ROL_COD . '" onclick="javascript:mostrarPermisosUsuario(\'' . $row->ROL_COD . '\')">
                                                             <td>' . $row-> ROL_COD. '</td>
                                                             <td>' . $row-> ROL_DESCRIPCION. '</td>
@@ -48,6 +49,18 @@ function frm_asignacionPermisos() {
                                                                     <i class="fa fa-pencil"></i>
                                                                 </a>
                                                         </tr>';
+                                            }else{
+                                                if($_SESSION["usu_rol_cod"]==1){
+                                                    $retval .= '<tr class="tablaPabellonesDetalle" id="' . $row->ROL_COD . '" onclick="javascript:mostrarPermisosUsuario(\'' . $row->ROL_COD . '\')">
+                                                            <td>' . $row-> ROL_COD. '</td>
+                                                            <td>' . $row-> ROL_DESCRIPCION. '</td>
+                                                            <td>' . $row->ROL_OBSERVACION  . '</td>
+                                                            <td><a class="btn btn-success btn-xs" title="Editar Rol" href="javascript:editarRol('.$row->ROL_COD.')">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                        </tr>';
+                                                }
+                                            }
     }
 //    <a class="btn btn-danger btn-xs '.$row->ROL_COD.'" title="Anular Rol" href="javascript:eliminarRol('.$cadenaParametros.')">
 //        <i class="fa fa-trash-o"></i>
