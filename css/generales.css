@@ -1,5 +1,6 @@
 input{text-transform:uppercase}
 .select2-search{z-index:999999}
+#listaReporteHorarios,#listaReporteSancionados,#listaReporteVisitas{display:none}
 #agregarVisitantesTable{display:none}
 #datosReporte_pie{display:none}
 #encuentraCedula{display:none}
@@ -13,8 +14,13 @@ div.dataTables_filter label{float:left}
 .header-search > input[type="text"]{margin-top:5px;min-width:282px}
 .header-search > button{top:5px}
 .search-results + .search-results{border-top:1px dashed #666}
+.smart-form .btnConsultaReport .btn{float:none}
 .popover{z-index:99999}
 .conPpl{cursor:pointer}
+.botonesSuperiores fieldset form{margin:0 0 0 13px}
+.table .txtHorariosHijo{font-size:.6em}
+.tablehijoReporte{margin-bottom:0}
+.tablehijoReporte tbody{font-size:.8em}
 #imgCambio{display:none;text-align:center;background:none repeat scroll 0 0 #666;bottom:0;height:200px;opacity:.7;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";filter:alpha(opacity=70);position:absolute;width:200px}
 #imgPpl{position:relative;width:200px}
 #imgPpl:hover{opacity:.7;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";filter:alpha(opacity=70)}

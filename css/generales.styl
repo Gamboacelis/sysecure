@@ -11,6 +11,8 @@ input
     text-transform:uppercase;
 .select2-search
     z-index: 999999;
+#listaReporteHorarios, #listaReporteSancionados, #listaReporteVisitas
+    display:none;
 #agregarVisitantesTable
     display: none
 #datosReporte_pie
@@ -47,12 +49,23 @@ div.dataTables_filter label
     top: 5px;
 .search-results + .search-results
     border-top: 1px dashed #666;
-
+.smart-form .btnConsultaReport .btn
+    float: none;
 .popover
     z-index: 99999;
 
 .conPpl
     cursor: pointer;
+
+.botonesSuperiores fieldset form
+    margin: 0 0 0 13px;
+.table .txtHorariosHijo
+    font-size: 0.6em;
+.tablehijoReporte
+    margin-bottom: 0;
+
+.tablehijoReporte tbody
+    font-size: 0.8em;
 
 @import "index.styl"
 @import "usuarios.styl"

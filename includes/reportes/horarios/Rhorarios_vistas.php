@@ -17,24 +17,27 @@ function reporteHorarios() {
                         <div class="widget-body">
                             <form class="smart-form">
                                 <fieldset>
-                                    <div class="row">
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-4">
+                                            <label>Etapa:</label>
                                             <label class="select">
-                                                    <select id="nivel" name="nivel" placeholder="Niveles">
+                                                    <select id="nivel" name="nivel">
                                                             <option disabled="" selected="" value="0">-- Selccione --</option>
                                                             '.niveles().'
                                                     </select>
                                             </label>
                                         </div>
-                                       
+                                        <div class="col-sm-4" id="RmuestraPabellones">
+                                            
+                                        </div>
+                                </fieldset>
+                                <footer class="btnConsultaReport" style="text-align: center;">
+                                    <div >
+                                        <a class="btn btn-success" href="javascript:reporteHorarios();">
+                                            <i class="fa fa-check"></i>
+                                            Consultar
+                                        </a>
                                     </div>
-                                </fieldset>
-                                <fieldset style="text-align: center;">
-                                    <a class="btn btn-success" href="javascript:reporteHorarios();">
-                                        <i class="fa fa-check"></i>
-                                        Consultar
-                                    </a>
-                                </fieldset>
+                                </footer>
                             </form>
                         </div>
                         <div id="muestraReporteHorarios">

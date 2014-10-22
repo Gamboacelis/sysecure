@@ -34,7 +34,65 @@ function reporteSancion() {
                                 <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
                                 <h2>Reporte General</h2>
                         </header>
-                        <div id="listaReporteSancionados">
+                        <div id="listaReporteSancionadosVisual">
+                                <table id="listaSanciones" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th><i class="fa fa-fw fa-male txt-color-blue hidden-md hidden-sm hidden-xs"></i> Nombre</th>
+                                        <th><i class="fa fa-fw fa-user txt-color-blue hidden-md hidden-sm hidden-xs"></i> Cédula</th>
+                                        <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Sanción</th>
+                                        <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Observaci&oacute;n</th>
+                                        <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Fecha Inicio</th>
+                                        <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Fecha fin</th>
+                                    </tr>
+                                </thead>
+                                <tbody>';
+                    $sql = "SELECT sa.*
+                            FROM `sys_vw_sanciones` sa 
+                            WHERE VSA_FECHA_INI BETWEEN '$fdesde' AND '$fhasta';";
+                    $val = $dbmysql->query($sql);
+                    while ($row = $val->fetch_object()){
+
+                        $sql1 = "SELECT vp.`PPL_COD`, pa.`CEN_COD`  FROM `sys_visitante_ppl` vp, `sys_ppl` p, `sys_pabellones` pa  WHERE vp.`PPL_COD` = p.`PPL_COD` AND pa.`PAB_COD` = p.`PAB_COD` AND vp.`VIS_COD` = ".$row->VIS_COD;
+                        $val1 = $dbmysql->query($sql1);
+                        $numeroPplCentroActual = 0;
+                        while ($row1 = $val1->fetch_object()){
+
+                            if($row1->CEN_COD == $_SESSION['usu_centro_cod'])    
+                            {
+                                $numeroPplCentroActual++;
+
+                            }
+                        }        
+
+                        if($numeroPplCentroActual > 0)
+                        {                
+                         $retval .='<tr>'
+                                 . '    <td>'.$row->VIS_COD.'</td>'
+                                 . '    <td>'.$row->VIS_NOMBRE.' '.$row->VIS_APELLIDO.'</td>'
+                                 . '    <td>'.$row->VIS_CEDULA.'</td>'
+                                 . '    <td>'.$row->SAN_DESCRIPCION.'</td>'
+                                 . '    <td>'.$row->VSA_NOTA.'</td>'
+                                 . '    <td>'.$row->VSA_FECHA_INI.'</td>'
+                                 . '    <td>'.$row->VSA_FECHA_FIN.'</td>'
+                                 . '</tr>';
+                        }         
+
+                    }
+                     $retval .='<tbody>
+                            </table>
+                            <i id="datosReporte_pie">Exportado: '.date('Y-m-d H:i').', por: '.$_SESSION['usu_usuario'].'</i>
+                        </div>
+                </div>
+            </article>';
+                     $retval .=reporteSancionExcel($fdesde,$fhasta);
+                     echo $retval;
+}
+
+function reporteSancionExcel($fdesde,$fhasta) {
+    global $dbmysql;
+    $retval='<div id="listaReporteSancionados">
                                 <h2>Reporte de Sancionados entre el: '.$fdesde.' hasta el '.$fhasta.' </h2>
                                 <table id="listaSanciones" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
@@ -84,8 +142,6 @@ function reporteSancion() {
                      $retval .='<tbody>
                             </table>
                             <i id="datosReporte_pie">Exportado: '.date('Y-m-d H:i').', por: '.$_SESSION['usu_usuario'].'</i>
-                        </div>
-                </div>
-            </article>';
-                     echo $retval;
+                        </div>';
+                     return $retval;
 }
