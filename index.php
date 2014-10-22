@@ -145,7 +145,7 @@ date_default_timezone_set('America/Bogota');
                                                                         </header>
                                                                         <div>
                                                                             <div class="widget-body">
-                                                                               
+                                                                                <div class="smart-form">
                                                                                     <fieldset>
                                                                                             <section>
                                                                                                 <label>Nombre del PPL</label>
@@ -165,7 +165,7 @@ date_default_timezone_set('America/Bogota');
                                                                                     <fieldset>
                                                                                                 
                                                                                     </fieldset>
-                                                                               
+                                                                               </div>
                                                                             </div>
                                                                             <div id="muestraReporte">
 
