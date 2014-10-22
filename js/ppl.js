@@ -206,7 +206,9 @@ function guardarPpl() {
                             timeout: 4000
                         });
                         limpiarFormularioPpl();
-                        location.reload();
+//                        location.reload()
+//                        dtTable.fnReloadAjax();
+                          $('#frmPPLModal').modal('hide');
                         break;
                     case '2':
                         $.smallBox({
