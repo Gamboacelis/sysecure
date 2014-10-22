@@ -11,46 +11,32 @@ date_default_timezone_set('America/Bogota');
         <meta name="description" content="Automatizacion y Control de Visitas a PPL">
         <meta name="author" content="iBlack Sistemas y Comunicaciones S.A.">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <!-- Basic Styles -->
         <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" media="screen" href="css/font-awesome.min.css">
-        <!-- SmartAdmin Styles : Please note (smartadmin-production.css) was created using LESS variables -->
         <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-production.min.css">
         <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-skins.min.css">
         <link rel="stylesheet" type="text/css" media="screen" href="css/generales.css"> 
-        <!-- SmartAdmin RTL Support is under construction
-                 This RTL CSS will be released in version 1.5
-        <link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-rtl.min.css"> -->
-        <!-- We recommend you use "your_style.css" to override SmartAdmin
-             specific styles this will also ensure you retrain your customization with each SmartAdmin update.
-        <link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
-        <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
         <link rel="stylesheet" type="text/css" media="screen" href="css/demo.min.css">
-        <!-- FAVICONS -->
         <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
         <link rel="icon" href="img/favicon/favicon.ico" type="image/x-icon">
-        <!-- GOOGLE FONT -->
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
-        <!-- Specifying a Webpage Icon for Web Clip 
-                 Ref: https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html -->
         <link rel="apple-touch-icon" href="img/splash/sptouch-icon-iphone.png">
         <link rel="apple-touch-icon" sizes="76x76" href="img/splash/touch-icon-ipad.png">
         <link rel="apple-touch-icon" sizes="120x120" href="img/splash/touch-icon-iphone-retina.png">
         <link rel="apple-touch-icon" sizes="152x152" href="img/splash/touch-icon-ipad-retina.png">
-        <!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <!-- Startup image for web apps -->
         <link rel="apple-touch-startup-image" href="img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
         <link rel="apple-touch-startup-image" href="img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
         <link rel="apple-touch-startup-image" href="img/splash/iphone.png" media="screen and (max-device-width: 320px)">
     </head>
     <body class="animated fadeInDown">
 		<header id="header">
-
-			<div id="logo-group">
-                            <span id="logo"> <img src="img/logo/Logo.png" alt="Sysecure"> </span>
-			</div>
+                    <div id="logo-group">
+                        <span id="logo"> <img src="img/logo/Logo.png" alt="Sysecure"> </span>
+                    </div>
+                    <span id="extr-page-header-space">
+                        <a href="javascript:abrirLogin()" class="btn btn-danger">Acceder al Sistema</a> 
+                    </span>
 		</header>
 
 		<div id="main" role="main">
@@ -59,7 +45,7 @@ date_default_timezone_set('America/Bogota');
 			<div id="content" class="container">
 
 				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
+					<div id="divPropaganda" class="col-xs-12 col-sm-12 col-md-7 col-lg-12 hidden-xs hidden-sm">
 						<h1 class="txt-color-red login-header-big">SYSECURE</h1>
 						<div class="hero">
 
@@ -83,7 +69,7 @@ date_default_timezone_set('America/Bogota');
 						</div>
 
 					</div>
-					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+					<div id="ventanaLogin" class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
 						<div class="well no-padding">
                                                     <form action="javascript:login();" id="login-form" class="smart-form client-form" method="POST">
 								<header>
@@ -328,7 +314,17 @@ date_default_timezone_set('America/Bogota');
                                 $("#nomPpl").val('');
                             }
                         }
-                        
+                        function abrirLogin(){
+                        if($("#divPropaganda .col-lg-12").length == 0){ 
+                            $('#divPropaganda').removeClass('col-lg-12');
+                            $('#divPropaganda').addClass('col-lg-8');
+                        }else{
+                            $('#divPropaganda').removeClass('col-lg-8');
+                            $('#divPropaganda').addClass('col-lg-12');
+                        }
+                            
+                            $('#ventanaLogin').toggle(500)
+                        }
 		</script>
 
 	</body>
