@@ -40,7 +40,7 @@ function enviarDatosPabellon() {
 function actualizarDatosPabellon() {
     global $dbmysql;
     $codigo = $_POST['IDpabellon'];
-    $ala = $_POST["ala"];
+    $ala = strtoupper($_POST["ala"]);
     $descripcion = strtoupper($_POST["descripcion"]);
     $capacidad = $_POST["capacidad"];
     $detalles = strtoupper($_POST["detalles"]);
@@ -63,7 +63,7 @@ function actualizarDatosPabellon() {
 
 function guardaDatosPabellon() {
     global $dbmysql;
-    $ala = $_POST["ala"];
+    $ala = strtoupper($_POST["ala"]);
     $descripcion = strtoupper($_POST["descripcion"]);
     $capacidad = $_POST["capacidad"];
     $detalles = strtoupper($_POST["detalles"]);

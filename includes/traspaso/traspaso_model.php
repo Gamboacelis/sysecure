@@ -87,7 +87,7 @@ function guardarTraspaso() {
     $codigoPpl = $_POST['codigo'];
     $codigoPabellon = $_POST['codigoPabellon'];
     $codigoAnterior = $_POST['anterior'];
-    $motivo = $_POST['motivo'];
+    $motivo = strtoupper($_POST['motivo']);
     $sql = "UPDATE `sys_ppl` SET PAB_COD= $codigoPabellon WHERE PPL_COD=$codigoPpl;";
     $val = $dbmysql->query($sql);
 

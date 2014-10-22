@@ -48,7 +48,7 @@ function guardaDatosCentro() {
     $valInicial='';
     $descripcion = strtoupper($_POST["descripcion"]);
     $telefono = $_POST["telefono"];
-    $direccion = $_POST["direccion"];
+    $direccion = strtoupper($_POST["direccion"]);
     $ciudad = $_POST["ciudad"];
     $tipo = $_POST["tipo"];
     $sql = "INSERT INTO `sys_centro`(CIU_COD,CEN_DESCRIPCION,CEN_DIRECCION,CEN_TELEFONO,CEN_TIPO)VALUES
@@ -68,7 +68,7 @@ function actualizarDatosCentro() {
     $codigo = $_POST['IDcentro'];
     $descripcion = strtoupper($_POST["descripcion"]);
     $telefono = $_POST["telefono"];
-    $direccion = $_POST["direccion"];
+    $direccion = strtoupper($_POST["direccion"]);
     $ciudad = $_POST["ciudad"];
     $tipo = $_POST["tipo"];
 

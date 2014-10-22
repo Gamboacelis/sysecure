@@ -55,10 +55,10 @@ function actualizaValorParametro() {
 
 function guardaDatosPabellon() {
     global $dbmysql;
-    $ala = $_POST["ala"];
-    $descripcion = $_POST["descripcion"];
+    $ala = strtoupper($_POST["ala"]);
+    $descripcion = strtoupper($_POST["descripcion"]);
     $capacidad = $_POST["capacidad"];
-    $detalles = $_POST["detalles"];
+    $detalles = strtoupper($_POST["detalles"]);
     $nivel = $_POST["nivel"];
     $centro = $_SESSION["usu_centro_cod"];
     $sql = "INSERT INTO `sys_pabellones`(CEN_COD,NVL_COD,PAB_ALA,PAB_DESCRIPCION,PAB_CAPACIDAD,PAB_DETALLES)VALUES
