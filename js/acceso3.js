@@ -11,6 +11,13 @@ $(document).ready(function() {
             "sZeroRecords": "No hay registros que mostrar"
         }
     });
+
+    $( 'input[type="search"]' ).keyup(function(e) {
+        if(e.keyCode==13){
+           $("#buscar").trigger("click");
+        } 
+           
+    });      
 });
 
 function permitirAcceso3(nombre, vipcontrol,pplcod,codControl,horario){

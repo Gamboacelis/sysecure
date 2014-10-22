@@ -15,6 +15,13 @@ $(document).ready(function() {
         colocarDatosFinalizar(cod);
     });
 
+    $( 'input[type="search"]' ).keyup(function(e) {
+        if(e.keyCode==13){
+           $("#buscar").trigger("click");
+        } 
+           
+    });      
+
 //    $('#listaAcceso4').children('tbody').children('tr').addClass('terminarVisita');
 
     var interval = setInterval(function() {
