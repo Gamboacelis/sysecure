@@ -49,7 +49,7 @@ function enviarDatosRoles() {
 function guardaDatosRol() {
     global $dbmysql;
     $descripcion = strtoupper($_POST["descripcion"]);
-    $observacion = $_POST["observacion"];
+    $observacion = strtoupper($_POST["observacion"]);
     
     $sql = "INSERT INTO `sys_roles`(ROL_DESCRIPCION,ROL_ESTADO,ROL_OBSERVACION)VALUES
             ('$descripcion','A','$observacion');";
@@ -75,7 +75,7 @@ function actualizarDatosRol() {
     global $dbmysql;
     $codigo = $_POST['IDrol'];
     $descripcion = strtoupper($_POST["descripcion"]);
-    $observacion = $_POST["observacion"];
+    $observacion = strtoupper($_POST["observacion"]);
 
     $sql = "UPDATE `sys_roles` SET 
                 ROL_DESCRIPCION    = '$descripcion',

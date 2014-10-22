@@ -99,7 +99,7 @@ function guardarDatosSanciones() {
 
     global $dbmysql;
 
-    $sancion = $_POST["sancionItem"];
+    $sancion = strtoupper($_POST["sancionItem"]);
     $IDvisitante = $_POST["IDvisitante"];
     $IDsancion = $_POST["IDsancion"]; 
 

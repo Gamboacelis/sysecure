@@ -64,7 +64,7 @@ function guardaDatosVisitante() {
 
     $cedula = $_POST["cedula"];
 
-    $direccion = $_POST["direccion"];
+    $direccion = strtoupper($_POST["direccion"]);
 
     $correo = strtolower($_POST["correo"]);
     
@@ -110,7 +110,7 @@ function actualizarDatosVisitante() {
     $apellido = strtoupper($_POST["apellido"]);
     $telefono = $_POST["telefono"];
     $cedula = $_POST["cedula"];
-    $direccion = $_POST["direccion"];
+    $direccion = strtoupper($_POST["direccion"]);
     $correo = strtolower($_POST["correo"]);   
     $parentesco = $_POST["parentesco"];    
     $codeImage = $_POST["codeImage"];

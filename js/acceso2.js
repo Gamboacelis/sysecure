@@ -10,6 +10,8 @@ $(document).ready(function() {
             "sZeroRecords": "No hay registros que mostrar"
         }
     });
+
+   
 });
 
 

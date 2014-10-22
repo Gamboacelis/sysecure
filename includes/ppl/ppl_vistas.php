@@ -7,7 +7,7 @@ $dbmysql = new database();
 
 function revisarPpl() {
     $retval = '';
-    $retval = '<article class="col-xs-12 col-sm-12 col-md-12 col-lg-10" id="viewPPL">
+    $retval = '<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="viewPPL">
                 <div class="botonesSuperiores">
                     <fieldset>
                         <button id="agregarEvento" class="btn btn-labeled btn-primary btn-personal"  data-toggle="modal" onclick="javascript:nuevoPpl();">
@@ -331,7 +331,8 @@ function frmAplicarTraspaso(){
 function comboPabellon() {
     global $dbmysql;
     $retval = '';
-    $sql = "SELECT * FROM `sys_pabellones`;";
+    $centro= $_SESSION["usu_centro_cod"];
+    $sql = "SELECT * FROM `sys_pabellones` WHERE CEN_COD=$centro;";
     $val = $dbmysql->query($sql);
     if ($val->num_rows > 0) {
         while ($row = $val->fetch_object()) {

@@ -1,5 +1,16 @@
 $(document).ready(function() {
-    $('#vistaCentros').dataTable();
+    var dtTable =$('#vistaCentros').dataTable({
+                        "bPaginate": true,
+                        "iDisplayLength": 5,
+                        "bDestroy": true,
+                        "oLanguage": {
+                            "sEmptyTable": "No hay datos disponibles en la tabla",
+                            "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
+                            "sInfoEmpty": "No hay entradas para mostrar",
+                            "sInfoFiltered": " - Filtrado de registros _MAX_",
+                            "sZeroRecords": "No hay registros que mostrar"
+                        }
+                    });
     var $registerForm = $("#smart-form-centro").validate({
         rules: {
             ciudad: {required: true},
@@ -41,7 +52,24 @@ function guardarCentro() {
                         timeout: 4000
                     });
                     limpiarFormularioCentro();
+//                    $('#cod_'+codVisitante).parent('td').parent('tr').remove();
                     location.reload();
+                    $('#vistaCentros').load($('#vistaCentros'));
+                    var dtTable =$('#vistaCentros').dataTable({
+                                "bPaginate": true,
+                                "iDisplayLength": 5,
+                                "bDestroy": true,
+                                "oLanguage": {
+                                    "sEmptyTable": "No hay datos disponibles en la tabla",
+                                    "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
+                                    "sInfoEmpty": "No hay entradas para mostrar",
+                                    "sInfoFiltered": " - Filtrado de registros _MAX_",
+                                    "sZeroRecords": "No hay registros que mostrar"
+                                }
+                            });
+//                        dtTable.load();
+                        $('#frmCentrosModal').modal('hide');
+                    
                 }
             }
         });
@@ -62,6 +90,22 @@ function guardarCentro() {
                     });
                     limpiarFormularioCentro();
                     location.reload();
+                     $('#vistaCentros').load($('#vistaCentros'));
+                    var dtTable =$('#vistaCentros').dataTable({
+                                "bPaginate": true,
+                                "iDisplayLength": 5,
+                                "bDestroy": true,
+                                "oLanguage": {
+                                    "sEmptyTable": "No hay datos disponibles en la tabla",
+                                    "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
+                                    "sInfoEmpty": "No hay entradas para mostrar",
+                                    "sInfoFiltered": " - Filtrado de registros _MAX_",
+                                    "sZeroRecords": "No hay registros que mostrar"
+                                }
+                            });
+                       
+                        $('#frmCentrosModal').modal('hide');
+                    
                 }
             }
         });

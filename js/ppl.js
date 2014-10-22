@@ -206,7 +206,23 @@ function guardarPpl() {
                             timeout: 4000
                         });
                         limpiarFormularioPpl();
-                        location.reload();
+//                        location.reload()
+                        var dtTable =$('#listaPpl').dataTable({
+                                "bPaginate": true,
+                                "iDisplayLength": 5,
+                                "bDestroy": true,
+                                "bServerSide": true,
+                                "sAjaxSource": "includes/ppl/ppl_dataTable.php",
+                                "oLanguage": {
+                                    "sEmptyTable": "No hay datos disponibles en la tabla",
+                                    "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
+                                    "sInfoEmpty": "No hay entradas para mostrar",
+                                    "sInfoFiltered": " - Filtrado de registros _MAX_",
+                                    "sZeroRecords": "No hay registros que mostrar"
+                                }
+                            });
+                        dtTable.fnReloadAjax();
+                          $('#frmPPLModal').modal('hide');
                         break;
                     case '2':
                         $.smallBox({
@@ -236,7 +252,22 @@ function guardarPpl() {
                         timeout: 4000
                     });
                     limpiarFormularioPpl();
-                    location.reload();
+                    var dtTable =$('#listaPpl').dataTable({
+                                "bPaginate": true,
+                                "iDisplayLength": 5,
+                                "bDestroy": true,
+                                "bServerSide": true,
+                                "sAjaxSource": "includes/ppl/ppl_dataTable.php",
+                                "oLanguage": {
+                                    "sEmptyTable": "No hay datos disponibles en la tabla",
+                                    "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
+                                    "sInfoEmpty": "No hay entradas para mostrar",
+                                    "sInfoFiltered": " - Filtrado de registros _MAX_",
+                                    "sZeroRecords": "No hay registros que mostrar"
+                                }
+                            });
+                        dtTable.fnReloadAjax();
+                        $('#frmPPLModal').modal('hide');
                 }
             }
         });
@@ -264,7 +295,8 @@ function editarPpl(codPpl) {
 function carga_DatosIncialesPPL(edt) {
     var img = (edt.datosPPL.PPL_IMG !== '') ? 'uploads/imagenes/ppl/' + edt.datosPPL.PPL_IMG : 'img/avatars/male.png';
     $("#IDppl").val(edt.datosPPL.PPL_COD);  /*Usuario*/
-    $('#pabellon').prop('selectedIndex', edt.datosPPL.PAB_COD); //PABELLON
+    $('#pabellon option[value="' + edt.datosPPL.PAB_COD + '"]').attr("selected", true);
+//    $('#pabellon').prop('selectedIndex', edt.datosPPL.PAB_COD); //PABELLON
     mostrarCelda();
     $('#celda').prop('selectedIndex', edt.datosPPL.CEL_COD); //CELDA
     $("#nombre").val(edt.datosPPL.PPL_NOMBRE);  //NOMBRE
@@ -465,6 +497,7 @@ function limpiarFormularioPpl() {
     $("#apellido").val('');  /*Descripcion*/
     $("#cedula").val('');  /*Capacidad*/
     $("#filePpl").val('');  /*Detalles*/
-    $('#pabellon').prop('selectedIndex', 0);/*Nivel*/
+//    $('#pabellon').prop('selectedIndex', 0);/*Nivel*/
+    $('#pabellon option[value="0"]').attr("selected", true);
     $('#celda').prop('selectedIndex', 0);/*Nivel*/
 }

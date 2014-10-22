@@ -24,6 +24,13 @@ $(document).ready(function() {
      $('div.dataTables_filter input').focusout(function(e) {
         dtTable.fnFilter($("div.dataTables_filter input").val());
     });
+
+    $( 'input[type="search"]' ).keyup(function(e) {
+        if(e.keyCode==13){
+           $("#buscar").trigger("click");
+        } 
+           
+    });     
 });
 
 function revisarVisitantesAsignados(codPpl,op){

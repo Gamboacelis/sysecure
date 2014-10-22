@@ -145,7 +145,7 @@ date_default_timezone_set('America/Bogota');
                                                                         </header>
                                                                         <div>
                                                                             <div class="widget-body">
-                                                                                <form class="smart-form">
+                                                                                <div class="smart-form">
                                                                                     <fieldset>
                                                                                             <section>
                                                                                                 <label>Nombre del PPL</label>
@@ -155,7 +155,7 @@ date_default_timezone_set('America/Bogota');
                                                                                                 </label>
                                                                                             </section>
                                                                                             <section style="text-align: center;">
-                                                                                                <a class="btn btn-success" href="javascript:consultarPPLBusqueda();">
+                                                                                                <a class="btn btn-success"  onclick="javascript:consultarPPLBusqueda();" href="#">
                                                                                                         <i class="fa fa-check"></i>
                                                                                                         Consultar
                                                                                                 </a>
@@ -165,7 +165,7 @@ date_default_timezone_set('America/Bogota');
                                                                                     <fieldset>
                                                                                                 
                                                                                     </fieldset>
-                                                                                </form>
+                                                                               </div>
                                                                             </div>
                                                                             <div id="muestraReporte">
 
@@ -256,6 +256,15 @@ date_default_timezone_set('America/Bogota');
                     $('#muestraReporte').html('');
                     $('#nomPpl').val('');
                 });
+
+
+                    $( '#nomPpl' ).keyup(function(e) {
+                        if(e.keyCode==13){
+                             $(".btn-success").trigger("click");
+                          
+                     } 
+           
+                     });     
 			});
                         function login(){
                             var usuario=$("#usuario").val();
