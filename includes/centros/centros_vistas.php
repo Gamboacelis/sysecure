@@ -10,7 +10,7 @@ function reporteCentros() {
     global $dbmysql;
     $sql = "SELECT ce.`CEN_COD`,ce.`CIU_COD`,c.`CIU_DESCRIPCION`,ce.`CEN_DESCRIPCION`,ce.`CEN_DIRECCION`,ce.`CEN_TELEFONO` FROM `sys_centro` ce, sys_ciudad c WHERE c.`CIU_COD`= ce.`CIU_COD`;";
     $val_s = $dbmysql->query($sql);
-    $retval = '<article class="col-sm-12 col-md-12 col-lg-6">
+    $retval = '<article class="col-sm-12 col-md-12 col-lg-10">
                     <div class="botonesSuperiores">
                     <fieldset>
                             <button id="agregarPabellon" class="btn btn-labeled btn-primary btn-personal"  data-toggle="modal" onclick="javascript:nuevoCentro()">

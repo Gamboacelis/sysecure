@@ -29,27 +29,28 @@ global $dbmysql;
 	/*
 	 * Ordenamiento
 	 */
-	if ( isset( $_GET['iSortCol_0'] ) )
-	{
-		$sOrder = "ORDER BY  ";
+//	if ( isset( $_GET['iSortCol_0'] ) )
+//	{
+//		$sOrder = "ORDER BY  ";
+                $sOrder = "ORDER BY PPL_COD DESC";
                 
-		for ( $i=0 ; $i<intval( $_GET['iSortingCols'] ) ; $i++ )
-		{
-			if ( $_GET[ 'bSortable_'.intval($_GET['iSortCol_'.$i]) ] == "true" )
-			{
-				$sOrder .= $aColumns[ intval( $_GET['iSortCol_'.$i] ) ]."
-				 	".mysql_real_escape_string( $_GET['sSortDir_'.$i] ) .", ";
-                                
-			}
-		}
-//		
-		$sOrder = substr_replace( $sOrder, "", -2 );
-		if ( $sOrder == "ORDER BY USU_COD" )
-		{
-			$sOrder = "ORDER BY USU_COD DESC";
-		}
-	}
-        
+//		for ( $i=0 ; $i<intval( $_GET['iSortingCols'] ) ; $i++ )
+//		{
+//			if ( $_GET[ 'bSortable_'.intval($_GET['iSortCol_'.$i]) ] == "true" )
+//			{
+//				$sOrder .= $aColumns[ intval( $_GET['iSortCol_'.$i] ) ]."
+//				 	".mysql_real_escape_string( $_GET['sSortDir_'.$i] ) .", ";
+//                                
+//			}
+//		}
+////		
+//		$sOrder = substr_replace( $sOrder, "", -2 );
+//		if ( $sOrder == "ORDER BY PPL_COD asc" )
+//		{
+//			$sOrder = "ORDER BY PPL_COD DESC";
+//		}
+//	}
+//        
 	/* 
 	 * Filtering
 	 */
@@ -64,22 +65,7 @@ global $dbmysql;
 		$sWhere = substr_replace( $sWhere, "", -3 );
 		$sWhere .= '  )';
 	}
-	/* Individual column filtering */
-//	for ( $i=0 ; $i<count($aColumns) ; $i++ )
-//	{
-//		if ( $_GET['bSearchable_'.$i] == "true" && $_GET['sSearch_'.$i] != '' )
-//		{
-//			if ( $sWhere == "" )
-//			{
-//				$sWhere = "WHERE ";
-//			}
-//			else
-//			{
-//				$sWhere .= " AND ";
-//			}
-//			$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string($_GET['sSearch_'.$i])."%' ";
-//		}
-//	}
+	
 	/*
 	 * SQL queries
 	 * Get data to display
@@ -103,14 +89,15 @@ global $dbmysql;
         /***********************************/
         
             $sQuery = "SELECT COUNT(".$sIndexColumn.")
-                        FROM   $sTable";
+                        FROM   $sTable 
+                        where PAB_COD in (SELECT PAB_COD FROM `sys_pabellones` WHERE CEN_COD ={$_SESSION['usu_centro_cod']});";
             $rResultTotal = mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
             $aResultTotal = mysql_fetch_array($rResultTotal);
             $iTotal = $aResultTotal[0];
             $output = array(
 		"sEcho" => intval($_GET['sEcho']),
 		"iTotalRecords" => $iTotal,
-		"iTotalDisplayRecords" => $iFilteredTotal,
+		"iTotalDisplayRecords" => $iTotal,
 		"aaData" => array());
 	/*
 	 * Output
