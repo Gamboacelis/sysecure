@@ -486,9 +486,14 @@ if ($_SESSION["autenticado"] == 'SI') {
             <!-- Full Calendar -->
             <script src="js/plantilla/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>
             <script src="js/plantilla/plugin/datatables/jquery.dataTables.min.js"></script>
+            <script src="js/plantilla/plugin/datatables/fnReloadAjax.js"></script>
             <script src="js/plantilla/plugin/datatables/dataTables.colVis.min.js"></script>
             <script src="js/plantilla/plugin/datatables/dataTables.tableTools.min.js"></script>
             <script src="js/plantilla/plugin/datatables/dataTables.bootstrap.min.js"></script>
+            <script src="js/plantilla/plugin/datatables/dataTables.autoFill.min.js"></script>
+            <script src="js/plantilla/plugin/datatables/dataTables.colReorder.min.js"></script>
+            <script src="js/plantilla/plugin/datatables/dataTables.responsive.min.js"></script>
+            <script src="js/plantilla/plugin/datatables/dataTables.scroller.min.js"></script>
             <script src="js/plantilla/plugin/knob/jquery.knob.min.js"></script>
             <script src="js/plantilla/plugin/morris/raphael.min.js"></script>
             <script src="js/plantilla/plugin/morris/morris.min.js"></script>

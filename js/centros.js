@@ -41,7 +41,9 @@ function guardarCentro() {
                         timeout: 4000
                     });
                     limpiarFormularioCentro();
-                    location.reload();
+//                    $('#cod_'+codVisitante).parent('td').parent('tr').remove();
+//                    location.reload();
+                    $('#vistaCentros').DataTable().fnReloadAjax();
                 }
             }
         });
@@ -61,7 +63,8 @@ function guardarCentro() {
                         timeout: 4000
                     });
                     limpiarFormularioCentro();
-                    location.reload();
+//                    location.reload();
+                    $('#vistaCentros').DataTable().fnReloadAjax();
                 }
             }
         });
