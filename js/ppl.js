@@ -302,6 +302,7 @@ function carga_DatosIncialesPPL(edt) {
     $("#nombre").val(edt.datosPPL.PPL_NOMBRE);  //NOMBRE
     $("#apellido").val(edt.datosPPL.PPL_APELLIDO); //APELLIDO
     $("#cedula").val(edt.datosPPL.PPL_CEDULA);  //CEDULA
+    $("#nacionalidad").val(edt.datosPPL.PPL_NACIONALIDAD);  //NACIONALIDAD
     $('#estado option[value="' + edt.datosPPL.PPL_ESTADO + '"]').attr("selected", true);
     $('img[alt="imagenPPL"]').attr('src', img);
     
