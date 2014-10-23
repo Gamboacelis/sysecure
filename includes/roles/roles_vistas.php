@@ -48,6 +48,9 @@ function frm_asignacionPermisos() {
                                                             <td><a class="btn btn-success btn-xs" title="Editar Rol" href="javascript:editarRol('.$row->ROL_COD.')">
                                                                     <i class="fa fa-pencil"></i>
                                                                 </a>
+                                                                <a class="btn btn-danger btn-xs '.$row-> ROL_COD.' eliminaRol" title="Eliminar Rol" href="javascript:eliminarRol('.$cadenaParametros.')">
+                                                                    <i class="fa fa-trash-o"></i>
+                                                                </a>
                                                         </tr>';
                                             }else{
                                                 if($_SESSION["usu_rol_cod"]==1){
@@ -58,9 +61,7 @@ function frm_asignacionPermisos() {
                                                             <td><a class="btn btn-success btn-xs" title="Editar Rol" href="javascript:editarRol('.$row->ROL_COD.')">
                                                                     <i class="fa fa-pencil"></i>
                                                                 </a>
-                                                                <a class="btn btn-danger btn-xs '.$row-> ROL_COD.' eliminaRol" title="Eliminar Rol" href="javascript:eliminarRol('.$cadenaParametros.')">
-                                                                    <i class="fa fa-trash-o"></i>
-                                                                </a>
+                                                                
                                                         </tr>';
                                                 }
                                             }
