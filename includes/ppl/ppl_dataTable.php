@@ -135,4 +135,28 @@ $centro=$_SESSION['usu_centro_cod'];
 			}
 
 	echo json_encode( $output );
+        
+        //create VIEW `bulkenco_sysecure`.`sys_vw_ppl` AS
+// SELECT 
+//        `p`.`PPL_COD` AS `PPL_COD`,
+//        `p`.`PAB_COD` AS `PAB_COD`,
+//        `p`.`CEL_COD` AS `CEL_COD`,
+//        `p`.`PPL_NOMBRE` AS `PPL_NOMBRE`,
+//        `p`.`PPL_APELLIDO` AS `PPL_APELLIDO`,
+//        `p`.`PPL_CEDULA` AS `PPL_CEDULA`,
+//        `p`.`PPL_NACIONALIDAD` AS `PPL_NACIONALIDAD`,
+//        `p`.`PPL_IMG` AS `PPL_IMG`,
+//        `p`.`PPL_ESTADO` AS `PPL_ESTADO`,
+//        `pa`.`CEN_COD` AS `CEN_COD`,
+//        `pa`.`NVL_COD` AS `NVL_COD`,
+//        `pa`.`PAB_DESCRIPCION` AS `PAB_DESCRIPCION`
+//        
+//    FROM
+//        (`bulkenco_sysecure`.`sys_ppl` `p`
+//        JOIN `bulkenco_sysecure`.`sys_pabellones` `pa`)
+//        
+//    WHERE
+//        ((`p`.`PAB_COD` = `pa`.`PAB_COD`))
+        
 ?>
+
