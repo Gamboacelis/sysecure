@@ -264,20 +264,30 @@ function eliminarVisitantePpl() {
     $codPpl= $_POST['codPpl'];
     $sql1 = "SELECT * FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante;";
     $val1 = $dbmysql->query($sql1);
-    if($val1->num_rows>1){
-        $sql2 = "DELETE FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante AND PPL_COD=$codPpl;";
-        $val2 = $dbmysql->query($sql2);
-    }elseif($val1->num_rows==1){
-        $sql3 ="UPDATE `sys_visitante` SET VIS_ESTADO   = 'E' WHERE VIS_COD=$codVisitante;";
-        $dbmysql->query($sql3);
-        $sql2 = "DELETE FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante AND PPL_COD=$codPpl;";
-        $val2 = $dbmysql->query($sql2);
-    }
-   if ($val2) {
-        echo 1;
-    } else {
-        echo 0;
-    }
+    $sql2 = "SELECT * FROM `sys_visitante` WHERE VIS_COD=$codVisitante;";
+    $val2 = $dbmysql->query($sql2);
+    $row2 = $val2->fetch_object();
+    
+    if(trim($row2->VIS_ESTADO) != 'S' )
+    {    
+        if($val1->num_rows>1){
+            $sql2 = "DELETE FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante AND PPL_COD=$codPpl;";
+            $val2 = $dbmysql->query($sql2);
+        }elseif($val1->num_rows==1){
+            $sql3 ="UPDATE `sys_visitante` SET VIS_ESTADO   = 'E' WHERE VIS_COD=$codVisitante;";
+            $dbmysql->query($sql3);
+            $sql2 = "DELETE FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante AND PPL_COD=$codPpl;";
+            $val2 = $dbmysql->query($sql2);
+        }
+       if ($val2) {
+            echo 1;
+        } else {
+            echo 0;
+        }
+    }    
+    else{
+        echo 2; 
+    }    
 }
 
 function validarCantidadVisitante() {
