@@ -20,6 +20,8 @@ function consultaDatosPPL(ppl){
                 success: function(respuesta) {
                     if(respuesta!==''){
                         $('#datosPpl').html(respuesta);
+                        $('#muestraReporte').children('div:first').children('div:first').hide();
+                        $('#datosPpl').attr('style','width:100%')
                     }else{
                         $("#datosPpl").val('<p><strong>No existen Datos para este PPL</strong></p>');
                     }

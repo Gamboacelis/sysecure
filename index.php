@@ -69,7 +69,7 @@ date_default_timezone_set('America/Bogota');
 						</div>
 
 					</div>
-					<div id="ventanaLogin" class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+					<div id="ventanaLogin" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true" style="display: block;width: 600px;margin: auto;top: 50px;overflow-y: hidden;">
 						<div class="well no-padding">
                                                     <form action="javascript:login();" id="login-form" class="smart-form client-form" method="POST">
 								<header>
@@ -315,15 +315,8 @@ date_default_timezone_set('America/Bogota');
                             }
                         }
                         function abrirLogin(){
-                        if($("#divPropaganda .col-lg-12").length == 0){ 
-                            $('#divPropaganda').removeClass('col-lg-12');
-                            $('#divPropaganda').addClass('col-lg-8');
-                        }else{
-                            $('#divPropaganda').removeClass('col-lg-8');
-                            $('#divPropaganda').addClass('col-lg-12');
-                        }
-                            
-                            $('#ventanaLogin').toggle(500)
+ 
+                            $('#ventanaLogin').modal('show');
                         }
 		</script>
 
