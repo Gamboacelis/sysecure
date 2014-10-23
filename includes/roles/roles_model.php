@@ -63,12 +63,19 @@ function guardaDatosRol() {
 function eliminarRol() {
     global $dbmysql;
     $codigo = $_POST['codigo'];
-    $sql = "UPDATE `sys_roles` SET ROL_ESTADO='E' WHERE ROL_COD=$codigo;";
-    $val = $dbmysql->query($sql);
-    if ($val) {
-        echo 1;
-    } else {
-        echo 0;
+    $sql_revisa="SELECT * FROM sys_usuarios WHERE ROL_COD=$codigo;";
+    $val_revisa = $dbmysql->query($sql_revisa);
+    if($val_revisa->num_rows==0){
+        $sql = "UPDATE `sys_roles` SET ROL_ESTADO='E' WHERE ROL_COD=$codigo;";
+        $val = $dbmysql->query($sql);
+
+        if ($val) {
+            echo 1;
+        } else {
+            echo 0;
+        }
+    }else{
+        echo 2;
     }
 }
 function actualizarDatosRol() {
