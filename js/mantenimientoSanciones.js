@@ -7,7 +7,6 @@ $('#listaTipoSanciones').dataTable({
             "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
             "sInfoEmpty": "No hay entradas para mostrar",
             "sInfoFiltered": " - Filtrado de registros _MAX_",
-//            "sSearch": "Buscar: ",
             "sZeroRecords": "No hay registros que mostrar"
         }
     });    
@@ -66,7 +65,23 @@ function guardarTipoSancion() {
                         timeout: 4000
                     });
                     limpiarFormulario();
-                    location.reload();
+                    var dtTable=$('#listaTipoSanciones').dataTable({
+                        "bPaginate": true,
+                        "iDisplayLength": 5,
+                        "bDestroy": true,
+                        "bServerSide": true,
+                        "sAjaxSource": "includes/sanciones/mantenimiento/sancion_dataTable.php",
+                        "oLanguage": {
+                            "sEmptyTable": "No hay datos disponibles en la tabla",
+                            "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
+                            "sInfoEmpty": "No hay entradas para mostrar",
+                            "sInfoFiltered": " - Filtrado de registros _MAX_",
+                            "sZeroRecords": "No hay registros que mostrar"
+                        }
+                    }); 
+                    dtTable.fnReloadAjax();
+                    $('#frmTipoSancion').modal('hide');
+//                    location.reload();
                 }
             },
             error: function (res)
@@ -90,7 +105,22 @@ function guardarTipoSancion() {
                         timeout: 4000
                     });
                     limpiarFormulario();
-                    location.reload();
+                    var dtTable=$('#listaTipoSanciones').dataTable({
+                        "bPaginate": true,
+                        "iDisplayLength": 5,
+                        "bDestroy": true,
+                        "bServerSide": true,
+                        "sAjaxSource": "includes/sanciones/mantenimiento/sancion_dataTable.php",
+                        "oLanguage": {
+                            "sEmptyTable": "No hay datos disponibles en la tabla",
+                            "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
+                            "sInfoEmpty": "No hay entradas para mostrar",
+                            "sInfoFiltered": " - Filtrado de registros _MAX_",
+                            "sZeroRecords": "No hay registros que mostrar"
+                        }
+                    }); 
+                    dtTable.fnReloadAjax();
+                    $('#frmTipoSancion').modal('hide');
                 }
             }
         });

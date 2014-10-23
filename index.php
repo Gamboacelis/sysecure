@@ -173,11 +173,9 @@ date_default_timezone_set('America/Bogota');
 		<script src="js/plantilla/plugin/pace/pace.min.js"></script>
 
 	    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-	    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script> if (!window.jQuery) { document.write('<script src="js/plantilla/libs/jquery-2.1.1.min.js"><\/script>');} </script>
+	    <script src="js/plantilla/libs/jquery-2.1.1.min.js"></script>
 
-	    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
-		<script> if (!window.jQuery.ui) { document.write('<script src="js/plantilla/libs/jquery-ui-1.11.0.min.js"><\/script>');} </script>
+	    <script src="js/plantilla/libs/jquery-ui-1.11.0.min.js"></script>
 
 		<!-- JS TOUCH : include this plugin for mobile drag / drop touch events 		
 		<script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script> -->
@@ -192,13 +190,7 @@ date_default_timezone_set('America/Bogota');
 		<script src="js/plantilla/plugin/masked-input/jquery.maskedinput.min.js"></script>
 		<!-- CUSTOM NOTIFICATION -->
                 <script src="js/plantilla/notification/SmartNotification.min.js"></script>
-		<!--[if IE 8]>
-			
-			<h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
-			
-		<![endif]-->
-
-		<!-- MAIN APP JS FILE -->
+		
 		<script src="js/plantilla/app.min.js"></script>
                 <script src="js/general.js"></script>
 
@@ -279,7 +271,9 @@ date_default_timezone_set('America/Bogota');
                             });
                         }
                         function consultarHoarios(){
+                            $('#nomPpl').focus();
                             $('#frmConsultaModal').modal('show');
+                            
                         }
                         function consultarPPLBusqueda(){
                             var nombreppl=$('#nomPpl').val();

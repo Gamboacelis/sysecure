@@ -41,7 +41,7 @@ if (isset($_GET['iSortCol_0'])) {
 //		
     $sOrder = substr_replace($sOrder, "", -2);
     if ($sOrder == "ORDER BY USU_COD") {
-        $sOrder = "ORDER BY USU_COD DESC";
+        $sOrder = "ORDER BY USU_COD ASC";
     }
 }
 

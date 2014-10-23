@@ -27,8 +27,9 @@ function revisarPpl() {
                             <table id="listaPpl" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th width="20">Prontuario</th>
                                         <th><i class="fa fa-fw fa-male txt-color-blue hidden-md hidden-sm hidden-xs"></i> Nombre</th>
+                                        <th><i class="fa fa-fw fa-male txt-color-blue hidden-md hidden-sm hidden-xs"></i> Nacionalidad</th>
                                         <th><i class="fa fa-fw fa-user txt-color-blue hidden-md hidden-sm hidden-xs"></i> Imagen</th>
                                         <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Pabellon Actual</th>
                                         <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Acción</th>
@@ -132,7 +133,14 @@ function frmPpl(){
                                                                                 <label class="input"> <i class="icon-append fa fa-lock"></i>
                                                                                         <input type="text" id="cedula"  name="cedula" placeholder="Cédula del PPL">
                                                                         </section>
-                                                                         <section class="col col-6" id=estadoLavel>
+                                                                        <section class="col col-6">
+                                                                                <label class="label">Nacionalidad</label>
+                                                                                <label class="input"> <i class="icon-append fa fa-lock"></i>
+                                                                                        <input type="text" id="nacionalidad"  name="nacionalidad" placeholder="Nacionalidad">
+                                                                        </section> 
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-6" id=estadoLavel>
                                                                                 <label class="label">Estado</label>
                                                                                 <label class="select">
                                                                                         <select id="estado" name="estado">

@@ -47,7 +47,7 @@ switch ($funcion) {
 function enviarDatosPpl() {
     global $dbmysql;
     $codPpl = $_POST['codPpl'];
-    $sql = "SELECT p.*,pa.* FROM `sys_ppl` p, sys_pabellones pa WHERE pa.`PAB_COD`=p.`PAB_COD`  AND p.`PPL_COD` =$codPpl";
+    $sql = "SELECT * FROM `sys_vw_ppl` WHERE `PPL_COD` =$codPpl";
     $val = $dbmysql->query($sql);
     $row = $val->fetch_object();
     $lista['datosPPL'] = array(
@@ -58,7 +58,8 @@ function enviarDatosPpl() {
         "PPL_APELLIDO" => $row->PPL_APELLIDO,
         "PPL_CEDULA" => $row->PPL_CEDULA,
         "PPL_IMG" => $row->PPL_IMG,
-        "PPL_ESTADO" => $row->PPL_ESTADO
+        "PPL_ESTADO" => $row->PPL_ESTADO,
+        "PPL_NACIONALIDAD" => $row->PPL_NACIONALIDAD
     );
 
     echo $encode = json_encode($lista);
@@ -83,13 +84,15 @@ function actualizarDatosPpl() {
     $apellido = strtoupper($_POST["apellido"]);
     $cedula = $_POST["cedula"];
     $imagPpl= $_POST["imagPpl"];
+    $nacionalidad= strtoupper($_POST["nacionalidad"]);
     $imagen = explode('/', $imagPpl);
     $img = ($img!='img')?$imagen[3]:'';
     $sql = "UPDATE `sys_ppl` SET 
                 PPL_NOMBRE    = '$nombre',
                 PPL_APELLIDO  = '$apellido',
                 PPL_CEDULA    = '$cedula',
-                PPL_IMG       = '$img'
+                PPL_IMG       = '$img',
+                PPL_NACIONALIDAD = '$nacionalidad'
             WHERE PPL_COD=$codigo;";
     $val = $dbmysql->query($sql);
     if ($val) {echo 1;} else {echo 0;}
@@ -164,11 +167,12 @@ function guardaDatosPpl() {
     $apellido = strtoupper($_POST["apellido"]);
     $cedula = $_POST["cedula"];
     $imagen = explode('/', $_POST["imagPpl"]);
+    $nacionalidad= strtoupper($_POST["nacionalidad"]);
     $img = $imagen[3];
     $existente = verificarPplExistente($nombre, $apellido, $cedula);
     if ($existente == 0) {
-        $sql = "INSERT INTO `sys_ppl`(PAB_COD,CEL_COD,PPL_NOMBRE,PPL_APELLIDO,PPL_CEDULA,PPL_IMG,PPL_ESTADO)VALUES
-                ('$pabellon','$celda','$nombre','$apellido','$cedula','$img','A');";
+        $sql = "INSERT INTO `sys_ppl`(PAB_COD,CEL_COD,PPL_NOMBRE,PPL_APELLIDO,PPL_CEDULA,PPL_NACIONALIDAD,PPL_IMG,PPL_ESTADO)VALUES
+                ('$pabellon','$celda','$nombre','$apellido','$cedula','$nacionalidad','$img','A');";
         $val = $dbmysql->query($sql);
         if ($val) {
             echo 1; // RESULTADO EXITOSO
