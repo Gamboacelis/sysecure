@@ -21,7 +21,8 @@ function GuardarCambioParametro(cod) {
         success: function(res) {
             if(res==='1'){
                 var json_obj = $.parseJSON(res);
-                $('#vis' + cod).children('td').children('#VisValor').text(valor);
+
+                $('#vis' + cod).children('td').children('#txtVisValor').text(valor)
                 $('#vis' + cod).children('td').children('.txtVisDatos').show();
                 $('#vis' + cod).children('td').children('.visDatosGeneral').hide();
                 $('#vis' + cod).children('td').children('.visBtnGuardar').hide();
