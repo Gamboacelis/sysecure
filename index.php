@@ -9,7 +9,7 @@ date_default_timezone_set('America/Bogota');
         <meta charset="utf-8">
         <title> Sysecure </title>
         <meta name="description" content="Automatizacion y Control de Visitas a PPL">
-        <meta name="author" content="iBlack Sistemas y Comunicaciones S.A.">
+        <meta name="author" content="Wie Solutions">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" media="screen" href="css/font-awesome.min.css">
@@ -69,9 +69,16 @@ date_default_timezone_set('America/Bogota');
 						</div>
 
 					</div>
-					<div id="ventanaLogin" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true" style="display: block;width: 600px;margin: auto;top: 50px;overflow-y: hidden;">
-						<div class="well no-padding col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                                    <form action="javascript:login();" id="login-form" class="smart-form client-form" method="POST">
+                                        <div class="modal fade" id="ventanaLogin" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                                &times;
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="javascript:login();" id="login-form" class="smart-form client-form" method="POST">
 								<header>
 									Ingreso
 								</header>
@@ -112,8 +119,9 @@ date_default_timezone_set('America/Bogota');
 									</button>
 								</footer>
 							</form>
-
+                                                    </div>        
 						</div>
+                                            </div>    
 					</div>
                                         <div class="modal fade" id="frmConsultaModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" style="width: 800px;">

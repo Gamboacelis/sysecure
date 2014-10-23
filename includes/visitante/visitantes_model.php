@@ -184,7 +184,7 @@ function enviarDatosParentesco() {
     $sql = "SELECT * FROM `sys_parentesco`";
     $val = $dbmysql->query($sql);
     $retval = '';
-    $sqlPariente = "SELECT  PAR_COD FROM `sys_visitante_ppl` WHERE VIS_COD = $visitante AND PPL_COD=$codPpl";
+    echo $sqlPariente = "SELECT  PAR_COD FROM `sys_visitante_ppl` WHERE VIS_COD = $visitante AND PPL_COD=$codPpl";
     $valPariente = $dbmysql->query($sqlPariente);
     $rowPariente = $valPariente->fetch_object();
     if ($visitante == 0 ){$codigoPariente = "";

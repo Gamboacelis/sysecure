@@ -65,7 +65,6 @@ $(document).ready(function() {
             cedula: {required: true},
             nombre: {required: true},
             apellido: {required: true},
-            telefono: {required: true},
             parentesco: {required: true}
         },
         errorPlacement: function(error, element) {

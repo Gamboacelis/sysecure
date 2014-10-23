@@ -137,11 +137,8 @@ while ($aRow = mysql_fetch_array($rResult)) {
         '' . utf8_encode($nombreppl) . '',
         '<div style="text-align:center;"><span class="badge bg-color-blue">'.$aRow['PAB_DESCRIPCION'].'</span></div>',
         ''.$estado.'',
-        '<a class="btn btn-success btn-xs" title="Editar Visitante" href="javascript:editarVisitante(' . $aRow['VIS_COD'] . ', ' . $aRow['PPL_COD'] . ')">
-            <i class="fa fa-pencil"></i>
-        </a>
-        <a class="btn btn-danger btn-xs ' . $aRow['VIS_COD'] . ' eliminaParticipante" title="Eliminar Visitante" href="javascript:eliminarVisitante(' . $aRow['VIS_COD'] . ', ' . $aRow['PPL_COD'] . ')">
-            <i class="fa fa-trash-o"></i>
+        '<a class="btn btn-primary" title="Editar Visitante" href="javascript:editarVisitante(' . $aRow['VIS_COD'] . ', ' . $aRow['PPL_COD'] . ')">
+            <i class="fa fa-pencil"></i> Editar
         </a>');
 }
 echo json_encode($output);

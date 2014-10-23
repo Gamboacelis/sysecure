@@ -79,7 +79,7 @@ function frmVisitas(){
                     </div>
                 </div>';
     return $retval;
-    return $retval;
+    
 }
 function frmVisitante2() { 
     $retval = '';
