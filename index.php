@@ -70,7 +70,7 @@ date_default_timezone_set('America/Bogota');
 
 					</div>
 					<div id="ventanaLogin" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true" style="display: block;width: 600px;margin: auto;top: 50px;overflow-y: hidden;">
-						<div class="well no-padding">
+						<div class="well no-padding col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                                     <form action="javascript:login();" id="login-form" class="smart-form client-form" method="POST">
 								<header>
 									Ingreso
