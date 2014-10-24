@@ -36,6 +36,7 @@ $(document).ready(function() {
         }
     });
     var dtTable=$('#listaVisitantes').dataTable({
+        "bDestroy": true,
         "bServerSide": true,
         "sAjaxSource": "includes/visitante/visitantes_dataTable.php",
         "oLanguage": {
@@ -43,7 +44,6 @@ $(document).ready(function() {
             "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
             "sInfoEmpty": "No hay entradas para mostrar",
             "sInfoFiltered": " - Filtrado de registros _MAX_",
-//            "sSearch": "Buscar: ",
             "sZeroRecords": "No hay registros que mostrar"
         }
     });
@@ -68,7 +68,23 @@ $(document).ready(function() {
             parentesco: {required: true}
         },
         errorPlacement: function(error, element) {
+            console.log(element);
             error.insertAfter(element.parent());
+        }
+    });
+    $("#cedula").validarCedulaEC({
+        onValid: function () {
+            $(this).parent('label').removeClass('state-error'); 
+            $(this).parent('label').addClass('state-success'); 
+            $("em").remove();
+            $("button[type=submit]").removeAttr("disabled");
+        },
+        onInvalid: function () {
+            $(this).parent('label').removeClass('state-success');
+            $(this).parent('label').addClass('state-error');  
+            $("em").remove();
+            $(this).parent('label').parent('section').append('<em class="invalid" for="cedula">Cédula o Ruc no Valido</em>');
+            $("button[type=submit]").attr("disabled", "disabled");
         }
     });
 });
@@ -93,20 +109,30 @@ function editarVisitante(visitante,ppl) {
         data: {codigoVis: visitante,ppl:ppl,tipo:tipo},
         success: function(res) {
             var json_obj = $.parseJSON(res);
-            limpiarFrmVisitante();
-            carga_DatosIncialesVisitantes(json_obj,visitante,ppl);
-            $('#frmVisitanteModal').modal('show');
-            $('#smart-form-register >header').text('Actualización de Visitante');
-            $('#IDvisitante').val(visitante);
-            $("#my_result").html("<img src='uploads/imagenes/visitante/"+visitante+".jpg' >");
-            $('#my_result img').load(function(){}).error(function(){$("#my_result img").attr('src','img/avatars/male.png');});            
-            Webcam.set({
-                width: 220,
-                height: 190,
-                image_format: "jpeg",
-                jpeg_quality: 90
-            });
-            Webcam.attach( "#my_camera" );
+            if(json_obj.datosVisitante.VIS_ESTADO!=='S'){
+                limpiarFrmVisitante();
+                carga_DatosIncialesVisitantes(json_obj,visitante,ppl);
+                $('#frmVisitanteModal').modal('show');
+                $('#smart-form-register >header').text('Actualización de Visitante');
+                $('#IDvisitante').val(visitante);
+                $("#my_result").html("<img src='uploads/imagenes/visitante/"+visitante+".jpg' >");
+                $('#my_result img').load(function(){}).error(function(){$("#my_result img").attr('src','img/avatars/male.png');});            
+                Webcam.set({
+                    width: 220,
+                    height: 190,
+                    image_format: "jpeg",
+                    jpeg_quality: 90
+                });
+                Webcam.attach( "#my_camera" );
+            }else{
+                $.smallBox({
+                    title: "Error..!!",
+                    content: "<i class='fa fa-clock-o'></i> <i>Visitante "+json_obj.datosVisitante.VIS_NOMBRE+" "+json_obj.datosVisitante.VIS_APELLIDO+" Se encuentra Sancionado</i>",
+                    color: "#C46A69",
+                    iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                    timeout: 7000
+                });
+            }
         }
     });
 }
@@ -174,7 +200,20 @@ function guardarVisitante(tipo) {
                     });
                     limpiarFrmVisitante();
                     if(tipo===1){
-                        location.reload();
+                        var dtTable=$('#listaVisitantes').dataTable({
+                            "bDestroy": true,
+                            "bServerSide": true,
+                            "sAjaxSource": "includes/visitante/visitantes_dataTable.php",
+                            "oLanguage": {
+                                "sEmptyTable": "No hay datos disponibles en la tabla",
+                                "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
+                                "sInfoEmpty": "No hay entradas para mostrar",
+                                "sInfoFiltered": " - Filtrado de registros _MAX_",
+                                "sZeroRecords": "No hay registros que mostrar"
+                            }
+                        });
+                        dtTable.fnReloadAjax();
+                        $('#frmVisitanteModal').modal('hide');
                     }else{
                         var codPpl = $('#IDvisPpl').val();
                         revisarVisitantesAsignados(codPpl,2);
@@ -224,7 +263,19 @@ function eliminarVisitante(cod,ppl){
                             iconSmall: "fa fa-check fa-2x fadeInRight animated",
                             timeout: 4000
                         });
-                        location.reload();
+                        var dtTable=$('#listaVisitantes').dataTable({
+                            "bDestroy": true,
+                            "bServerSide": true,
+                            "sAjaxSource": "includes/visitante/visitantes_dataTable.php",
+                            "oLanguage": {
+                                "sEmptyTable": "No hay datos disponibles en la tabla",
+                                "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
+                                "sInfoEmpty": "No hay entradas para mostrar",
+                                "sInfoFiltered": " - Filtrado de registros _MAX_",
+                                "sZeroRecords": "No hay registros que mostrar"
+                            }
+                        });
+                        dtTable.fnReloadAjax();
                     }
                 }
             });

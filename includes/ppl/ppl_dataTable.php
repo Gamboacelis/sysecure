@@ -136,7 +136,7 @@ $centro=$_SESSION['usu_centro_cod'];
 
 	echo json_encode( $output );
         
-        //create VIEW `bulkenco_sysecure`.`sys_vw_ppl` AS
+//        create VIEW `bulkenco_sysecure`.`sys_vw_ppl` AS
 // SELECT 
 //        `p`.`PPL_COD` AS `PPL_COD`,
 //        `p`.`PAB_COD` AS `PAB_COD`,

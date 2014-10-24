@@ -9,7 +9,6 @@ $(document).ready(function() {
             "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
             "sInfoEmpty": "No hay entradas para mostrar",
             "sInfoFiltered": " - Filtrado de registros _MAX_",
-//            "sSearch": "Buscar: ",
             "sZeroRecords": "No hay registros que mostrar"
         }
     });
@@ -36,12 +35,8 @@ $(document).ready(function() {
     var $registerForm = $("#smart-form-ppl").validate({
         rules: {
             pabellon: {required: true},
-            nombre: {required: true,lettersonly: true},
-            apellido: {required: true,lettersonly: true}
-        },
-        message:{
-            nombre: {lettersonly: "Por favor ingrese solo Letras"},
-            apellido: {lettersonly: "Por favor ingrese solo Letras"}
+            nombre: {required: true},
+            apellido: {required: true}
         },
         errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
@@ -221,7 +216,7 @@ function guardarPpl() {
                                     "sZeroRecords": "No hay registros que mostrar"
                                 }
                             });
-                        dtTable.fnReloadAjax();
+                        dtTable.fnReloadAjax("includes/ppl/ppl_dataTable.php");
                           $('#frmPPLModal').modal('hide');
                         break;
                     case '2':
@@ -266,7 +261,7 @@ function guardarPpl() {
                                     "sZeroRecords": "No hay registros que mostrar"
                                 }
                             });
-                        dtTable.fnReloadAjax();
+                        dtTable.fnReloadAjax("includes/ppl/ppl_dataTable.php");
                         $('#frmPPLModal').modal('hide');
                 }
             }
@@ -503,6 +498,6 @@ function limpiarFormularioPpl() {
     $("#cedula").val('');  /*Capacidad*/
     $("#filePpl").val('');  /*Detalles*/
 //    $('#pabellon').prop('selectedIndex', 0);/*Nivel*/
-    $('#pabellon option[value="0"]').attr("selected", true);
+    $('#pabellon').prop('selectedIndex', 0);/*Nivel*/
     $('#celda').prop('selectedIndex', 0);/*Nivel*/
 }

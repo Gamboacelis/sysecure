@@ -47,7 +47,8 @@ function enviarDatosVisitante() {
         "VIS_HUELLA" => $row->VIS_HUELLA,
         "VIS_DIRECCION" => $row->VIS_DIRECCION,
         "VIS_TELEFONO" => $row->VIS_TELEFONO,
-        "VIS_CORREO" => $row->VIS_CORREO
+        "VIS_CORREO" => $row->VIS_CORREO,
+        "VIS_ESTADO" => $row->VIS_ESTADO
     );
     echo $encode = json_encode($lista);
 }
@@ -118,7 +119,7 @@ function actualizarDatosVisitante() {
     if(obtenerVisitanteValido($codigo)==1){
             $estado=',VIS_ESTADO = "A"';
     }else{
-        if($nombre!='' &&$apellido!='' && $cedula!='' && $telefono!=''){
+        if($nombre!='' &&$apellido!='' && $cedula!=''){
                 $estado=',VIS_ESTADO = "A"';
             }else{
                 $estado='';
@@ -226,7 +227,7 @@ function obtenerVisitanteValido($codigo){
     $apellido = $row->VIS_APELLIDO;
     $cedula = $row->VIS_CEDULA;
     $telefono = $row->VIS_TELEFONO;
-    if($nombre!='' && $apellido!='' && $cedula!='' && $telefono!=''){
+    if($nombre!='' && $apellido!='' && $cedula!=''){
         return 1;
     }else{
         return 0;

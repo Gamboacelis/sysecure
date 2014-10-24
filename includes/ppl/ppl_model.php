@@ -134,23 +134,27 @@ function mostrarVisitantesPpl() {
     if ($val->num_rows > 0) {
         while ($row = $val->fetch_object()) {
             $x++;
+            
             $cadenaParametros = $codigoPpl.','.$row->VIS_COD . ',\'' . $row->VIS_NOMBRE . ' ' . $row->VIS_APELLIDO . '\'';
             $a = 'A';
             $parametros = $codigoPpl.','.$row->VIS_COD . ',\'' . $a . '\'';
+            //REVISAR SANCIONADOS
+            $estado=($row->VIS_ESTADO!='S')?'<a class="btn btn-primary btn-xs visBtnGuardar" title="Guardar Cambios" href="javascript:GuardarCambioVisita(' . $parametros . ')">
+                                                <i class="fa fa-save"></i>
+                                            </a>
+                                            <a class="btn btn-success btn-xs visBtnDatos" title="Editar Visitante" href="javascript:editarVisita('.$codigoPpl.',' . $row->VIS_COD . ')">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+                                            <a class="btn btn-danger btn-xs ' . $row->VIS_COD . ' eliminaVisitante visBtnDatos" title="Anular Visitante" href="javascript:eliminarVisitantePpl(' . $cadenaParametros . ')">
+                                                <i class="fa fa-trash-o"></i>
+                                            </a>':'<span class="label label-danger" style="color: #fff;display: inline;font-size: 75%;font-weight: 700;line-height: 1;padding: 0.2em 0.6em 0.3em;text-align: center;"> Sancionado </span>';
+            /////////////////////
             $retval.='<tr id="vis' . $row->VIS_COD . '">
                         <td>' . $x . '</td>
                         <td><div class="txtVisDatos" id="txtVisNombre">' . $row->VIS_NOMBRE . '</div><input type="text" id="visNombre" name="visNombre" class="visDatos" value="' . $row->VIS_NOMBRE . '"></td>
                         <td><div class="txtVisDatos" id="txtVisApellido">' . $row->VIS_APELLIDO . '</div><input type="text" id="visApellido" name="visApellido" class="visDatos" value="' . $row->VIS_APELLIDO . '"></td>
                         <td><div class="txtVisDatos" id="txtVisParentesco">' . $row->PAR_DESCRIPCION . '</div><select id="visParentesco" name="visParentesco" class="visDatos">' . comboParentesco() . '</select></td>
-                        <td><a class="btn btn-primary btn-xs visBtnGuardar" title="Guardar Cambios" href="javascript:GuardarCambioVisita(' . $parametros . ')">
-                                <i class="fa fa-save"></i>
-                            </a>
-                            <a class="btn btn-success btn-xs visBtnDatos" title="Editar Visitante" href="javascript:editarVisita('.$codigoPpl.',' . $row->VIS_COD . ')">
-                                <i class="fa fa-pencil"></i>
-                            </a>
-                            <a class="btn btn-danger btn-xs ' . $row->VIS_COD . ' eliminaVisitante visBtnDatos" title="Anular Visitante" href="javascript:eliminarVisitantePpl(' . $cadenaParametros . ')">
-                                <i class="fa fa-trash-o"></i>
-                            </a></td>    
+                        <td>'.$estado.'</td>    
                       </tr>';
         }
     } else {

@@ -46,41 +46,11 @@ $(document).ready(function() {
             },
             cargo: {
                 required: true
+            },
+            cedula: {
+                required: true
             }
         },
-        // Messages for form validation
-        messages: {
-            usuario: {
-                required: 'Introduzca un Usuario Valido'
-            },
-            email: {
-                required: 'Introduzca su dirección de correo electrónico',
-                email: 'Por favor, introduce una dirección de correo electrónico válida'
-            },
-            password: {
-                required: 'Por favor, introduzca su contraseña'
-            },
-            passwordConfirm: {
-                required: 'Por favor, introduzca su contraseña una vez más',
-                equalTo: 'Por favor, introduzca la misma contraseña que el anterior'
-            },
-            nombre: {
-                required: 'Por favor, introduzca su Nombre'
-            },
-            apellido: {
-                required: 'Por favor, introduzca su Apellido'
-            },
-            genero: {
-                required: 'Por favor, seleccione su Genero'
-            },
-            grupo: {
-                required: 'Por favor, seleccione el Grupo Scout'
-            },
-            cargo: {
-                required: 'Por favor, seleccione el Cargo Scout'
-            }
-        },
-        // Do not change code below
         errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
         }
@@ -115,7 +85,21 @@ $(document).ready(function() {
             error.insertAfter(element.parent());
         }
     });
-
+    $("#cedula").validarCedulaEC({
+        onValid: function () {
+            $(this).parent('label').removeClass('state-error'); 
+            $(this).parent('label').addClass('state-success'); 
+            $(this).parent('label').parent('section').children("em").remove();
+            $("button[type=submit]").removeAttr("disabled");
+        },
+        onInvalid: function () {
+            $(this).parent('label').removeClass('state-success');
+            $(this).parent('label').addClass('state-error');  
+            $(this).parent('label').siblings("em").remove();
+            $(this).parent('label').parent('section').append('<em class="invalid" for="cedula">Cédula o Ruc no Valido</em>');
+            $("button[type=submit]").attr("disabled", "disabled");
+        }
+    });
 });
 function cambiarClaveUsuario(usuario) {
     $('.' + usuario).parent('section').siblings('.verclave').hide();

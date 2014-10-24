@@ -21,6 +21,7 @@ if ($_SESSION["autenticado"] == 'SI') {
         case 'administrativo':
             $option = isset($_GET['op']) ? $_GET['op'] : 0;
             include_once("./includes/pabellones/pabellon_vistas.php");
+            include_once("./includes/parentesco/parentesco_vistas.php");
             include_once("./includes/usuario/Usuarios_vistas.php");
             include_once("./includes/horarios/horarios_vistas.php");
             include_once("./includes/ppl/ppl_vistas.php");
@@ -47,6 +48,10 @@ if ($_SESSION["autenticado"] == 'SI') {
                     $titulo = 'Revisión de Pabellones';
                     $activarMenu33 = 'class="active"';
                     $contenido = reporte_pabellones();
+                    break;
+                case 'parentesco':
+                    $titulo = 'Revisión de Parentescos';
+                    $contenido = reporte_parentesco();
                     break;
                 case 'parametros':
                     $titulo = 'Revisión de Parametros de Configuracion';
@@ -414,6 +419,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <!-- JQUERY VALIDATE -->
             <script src="js/plantilla/plugin/jquery-validate/jquery.validate.min.js"></script>
             <script src="js/plantilla/plugin/jquery-validate/additional-methods.min.js"></script>
+            <script src="js/plantilla/plugin/jquery-validate/jquery.validate.ruc.min.js"></script>
             <!-- JQUERY VALIDATE MENSSAGE IN SPANISH -->
             <script src="js/plantilla/plugin/jquery-validate/jqueryvalidatemessage.min.js"></script>
 
@@ -472,6 +478,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/roles.js"></script>
             <script src="js/busquedas.js"></script>
             <script src="js/reportes.js"></script>
+            <script src="js/parentesco.js"></script>
 
             <!-- PAGE RELATED PLUGIN(S) -->
             <script src="js/plantilla/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
