@@ -106,7 +106,27 @@ $centro=$_SESSION['usu_centro_cod'];
         $i=0;
         
 	while ( $aRow = mysql_fetch_array( $rResult ) ){
-           	
+           	$eliminar=($_SESSION["usu_rol_cod"]<=3)?'<a class="btn btn-success btn-xs" title="Visitantes Habilitados" href="javascript:revisarVisitantesDisponibles('.$aRow[ 'PPL_COD' ].')">
+                                                        <i class="fa fa-group"></i>
+                                                    </a>
+                                                    <a class="btn btn-success btn-xs" title="Editar Usuario" href="javascript:editarPpl('.$aRow[ 'PPL_COD' ].')">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                    <a class="btn btn-danger btn-xs '.$aRow[ 'PPL_COD' ].' eliminaParticipante" title="Anular PPL" href="javascript:eliminarPpl('.$cadenaParametros.')">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                    <a class="btn btn-warning btn-xs '.$aRow[ 'PPL_COD' ].'" title="Traspaso de PPL" href="javascript:aplicarTraspaso('.$aRow[ 'PAB_COD'].','.$aRow[ 'PPL_COD' ].')">
+                                                        <i class="fa fa fa-exchange"></i>  Traspaso
+                                                    </a>':'
+                                                    <a class="btn btn-success btn-xs" title="Visitantes Habilitados" href="javascript:revisarVisitantesDisponibles('.$aRow[ 'PPL_COD' ].')">
+                                                        <i class="fa fa-group"></i>
+                                                    </a>
+                                                    <a class="btn btn-success btn-xs" title="Editar Usuario" href="javascript:editarPpl('.$aRow[ 'PPL_COD' ].')">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                    <a class="btn btn-warning btn-xs '.$aRow[ 'PPL_COD' ].'" title="Traspaso de PPL" href="javascript:aplicarTraspaso('.$aRow[ 'PAB_COD'].','.$aRow[ 'PPL_COD' ].')">
+                                                        <i class="fa fa fa-exchange"></i>  Traspaso
+                                                    </a>';
             //Consulta Pabellon Anterior
             $sql2 = "SELECT h.*,p.PAB_DESCRIPCION FROM sys_historia_ppl h,`sys_pabellones` p WHERE h.PAB_COD=p.PAB_COD AND h.PPL_COD = {$aRow[ 'PPL_COD' ]} ORDER BY h.`HIS_COD` DESC LIMIT 0,1";
             $val2 = $dbmysql->query($sql2);
@@ -120,18 +140,7 @@ $centro=$_SESSION['usu_centro_cod'];
                                                 ''.$aRow[ 'PPL_NACIONALIDAD' ].'',
                                                 '<img src="/'.$img.'" class="img-thumbnail" style="width: 60px">',
                                                 '<div style="text-align:center;"><span class="badge bg-color-blue">'.$aRow[ 'PAB_DESCRIPCION' ].'</span></div>',
-                                                '<a class="btn btn-success btn-xs" title="Visitantes Habilitados" href="javascript:revisarVisitantesDisponibles('.$aRow[ 'PPL_COD' ].')">
-                                                    <i class="fa fa-group"></i>
-                                                </a>
-                                                <a class="btn btn-success btn-xs" title="Editar Usuario" href="javascript:editarPpl('.$aRow[ 'PPL_COD' ].')">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-                                                <a class="btn btn-danger btn-xs '.$aRow[ 'PPL_COD' ].' eliminaParticipante" title="Anular PPL" href="javascript:eliminarPpl('.$cadenaParametros.')">
-                                                    <i class="fa fa-trash-o"></i>
-                                                </a>
-                                                <a class="btn btn-warning btn-xs '.$aRow[ 'PPL_COD' ].'" title="Traspaso de PPL" href="javascript:aplicarTraspaso('.$aRow[ 'PAB_COD'].','.$aRow[ 'PPL_COD' ].')">
-                                                    <i class="fa fa fa-exchange"></i>  Traspaso
-                                                </a>');
+                                                ''.$eliminar.'');
 			}
 
 	echo json_encode( $output );

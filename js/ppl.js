@@ -343,20 +343,44 @@ function GuardarCambioVisita(codppl,codVis, tipo) {
         success: function(res) {
             if (res !== '0') {
                 var json_obj = $.parseJSON(res);
-                if (tipo === 'N') {
-                    $('#new').children('td').children('#txtVisNombre').text(json_obj.datosActualizados.nombre);
-                    $('#new').children('td').children('#txtVisApellido').text(json_obj.datosActualizados.apellido);
-                    $('#new').children('td').children('#txtVisParentesco').text(json_obj.datosActualizados.parentesco);
-                } else {
-                    $('#vis' + codVis).children('td').children('#txtVisNombre').text(json_obj.datosActualizados.nombre);
-                    $('#vis' + codVis).children('td').children('#txtVisApellido').text(json_obj.datosActualizados.apellido);
-                    $('#vis' + codVis).children('td').children('#txtVisParentesco').text(json_obj.datosActualizados.parentesco);
+                if(json_obj.datosActualizados.tipo==='nuevo'){
+                    if (tipo === 'N') {
+                        $('#new').children('td').children('#txtVisNombre').text(json_obj.datosActualizados.nombre);
+                        $('#new').children('td').children('#txtVisApellido').text(json_obj.datosActualizados.apellido);
+                        $('#new').children('td').children('#txtVisParentesco').text(json_obj.datosActualizados.parentesco);
+                    } 
+                    else {
+                        $('#vis' + codVis).children('td').children('#txtVisNombre').text(json_obj.datosActualizados.nombre);
+                        $('#vis' + codVis).children('td').children('#txtVisApellido').text(json_obj.datosActualizados.apellido);
+                        $('#vis' + codVis).children('td').children('#txtVisParentesco').text(json_obj.datosActualizados.parentesco);
+                    }
+                }else{
+                    $.SmartMessageBox({
+                        title: "Confirmación!",
+                        content: "Ya existe un Visitante llamado: <span class='txt-color-orangeDark'><strong>" + json_obj.datosActualizados.nombreVisita + " " +json_obj.datosActualizados.apellidoVisita +" </strong></span> Asignado al PPL <span class='txt-color-orangeDark'><strong>"+ json_obj.datosActualizados.nombrePPL +" "+ json_obj.datosActualizados.apellidoPPL +"</strong></span>, Desea asignar el mismo Visitante a este PPL ingresado?",
+                        buttons: '[No][Si]'
+                    }, function(ButtonPressed) {
+                        if (ButtonPressed === "Si") {
+                            $.ajax({
+                                url: "./includes/ppl/ppl_model.php?opcion=guardarListaVisRepe",
+                                type: 'post',
+                                data: {codPlp: codigo,codVis:json_obj.datosActualizados.codigoVis,nombre: nombre, apellido: apellido,parentesco: parentesco},
+                                success: function(respuesta) {
+                                    if (respuesta === '1') {
+                                       revisarVisitantesDisponibles(codigo);
+                                    }
+                                }
+                            });
+
+                        }
+                    });
                 }
             }
        
             if (tipo === 'N') {
-                revisarVisitantesDisponibles(json_obj.datosActualizados.codigoPPL);
-            } else {
+                revisarVisitantesDisponibles(codigo);
+            }
+            else {
                 $('#vis' + codVis).children('td').children('#visNombre').val(json_obj.datosActualizados.nombre);
                 $('#vis' + codVis).children('td').children('#visApellido').val(json_obj.datosActualizados.apellido);
                 $('#vis' + codVis).children('td').children('#visParentesco').prop('selectedIndex', parentesco);
@@ -383,6 +407,7 @@ function nuevoVisitantePpl() {
         type: 'POST',
         data: {codigo: codigo},
         success: function(res) {
+             
             if (res === '1') {
                 var tds = $("#litaVisitantesPpl tr:first td").length; // Obtenemos el total de columnas (tr) del id "tabla" 
                 var trs = $("#litaVisitantesPpl tr").length;
@@ -411,6 +436,7 @@ function nuevoVisitantePpl() {
                     $('#new').children('td').children('.visBtnGuardar').show();
                 }
             } else {
+               
                 $.smallBox({
                     title: "Error..!!",
                     content: "<i class='fa fa-clock-o'></i> <i>Limite máximo de Visitantes Asignados</i>",
