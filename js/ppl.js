@@ -322,6 +322,7 @@ function editarVisita(codPpl,cod) {
     $('#vis' + cod).children('td').children('.visBtnDatos').hide();
 }
 function GuardarCambioVisita(codppl,codVis, tipo) {
+    
     if (tipo === 'N') {
         var url = './includes/ppl/ppl_model.php?opcion=guardarListaVisitante';
         var codigo = $('#IDpplNew').val();

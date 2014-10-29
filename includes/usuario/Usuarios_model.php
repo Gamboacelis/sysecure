@@ -63,7 +63,12 @@ function actualizarDatosUsuario() {
     $celular = $_POST["celular"];
     $cedula = $_POST["cedula"];
     $tipoUsuario = $_POST["tipoUsuario"];
-
+//    $sql_rol = "SELECT * FROM `sys_usuarios` WHERE USU_COD=$codigo;";
+//    $val_rol = $dbmysql->query($sql_rol);
+//    $row = $val_rol->fetch_object();
+//    if($row->ROL_COD!=$tipoUsuario){
+//        
+//    }
     $sql = "UPDATE `sys_usuarios` SET 
                 USU_NOMBRE    = '$nombre',
                 USU_APELLIDO  = '$apellido',

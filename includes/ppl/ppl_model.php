@@ -206,7 +206,7 @@ function actualizaListaVisitante() {
         $sql2 = "SELECT * FROM `sys_parentesco` WHERE PAR_COD='$parCod';";
         $val2 = $dbmysql->query($sql2);
         $row = $val2->fetch_object();
-        $datos['datosActualizados'] = array("codigoVis" => $visCod, "nombre" => $nombre, "apellido" => $apellido, "parentesco" => $row->PAR_DESCRIPCION);
+        $datos['datosActualizados'] = array("tipo"=>"nuevo","codigoVis" => $visCod, "nombre" => $nombre, "apellido" => $apellido, "parentesco" => $row->PAR_DESCRIPCION);
         echo json_encode($datos); // RESULTADO EXITOSO
     } else {
         echo 0; //NO SE EJECUTO EL QUERY
@@ -312,7 +312,7 @@ function eliminarVisitantePpl() {
             $sql2 = "DELETE FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante AND PPL_COD=$codPpl;";
             $val2 = $dbmysql->query($sql2);
         }elseif($val1->num_rows==1){
-            $sql3 ="UPDATE `sys_visitante` SET VIS_ESTADO   = 'E' WHERE VIS_COD=$codVisitante;";
+            $sql3 ="DELETE FROM `sys_visitante` WHERE VIS_COD=$codVisitante;";
             $dbmysql->query($sql3);
             $sql2 = "DELETE FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante AND PPL_COD=$codPpl;";
             $val2 = $dbmysql->query($sql2);
