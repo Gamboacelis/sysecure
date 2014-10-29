@@ -301,11 +301,11 @@ function validarCantidadVisitante() {
     $val = $dbmysql->query($sql);
     $row = $val->fetch_object();
     $cantidadVisitas = $row->PAR_VALOR;
-    $sql2 = "SELECT vp.*,v.*  FROM `sys_visitante_ppl` vp,  sys_visitante v WHERE vp.VIS_COD=v.VIS_COD AND v.VIS_ESTADO='A' AND PPL_COD=$codigo;";
+    echo $sql2 = "SELECT vp.*,v.*  FROM `sys_visitante_ppl` vp,  sys_visitante v WHERE vp.VIS_COD=v.VIS_COD AND v.VIS_ESTADO='A' AND PPL_COD=$codigo;";
     $val2 = $dbmysql->query($sql2);
-    $cantidadActual = ($val2->num_rows);
-    if ($cantidadVisitas >= $cantidadActual)
-        echo 1;
-    else
-        echo 0;
+    echo 'cantidad= '.$cantidadActual = $val2->num_rows;
+//    if ($cantidadVisitas >= $cantidadActual)
+//        echo 1;
+//    else
+//        echo 0;
 }
