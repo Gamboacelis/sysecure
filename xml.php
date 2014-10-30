@@ -39,4 +39,6 @@ $msg->addParam(new xmlrpcval("prison.person", "string"));
 $msg->addParam(new xmlrpcval("name_get", "string"));
 $msg->addParam(new xmlrpcval($val, "struct"));
 $response = $client->send($msg);
+
+var_dump($response);
 }
