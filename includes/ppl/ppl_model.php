@@ -45,6 +45,9 @@ switch ($funcion) {
     case 'guardarListaVisRepe':
         guardarListaVisRepe();
         break;
+    case 'verificaConyugeVisitante':
+        verificaConyugeVisitante();
+        break;
 }
 
 function enviarDatosPpl() {
@@ -156,7 +159,7 @@ function mostrarVisitantesPpl() {
                         <td>' . $x . '</td>
                         <td><div class="txtVisDatos" id="txtVisNombre">' . $row->VIS_NOMBRE . '</div><input type="text" id="visNombre" name="visNombre" class="visDatos" value="' . $row->VIS_NOMBRE . '"></td>
                         <td><div class="txtVisDatos" id="txtVisApellido">' . $row->VIS_APELLIDO . '</div><input type="text" id="visApellido" name="visApellido" class="visDatos" value="' . $row->VIS_APELLIDO . '"></td>
-                        <td><div class="txtVisDatos" id="txtVisParentesco">' . $row->PAR_DESCRIPCION . '</div><select id="visParentesco" name="visParentesco" class="visDatos">' . comboParentesco() . '</select></td>
+                        <td><div class="txtVisDatos" id="txtVisParentesco">' . $row->PAR_DESCRIPCION . '</div><select id="visParentesco" name="visParentesco" class="visDatos">' . comboParentesco($row->TPV_COD,$row->PAR_COD) . '</select></td>
                         <td>'.$estado.'</td>    
                       </tr>';
         }
@@ -198,8 +201,8 @@ function actualizaListaVisitante() {
     $visCod = $_POST["visCod"];
     $parCod = $_POST["parentesco"];
     $codPpl = $_POST["codPlp"];
-    $tipoVisita=obtenerTipoVisitaParentesco($parCod);
-    $sql = "UPDATE `sys_visitante` SET VIS_NOMBRE='$nombre',VIS_APELLIDO='$apellido',VIS_TIPO='$tipoVisita' WHERE VIS_COD=$visCod;";
+    
+    $sql = "UPDATE `sys_visitante` SET VIS_NOMBRE='$nombre',VIS_APELLIDO='$apellido' WHERE VIS_COD=$visCod;";
     $val = $dbmysql->query($sql);
     $sql1 = "UPDATE `sys_visitante_ppl` SET PAR_COD='$parCod' WHERE VIS_COD=$visCod AND PPL_COD=$codPpl;";
     $val1 = $dbmysql->query($sql1);
@@ -299,24 +302,59 @@ function verificarPplExistente($nombre, $apellido, $cedula) {
     }
 }
 
-function comboParentesco() {
+function verificaConyugeVisitante(){
     global $dbmysql;
+    $nombre=$_POST['nombre'];
+    $apellido=$_POST['apellido'];
+    $parentesco=$_POST['parentesco'];
+    //VERIFICO EL TIPO DE PARENTESCO INGRESADO
+    $sql_par = "SELECT * FROM `sys_parentesco` WHERE PAR_COD ='$parentesco';";
+    $val_par = $dbmysql->query($sql_par);
+    $row_par = $val_par->fetch_object();
+    
+    /////////////////////////////////////////
+    if($row_par->TPV_COD==2){
+   
+        $sql = "SELECT vp.*,p.*,v.* FROM `sys_visitante_ppl` vp, sys_visitante v, sys_parentesco p
+                WHERE v.`VIS_COD`=vp.`VIS_COD`
+                AND p.`PAR_COD`=vp.`PAR_COD`
+                AND v.VIS_NOMBRE='$nombre'
+                AND v.VIS_APELLIDO='$apellido'
+                AND p.TPV_COD=2;";
+        $val = $dbmysql->query($sql);
+        if ($val->num_rows > 0) {
+            echo 1; // RESULTADO EXITOSO
+        } else {
+            echo 0; //NO SE EJECUTO EL QUERY
+        }
+    }else{
+        echo 0;
+    }
+}
+
+function comboParentesco($tipo=0,$parentesco=0) {
+    global $dbmysql;
+//    echo $parentesco;
     $ban = $_POST['alerta'];
     $codPpl = $_POST['codPpl'];
     //CONSULTAR LOS PARENTESCOS QUE TIENE EL PPL PARA QUE NO SE REPITAN
-    $sql_tipo = "SELECT vp.*,v.* FROM `sys_visitante_ppl` vp, sys_visitante v WHERE v.`VIS_COD`=vp.`VIS_COD` AND `PPL_COD`=$codPpl AND v.VIS_TIPO='C';";
+    if($tipo!=2){
+    $sql_tipo = "SELECT vp.*,p.*,v.* FROM `sys_visitante_ppl` vp, sys_visitante v, sys_parentesco p WHERE v.`VIS_COD`=vp.`VIS_COD`AND p.`PAR_COD`=vp.`PAR_COD` AND vp.`PPL_COD`=$codPpl AND p.TPV_COD=2;";
     $val_tipo = $dbmysql->query($sql_tipo);
     if($val_tipo->num_rows>0)
         $ex=2;
     else
         $ex=0;
+    }else{$ex=0;}
     $retval = '';
     $sql = "SELECT * FROM `sys_parentesco` order by `PAR_DESCRIPCION`;";
     $val = $dbmysql->query($sql);
     if ($val->num_rows > 0) {
         while ($row = $val->fetch_object()) {
-            if($row->TPV_COD!=$ex)
-                $retval.='<option value="' . $row->PAR_COD . '">' . $row->PAR_DESCRIPCION . '</option>';
+            if($row->TPV_COD!=$ex){
+                if($parentesco==$row->PAR_COD){$select='selected="selected"';}else{$select='';}
+                $retval.='<option value="' . $row->PAR_COD . '" '.$select.'>' . $row->PAR_DESCRIPCION . '</option>';
+            }
         }
     }
     if ($ban != '')
