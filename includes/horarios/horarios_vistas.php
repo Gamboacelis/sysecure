@@ -111,18 +111,11 @@ function frmHorarios() {
                                                                     <input type="hidden" id="IDpabellonFrm" name="IDpabellonFrm">
                                                                     <div class="row">
                                                                         <section class="col col-6">
-                                                                                <label>Días:</label>
-                                                                                <label class="select">
-                                                                                        <select id="dias" name="dias">
-                                                                                                <option value="0" selected="" disabled="">-- Dias --</option>
-                                                                                                <option value="Lunes">Lunes</option>
-                                                                                                <option value="Martes">Martes</option>
-                                                                                                <option value="Miercoles">Miércoles</option>
-                                                                                                <option value="Jueves">Jueves</option>
-                                                                                                <option value="Viernes">Viernes</option>
-                                                                                                <option value="Sabado">Sábado</option>
-                                                                                                <option value="Domingo">Domingo</option>
-                                                                                        </select> <i></i> </label>
+                                                                                <label>Fecha:</label>
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-calendar"></i>
+                                                                                    <input id="fechaHorario" class="hasDatepicker" type="text" placeholder="Fecha Inicio" name="fechaHorario">
+                                                                                </label>
                                                                         </section>
                                                                         <section class="col col-6">
                                                                                 <label>Descripción:</label>

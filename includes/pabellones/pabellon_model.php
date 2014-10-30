@@ -69,9 +69,21 @@ function guardaDatosPabellon() {
     $detalles = strtoupper($_POST["detalles"]);
     $nivel = $_POST["nivel"];
     $centro = $_SESSION["usu_centro_cod"];
-    $sql = "INSERT INTO `sys_pabellones`(CEN_COD,NVL_COD,PAB_ALA,PAB_DESCRIPCION,PAB_CAPACIDAD,PAB_DETALLES)VALUES
-            ('$centro','$nivel','$ala','$descripcion','$capacidad','$detalles');";
-    $val = $dbmysql->query($sql);
+
+
+    $sql_v = "SELECT * FROM `sys_pabellones` WHERE PAB_DESCRIPCION = '$descripcion'";
+    $val_v = $dbmysql->query($sql_v);
+    $row_v = $val_v->fetch_object();
+    
+    if($row_v->PAB_DESCRIPCION != $descripcion)
+    {   
+
+        $sql = "INSERT INTO `sys_pabellones`(CEN_COD,NVL_COD,PAB_ALA,PAB_DESCRIPCION,PAB_CAPACIDAD,PAB_DETALLES)VALUES
+                ('$centro','$nivel','$ala','$descripcion','$capacidad','$detalles');";
+        $val = $dbmysql->query($sql);
+
+    }
+
     if ($val) {
         echo 1;
     } else {

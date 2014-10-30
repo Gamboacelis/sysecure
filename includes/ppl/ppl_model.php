@@ -42,6 +42,9 @@ switch ($funcion) {
     case 'eliminarPpl':
         eliminarPpl();
         break;
+    case 'guardarListaVisRepe':
+        guardarListaVisRepe();
+        break;
 }
 
 function enviarDatosPpl() {
@@ -203,34 +206,65 @@ function actualizaListaVisitante() {
         $sql2 = "SELECT * FROM `sys_parentesco` WHERE PAR_COD='$parCod';";
         $val2 = $dbmysql->query($sql2);
         $row = $val2->fetch_object();
-        $datos['datosActualizados'] = array("codigoVis" => $visCod, "nombre" => $nombre, "apellido" => $apellido, "parentesco" => $row->PAR_DESCRIPCION);
+        $datos['datosActualizados'] = array("tipo"=>"nuevo","codigoVis" => $visCod, "nombre" => $nombre, "apellido" => $apellido, "parentesco" => $row->PAR_DESCRIPCION);
         echo json_encode($datos); // RESULTADO EXITOSO
     } else {
         echo 0; //NO SE EJECUTO EL QUERY
     }
 }
-
+function guardarListaVisRepe(){
+    global $dbmysql;
+    $nombre = strtoupper($_POST["nombre"]);
+    $apellido = strtoupper($_POST["apellido"]);
+    $parCod = $_POST["parentesco"];
+    $codPpl = $_POST["codPlp"];
+    $IdVisita=$_POST["codVis"];
+    $sql = "INSERT INTO `sys_visitante_ppl` (PPL_COD,VIS_COD,PAR_COD)
+                VALUES($codPpl,$IdVisita,$parCod);";
+    $val = $dbmysql->query($sql);
+    $sql2 = "SELECT * FROM `sys_parentesco` WHERE PAR_COD='$parCod';";
+    $val2 = $dbmysql->query($sql2);
+    $row = $val2->fetch_object();
+    $datos['datosActualizados'] = array("tipo"=>"nuevo","codigoPPL" => $codPpl, "codigoVis" => $IdVisita, "nombre" => $nombre, "apellido" => $apellido, "parentesco" => $row->PAR_DESCRIPCION);
+    json_encode($datos); // RESULTADO EXITOSO
+    echo 1;
+}
 function guardarListaVisitante() {
     global $dbmysql;
     $nombre = strtoupper($_POST["nombre"]);
     $apellido = strtoupper($_POST["apellido"]);
     $parCod = $_POST["parentesco"];
     $codPpl = $_POST["codPlp"];
-    $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_ESTADO)
-            VALUES('$nombre','$apellido','N');";
-    $val = $dbmysql->query($sql);
-    if ($val) {
-        $IdVisita = $dbmysql->maxid('VIS_COD', 'sys_visitante');
-        $sql = "INSERT INTO `sys_visitante_ppl` (PPL_COD,VIS_COD,PAR_COD)
-                    VALUES($codPpl,$IdVisita,$parCod);";
+    $sql_con = "SELECT * FROM `sys_visitante` WHERE VIS_NOMBRE ='$nombre' AND VIS_APELLIDO = '$apellido' AND VIS_ESTADO !='E';";
+    $val_con = $dbmysql->query($sql_con);
+    if($val_con->num_rows==0){
+        $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_ESTADO)
+                VALUES('$nombre','$apellido','N');";
         $val = $dbmysql->query($sql);
-        $sql2 = "SELECT * FROM `sys_parentesco` WHERE PAR_COD='$parCod';";
-        $val2 = $dbmysql->query($sql2);
-        $row = $val2->fetch_object();
-        $datos['datosActualizados'] = array("codigoPPL" => $codPpl, "codigoVis" => $IdVisita, "nombre" => $nombre, "apellido" => $apellido, "parentesco" => $row->PAR_DESCRIPCION);
+        if ($val) {
+            $IdVisita = $dbmysql->maxid('VIS_COD', 'sys_visitante');
+            $sql = "INSERT INTO `sys_visitante_ppl` (PPL_COD,VIS_COD,PAR_COD)
+                        VALUES($codPpl,$IdVisita,$parCod);";
+            $val = $dbmysql->query($sql);
+            $sql2 = "SELECT * FROM `sys_parentesco` WHERE PAR_COD='$parCod';";
+            $val2 = $dbmysql->query($sql2);
+            $row = $val2->fetch_object();
+            $datos['datosActualizados'] = array("tipo"=>"nuevo","codigoPPL" => $codPpl, "codigoVis" => $IdVisita, "nombre" => $nombre, "apellido" => $apellido, "parentesco" => $row->PAR_DESCRIPCION);
+            echo json_encode($datos); // RESULTADO EXITOSO
+        } else {
+            echo 0; //NO SE EJECUTO EL QUERY
+        }
+    }else{
+        $row_con = $val_con->fetch_object();
+        $codigoVisitante=$row_con->VIS_COD;
+        $sql="SELECT * FROM `sys_vw_visitante` WHERE VIS_COD= $codigoVisitante;";
+        $val = $dbmysql->query($sql);
+        $row = $val->fetch_object();
+        //////DATOS///
+        $datos['datosActualizados'] = array("tipo"=>"repetido","codigoPPL" => $row->PPL_COD,"nombrePPL" => $row->PPL_NOMBRE,"apellidoPPL" => $row->PPL_APELLIDO, "codigoVis" => $row->VIS_COD, "nombreVisita" => $row->VIS_NOMBRE, "apellidoVisita" => $row->VIS_APELLIDO, "parentescoVisita" => $row->PAR_DESCRIPCION);
         echo json_encode($datos); // RESULTADO EXITOSO
-    } else {
-        echo 0; //NO SE EJECUTO EL QUERY
+        
+        
     }
 }
 
@@ -249,7 +283,7 @@ function comboParentesco() {
     global $dbmysql;
     $ban = $_POST['alerta'];
     $retval = '';
-    $sql = "SELECT * FROM `sys_parentesco`;";
+    $sql = "SELECT * FROM `sys_parentesco` order by `PAR_DESCRIPCION`;";
     $val = $dbmysql->query($sql);
     if ($val->num_rows > 0) {
         while ($row = $val->fetch_object()) {
@@ -278,7 +312,7 @@ function eliminarVisitantePpl() {
             $sql2 = "DELETE FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante AND PPL_COD=$codPpl;";
             $val2 = $dbmysql->query($sql2);
         }elseif($val1->num_rows==1){
-            $sql3 ="UPDATE `sys_visitante` SET VIS_ESTADO   = 'E' WHERE VIS_COD=$codVisitante;";
+            $sql3 ="DELETE FROM `sys_visitante` WHERE VIS_COD=$codVisitante;";
             $dbmysql->query($sql3);
             $sql2 = "DELETE FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante AND PPL_COD=$codPpl;";
             $val2 = $dbmysql->query($sql2);
@@ -301,10 +335,10 @@ function validarCantidadVisitante() {
     $val = $dbmysql->query($sql);
     $row = $val->fetch_object();
     $cantidadVisitas = $row->PAR_VALOR;
-    $sql2 = "SELECT vp.*,v.*  FROM `sys_visitante_ppl` vp,  sys_visitante v WHERE vp.VIS_COD=v.VIS_COD AND v.VIS_ESTADO='A' AND PPL_COD=$codigo;";
+    $sql2 = "SELECT vp.*,v.*  FROM `sys_visitante_ppl` vp,  sys_visitante v WHERE vp.VIS_COD=v.VIS_COD AND v.VIS_ESTADO !='E' AND PPL_COD=$codigo;";
     $val2 = $dbmysql->query($sql2);
-    $cantidadActual = ($val2->num_rows);
-    if ($cantidadVisitas >= $cantidadActual)
+    $cantidadActual = $val2->num_rows;
+    if ($cantidadActual<$cantidadVisitas)
         echo 1;
     else
         echo 0;
