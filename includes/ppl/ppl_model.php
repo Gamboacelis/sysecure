@@ -198,7 +198,8 @@ function actualizaListaVisitante() {
     $visCod = $_POST["visCod"];
     $parCod = $_POST["parentesco"];
     $codPpl = $_POST["codPlp"];
-    $sql = "UPDATE `sys_visitante` SET VIS_NOMBRE='$nombre',VIS_APELLIDO='$apellido' WHERE VIS_COD=$visCod;";
+    $tipoVisita=obtenerTipoVisitaParentesco($parCod);
+    $sql = "UPDATE `sys_visitante` SET VIS_NOMBRE='$nombre',VIS_APELLIDO='$apellido',VIS_TIPO='$tipoVisita' WHERE VIS_COD=$visCod;";
     $val = $dbmysql->query($sql);
     $sql1 = "UPDATE `sys_visitante_ppl` SET PAR_COD='$parCod' WHERE VIS_COD=$visCod AND PPL_COD=$codPpl;";
     $val1 = $dbmysql->query($sql1);
@@ -302,13 +303,20 @@ function comboParentesco() {
     global $dbmysql;
     $ban = $_POST['alerta'];
     $codPpl = $_POST['codPpl'];
-    
+    //CONSULTAR LOS PARENTESCOS QUE TIENE EL PPL PARA QUE NO SE REPITAN
+    $sql_tipo = "SELECT vp.*,v.* FROM `sys_visitante_ppl` vp, sys_visitante v WHERE v.`VIS_COD`=vp.`VIS_COD` AND `PPL_COD`=$codPpl AND v.VIS_TIPO='C';";
+    $val_tipo = $dbmysql->query($sql_tipo);
+    if($val_tipo->num_rows>0)
+        $ex=2;
+    else
+        $ex=0;
     $retval = '';
     $sql = "SELECT * FROM `sys_parentesco` order by `PAR_DESCRIPCION`;";
     $val = $dbmysql->query($sql);
     if ($val->num_rows > 0) {
         while ($row = $val->fetch_object()) {
-            $retval.='<option value="' . $row->PAR_COD . '">' . $row->PAR_DESCRIPCION . '</option>';
+            if($row->TPV_COD!=$ex)
+                $retval.='<option value="' . $row->PAR_COD . '">' . $row->PAR_DESCRIPCION . '</option>';
         }
     }
     if ($ban != '')

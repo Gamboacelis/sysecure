@@ -1,6 +1,6 @@
 <?php
 
-define('PATH_PROD', '/Applications/AMPPS/www/sysecure');
+define('PATH_PROD', '/Applications/AMPPS/www/');
 define('SISTEM_NAME', 'sysecure');
 define('PATH_PPL', '/uploads/imagenes/ppl/');
 define('PATH_VISITAS', '/uploads/imagenes/visitas/');
