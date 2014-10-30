@@ -331,17 +331,31 @@ function GuardarCambioVisita(codppl,codVis, tipo) {
             url: './includes/ppl/ppl_model.php?opcion=verificaConyugeVisitante',
             datetype: "json",
             type: 'POST',
-            data: {nombre: nombre,apellido:apellido, parentesco: parentesco},
+            data: {nombre: nombre,apellido:apellido, parentesco: parentesco,codppl:codppl},
             success: function(res) {
-                if(res==='1'){
-                    $.smallBox({
-                        title: "Error..!!",
-                        content: "<i class='fa fa-clock-o'></i> <i>El Visitante "+nombre+" "+apellido+", ya es cónyuge de otro PPL</i>",
-                        color: "#C46A69",
-                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                        timeout: 8000
-                    });
-                    return false;
+                switch (res){
+                    case '1':
+                        $.smallBox({
+                            title: "Error..!!",
+                            content: "<i class='fa fa-clock-o'></i> <i>El Visitante "+nombre+" "+apellido+", ya es cónyuge de otro PPL</i>",
+                            color: "#C46A69",
+                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                            timeout: 8000
+                        });
+                        return false;
+                        break;
+                    case '2':
+                        $.smallBox({
+                            title: "Error..!!",
+                            content: "<i class='fa fa-clock-o'></i> <i>El Visitante ya se encuentra en la Lista</i>",
+                            color: "#C46A69",
+                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                            timeout: 8000
+                        });
+                        break;
+                    default :
+                        ajaxGuardarVisita(url,tipo,codppl,codVis,nombre,apellido,parentesco);
+                        break;
                 }
             }
         });
@@ -351,8 +365,13 @@ function GuardarCambioVisita(codppl,codVis, tipo) {
         var nombre = $('#vis' + codVis).children('td').children('#visNombre').val();
         var apellido = $('#vis' + codVis).children('td').children('#visApellido').val();
         var parentesco = $('#vis' + codVis).children('td').children('#visParentesco').val();
+        ajaxGuardarVisita(url,tipo,codppl,codVis,nombre,apellido,parentesco);
     }
-    $.ajax({
+    
+}
+function ajaxGuardarVisita(url,tipo,codPlp,codVis,nombreVis,apellidoVis,parentescoVis){
+    var codigo=codPlp,nombre=nombreVis,apellido=apellidoVis,parentesco=parentescoVis;
+     $.ajax({
         url: url,
         datetype: "json",
         type: 'POST',
@@ -416,6 +435,7 @@ function GuardarCambioVisita(codppl,codVis, tipo) {
         }
     });
 }
+
 function nuevoVisitantePpl() {
     var codigo = $('#IDpplNew').val();
     $.ajax({

@@ -138,7 +138,7 @@ $centro=$_SESSION['usu_centro_cod'];
                     $output['aaData'][] =array( ''.utf8_encode($aRow[ 'PPL_COD' ]).'',
                                                 ''.utf8_encode($nombre).'',
                                                 ''.$aRow[ 'PPL_NACIONALIDAD' ].'',
-                                                '<img src="/'.$img.'" class="img-thumbnail" style="width: 60px">',
+                                                //'<img src="/'.$img.'" class="img-thumbnail" style="width: 60px">',
                                                 '<div style="text-align:center;"><span class="badge bg-color-blue">'.$aRow[ 'PAB_DESCRIPCION' ].'</span></div>',
                                                 ''.$eliminar.'');
 			}

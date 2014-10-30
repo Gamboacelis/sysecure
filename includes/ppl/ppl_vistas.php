@@ -30,7 +30,6 @@ function revisarPpl() {
                                         <th width="20">Prontuario</th>
                                         <th><i class="fa fa-fw fa-male txt-color-blue hidden-md hidden-sm hidden-xs"></i> Nombre</th>
                                         <th><i class="fa fa-fw fa-male txt-color-blue hidden-md hidden-sm hidden-xs"></i> Nacionalidad</th>
-                                        <th><i class="fa fa-fw fa-user txt-color-blue hidden-md hidden-sm hidden-xs"></i> Imagen</th>
                                         <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Pabellon Actual</th>
                                         <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Acción</th>
                                     </tr>
@@ -67,31 +66,7 @@ function frmPpl(){
                                                             <header>
                                                                     Formulario de Registro
                                                             </header>
-                                                            <fieldset>
-                                                                    <section>
-                                                                            <label class="label">Imagen</label>
-                                                                            <div id="imgPpl">
-                                                                                <input id="imagPpl" name="imagPpl" type="hidden" />
-                                                                                <img id="imagenPPL" alt="imagenPPL" src="img/avatars/male.png" class="img-thumbnail" style="width: 200px">
-                                                                            </div>
-                                                                                <div id="imgCambio">
-                                                                                    <div class="cargar_img">
-                                                                                        <input id="filePpl" name="filePpl" type="file" />
-                                                                                        <div id="cargar_txt">
-                                                                                            <span class="cargar_btn">Cambiar Imagen</span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="imgCambio_botones">
-                                                                                        <a class="btn btn-default btn-circle" href="javascript:agregarImagenPpl();">
-                                                                                            <i class="glyphicon glyphicon-ok"></i>
-                                                                                        </a>
-                                                                                        <a class="btn btn-default btn-circle" href="javascript:cancelarImagen();">
-                                                                                            <i class="glyphicon glyphicon-ban-circle"></i>
-                                                                                        </a>
-                                                                                    </div>
-                                                                                <div>
-                                                                    </section>
-                                                            </fieldset>
+                                                            
                                                             <fieldset>
                                                                     <input type="hidden" id="IDppl" name="IDppl">
                                                                     <div class="row">
@@ -350,3 +325,28 @@ function comboPabellon() {
     return $retval;
 }
 
+/*<fieldset>
+    <section>
+            <label class="label">Imagen</label>
+            <div id="imgPpl">
+                <input id="imagPpl" name="imagPpl" type="hidden" />
+                <img id="imagenPPL" alt="imagenPPL" src="img/avatars/male.png" class="img-thumbnail" style="width: 200px">
+            </div>
+                <div id="imgCambio">
+                    <div class="cargar_img">
+                        <input id="filePpl" name="filePpl" type="file" />
+                        <div id="cargar_txt">
+                            <span class="cargar_btn">Cambiar Imagen</span>
+                        </div>
+                    </div>
+                    <div class="imgCambio_botones">
+                        <a class="btn btn-default btn-circle" href="javascript:agregarImagenPpl();">
+                            <i class="glyphicon glyphicon-ok"></i>
+                        </a>
+                        <a class="btn btn-default btn-circle" href="javascript:cancelarImagen();">
+                            <i class="glyphicon glyphicon-ban-circle"></i>
+                        </a>
+                    </div>
+                <div>
+    </section>
+</fieldset>*/
