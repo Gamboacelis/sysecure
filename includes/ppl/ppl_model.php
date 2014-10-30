@@ -235,11 +235,12 @@ function guardarListaVisitante() {
     $apellido = strtoupper($_POST["apellido"]);
     $parCod = $_POST["parentesco"];
     $codPpl = $_POST["codPlp"];
+    $tipoVisita=obtenerTipoVisitaParentesco($parCod);
     $sql_con = "SELECT * FROM `sys_visitante` WHERE VIS_NOMBRE ='$nombre' AND VIS_APELLIDO = '$apellido' AND VIS_ESTADO !='E';";
     $val_con = $dbmysql->query($sql_con);
     if($val_con->num_rows==0){
-        $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_ESTADO)
-                VALUES('$nombre','$apellido','N');";
+        $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_ESTADO,VIS_TIPO)
+                VALUES('$nombre','$apellido','N','$tipoVisita');";
         $val = $dbmysql->query($sql);
         if ($val) {
             $IdVisita = $dbmysql->maxid('VIS_COD', 'sys_visitante');
@@ -268,6 +269,24 @@ function guardarListaVisitante() {
     }
 }
 
+function obtenerTipoVisitaParentesco($parCod){
+    global $dbmysql;
+    $sql="SELECT p.*,tv.* FROM `sys_parentesco` p, sys_tipovisita tv WHERE tv.`TPV_COD`=p.`TPV_COD` AND p.PAR_COD= $parCod;";
+    $val = $dbmysql->query($sql);
+    $row = $val->fetch_object();
+    switch ($row->TPV_COD) {
+        case 1:
+            return 'F';
+        break;
+        case 2:
+            return 'C';
+        break;
+        case 3:
+            return 'A';
+        break;
+    }
+}
+
 function verificarPplExistente($nombre, $apellido, $cedula) {
     global $dbmysql;
     $sql = "SELECT * FROM `sys_ppl` WHERE PPL_NOMBRE ='$nombre' AND PPL_APELLIDO='$apellido' AND PPL_CEDULA ='$cedula';";
@@ -282,6 +301,8 @@ function verificarPplExistente($nombre, $apellido, $cedula) {
 function comboParentesco() {
     global $dbmysql;
     $ban = $_POST['alerta'];
+    $codPpl = $_POST['codPpl'];
+    
     $retval = '';
     $sql = "SELECT * FROM `sys_parentesco` order by `PAR_DESCRIPCION`;";
     $val = $dbmysql->query($sql);

@@ -96,8 +96,6 @@ function nuevoPpl() {
     $('#frmPPLModal').modal('show');
     $('#estadoLavel').hide();
     limpiarFormularioPpl();
-//    $('#smart-form-pabellon >header').text('Registro Nuevo Pabellon')
-//    $('#IDpabellon').val('');
 }
 function handleFileSelectImagen(evt) {
     var files = evt.target.files; // FileList object
@@ -424,7 +422,7 @@ function nuevoVisitantePpl() {
                         url: './includes/ppl/ppl_model.php?opcion=comboParentesco',
                         datetype: "json",
                         type: 'POST',
-                        data: {alerta: alerta},
+                        data: {alerta: alerta,codPpl:codigo},
                         success: function(res) {
                             $('#new').children('td').children('#visParentesco').html(res);
                         }
