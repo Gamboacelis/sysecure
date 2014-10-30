@@ -7,4 +7,4 @@ define('PATH_VISITAS', '/uploads/imagenes/visitas/');
 define('HOST_NAME', 'localhost');
 define('USER_NAME', 'root');
 define('USER_PASSWD', '');
-define('DB_NAME', 'bulkenco_sysecure');
+define('DB_NAME', 'sysecure');
