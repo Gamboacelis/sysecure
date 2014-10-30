@@ -1,6 +1,8 @@
 <?php
 
 session_start();
+include_once '../../includes/generales.php';
+$clGeneral = new general();
 include_once '../conexiones/db_local.inc.php';
 $dbmysql = new database();
 date_default_timezone_set('America/Bogota');
@@ -72,7 +74,7 @@ function enviarDatosPpl() {
 }
 
 function cambioEstadoPpl() {
-    global $dbmysql;
+    global $dbmysql,$clGeneral;
     $codigo = $_POST['codPpl'];
     $estado = $_POST["estado"];
 
@@ -80,11 +82,12 @@ function cambioEstadoPpl() {
                 PPL_ESTADO    = '$estado'
             WHERE PPL_COD=$codigo;";
     $val = $dbmysql->query($sql);
+    $clGeneral->auditoria('A', 'sys_ppl', 'estado:'.$estado.'ppl:'.$codigo);
     if ($val) {echo 1;} else {echo 0;}
 }
 
 function actualizarDatosPpl() {
-    global $dbmysql;
+    global $dbmysql,$clGeneral;
     $codigo = $_POST['IDppl'];
     $nombre = strtoupper($_POST["nombre"]);
     $apellido = strtoupper($_POST["apellido"]);
@@ -101,16 +104,18 @@ function actualizarDatosPpl() {
                 PPL_NACIONALIDAD = '$nacionalidad'
             WHERE PPL_COD=$codigo;";
     $val = $dbmysql->query($sql);
+    $clGeneral->auditoria('A', 'sys_ppl', 'valores:'.$nombre.','.$apellido.','.$cedula.','.$img.','.$nacionalidad.' - ppl:'.$codigo);
     if ($val) {echo 1;} else {echo 0;}
 }
 
 function eliminarPpl() {
-    global $dbmysql;
+    global $dbmysql,$clGeneral;
     $codigo = $_POST['codigo'];
     $sql = "UPDATE `sys_ppl` SET 
                 PPL_ESTADO    = 'E'
             WHERE PPL_COD=$codigo;";
     $val = $dbmysql->query($sql);
+    $clGeneral->auditoria('E', 'sys_ppl', 'estado: E ,ppl:'.$codigo);
     if ($val) {echo 1;} else {echo 0;}
 }
 
@@ -170,7 +175,7 @@ function mostrarVisitantesPpl() {
 }
 
 function guardaDatosPpl() {
-    global $dbmysql;
+    global $dbmysql,$clGeneral;
     $pabellon = $_POST["pabellon"];
     $celda = $_POST["celda"];
     $nombre = strtoupper($_POST["nombre"]);
@@ -184,6 +189,8 @@ function guardaDatosPpl() {
         $sql = "INSERT INTO `sys_ppl`(PAB_COD,CEL_COD,PPL_NOMBRE,PPL_APELLIDO,PPL_CEDULA,PPL_NACIONALIDAD,PPL_IMG,PPL_ESTADO)VALUES
                 ('$pabellon','$celda','$nombre','$apellido','$cedula','$nacionalidad','$img','A');";
         $val = $dbmysql->query($sql);
+        $descripcion=$pabellon.','.$celda.','.$nombre.','.$apellido.','.$cedula.','.$nacionalidad.','.$img.',A';
+        $clGeneral->auditoria('I', 'sys_ppl', 'valores:'.$descripcion);
         if ($val) {
             echo 1; // RESULTADO EXITOSO
         } else {
@@ -195,7 +202,7 @@ function guardaDatosPpl() {
 }
 
 function actualizaListaVisitante() {
-    global $dbmysql;
+    global $dbmysql,$clGeneral;
     $nombre = strtoupper($_POST["nombre"]);
     $apellido = strtoupper($_POST["apellido"]);
     $visCod = $_POST["visCod"];
@@ -204,8 +211,10 @@ function actualizaListaVisitante() {
     
     $sql = "UPDATE `sys_visitante` SET VIS_NOMBRE='$nombre',VIS_APELLIDO='$apellido' WHERE VIS_COD=$visCod;";
     $val = $dbmysql->query($sql);
+    $clGeneral->auditoria('A', 'sys_visitante', 'valores:'.$nombre.','.$apellido.' visitante:'.$visCod);
     $sql1 = "UPDATE `sys_visitante_ppl` SET PAR_COD='$parCod' WHERE VIS_COD=$visCod AND PPL_COD=$codPpl;";
     $val1 = $dbmysql->query($sql1);
+    $clGeneral->auditoria('A', 'sys_visitante_ppl', 'parentesco:'.$parCod.', visitante:'.$visCod.' ppl:'.$codPpl);
     if ($val && $val1) {
         $sql2 = "SELECT * FROM `sys_parentesco` WHERE PAR_COD='$parCod';";
         $val2 = $dbmysql->query($sql2);
@@ -217,7 +226,7 @@ function actualizaListaVisitante() {
     }
 }
 function guardarListaVisRepe(){
-    global $dbmysql;
+    global $dbmysql,$clGeneral;
     $nombre = strtoupper($_POST["nombre"]);
     $apellido = strtoupper($_POST["apellido"]);
     $parCod = $_POST["parentesco"];
@@ -226,6 +235,7 @@ function guardarListaVisRepe(){
     $sql = "INSERT INTO `sys_visitante_ppl` (PPL_COD,VIS_COD,PAR_COD)
                 VALUES($codPpl,$IdVisita,$parCod);";
     $val = $dbmysql->query($sql);
+    $clGeneral->auditoria('I', 'sys_visitante_ppl', 'valores:'.$codPpl.','.$IdVisita.','.$parCod);    
     $sql2 = "SELECT * FROM `sys_parentesco` WHERE PAR_COD='$parCod';";
     $val2 = $dbmysql->query($sql2);
     $row = $val2->fetch_object();
@@ -234,7 +244,7 @@ function guardarListaVisRepe(){
     echo 1;
 }
 function guardarListaVisitante() {
-    global $dbmysql;
+    global $dbmysql,$clGeneral;
     $nombre = strtoupper($_POST["nombre"]);
     $apellido = strtoupper($_POST["apellido"]);
     $parCod = $_POST["parentesco"];
@@ -246,11 +256,13 @@ function guardarListaVisitante() {
         $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_ESTADO)
                 VALUES('$nombre','$apellido','N');";
         $val = $dbmysql->query($sql);
+        $clGeneral->auditoria('I', 'sys_visitante', 'valores:'.$nombre.','.$apellido.',N');    
         if ($val) {
             $IdVisita = $dbmysql->maxid('VIS_COD', 'sys_visitante');
             $sql = "INSERT INTO `sys_visitante_ppl` (PPL_COD,VIS_COD,PAR_COD)
                         VALUES($codPpl,$IdVisita,$parCod);";
             $val = $dbmysql->query($sql);
+            $clGeneral->auditoria('I', 'sys_visitante_ppl', 'valores:'.$codPpl.','.$IdVisita.','.$parCod);    
             $sql2 = "SELECT * FROM `sys_parentesco` WHERE PAR_COD='$parCod';";
             $val2 = $dbmysql->query($sql2);
             $row = $val2->fetch_object();
@@ -375,7 +387,7 @@ function comboParentesco($tipo=0,$parentesco=0) {
 }
 
 function eliminarVisitantePpl() {
-    global $dbmysql;
+    global $dbmysql,$clGeneral;
     $codVisitante = $_POST['codigo'];
     $codPpl= $_POST['codPpl'];
     $sql1 = "SELECT * FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante;";
@@ -389,11 +401,14 @@ function eliminarVisitantePpl() {
         if($val1->num_rows>1){
             $sql2 = "DELETE FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante AND PPL_COD=$codPpl;";
             $val2 = $dbmysql->query($sql2);
+            $clGeneral->auditoria('E', 'sys_visitante_ppl', 'visitante:'.$codVisitante.'ppl:'.$codPpl);
         }elseif($val1->num_rows==1){
             $sql3 ="DELETE FROM `sys_visitante` WHERE VIS_COD=$codVisitante;";
             $dbmysql->query($sql3);
+            $clGeneral->auditoria('E', 'sys_visitante', 'visitante:'.$codVisitante);
             $sql2 = "DELETE FROM `sys_visitante_ppl` WHERE VIS_COD=$codVisitante AND PPL_COD=$codPpl;";
             $val2 = $dbmysql->query($sql2);
+            $clGeneral->auditoria('E', 'sys_visitante_ppl', 'visitante:'.$codVisitante.'ppl:'.$codPpl);
         }
        if ($val2) {
             echo 1;

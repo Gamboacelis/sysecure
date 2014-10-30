@@ -31,33 +31,44 @@ class general {
         $activarMenu43 = '';
         $activarMenu44 = '';
     }
-    
-    function insertarParamInciales($centro){
+
+    function auditoria($tipo, $tabla, $descripcion) {
         global $dbmysql;
-        $ppl=PAR_PPL;
-        $visitante=PAR_VISITANTES;
-        $acceso3=PAR_ACCESO3;
-        $acceso4=PAR_ACCESO4;
-        $sql="INSERT INTO `sys_parametros` (`PAR_COD`, `CEN_COD`, `PAR_MODULO`, `PAR_DESCRIPCION`, `PAR_VALOR`) VALUES
+        $ip = general::obtenerIp();
+        $dominio = general::obtenerNombreEquipo();
+        $usuario = $_SESSION["usu_usuario"];
+        $fecha = date('Y-m-d H:i');
+        $sql = "INSERT INTO `sys_auditoria` (`AUD_TIPO`,`AUD_TABLA`,`AUD_DESCRIPCION`,`AUD_IP`,`AUD_DOMINIO`,`AUD_USUARIO`,`AUD_FECHAHORA`)
+              VALUES ('$tipo','$tabla','$descripcion','$ip','$dominio','$usuario','$fecha')";
+        $val = $dbmysql->query($sql);
+    }
+
+    function insertarParamInciales($centro) {
+        global $dbmysql;
+        $ppl = PAR_PPL;
+        $visitante = PAR_VISITANTES;
+        $acceso3 = PAR_ACCESO3;
+        $acceso4 = PAR_ACCESO4;
+        $sql = "INSERT INTO `sys_parametros` (`PAR_COD`, `CEN_COD`, `PAR_MODULO`, `PAR_DESCRIPCION`, `PAR_VALOR`) VALUES
             (1, $centro, 'PPL', 'Cantidad de visitantes por PPL', '$ppl'),
             (2, $centro, 'VISITANTES', 'Cantidad de Visitas por horario', '$visitante'),
             (3, $centro, 'ACCESO 3', 'Numero de Cedulas por Literal', '$acceso3'),
             (4, $centro, 'ACCESO 4', 'Tiempo de espera para finalizar Visita', '$acceso4');";
-        $val=$dbmysql->query($sql);
+        $val = $dbmysql->query($sql);
         if ($val) {
             return 1;
         } else {
             return 0;
         }
     }
-    
-    function pulirRegistros(){
+
+    function pulirRegistros() {
         global $dbmysql;
-        $calcular_dia = date( "Y-m-d", strtotime( "-1 day") ); 
+        $calcular_dia = date("Y-m-d", strtotime("-1 day"));
         $sql = "UPDATE `sys_control` SET CON_ESTADO = 'S' WHERE CON_FECHA = '$calcular_dia';";
         $dbmysql->query($sql);
-   }
-    
+    }
+
     function registrar_acceso() {
         global $dbmysql;
         $usuario = $_SESSION["user_id"];
@@ -71,7 +82,6 @@ class general {
     }
 
     function obtenerIp() {
-        $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"] ? $_SERVER["HTTP_CF_CONNECTING_IP"] : $_SERVER["REMOTE_ADDR"];
         return $_SERVER['REMOTE_ADDR'];
     }
 
@@ -154,19 +164,19 @@ class general {
         }
     }
 
-    function obtenerTotalVisita($tipo){
+    function obtenerTotalVisita($tipo) {
         global $dbmysql;
-        $valor=0;
-        $fecha=date('Y-m-d');
+        $valor = 0;
+        $fecha = date('Y-m-d');
         switch ($tipo) {
             case 'A':
-                $variante=" WHERE VISG_FECHA=$fecha AND VISG_ESTADO='A'";
+                $variante = " WHERE VISG_FECHA=$fecha AND VISG_ESTADO='A'";
                 break;
             case 'T':
-                $variante="";
+                $variante = "";
                 break;
             case 'H':
-                $variante="WHERE VISG_FECHA=$fecha";
+                $variante = "WHERE VISG_FECHA=$fecha";
                 break;
         }
         $sql = "SELECT count(*) AS CantVisita FROM  `sys_visitas` $variante;";
@@ -175,7 +185,7 @@ class general {
         $valor = $row->CantVisita;
         return $valor;
     }
-    
+
     function revisarDatosVisitante($codVisitante) {
         global $dbmysql;
         $sql = "SELECT VIS_COD,VIS_NOMBRE,VIS_APELLIDO,PAR_COD,VIS_CEDULA,VIS_DIRECCION,VIS_TELEFONO,VIS_CORREO,VIS_IMAGEN,VIS_ESTADO
