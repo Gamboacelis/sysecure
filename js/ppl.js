@@ -327,6 +327,24 @@ function GuardarCambioVisita(codppl,codVis, tipo) {
         var nombre = $('#new').children('td').children('#visNombre').val();
         var apellido = $('#new').children('td').children('#visApellido').val();
         var parentesco = $('#new').children('td').children('#visParentesco').val();
+        $.ajax({
+            url: './includes/ppl/ppl_model.php?opcion=verificaConyugeVisitante',
+            datetype: "json",
+            type: 'POST',
+            data: {nombre: nombre,apellido:apellido, parentesco: parentesco},
+            success: function(res) {
+                if(res==='1'){
+                    $.smallBox({
+                        title: "Error..!!",
+                        content: "<i class='fa fa-clock-o'></i> <i>El Visitante "+nombre+" "+apellido+", ya es cónyuge de otro PPL</i>",
+                        color: "#C46A69",
+                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                        timeout: 8000
+                    });
+                    return false;
+                }
+            }
+        });
     } else {
         var url = './includes/ppl/ppl_model.php?opcion=actualizaListaVisitante';
         var codigo = codppl;
