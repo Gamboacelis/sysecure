@@ -33,7 +33,7 @@ function enviarDatosHorario() {
         "HOR_COD" => $row->HOR_COD,
         "TPV_COD" => $row->TPV_COD,
         "HOR_DESCRIPCION" => $row->HOR_DESCRIPCION,
-        "HOR_DIAS" => $row->HOR_DIAS,
+        "HOR_FECHA" => $row->HOR_FECHA,
         "HOR_HORA_ING" => $row->HOR_HORA_ING,
         "HOR_HORA_SAL" => $row->HOR_HORA_SAL,
         "HOR_ESTADO" => $row->HOR_ESTADO
@@ -45,7 +45,7 @@ function enviarDatosHorario() {
 function actualizarDatosHorario() {
     global $dbmysql;
     $codigo = $_POST['IDhorario'];
-    $dias= strtoupper($_POST["dias"]);
+    $fecha= $_POST["fechaHorario"];
     $tipoVisitas=$_POST["tipoVisitas"]; 
     $descripcion = strtoupper($_POST["descripcion"]);
     $horaIngreso = $_POST["horaIngreso"];
@@ -55,7 +55,7 @@ function actualizarDatosHorario() {
     $sql = "UPDATE `sys_horarios` SET 
                 TPV_COD             = '$tipoVisitas',
                 HOR_DESCRIPCION     = '$descripcion',
-                HOR_DIAS            = '$dias',
+                HOR_FECHA           = '$fecha',
                 HOR_HORA_ING        = '$horaIngreso',
                 HOR_HORA_SAL        = '$horaSalida',
                 HOR_ESTADO          ='$estado'
@@ -70,14 +70,14 @@ function actualizarDatosHorario() {
 
 function guardaDatosHorario() {
     global $dbmysql;
-    $dias= strtoupper($_POST["dias"]);
+    $fecha= $_POST["fechaHorario"];
     $descripcion = strtoupper($_POST["descripcion"]);
     $horaIngreso = $_POST["horaIngreso"];
     $horaSalida = $_POST["horaSalida"];
     $pabellon = $_POST["IDpabellonFrm"];
     $tipoVisitas=$_POST["tipoVisitas"]; 
-    $sql = "INSERT INTO `sys_horarios`(PAB_COD,TPV_COD,HOR_DESCRIPCION,HOR_DIAS,HOR_HORA_ING,HOR_HORA_SAL,HOR_ESTADO)VALUES
-            ('$pabellon','$tipoVisitas','$descripcion','$dias','$horaIngreso','$horaSalida','A');";
+    $sql = "INSERT INTO `sys_horarios`(PAB_COD,TPV_COD,HOR_DESCRIPCION,HOR_FECHA,HOR_HORA_ING,HOR_HORA_SAL,HOR_ESTADO)VALUES
+            ('$pabellon','$tipoVisitas','$descripcion','$fecha','$horaIngreso','$horaSalida','A');";
     $val = $dbmysql->query($sql);
     if ($val) {echo 1;} else {echo 0;}
 }
@@ -106,7 +106,7 @@ function buscarHorariosPabellon() {
             $cadenaParametros=$row->HOR_COD.',\''.$row->HOR_DESCRIPCION.'\','.$codPabellon;
             $estado=($row->HOR_ESTADO=='A')?'<span class="label label-success">Activo</span>':'<span class="label label-danger">Inactivo</span>';
             $retval .='<tr id="tablaHorarios">
-                           <td>' . $row->HOR_DIAS . '</td>
+                           <td>' . $row->HOR_FECHA . '</td>
                            <td>' . $row->TPV_DESCRIPCION . '</td>
                            <td>' . $row->HOR_DESCRIPCION . '</td>
                            <td>' . $row->HOR_HORA_ING . '</td>

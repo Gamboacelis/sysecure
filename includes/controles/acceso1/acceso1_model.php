@@ -22,12 +22,11 @@ function obtenerVisitantesAsignados() {
     $fecha = date('Y-m-d');
     $hora = date('H:i:s');
     $codPpl = $_POST['codPpl'];
-    $obtenerDia = $clGeneral->obtenerDia(); // Obtener el dia de la Semana en Español
     $datosPPL = $clGeneral->obtenerInformacionPPL($codPpl); // Extrae los datos del PPL
     $datoPPL = $datosPPL->fetch_object();
     $pabellon = $datoPPL->PAB_COD; // Selecciona el codigo del Pabellon
     $nombresPpl = $datoPPL->PPL_NOMBRE . ' ' . $datoPPL->PPL_APELLIDO;
-    $horarios = $clGeneral->obtenerHorario($pabellon, $obtenerDia, $hora); //Consulta los horarios del Pabellon en este dia y a esta Hora
+    $horarios = $clGeneral->obtenerHorario($pabellon, $fecha, $hora); //Consulta los horarios del Pabellon en este dia y a esta Hora
     if ($horarios != '0') {
         $horario = $horarios->fetch_object();
 
@@ -39,7 +38,7 @@ function obtenerVisitantesAsignados() {
         $val = $dbmysql->query($sql);
         $retval .='<div class="alert alert-info no-margin fade in">
                             <button class="close" data-dismiss="alert"> × </button><i class="fa-fw fa fa-info"></i>
-                            PPL: <strong>' . $nombresPpl . '</strong>,<br> Pabellon: ' . $datoPPL->PAB_DESCRIPCION . ', <br> Horario: ' . $obtenerDia . ', Desde: ' . $horaInicio . ' Hasta: ' . $horaFin . ' <br>
+                            PPL: <strong>' . $nombresPpl . '</strong>,<br> Pabellon: ' . $datoPPL->PAB_DESCRIPCION . ', <br> Horario: ' . $fecha . ', Desde: ' . $horaInicio . ' Hasta: ' . $horaFin . ' <br>
                              <p style="color:red;"><strong>Tipo de Visita: </strong>' . $horario->TPV_DESCRIPCION . '</p>
                     </div>
                     <table id="visitantesPermitidos" class="table table-hover table-bordered">

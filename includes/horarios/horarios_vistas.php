@@ -114,7 +114,8 @@ function frmHorarios() {
                                                                                 <label>Fecha:</label>
                                                                                 <label class="input">
                                                                                     <i class="icon-append fa fa-calendar"></i>
-                                                                                    <input id="fechaHorario" class="hasDatepicker" type="text" placeholder="Fecha Inicio" name="fechaHorario">
+                                                                                    <input id="fechaHorario" class="form-control" type="text" placeholder="Fecha Inicio" name="fechaHorario">
+                                                                                    
                                                                                 </label>
                                                                         </section>
                                                                         <section class="col col-6">

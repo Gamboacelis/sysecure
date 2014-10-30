@@ -107,10 +107,10 @@ class general {
         return $dias[date("w")];
     }
 
-    function obtenerHorario($pabellon, $obtenerDia, $hora) {
+    function obtenerHorario($pabellon, $fecha, $hora) {
         global $dbmysql;
         $horaActual = $hora;
-        $sql = "SELECT tpv.*,h.* FROM `sys_horarios` h,`sys_tipovisita` tpv WHERE tpv.`TPV_COD`=h.`TPV_COD` AND `PAB_COD` = $pabellon AND `HOR_DIAS` = '$obtenerDia' AND `HOR_HORA_ING`<='$horaActual' AND `HOR_HORA_SAL`>='$horaActual' AND `HOR_ESTADO` ='A'";
+        $sql = "SELECT tpv.*,h.* FROM `sys_horarios` h,`sys_tipovisita` tpv WHERE tpv.`TPV_COD`=h.`TPV_COD` AND `PAB_COD` = $pabellon AND `HOR_FECHA` = '$fecha' AND `HOR_HORA_ING`<='$horaActual' AND `HOR_HORA_SAL`>='$horaActual' AND `HOR_ESTADO` ='A'";
         $val = $dbmysql->query($sql);
         if ($val->num_rows > 0) {
             return $val;

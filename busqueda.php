@@ -2,7 +2,8 @@
 
 include_once './includes/conexiones/db_local.inc.php';
 $dbmysql = new database();
-date_default_timezone_set('America/Bogota');
+date_default_timezone_set('America/Guayaquil'); 
+setlocale(LC_TIME, 'spanish');
 $funcion = isset($_GET['opcion']) ? $_GET['opcion'] : 'ninguno';
 switch ($funcion) {
     case 'reportePPL':
@@ -98,7 +99,7 @@ function mostrarDatosPpl() {
                                         <dt><strong class="text-danger">Horario: </strong></dt>
                                         <dd class="text-primary">' . $row2->HOR_DESCRIPCION . '</dd>
                                         <dt><strong class="text-danger">Dia: </strong></dt>
-                                        <dd class="text-primary">' . $row2->HOR_DIAS . '</dd>
+                                        <dd class="text-primary">' . date("l j F, Y", strtotime($row2->HOR_FECHA)) . '</dd>
                                         <dt><strong class="text-danger">Hora Ingreso: </strong></dt>
                                         <dd class="text-primary">' . $row2->HOR_HORA_ING. ' </dd>
                                         <dt><strong class="text-danger">Hora Salida: </strong></dt>

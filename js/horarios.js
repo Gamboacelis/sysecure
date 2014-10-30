@@ -21,6 +21,13 @@ $(document).ready(function() {
             error.insertAfter(element.parent());
         }
     });
+
+
+    $("#fechaHorario").datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        dateFormat: "yy-mm-dd"
+    });
 });
 function mostrarHoraiosPabellon(pabellon) {
     $('#IDpabellon').val(pabellon);
@@ -183,7 +190,7 @@ function carga_DatosIncialesHorario(edt) {
     $("#horaIngreso").val(edt.datosHorario.HOR_HORA_ING);  /*Hora de Ingreso*/
     $("#horaSalida").val(edt.datosHorario.HOR_HORA_SAL);  /*Hora de Salida*/
     $('#tipoVisitas').prop('selectedIndex', edt.datosHorario.TPV_COD);
-    $('#dias option[value="' + edt.datosHorario.HOR_DIAS + '"]').attr("selected", true);/*Tipo de Usuario*/
+    $('#fechaHorario').val(edt.datosHorario.HOR_FECHA);/*Tipo de Usuario*/
     edt.datosHorario.HOR_ESTADO == 'A' ? $("#estado").prop("checked", true) : $("#estado").prop("checked", false);
 
 }
