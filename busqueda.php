@@ -7,8 +7,6 @@ $dbmysql = new database();
 
 date_default_timezone_set('America/Guayaquil'); 
 setlocale(LC_TIME, 'spanish');
-setlocale(LC_ALL,"es_ES");
-
 $funcion = isset($_GET['opcion']) ? $_GET['opcion'] : 'ninguno';
 switch ($funcion) {
     case 'reportePPL':
@@ -104,8 +102,8 @@ function mostrarDatosPpl() {
                         $retval .= '<div class="dl-horizontal col col-12">
                                         <dt><strong class="text-danger">Horario: </strong></dt>
                                         <dd class="text-primary">' . $row2->HOR_DESCRIPCION . '</dd>
-                                        <dt><strong class="text-danger">Dia: </strong></dt> 
-                                        <dd class="text-primary">' .  strftime("%A %d de %B del %Y",$row2->HOR_FECHA) . date("l j F, Y", strtotime($row2->HOR_FECHA)). '</dd>
+                                        <dt><strong class="text-danger">Dia: </strong></dt>
+                                        <dd class="text-primary">' . $generales->remplazarDia($row2->HOR_FECHA) . '</dd>
                                         <dt><strong class="text-danger">Hora Ingreso: </strong></dt>
                                         <dd class="text-primary">' . $row2->HOR_HORA_ING. ' </dd>
                                         <dt><strong class="text-danger">Hora Salida: </strong></dt>
