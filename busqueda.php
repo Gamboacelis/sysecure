@@ -1,7 +1,10 @@
 <?php
 
 include_once './includes/conexiones/db_local.inc.php';
+include_once './includes/generales.php';
 $dbmysql = new database();
+
+
 date_default_timezone_set('America/Guayaquil'); 
 setlocale(LC_TIME, 'spanish');
 setlocale(LC_ALL,"es_ES");
@@ -86,6 +89,7 @@ function consultarDatosPPL() {
 function mostrarDatosPpl() {
     global $dbmysql;
     $ppl = $_POST['ppl'];
+    $generales = new general();
     $retval = '';
     $sql="SELECT p.`PPL_COD`,p.`PAB_COD`,pa.`PAB_DESCRIPCION`,p.`PPL_NOMBRE`,p.`PPL_APELLIDO`,p.`PPL_CEDULA`,p.`PPL_NACIONALIDAD`FROM `sys_ppl` p, sys_pabellones pa WHERE p.`PAB_COD`=pa.`PAB_COD` AND p.`PPL_COD`=$ppl;";
     $val = $dbmysql->query($sql);
@@ -109,6 +113,7 @@ function mostrarDatosPpl() {
                                         <dt><strong class="text-danger">Tipo de Visitas: </strong></dt>
                                         <dd class="text-primary">' . $row2->TPV_DESCRIPCION. ' </dd>
                                 </div><hr style="color: #0056b2;" />';
+
                     }
                     }else{
                         $retval .= '<div class="col col-12">
@@ -120,3 +125,8 @@ function mostrarDatosPpl() {
     
     echo $retval;
 }
+
+
+
+
+
