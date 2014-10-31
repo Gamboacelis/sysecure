@@ -206,4 +206,45 @@ class general {
         return $row->CEN_TIPO;
     }
 
+
+    function remplazarDia($fecha)
+    {
+
+       $dia = array('Monday'    => 'Lunes',
+                 'Tuesday'   => 'Martes',
+                 'Wednesday' => 'Miercoles',
+                 'Thursday'  => 'Jueves',
+                 'Friday'    => 'Viernes',
+                 'Saturday'  => 'Sabado',
+                 'Sunday'    => 'Domingo'
+        );
+
+
+       $mes = array(
+                 'January'    => 'Enero',
+                 'February'   => 'Febrero',
+                 'March' => 'Marzo',
+                 'April'  => 'Abril',
+                 'May'    => 'Mayo',
+                 'June'  => 'Junio',
+                 'July'    => 'Julio',
+                 'August'    => 'Agosto',
+                 'September'   => 'Septiembre',
+                 'October' => 'Octubre',
+                 'November'  => 'Nomviembre',
+                 'December'    => 'Diciembre'
+              
+        );
+       
+        
+        $diaSemana = $dia[date('l', strtotime($fecha))];
+        $diaFecha  = date('j', strtotime($fecha));
+        $mes  = $mes[date('F', strtotime($fecha))];
+        $anio  = date('Y', strtotime($fecha));        
+
+        return $diaSemana.", ".$diaFecha." de ".$mes." del ".$anio; 
+    }
+
 }
+
+
