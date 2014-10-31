@@ -42,6 +42,10 @@ function exportarHorarios() {
     $("#datos_a_enviar").val($("<div>").append($("#listaReporteHorarios").eq(0).clone()).html());
     $("#FormularioExportacionHorarios").submit();
 }
+function exportarHorPab() {
+    $("#datos_a_enviar").val($("<div>").append($("#listaReporteHorPab").eq(0).clone()).html());
+    $("#FormularioExportacionHorPab").submit();
+}
 function reporteSancion() {
     var fdesde = $('#fdesde').val();
     var fhasta = $('#fhasta').val();
@@ -117,6 +121,31 @@ function reporteHorarios() {
                     "sInfoEmpty": "No hay entradas para mostrar",
                     "sInfoFiltered": " - Filtrado de registros _MAX_",
         //            "sSearch": "Buscar: ",
+                    "sZeroRecords": "No hay registros que mostrar"
+                }
+            });
+        }
+    });
+}
+
+function reporteHorPab() {
+    var pabellon = $('#pabellon').val();
+    $.ajax({
+        url: './includes/reportes/pabellonesHorarios/RhorPab_model.php?opcion=reporteHorPab',
+        datetype: "json",
+        type: 'POST',
+        data: {pabellon:pabellon},
+        success: function (res) {
+            $('#muestraReporteHorPab').html(res);
+            $( "#main" ).css( "min-height","+=680");
+            var dtTable =$('#listaHorPab').dataTable({
+                "bPaginate": true,
+                "iDisplayLength": 10,
+                "oLanguage": {
+                    "sEmptyTable": "No hay datos disponibles en la tabla",
+                    "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
+                    "sInfoEmpty": "No hay entradas para mostrar",
+                    "sInfoFiltered": " - Filtrado de registros _MAX_",
                     "sZeroRecords": "No hay registros que mostrar"
                 }
             });

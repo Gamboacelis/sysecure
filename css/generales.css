@@ -1,7 +1,7 @@
 input{text-transform:uppercase}
 .select2-search{z-index:999999}
 #ventanaLogin{display:none}
-#listaReporteHorarios,#listaReporteSancionados,#listaReporteVisitas{display:none}
+#listaReporteHorarios,#listaReporteSancionados,#listaReporteVisitas,#listaReporteHorPab{display:none}
 #agregarVisitantesTable{display:none}
 #datosReporte_pie{display:none}
 #encuentraCedula{display:none}

@@ -149,7 +149,12 @@ if ($_SESSION["autenticado"] == 'SI') {
                     include_once("./includes/reportes/horarios/Rhorarios_vistas.php");
                     $titulo = 'Reporte de Visitas';
                     $contenido = reporteHorarios();
-                    break;   
+                    break; 
+                case 'horPab':
+                    include_once("./includes/reportes/pabellonesHorarios/RhorPab_vistas.php");
+                    $titulo = 'Reporte de Visitas por Pabellones';
+                    $contenido = reporteHorPab();
+                    break; 
             }
             break;
         default:
