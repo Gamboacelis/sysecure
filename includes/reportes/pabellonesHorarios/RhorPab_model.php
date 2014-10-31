@@ -2,6 +2,7 @@
 
 session_start();
 include_once '../../conexiones/db_local.inc.php';
+include_once '../../../includes/generales.php';
 $dbmysql = new database();
 date_default_timezone_set('America/Bogota');
 $funcion = isset($_GET['opcion']) ? $_GET['opcion'] : 'ninguno';
@@ -16,12 +17,12 @@ switch ($funcion) {
 
 function reporteHorPab() {
     global $dbmysql;
-    
-    echo $pabellon=$_POST['pabellon'];
+    $generales = new general();
+    $pabellon=$_POST['pabellon'];
     $centro=$_SESSION['usu_centro_cod'];
     $retval='';
     $pab=($pabellon!='')?" AND p.PAB_COD=".$pabellon:'';
-    $sql = "SELECT h.`HOR_COD`,h.`PAB_COD`,p.`PAB_DESCRIPCION`,h.`TPV_COD`, tv.`TPV_DESCRIPCION`,h.`HOR_DESCRIPCION`,h.`HOR_FECHA`,h.`HOR_HORA_ING`,h.`HOR_HORA_SAL`,h.`HOR_ESTADO` FROM `sys_horarios` h, sys_pabellones p, sys_tipovisita tv WHERE h.`PAB_COD`=p.`PAB_COD` AND tv.`TPV_COD`=h.`TPV_COD` $pab;";
+    $sql = "SELECT h.`HOR_COD`,h.`PAB_COD`,p.`PAB_DESCRIPCION`,h.`TPV_COD`, tv.`TPV_DESCRIPCION`,h.`HOR_DESCRIPCION`,h.`HOR_FECHA`,h.`HOR_HORA_ING`,h.`HOR_HORA_SAL`,h.`HOR_ESTADO` FROM `sys_horarios` h, sys_pabellones p, sys_tipovisita tv WHERE h.`PAB_COD`=p.`PAB_COD` AND tv.`TPV_COD`=h.`TPV_COD` AND p.CEN_COD=$centro $pab;";
     $val = $dbmysql->query($sql);
     if($val->num_rows>0){
         $retval ='<div class="botonesSuperiores">
@@ -60,7 +61,7 @@ function reporteHorPab() {
                     while ($row = $val->fetch_object()){
                      $retval .='<tr>
                                     <td>'.$row->PAB_DESCRIPCION.'</td>
-                                    <td>'.$row->HOR_FECHA.'</td>
+                                    <td>'.$generales->remplazarDia($row->HOR_FECHA).'</td>
                                     <td>'.$row->HOR_DESCRIPCION.'</td>
                                     <td>'.$row->TPV_DESCRIPCION.'</td>
                                     <td>'.$row->HOR_HORA_ING.'</td>
@@ -117,6 +118,7 @@ function reporteHorPabExcel($pabellon) {
     $pab=($pabellon!='')?" AND p.PAB_COD=".$pabellon:'';
     $centro=$_SESSION['usu_centro_cod'];
     $retval='';
+    $generales = new general();
     $retval='<div id="listaReporteHorPab">
                                 <h2>Reporte de Horarios por Pabellon </h2>
                                 <table id="listaHorPabExcel" class="table table-striped table-bordered table-hover" width="100%">
@@ -132,12 +134,12 @@ function reporteHorPabExcel($pabellon) {
                                 </thead>
                                 <tbody>';
                         
-                        $sql = "SELECT h.`HOR_COD`,h.`PAB_COD`,p.`PAB_DESCRIPCION`,h.`TPV_COD`, tv.`TPV_DESCRIPCION`,h.`HOR_DESCRIPCION`,h.`HOR_FECHA`,h.`HOR_HORA_ING`,h.`HOR_HORA_SAL`,h.`HOR_ESTADO` FROM `sys_horarios` h, sys_pabellones p, sys_tipovisita tv WHERE h.`PAB_COD`=p.`PAB_COD` AND tv.`TPV_COD`=h.`TPV_COD` $pab;";
+                        $sql = "SELECT h.`HOR_COD`,h.`PAB_COD`,p.`PAB_DESCRIPCION`,h.`TPV_COD`, tv.`TPV_DESCRIPCION`,h.`HOR_DESCRIPCION`,h.`HOR_FECHA`,h.`HOR_HORA_ING`,h.`HOR_HORA_SAL`,h.`HOR_ESTADO` FROM `sys_horarios` h, sys_pabellones p, sys_tipovisita tv WHERE h.`PAB_COD`=p.`PAB_COD` AND tv.`TPV_COD`=h.`TPV_COD` AND p.CEN_COD=$centro $pab;";
                         $val = $dbmysql->query($sql);
                     while ($row = $val->fetch_object()){
                      $retval .='<tr>
                                     <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->PAB_DESCRIPCION.'</td>
-                                    <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->HOR_FECHA.'</td>
+                                    <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$generales->remplazarDia($row->HOR_FECHA).'</td>
                                     <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->HOR_DESCRIPCION.'</td>
                                     <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->TPV_DESCRIPCION.'</td>
                                     <td style="border-bottom:dotted #999999 1px;border-right:dotted #999999 1px;">'.$row->HOR_HORA_ING.'</td>

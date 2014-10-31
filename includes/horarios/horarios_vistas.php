@@ -65,7 +65,7 @@ function frm_asignacionPabellones() {
                                     <table id="tbPabellonesHorarios" class="table table-striped table-bordered table-hover">
                                         <thead>
                                             <tr id="tablaHorarios">
-                                                    <th>Dia</th>
+                                                    <th>Fecha</th>
                                                     <th>Tipo Visita</th>
                                                     <th>Descripción</th>
                                                     <th>Hora Ingreso</th>

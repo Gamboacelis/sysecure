@@ -184,7 +184,7 @@ date_default_timezone_set('America/Bogota');
         <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
         <script src="js/plantilla/libs/jquery-2.1.1.min.js"></script>
 
-        <script src="js/plantilla/libs/jquery-ui-1.11.0.min.js"></script>
+        <script src="js/plantilla/libs/jquery-ui-1.10.3.min.js"></script>
 
         <!-- JS TOUCH : include this plugin for mobile drag / drop touch events 		
         <script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script> -->

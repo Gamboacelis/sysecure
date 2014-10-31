@@ -2,6 +2,7 @@
 
 session_start();
 include_once '../conexiones/db_local.inc.php';
+include_once '../../includes/generales.php';
 $dbmysql = new database();
 date_default_timezone_set('America/Bogota');
 $funcion = isset($_GET['opcion']) ? $_GET['opcion'] : 'ninguno';
@@ -96,6 +97,7 @@ function eliminarHorario() {
 
 function buscarHorariosPabellon() {
     global $dbmysql;
+    $generales = new general();
     $codPabellon = $_POST['pabellon'];
     $sql = "SELECT * FROM `sys_horarios` h
             INNER JOIN sys_tipovisita tp
@@ -106,7 +108,7 @@ function buscarHorariosPabellon() {
             $cadenaParametros=$row->HOR_COD.',\''.$row->HOR_DESCRIPCION.'\','.$codPabellon;
             $estado=($row->HOR_ESTADO=='A')?'<span class="label label-success">Activo</span>':'<span class="label label-danger">Inactivo</span>';
             $retval .='<tr id="tablaHorarios">
-                           <td>' . $row->HOR_FECHA . '</td>
+                           <td>' . $generales->remplazarDia($row->HOR_FECHA,'d-M-Y') . '</td>
                            <td>' . $row->TPV_DESCRIPCION . '</td>
                            <td>' . $row->HOR_DESCRIPCION . '</td>
                            <td>' . $row->HOR_HORA_ING . '</td>

@@ -207,15 +207,15 @@ class general {
     }
 
 
-    function remplazarDia($fecha)
+    function remplazarDia($fecha,$formato='')
     {
 
        $dia = array('Monday'    => 'Lunes',
                  'Tuesday'   => 'Martes',
-                 'Wednesday' => 'Miercoles',
+                 'Wednesday' => 'Míercoles',
                  'Thursday'  => 'Jueves',
                  'Friday'    => 'Viernes',
-                 'Saturday'  => 'Sabado',
+                 'Saturday'  => 'Sábado',
                  'Sunday'    => 'Domingo'
         );
 
@@ -231,18 +231,22 @@ class general {
                  'August'    => 'Agosto',
                  'September'   => 'Septiembre',
                  'October' => 'Octubre',
-                 'November'  => 'Nomviembre',
+                 'November'  => 'Noviembre',
                  'December'    => 'Diciembre'
               
         );
        
-        
-        $diaSemana = $dia[date('l', strtotime($fecha))];
-        $diaFecha  = date('j', strtotime($fecha));
-        $mes  = $mes[date('F', strtotime($fecha))];
-        $anio  = date('Y', strtotime($fecha));        
+        if($formato==''){
+            $diaSemana = $dia[date('l', strtotime($fecha))];
+            $diaFecha  = date('j', strtotime($fecha));
+            $mes  = $mes[date('F', strtotime($fecha))];
+            $anio  = date('Y', strtotime($fecha));        
 
-        return $diaSemana.", ".$diaFecha." de ".$mes." del ".$anio; 
+            return $diaSemana.", ".$diaFecha." de ".$mes." del ".$anio; 
+        }else{
+            $diaSemana = $dia[date('l', strtotime($fecha))];
+         return $diaSemana.", ".date($formato,strtotime($fecha));    
+        }
     }
 
 }
