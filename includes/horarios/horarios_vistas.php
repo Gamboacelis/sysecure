@@ -10,7 +10,7 @@ function frm_asignacionPabellones() {
     $retval = '';
     $sql = "SELECT e.*,p.* FROM `sys_pabellones` p, sys_etapas e WHERE e.`NVL_COD`=p.`NVL_COD` AND p.CEN_COD={$_SESSION['usu_centro_cod']}";
     $val_s = $dbmysql->query($sql);
-    $retval = '<article class="col-sm-12 col-md-12 col-lg-6">
+    $retval = '<article class="col-sm-12 col-md-12 col-lg-5">
                     <div class="jarviswidget jarviswidget-color-darken" id="wid-id-2" data-widget-editbutton="false">
                             <header>
                                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
@@ -46,7 +46,7 @@ function frm_asignacionPabellones() {
                             </div>
                     </div>
             </article>';
-    $retval .='<article class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+    $retval .='<article class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
                     <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                             <header>
                                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>

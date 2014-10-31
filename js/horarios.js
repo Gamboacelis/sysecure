@@ -2,6 +2,7 @@ $(document).ready(function() {
 //    $('#horaIngreso').timepicker({ timeFormat: 'HH:mm' });
     $('#horaIngreso').clockpicker({placement: 'top',donetext: 'Cancelar'});
     $('#horaSalida').clockpicker({placement: 'top',donetext: 'Cancelar'});
+    
     var $cambioClaveForm = $("#smart-form-horarios").validate({
         rules: {
             dias: {required: true},
@@ -22,9 +23,8 @@ $(document).ready(function() {
         }
     });
 
-
     $("#fechaHorario").datepicker({
-        defaultDate: "+1w",
+//        defaultDate: "+1w",
         changeMonth: true,
         dateFormat: "yy-mm-dd"
     });
