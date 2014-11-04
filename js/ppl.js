@@ -312,24 +312,24 @@ function revisarVisitantesDisponibles(codPpl) {
         success: function(res) {
             $('#litaVisitantesPpl >tbody').html(res);
             $('#frmVisitantesModal').modal('show');
-            $('select#visParentesco').on('change',function(){
-                var codParen=$(this).val();
-                $.ajax({
-                    url: './includes/ppl/ppl_model.php?opcion=verificaConyugal',
-                    datetype: "json",
-                    type: 'POST',
-                    data: {codParen: codParen},
-                    success: function(res) {
-                        if(res==='1'){
-                            $.SmartMessageBox({
-                                    title : "Visita Conyugal",
-                                    content : "El Visitante Actual se su visita <span class='txt-color-orangeDark'><strong>CONYUGAL</strong></span>",
-                                    buttons : '[Aceptar]'
-                            });
-                        }
-                    }
-                });
-            });
+//            $('select#visParentesco').on('change',function(){
+//                var codParen=$(this).val();
+//                $.ajax({
+//                    url: './includes/ppl/ppl_model.php?opcion=verificaConyugal',
+//                    datetype: "json",
+//                    type: 'POST',
+//                    data: {codParen: codParen},
+//                    success: function(res) {
+//                        if(res==='1'){
+//                            $.SmartMessageBox({
+//                                    title : "Visita Conyugal",
+//                                    content : "El Visitante Actual se su visita <span class='txt-color-orangeDark'><strong>CONYUGAL</strong></span>",
+//                                    buttons : '[Aceptar]'
+//                            });
+//                        }
+//                    }
+//                });
+//            });
         }
     });
 }
@@ -347,7 +347,8 @@ function GuardarCambioVisita(codppl,codVis, tipo) {
         var nombre = $('#new').children('td').children('#visNombre').val();
         var apellido = $('#new').children('td').children('#visApellido').val();
         var parentesco = $('#new').children('td').children('#visParentesco').val();
-        if(nombre!=='' && apellido!==''){
+        if(nombre!=='' && apellido!=='')
+        {
             $.ajax({
             url: './includes/ppl/ppl_model.php?opcion=verificaConyugeVisitante',
             datetype: "json",
@@ -455,13 +456,32 @@ function ajaxGuardarVisita(url,tipo,codPlp,codVis,nombreVis,apellidoVis,parentes
                 $('#vis' + codVis).children('td').children('.visBtnGuardar').hide();
                 $('#vis' + codVis).children('td').children('.visBtnDatos').show();
             }
-            $.smallBox({
-                title: "Actualización",
-                content: "<i class='fa fa-clock-o'></i> <i>Visitante Actualizado correctamente...</i>",
-                color: "#659265",
-                iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                timeout: 4000
+            $.ajax({
+                url: './includes/ppl/ppl_model.php?opcion=verificaConyugal',
+                datetype: "json",
+                type: 'POST',
+                data: {codParen: parentesco},
+                success: function(res) {
+                    if(res==='1'){
+                        $.smallBox({
+                            title: "Visita Conyugal",
+                            content: "<i class='fa fa-clock-o'></i> <i>Visita <strong>CONYUGAL</strong> ingresada Correctamente..!!</i>",
+                            color: "#659265",
+                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                            timeout: 7000
+                        });
+                    }else{
+                        $.smallBox({
+                            title: "Actualización",
+                            content: "<i class='fa fa-clock-o'></i> <i>Visitante Actualizado correctamente...</i>",
+                            color: "#659265",
+                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                            timeout: 4000
+                        });
+                    }
+                }
             });
+            
         }
     });
 }
@@ -501,24 +521,24 @@ function nuevoVisitantePpl() {
                     $("#litaVisitantesPpl").append(nuevaFila);
                     $('#new').children('td').children('.visDatos').show();
                     $('#new').children('td').children('.visBtnGuardar').show();
-                    $('select#visParentesco').on('change',function(){
-                        var codParen=$(this).val();
-                        $.ajax({
-                            url: './includes/ppl/ppl_model.php?opcion=verificaConyugal',
-                            datetype: "json",
-                            type: 'POST',
-                            data: {codParen: codParen},
-                            success: function(res) {
-                                if(res==='1'){
-                                    $.SmartMessageBox({
-                                            title : "Visita Conyugal",
-                                            content : "El Visitante Actual se su visita <span class='txt-color-orangeDark'><strong>CONYUGAL</strong></span>",
-                                            buttons : '[Aceptar]'
-                                    });
-                                }
-                            }
-                        });
-                    });
+//                    $('select#visParentesco').on('change',function(){
+//                        var codParen=$(this).val();
+//                        $.ajax({
+//                            url: './includes/ppl/ppl_model.php?opcion=verificaConyugal',
+//                            datetype: "json",
+//                            type: 'POST',
+//                            data: {codParen: codParen},
+//                            success: function(res) {
+//                                if(res==='1'){
+//                                    $.SmartMessageBox({
+//                                            title : "Visita Conyugal",
+//                                            content : "El Visitante Actual es visita <span class='txt-color-orangeDark'><strong>CONYUGAL</strong></span>",
+//                                            buttons : '[Aceptar]'
+//                                    });
+//                                }
+//                            }
+//                        });
+//                    });
                 }
             } else {
                

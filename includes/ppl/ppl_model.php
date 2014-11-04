@@ -165,8 +165,8 @@ function mostrarVisitantesPpl() {
             /////////////////////
             $retval.='<tr id="vis' . $row->VIS_COD . '">
                         <td>' . $x . '</td>
-                        <td><div class="txtVisDatos" id="txtVisNombre">' . $row->VIS_NOMBRE . '</div><input type="text" id="visNombre" name="visNombre" class="visDatos" value="' . $row->VIS_NOMBRE . '"></td>
-                        <td><div class="txtVisDatos" id="txtVisApellido">' . $row->VIS_APELLIDO . '</div><input type="text" id="visApellido" name="visApellido" class="visDatos" value="' . $row->VIS_APELLIDO . '"></td>
+                        <td><div class="txtVisDatos" id="txtVisNombre">' . utf8_decode($row->VIS_NOMBRE) . '</div><input type="text" id="visNombre" name="visNombre" class="visDatos" value="' . $row->VIS_NOMBRE . '"></td>
+                        <td><div class="txtVisDatos" id="txtVisApellido">' . utf8_decode($row->VIS_APELLIDO) . '</div><input type="text" id="visApellido" name="visApellido" class="visDatos" value="' . $row->VIS_APELLIDO . '"></td>
                         <td><div class="txtVisDatos" id="txtVisParentesco">' . $row->PAR_DESCRIPCION . '</div><select id="visParentesco" name="visParentesco" class="visDatos">' . comboParentesco($row->TPV_COD,$row->PAR_COD) . '</select></td>
                         <td>'.$estado.'</td>    
                       </tr>';
@@ -266,7 +266,7 @@ function guardarListaVisitante() {
             $sql = "INSERT INTO `sys_visitante_ppl` (PPL_COD,VIS_COD,PAR_COD)
                         VALUES($codPpl,$idVisitante,$parCod);";
 
-            echo $sql;            
+//            echo $sql;            
             $val = $dbmysql->query($sql);
             $clGeneral->auditoria('I', 'sys_visitante_ppl', 'valores:'.$codPpl.','.$idVisitante.','.$parCod);    
             $sql2 = "SELECT * FROM `sys_parentesco` WHERE PAR_COD='$parCod';";
