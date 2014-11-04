@@ -19,7 +19,8 @@ switch ($funcion) {
 
 function reporte_parentesco() {
     global $dbmysql,$clGeneral;
-    $sql="SELECT e.*,p.* FROM `sys_parentesco` p, sys_tipovisita e WHERE e.`TPV_COD`=p.`TPV_COD`";
+    $centro=$_SESSION["usu_centro_cod"];
+    $sql="SELECT e.*,p.*,c.* FROM `sys_parentesco` p, sys_tipovisita e, sys_centro c WHERE c.CEN_COD=p.CEN_COD AND e.`TPV_COD`=p.`TPV_COD` AND p.CEN_COD=$centro;";
      $val_s = $dbmysql->query($sql);
         $retval = '<article class="col-sm-12 col-md-12 col-lg-8">
                     <div class="botonesSuperiores">
@@ -44,6 +45,7 @@ function reporte_parentesco() {
                                                             <thead>
                                                                     <tr>
                                                                             <th>Código</th>
+                                                                            <th>Centro</th>
                                                                             <th>Tipo Parentesco</th>
                                                                             <th>Descripción</th>
                                                                             <th>Acción</th>
@@ -54,6 +56,7 @@ function reporte_parentesco() {
                                                         $cadenaParametros=utf8_encode($row->PAR_COD.','."'$row->PAR_DESCRIPCION'");
                                                          $retval .= '<tr>
                                                                             <td>'.$row->PAR_COD.'</td>
+                                                                            <td>'.$row->CEN_DESCRIPCION.'</td>
                                                                             <td>'.$row->TPV_DESCRIPCION.'</td>
                                                                             <td>'.$row->PAR_DESCRIPCION.'</td>
                                                                             <td>
@@ -100,12 +103,13 @@ function frmParentesco() {
                                                             </header>
                                                             <fieldset>
                                                                 <input type="hidden" id="IDparentesco" name="IDparentesco">
+                                                                <input type="hidden" id="codCentro" name="codCentro">
                                                                 <div class="row">
                                                                     <section class="col col-6">
                                                                             <label class="label">Tipo Parentesco:</label>
                                                                             <label class="select">
                                                                                     <select id="tpparentesco" name="tpparentesco">
-                                                                                        <option value="0" selected="" disabled="">-- Niveles --</option>
+                                                                                        <option value="0" selected="" disabled="">-- Seleccione --</option>
                                                                                         ' . comboTipoParentesco() . '
                                                                                     </select> <i></i> 
                                                                             </label>

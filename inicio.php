@@ -284,14 +284,14 @@ if ($_SESSION["autenticado"] == 'SI') {
             <div id="main" role="main">
 
                 <!-- RIBBON -->
-                <div id="ribbon">
+                <!--div id="ribbon">
                     <span class="ribbon-button-alignment"> 
                         <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh"  rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
                             <i class="fa fa-refresh"></i>
                         </span> 
                     </span>
                     <!-- breadcrumb -->
-                    <ol class="breadcrumb">
+                    <!--ol class="breadcrumb">
                         <li>Inicio</li><li>Dashboard</li>
                     </ol>
                     <form action="javascript:busquedas();" class="header-search pull-right">
@@ -306,10 +306,10 @@ if ($_SESSION["autenticado"] == 'SI') {
                 <div id="content">
 
                     <div class="row">
-                        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+                        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-6">
                             <h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-home"></i> Inicio <span>>  <?php echo $titulo ?></span></h1>
                         </div>
-                        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+                        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-6">
                             <ul id="sparks" class="">
                                 <li class="sparks-info">
                                 <h5>

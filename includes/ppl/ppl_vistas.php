@@ -120,7 +120,7 @@ function frmPpl(){
                                                                                 <label class="select">
                                                                                         <select id="estado" name="estado">
                                                                                                 <option value="0" selected="" disabled="">-- Estado --</option>
-                                                                                                <option value="A">Privado Livertad</option>
+                                                                                                <option value="A">Privado Libertad</option>
                                                                                                 <option value="L">Libre</option>
                                                                                                 <option value="T">Traslado</option>
                                                                                                 <option value="D">Audiencia</option>

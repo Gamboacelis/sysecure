@@ -70,11 +70,17 @@ function enviarDatosPabellon() {
 function enviarDatosPabellones() {
     global $dbmysql;
     $idpab = $_POST['codigo'];
-    $sql = "SELECT * FROM `sys_pabellones` WHERE PAB_COD != $idpab ";
+    $centro=$_SESSION["usu_centro_cod"];
+    $sql = "SELECT * FROM `sys_pabellones` WHERE PAB_COD != $idpab AND CEN_COD=$centro;";
     $val = $dbmysql->query($sql);
-    $retval = '';
-    while ($row = $val->fetch_object()) {
-        $retval.='<option value="' . $row->PAB_COD . '"> Pabellon ' . $row->PAB_DESCRIPCION . '</option>';
+    if($val->num_rows>0){
+        $retval = '';
+        while ($row = $val->fetch_object()) {
+            $retval.='<option value="' . $row->PAB_COD . '"> Pabellon ' . $row->PAB_DESCRIPCION . '</option>';
+        }
+        
+    }else{
+        $retval.='<option value=""> No existen mas Pabellones</option>';
     }
     echo $retval;
 }
