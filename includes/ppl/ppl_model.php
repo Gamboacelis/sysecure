@@ -256,13 +256,16 @@ function guardarListaVisitante() {
         $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_ESTADO)
                 VALUES('$nombre','$apellido','N');";
         $val = $dbmysql->query($sql);
+        $idVisitante = $dbmysql->lastid();
         $clGeneral->auditoria('I', 'sys_visitante', 'valores:'.$nombre.','.$apellido.',N');    
         if ($val) {
-            $IdVisita = $dbmysql->maxid('VIS_COD', 'sys_visitante');
+            //$IdVisita = $dbmysql->maxid('VIS_COD', 'sys_visitante');
             $sql = "INSERT INTO `sys_visitante_ppl` (PPL_COD,VIS_COD,PAR_COD)
-                        VALUES($codPpl,$IdVisita,$parCod);";
+                        VALUES($codPpl,$idVisitante,$parCod);";
+
+            echo $sql;            
             $val = $dbmysql->query($sql);
-            $clGeneral->auditoria('I', 'sys_visitante_ppl', 'valores:'.$codPpl.','.$IdVisita.','.$parCod);    
+            $clGeneral->auditoria('I', 'sys_visitante_ppl', 'valores:'.$codPpl.','.$idVisitante.','.$parCod);    
             $sql2 = "SELECT * FROM `sys_parentesco` WHERE PAR_COD='$parCod';";
             $val2 = $dbmysql->query($sql2);
             $row = $val2->fetch_object();

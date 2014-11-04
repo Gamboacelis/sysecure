@@ -32,6 +32,13 @@ class database {
                 $id = $obj->fetch_object();
 		return $id->lastid;
 	}
+
+	function lastid( ){
+		
+		return mysqli_insert_id($this->db);
+		
+	}
+
 	
 	function newid( $table ){
 		$id = $this->maxid($table);
