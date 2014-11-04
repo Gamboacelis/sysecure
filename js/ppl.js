@@ -79,6 +79,8 @@ $(document).ready(function() {
                 }
             });
         });
+        
+        
 });
 function mostrarCelda() {
     $('#pabellon').val();
@@ -163,7 +165,7 @@ function agregarImagenPpl() {
             $.smallBox({
                 title: 'Error...!',
                 content: "<i class='fa fa-clock-o'></i> <i>Error durante el proceso, datos no guardados</i>",
-                color: "#659265",
+                color: "#C46A69",
                 iconSmall: "fa fa-check fa-2x fadeInRight animated",
                 timeout: 4000
             });
@@ -310,6 +312,24 @@ function revisarVisitantesDisponibles(codPpl) {
         success: function(res) {
             $('#litaVisitantesPpl >tbody').html(res);
             $('#frmVisitantesModal').modal('show');
+            $('select#visParentesco').on('change',function(){
+                var codParen=$(this).val();
+                $.ajax({
+                    url: './includes/ppl/ppl_model.php?opcion=verificaConyugal',
+                    datetype: "json",
+                    type: 'POST',
+                    data: {codParen: codParen},
+                    success: function(res) {
+                        if(res==='1'){
+                            $.SmartMessageBox({
+                                    title : "Visita Conyugal",
+                                    content : "El Visitante Actual se su visita <span class='txt-color-orangeDark'><strong>CONYUGAL</strong></span>",
+                                    buttons : '[Aceptar]'
+                            });
+                        }
+                    }
+                });
+            });
         }
     });
 }
@@ -327,7 +347,8 @@ function GuardarCambioVisita(codppl,codVis, tipo) {
         var nombre = $('#new').children('td').children('#visNombre').val();
         var apellido = $('#new').children('td').children('#visApellido').val();
         var parentesco = $('#new').children('td').children('#visParentesco').val();
-        $.ajax({
+        if(nombre!=='' && apellido!==''){
+            $.ajax({
             url: './includes/ppl/ppl_model.php?opcion=verificaConyugeVisitante',
             datetype: "json",
             type: 'POST',
@@ -359,6 +380,15 @@ function GuardarCambioVisita(codppl,codVis, tipo) {
                 }
             }
         });
+        }else{
+            $.smallBox({
+                title: 'Error...!',
+                content: "<i class='fa fa-clock-o'></i> <i>Debe ingresar Nombre y Apellido</i>",
+                color: "#C46A69",
+                iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                timeout: 5000
+            });
+        }
     } else {
         var url = './includes/ppl/ppl_model.php?opcion=actualizaListaVisitante';
         var codigo = codppl;
@@ -471,6 +501,24 @@ function nuevoVisitantePpl() {
                     $("#litaVisitantesPpl").append(nuevaFila);
                     $('#new').children('td').children('.visDatos').show();
                     $('#new').children('td').children('.visBtnGuardar').show();
+                    $('select#visParentesco').on('change',function(){
+                        var codParen=$(this).val();
+                        $.ajax({
+                            url: './includes/ppl/ppl_model.php?opcion=verificaConyugal',
+                            datetype: "json",
+                            type: 'POST',
+                            data: {codParen: codParen},
+                            success: function(res) {
+                                if(res==='1'){
+                                    $.SmartMessageBox({
+                                            title : "Visita Conyugal",
+                                            content : "El Visitante Actual se su visita <span class='txt-color-orangeDark'><strong>CONYUGAL</strong></span>",
+                                            buttons : '[Aceptar]'
+                                    });
+                                }
+                            }
+                        });
+                    });
                 }
             } else {
                

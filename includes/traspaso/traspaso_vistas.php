@@ -53,122 +53,59 @@ function revisarTraspasoPpl() {
         return $retval;
 }
 function aplicarTraspaso(){
-
     $retval = '';
-
     $retval = '<div class="modal fade" id="frmAplicarTraspaso" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
-
                     <div class="modal-dialog">
-
                         <div class="modal-content">
-
                             <div class="modal-header">
-
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-
                                         &times;
-
                                 </button>
-
                             </div>
-
                             <div class="modal-body">
-
                                 <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
-
                                                 <header>
-
                                                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-
                                                         <h2>Realizar Traspaso de PPL</h2>                
-
                                                 </header>
-
                                                 <div> 
-
                                                     <div class="widget-body no-padding">
-
                                                         <form id="smart-form-register" class="smart-form" action="javascript:guardarTraspaso()">
-
-
                                                             <fieldset>
-
                                                                     <input type="hidden" id="IDppl" name="IDppl">
-
-
                                                             </fieldset> 
-
                                                             <fieldset>
-
                                                                 <div class="row">
-
-                                                                
                                                                     <section class="col col-6">
-
                                                                             <label class="input" id="pabellonActual"> </label>
-
-                                                                                 
-                                                                            
-
                                                                     </section>                                                                    
-
                                                                 </div>
                                                                 <div class="row">
-
                                                                     <section class="col col-6">
-
                                                                             <label class="input" id="tiempo_sancion"><strong>Pabellon a transferir:</strong></label>
-
                                                                                 <select id="nuevoPabellon"  name="nuevoPabellon" onchange="transferirApabellon()"  class="form-control">
                                                                                 </select>                                                                            
-                                                                            
-    
                                                                    </section>
-                                                         
-
                                                                 </div>      
                                                                 <div class="row">
-
                                                                     <section class="col col-6">
-
                                                                             <label class="input" >Motivo del traspaso</label>
-
                                                                             <textarea rows="4" cols="50" class="form-control" id="motivo" name="motivo"></textarea>
-
-                                                                            
-    
                                                                    </section>
-                                                         
-
                                                                 </div>                                                                                                                                  
                                                             </fieldset>
-
                                                             <footer>
-
                                                                     <button type="submit" class="btn btn-primary">
-
                                                                             Transferir
-
                                                                     </button>
-
                                                             </footer>
-
                                                         </form>                     
-
                                                 </div>
-
                                             </div>
-
                                         </div>
-
                                 </div>
-
-                            
-
                         </div>
-
                     </div>
-
                 </div>';
 
     return $retval;

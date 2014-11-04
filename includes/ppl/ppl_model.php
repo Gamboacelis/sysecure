@@ -50,6 +50,9 @@ switch ($funcion) {
     case 'verificaConyugeVisitante':
         verificaConyugeVisitante();
         break;
+    case 'verificaConyugal':
+        verificaConyugal();
+        break;
 }
 
 function enviarDatosPpl() {
@@ -283,8 +286,6 @@ function guardarListaVisitante() {
         //////DATOS///
         $datos['datosActualizados'] = array("tipo"=>"repetido","codigoPPL" => $row->PPL_COD,"nombrePPL" => $row->PPL_NOMBRE,"apellidoPPL" => $row->PPL_APELLIDO, "codigoVis" => $row->VIS_COD, "nombreVisita" => $row->VIS_NOMBRE, "apellidoVisita" => $row->VIS_APELLIDO, "parentescoVisita" => $row->PAR_DESCRIPCION);
         echo json_encode($datos); // RESULTADO EXITOSO
-        
-        
     }
 }
 
@@ -355,6 +356,23 @@ function verificaConyugeVisitante(){
         }else{
             echo 0;
         }
+    }
+}
+
+function verificaConyugal(){
+    global $dbmysql;
+    $codParen = $_POST['codParen'];
+    $sql_tipo = "SELECT * FROM sys_parentesco WHERE `PAR_COD`=$codParen;";
+    $val_tipo = $dbmysql->query($sql_tipo);
+    if($val_tipo->num_rows>0){
+        $row = $val_tipo->fetch_object();
+        if($row->TPV_COD==2){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }else{
+        echo 0;
     }
 }
 

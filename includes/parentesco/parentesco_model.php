@@ -39,11 +39,11 @@ function actualizarDatosParentesco() {
     $codigo = $_POST['IDparentesco'];
     $tpparentesco = $_POST["tpparentesco"];
     $descripcion = strtoupper($_POST["descripcion"]);
-
+    $centro=$_SESSION["usu_centro_cod"];
     $sql = "UPDATE `sys_parentesco` SET 
                 TPV_COD  = $tpparentesco,
                 PAR_DESCRIPCION   = '$descripcion'
-            WHERE PAR_COD=$codigo;";
+            WHERE PAR_COD=$codigo AND CEN_COD=$centro;";
     $val = $dbmysql->query($sql);
     if ($val) {
         echo 1;
@@ -56,9 +56,9 @@ function guardaDatosParentesco() {
     global $dbmysql;
     $tpparentesco = $_POST["tpparentesco"];
     $descripcion = strtoupper($_POST["descripcion"]);
-
-    $sql = "INSERT INTO `sys_parentesco`(TPV_COD,PAR_DESCRIPCION)VALUES
-            ($tpparentesco,'$descripcion');";
+    $centro=$_SESSION["usu_centro_cod"];
+    $sql = "INSERT INTO `sys_parentesco`(CEN_COD,TPV_COD,PAR_DESCRIPCION)VALUES
+            ($centro,$tpparentesco,'$descripcion');";
     $val = $dbmysql->query($sql);
     if ($val) {
         echo 1;
@@ -70,10 +70,11 @@ function guardaDatosParentesco() {
 function eliminarParentesco() {
     global $dbmysql;
     $codigo = $_POST['codigo'];
+    $centro=$_SESSION["usu_centro_cod"];
     $sql_veri = "SELECT * FROM `sys_visitante_ppl` WHERE PAR_COD=$codigo;";
     $val_veri = $dbmysql->query($sql_veri);
     if($val_veri->num_rows==0){
-        $sql = "DELETE  FROM `sys_parentesco` WHERE PAR_COD=$codigo;";
+        $sql = "DELETE  FROM `sys_parentesco` WHERE PAR_COD=$codigo AND CEN_COD=$centro;";
         $val = $dbmysql->query($sql);
         if ($val) {
             echo 1;

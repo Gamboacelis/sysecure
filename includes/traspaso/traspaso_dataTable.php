@@ -129,7 +129,7 @@ global $dbmysql;
                             $estado='<span class="label label-info">Audiencia</span>';
                         break;
                     default:
-                        $estado='<span class="label label-primary">Privado Livertad</span>';
+                        $estado='<span class="label label-primary">Privado Libertad</span>';
                         break;
                 }
                     $img=($aRow[ 'PPL_IMG' ]!='')?''.SISTEM_NAME.PATH_PPL.$aRow[ 'PPL_IMG' ]:SISTEM_NAME.'/img/avatars/male.png';

@@ -123,7 +123,7 @@ global $dbmysql;
                 /* General output */
                     $nombre=$aRow[ 'PPL_NOMBRE' ].' '.$aRow[ 'PPL_APELLIDO' ];
                     $cadenaParametros=utf8_encode($aRow[ 'PPL_COD' ].','."'$nombre'");
-                    $estado=($aRow['PPL_ESTADO']=='A')?'<span class="label label-primary">Privado Livertad</span>':'<span class="label label-danger">Inactivo</span>';
+                    $estado=($aRow['PPL_ESTADO']=='A')?'<span class="label label-primary">Privado Libertad</span>':'<span class="label label-danger">Inactivo</span>';
                     $output['aaData'][] =array( ''.utf8_encode($aRow[ 'PPL_COD' ]).'',
                                                 '<div style="text-align:center;"><span class="badge bg-color-blue">'.$aRow[ 'PAB_DESCRIPCION' ].'</span></div>',
                                                 ''.utf8_encode($nombre).'',
