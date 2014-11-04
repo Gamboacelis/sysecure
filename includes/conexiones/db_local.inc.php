@@ -35,7 +35,7 @@ class database {
 
 	function lastid( ){
 		
-		return mysqli_insert_id($this->db);
+		return mysqli_insert_id($this->db); 
 		
 	}
 
