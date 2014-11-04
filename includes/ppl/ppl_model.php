@@ -265,9 +265,7 @@ function guardarListaVisitante() {
             //$IdVisita = $dbmysql->maxid('VIS_COD', 'sys_visitante');
             $sql = "INSERT INTO `sys_visitante_ppl` (PPL_COD,VIS_COD,PAR_COD)
                         VALUES($codPpl,$idVisitante,$parCod);";
-
-            echo $sql;            
-            $val = $dbmysql->query($sql);
+           $val = $dbmysql->query($sql);
             $clGeneral->auditoria('I', 'sys_visitante_ppl', 'valores:'.$codPpl.','.$idVisitante.','.$parCod);    
             $sql2 = "SELECT * FROM `sys_parentesco` WHERE PAR_COD='$parCod';";
             $val2 = $dbmysql->query($sql2);
