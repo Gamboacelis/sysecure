@@ -134,11 +134,13 @@ function actualizarDatosVisitante() {
                 VIS_CORREO    = '$correo'
                 $estado
             WHERE VIS_COD=$codigo;";
+
     $val = $dbmysql->query($sql);
     
     $sql1 = "UPDATE `sys_visitante_ppl` SET 
                 PAR_COD =  $parentesco
             WHERE VIS_COD=$codigo AND PPL_COD=$codPpl;";
+
     $val1 = $dbmysql->query($sql1);
    if ($val && $val1) {
         if($codeImage != ""){saveImage($codeImage,$codigo);}    

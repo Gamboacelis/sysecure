@@ -156,6 +156,7 @@ function carga_DatosIncialesVisitantes(edt,vis,ppl) {
 function guardarVisitante(tipo) {
     var visitante = $('#IDvisitante').val();
     if (visitante === '') {
+
         $.ajax({
             url: './includes/visitante/visitantes_model.php?opcion=guardaDatosVisitante',
             datetype: "json",
@@ -179,6 +180,7 @@ function guardarVisitante(tipo) {
             }
         });
     } else {
+
         $.ajax({
             url: './includes/visitante/visitantes_model.php?opcion=actualizarDatosVisitante',
             datetype: "json",
@@ -234,6 +236,8 @@ function guardarVisitante(tipo) {
                             $('#frmVisitanteModal').modal('hide');
                             break;
                     }
+
+                    window.location.reload();
                 }
             },
             error: function (){
