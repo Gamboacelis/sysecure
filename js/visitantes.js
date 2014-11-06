@@ -154,9 +154,11 @@ function carga_DatosIncialesVisitantes(edt,vis,ppl) {
 }
 
 function guardarVisitante(tipo) {
+    debugger
     var visitante = $('#IDvisitante').val();
     
     if (visitante === '') {
+
         $.ajax({
             url: './includes/visitante/visitantes_model.php?opcion=guardaDatosVisitante',
             datetype: "json",
@@ -184,6 +186,7 @@ function guardarVisitante(tipo) {
         });
 
     } else {
+
         $.ajax({
             url: './includes/visitante/visitantes_model.php?opcion=actualizarDatosVisitante',
             datetype: "json",
