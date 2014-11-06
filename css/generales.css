@@ -40,5 +40,7 @@ div.dataTables_filter label{float:left}
 .cargar_txt span{margin:0 0 0 12px;z-index:2}
 #tbPermisosDisponibles #tablaHorarios label{display:block}
 #email,#usuario,#password,#passwordConfirm{text-transform:lowercase}
+#sparks li {overflow: unset;}
+nav ul li a {max-width: 220px;}
 .tablaPabellonesDetalle:hover{color:#058dc7;cursor:pointer}
 .txtPabellonHorario{color:#f00;font-size:1.2em;font-weight:bolder}

@@ -22,9 +22,9 @@ class database {
 	
 	function query( $query ){
 		$obj = $this->db->query($query);
-
 		return $obj;
 	}
+	
 	
 	function maxid( $campo,$table ){
 		$query = "SELECT MAX($campo) AS lastid FROM $table";
@@ -35,7 +35,7 @@ class database {
 
 	function lastid( ){
 		
-		return mysqli_insert_id($this->db); 
+		return $this->db->insert_id; 
 		
 	}
 
