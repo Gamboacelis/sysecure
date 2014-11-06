@@ -1,4 +1,5 @@
 input{text-transform:uppercase}
+nav ul li a{max-width:220px}
 .select2-search{z-index:999999}
 #ventanaLogin{display:none}
 #listaReporteHorarios,#listaReporteSancionados,#listaReporteVisitas,#listaReporteHorPab{display:none}
@@ -8,6 +9,7 @@ input{text-transform:uppercase}
 #frmVisitasModal .modal-dialog{width:750px}
 #guardarVisitanteNuevo{display:none}
 #verlugarCedula{color:#f00;font-size:10em;margin:0 auto;text-align:center}
+#sparks li{overflow:unset}
 .bootstrap-timepicker-widget{z-index:10000 !important}
 .smart-style-3 #header{background-color:#3ea7d1;background-image:-webkit-linear-gradient(top, #3ea7d1, #058dc7);background-image:-moz-linear-gradient(top, #3ea7d1, #058dc7);background-image:-o-linear-gradient(top, #3ea7d1, #058dc7);background-image:-ms-linear-gradient(top, #3ea7d1, #058dc7);background-image:linear-gradient(to bottom, #3ea7d1, #058dc7)}
 .logo-principal{margin:50px;text-align:center}
