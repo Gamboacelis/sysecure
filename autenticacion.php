@@ -28,6 +28,7 @@ if($consulta->num_rows>0){
             $_SESSION["usu_centro_cod"]=$row->CEN_COD;
             $_SESSION["usu_centro_descrip"]=$row->CEN_DESCRIPCION;
         $clGeneral->registrar_acceso();
+//        window.open("url.html","algo","type=fullWindow, fullscreen=yes, resizable=yes").focus();
 	echo "ok";
 }
 else{

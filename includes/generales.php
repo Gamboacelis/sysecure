@@ -103,7 +103,18 @@ class general {
         }
         return $pabellon;
     }
-
+    function obtenerPabellon($pabellon){
+         global $dbmysql;
+        $sql = "SELECT PAB_DESCRIPCION
+                FROM `sys_pabellones` 
+                WHERE PAB_COD=$pabellon";
+        $val = $dbmysql->query($sql);
+        if ($val->num_rows > 0) {
+            $row = $val->fetch_object();
+            $pabellon = $row->PAB_DESCRIPCION;
+        }
+        return $pabellon;
+    }
     function obtenerHorariosPabellon($codigoPabellon) {
         global $dbmysql;
         $sql = "SELECT * FROM `sys_horarios` WHERE PAB_COD=$codigoPabellon";
