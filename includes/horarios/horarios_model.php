@@ -52,20 +52,25 @@ function actualizarDatosHorario() {
     $horaIngreso = $_POST["horaIngreso"];
     $horaSalida = $_POST["horaSalida"];
     $estado = $_POST["estado"];
-
-    $sql = "UPDATE `sys_horarios` SET 
-                TPV_COD             = '$tipoVisitas',
-                HOR_DESCRIPCION     = '$descripcion',
-                HOR_FECHA           = '$fecha',
-                HOR_HORA_ING        = '$horaIngreso',
-                HOR_HORA_SAL        = '$horaSalida',
-                HOR_ESTADO          ='$estado'
-            WHERE HOR_COD=$codigo;";
-    $val = $dbmysql->query($sql);
-    if ($val) {
-        echo 1;
-    } else {
-        echo 0;
+    $consulta="SELECT * FROM sys_horarios WHERE TPV_COD=$tipoVisitas AND HOR_FECHA='$fecha' AND HOR_HORA_ING='$horaIngreso' AND HOR_HORA_SAL='$horaSalida'";
+    $val_con = $dbmysql->query($consulta);
+    if ($val_con->num_rows==0){
+        $sql = "UPDATE `sys_horarios` SET 
+                    TPV_COD             = '$tipoVisitas',
+                    HOR_DESCRIPCION     = '$descripcion',
+                    HOR_FECHA           = '$fecha',
+                    HOR_HORA_ING        = '$horaIngreso',
+                    HOR_HORA_SAL        = '$horaSalida',
+                    HOR_ESTADO          ='$estado'
+                WHERE HOR_COD=$codigo;";
+        $val = $dbmysql->query($sql);
+        if ($val) {
+            echo 1;
+        } else {
+            echo 0;
+        }
+    }else{
+        echo 2;
     }
 }
 
@@ -77,10 +82,17 @@ function guardaDatosHorario() {
     $horaSalida = $_POST["horaSalida"];
     $pabellon = $_POST["IDpabellonFrm"];
     $tipoVisitas=$_POST["tipoVisitas"]; 
-    $sql = "INSERT INTO `sys_horarios`(PAB_COD,TPV_COD,HOR_DESCRIPCION,HOR_FECHA,HOR_HORA_ING,HOR_HORA_SAL,HOR_ESTADO)VALUES
-            ('$pabellon','$tipoVisitas','$descripcion','$fecha','$horaIngreso','$horaSalida','A');";
-    $val = $dbmysql->query($sql);
-    if ($val) {echo 1;} else {echo 0;}
+    $consulta="SELECT * FROM sys_horarios WHERE TPV_COD=$tipoVisitas AND HOR_FECHA='$fecha' AND HOR_HORA_ING='$horaIngreso' AND HOR_HORA_SAL='$horaSalida'";
+    $val_con = $dbmysql->query($consulta);
+    if ($val_con->num_rows==0){
+        $sql = "INSERT INTO `sys_horarios`(PAB_COD,TPV_COD,HOR_DESCRIPCION,HOR_FECHA,HOR_HORA_ING,HOR_HORA_SAL,HOR_ESTADO)VALUES
+                ('$pabellon','$tipoVisitas','$descripcion','$fecha','$horaIngreso','$horaSalida','A');";
+        $val = $dbmysql->query($sql);
+        if ($val) {echo 1;} else {echo 0;}
+    }else{
+        echo 2;
+    }
+    
 }
 
 function eliminarHorario() {

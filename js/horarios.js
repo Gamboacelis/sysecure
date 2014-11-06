@@ -93,6 +93,16 @@ function guardarHorario() {
                             $('#tbPabellonesHorarios >tbody').html(resultado);
                         }
                     });
+                }else{
+                    if(res === '2'){
+                        $.smallBox({
+                            title: 'Duplicado...',
+                            content: "<i class='fa fa-clock-o'></i> <i>El horario ingresado ya Existef</i>",
+                            color: "#C46A69",
+                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                            timeout: 4000
+                        });
+                    }
                 }
             }
         });
@@ -121,6 +131,16 @@ function guardarHorario() {
                             $('#tbPabellonesHorarios >tbody').html(resultado);
                         }
                     });
+                }else{
+                    if(res === '2'){
+                        $.smallBox({
+                            title: 'Duplicado...',
+                            content: "<i class='fa fa-clock-o'></i> <i>El horario ingresado ya Existef</i>",
+                            color: "#C46A69",
+                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                            timeout: 4000
+                        });
+                    }
                 }
             }
         });
