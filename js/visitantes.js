@@ -155,7 +155,6 @@ function carga_DatosIncialesVisitantes(edt,vis,ppl) {
 
 function guardarVisitante(tipo) {
     var visitante = $('#IDvisitante').val();
-    
     if (visitante === '') {
         $.ajax({
             url: './includes/visitante/visitantes_model.php?opcion=guardaDatosVisitante',
@@ -175,14 +174,10 @@ function guardarVisitante(tipo) {
                     location.reload();
                 }
              },
-            error: function (res)
-            {
+            error: function (res){
                 alert("error al guardar la informacion en la base de datos.")
             }
-            
-
         });
-
     } else {
         $.ajax({
             url: './includes/visitante/visitantes_model.php?opcion=actualizarDatosVisitante',
@@ -199,27 +194,50 @@ function guardarVisitante(tipo) {
                         timeout: 4000
                     });
                     limpiarFrmVisitante();
-                    if(tipo===1){
-                        var dtTable=$('#listaVisitantes').dataTable({
-                            "bDestroy": true,
-                            "bServerSide": true,
-                            "sAjaxSource": "includes/visitante/visitantes_dataTable.php",
-                            "oLanguage": {
-                                "sEmptyTable": "No hay datos disponibles en la tabla",
-                                "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
-                                "sInfoEmpty": "No hay entradas para mostrar",
-                                "sInfoFiltered": " - Filtrado de registros _MAX_",
-                                "sZeroRecords": "No hay registros que mostrar"
-                            }
-                        });
-                        dtTable.fnReloadAjax();
-                        $('#frmVisitanteModal').modal('hide');
-                    }else{
-                        var codPpl = $('#IDvisPpl').val();
-                        revisarVisitantesAsignados(codPpl,2);
-                        $('#frmVisitanteModal').modal('hide');
+                    debugger;
+                    switch (tipo){
+                        case 1:
+                                var dtTable=$('#listaVisitantes').dataTable({
+                                "bDestroy": true,
+                                "bServerSide": true,
+                                "sAjaxSource": "includes/visitante/visitantes_dataTable.php",
+                                "oLanguage": {
+                                    "sEmptyTable": "No hay datos disponibles en la tabla",
+                                    "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
+                                    "sInfoEmpty": "No hay entradas para mostrar",
+                                    "sInfoFiltered": " - Filtrado de registros _MAX_",
+                                    "sZeroRecords": "No hay registros que mostrar"
+                                }
+                            });
+                            dtTable.fnReloadAjax();
+                            $('#frmVisitanteModal').modal('hide');
+                            break;
+                        case 2:
+                            var dtTable=$('#listaAcceso2').dataTable({
+                                "bDestroy": true,
+                                "bServerSide": true,
+                                "sAjaxSource": "includes/controles/acceso2/acceso2_dataTable.php",
+                                "oLanguage": {
+                                    "sEmptyTable": "No hay datos disponibles en la tabla",
+                                    "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
+                                    "sInfoEmpty": "No hay entradas para mostrar",
+                                    "sInfoFiltered": " - Filtrado de registros _MAX_",
+                                    "sZeroRecords": "No hay registros que mostrar"
+                                }
+                            });
+                            dtTable.fnReloadAjax();
+                            $('#frmVisitanteModal').modal('hide');
+                            break;
+                        default :
+                            var codPpl = $('#IDvisPpl').val();
+                            revisarVisitantesAsignados(codPpl,2);
+                            $('#frmVisitanteModal').modal('hide');
+                            break;
                     }
                 }
+            },
+            error: function (){
+                alert('error');
             }
         });
     }

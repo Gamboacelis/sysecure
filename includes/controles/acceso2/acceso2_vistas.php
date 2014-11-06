@@ -66,12 +66,13 @@ function frmAccesoVisitante() {
                                                 </header>
                                                 <div>
                                                     <div class="widget-body no-padding">
-                                                        <form id="smart-form-register" class="smart-form" action="javascript:guardarVisitante()">
+                                                        <form id="form-visitante" class="smart-form" action="javascript:guardarVisitante(2)">
                                                             <header>
                                                                     Formulario de Registro
                                                             </header>
                                                             <fieldset>
                                                                     <input type="hidden" id="IDvisitante" name="IDvisitante">
+                                                                    <input type="hidden" id="IDvisPpl" name="IDvisPpl">
                                                             </fieldset>
                                                             <fieldset>
                                                                 <div class="row">
