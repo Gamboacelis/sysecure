@@ -154,7 +154,6 @@ function carga_DatosIncialesVisitantes(edt,vis,ppl) {
 }
 
 function guardarVisitante(tipo) {
-    debugger
     var visitante = $('#IDvisitante').val();
     
     if (visitante === '') {
@@ -222,6 +221,8 @@ function guardarVisitante(tipo) {
                         revisarVisitantesAsignados(codPpl,2);
                         $('#frmVisitanteModal').modal('hide');
                     }
+
+                    window.location.reload();
                 }
             }
         });
