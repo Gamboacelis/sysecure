@@ -46,7 +46,7 @@ function reporteHorPab() {
     $retval .= '</article>';
     return $retval;
 }
-function pabellonesVista($nivel){
+function pabellonesVista(){
     global $dbmysql;
     $retval = '';
     $centro=$_SESSION['usu_centro_cod'];
