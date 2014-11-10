@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>TODO write content</div>
+        <script>
+           
+            var f1 = '01/11/2014 10:20:00';
+            var f2='06/11/2014 7:48:00';
+            alert(restaFechas(f1,f2));
+            function restaFechas(f1,f2){
+                    //Separa Fecha de Horas
+                    var aFec1 = f1.split(' '); 
+                    var aFec2 = f2.split(' '); 
+                    //Extarer Fechas
+                    var aFecha1=aFec1[0].split('/'); 
+                    var aFecha2=aFec2[0].split('/'); 
+                    var fFecha1 = Date.UTC(aFecha1[2],aFecha1[1]-1,aFecha1[0]); 
+                    var fFecha2 = Date.UTC(aFecha2[2],aFecha2[1]-1,aFecha2[0]); 
+                    var dif = fFecha2 - fFecha1;
+                    var dias = Math.floor(dif / (1000 * 60 * 60 * 24)); 
+                    var horas=dias*24;
+                    var minutos=horas*60;
+                    //Extraer Horas
+                    var hora1=aFec1[1].split(':'), 
+                        hora2=aFec2[1].split(':'); 
+                        var aMin,bMin;
+                        if(parseInt(hora1[0])<parseInt(hora2[0])){
+                            aMin=((parseInt(hora1[0])+24)-parseInt(hora2[0]))*60;
+                            minutos=minutos-1440;
+                        }else{
+                            aMin=(parseInt(hora1[0])-parseInt(hora2[0]))*60;
+                        }
+                        if(parseInt(hora1[1])<parseInt(hora2[1])){
+                            bMin=(parseInt(hora1[1])+60)-parseInt(hora2[1]);
+                            aMin=aMin-60;
+                        }else{
+                            bMin=hora1[1]-hora2[1];
+                        }
+                        var tiempo=aMin+bMin;
+                        var total=minutos+tiempo;
+                    return total;
+                }
+        </script>
+    </body>
+</html>

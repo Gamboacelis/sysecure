@@ -66,7 +66,7 @@ function frmAccesoVisitante() {
                                                 </header>
                                                 <div>
                                                     <div class="widget-body no-padding">
-                                                        <form id="form-visitante" class="smart-form" action="javascript:guardarVisitante(1)">
+                                                        <form id="form-visitante" class="smart-form" action="javascript:guardarVisitante(2)">
                                                             <header>
                                                                     Formulario de Registro
                                                             </header>
