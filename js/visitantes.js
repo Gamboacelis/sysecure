@@ -1,39 +1,25 @@
 $(document).ready(function() {
     $('#cedula').focusout(function(){
-        var idVisitante=$('#IDvisitante').val();
-        if(idVisitante===''){
-            var tipo='C',ppl=0;
-            var url = './includes/visitante/visitantes_model.php?opcion=enviarDatosVisitante';
-            $.ajax({
-                url: url,
+        $.ajax({
+                url: './includes/visitante/visitantes_model.php?opcion=validarVisitanteCedula',
                 datetype: "json",
                 type: 'POST',
-                data: {cedula:$(this).val(),ppl:ppl,tipo:tipo},
+                data: {cedula:$(this).val()},
                 success: function(res) {
-                    var json_obj = $.parseJSON(res);
-                    $('#encuentraCedula').toggle();
-                    $("#nombre").val(json_obj.datosVisitante.VIS_NOMBRE);  
-                    $("#apellido").val(json_obj.datosVisitante.VIS_APELLIDO);  
-                    $("#telefono").val(json_obj.datosVisitante.VIS_TELEFONO); 
-                    $("#cedula").val(json_obj.datosVisitante.VIS_CEDULA);  
-                    $("#huella").val(json_obj.datosVisitante.VIS_HUELLA);  
-                    $("#direccion").val(json_obj.datosVisitante.VIS_DIRECCION); 
-                    $("#correo").val(json_obj.datosVisitante.VIS_CORREO);  
-                    cargarParentesco(json_obj.datosVisitante.VIS_COD,ppl);
-                    cargarPpl(json_obj.datosVisitante.VIS_COD);
-                    $('#IDvisitante').val(json_obj.datosVisitante.VIS_COD);
-                    $("#my_result").html("<img src='uploads/imagenes/visitante/"+json_obj.datosVisitante.VIS_COD+".jpg' >");
-                    $('#my_result img').load(function(){}).error(function(){$("#my_result img").attr('src','img/avatars/male.png');});            
-                    Webcam.set({
-                        width: 220,
-                        height: 190,
-                        image_format: "jpeg",
-                        jpeg_quality: 90
-                    });
-                    Webcam.attach( "#my_camera" );
+                    if(res==='1'){
+                        $('#cedula').parent('label').removeClass('state-success');
+                        $('#cedula').parent('label').addClass('state-error');  
+                        $(".existeCedula").remove();
+                        $('#cedula').parent('label').parent('section').append('<em class="invalid existeCedula" for="cedula">Cédula o Ruc ya existe</em>');
+                        $("button[type=submit]").attr("disabled", "disabled");
+                    }else{
+                        $(this).parent('label').removeClass('state-error'); 
+                        $(this).parent('label').addClass('state-success'); 
+                        $(".existeCedula").remove();
+                        $("button[type=submit]").removeAttr("disabled");
+                    }
                 }
             });
-        }
     });
     var dtTable=$('#listaVisitantes').dataTable({
         "bDestroy": true,
@@ -327,6 +313,7 @@ function cargarParentesco(visitante,ppl){
         }
     });
 }
+
 function cargarPpl(ppl){
     $.ajax({
         url: "./includes/visitante/visitantes_model.php?opcion=enviarDatosPpl",

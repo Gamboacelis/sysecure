@@ -239,25 +239,33 @@ date_default_timezone_set('America/Bogota');
                                                                                                 var usuario = $("#usuario").val();
                                                                                                 var clave = $("#clave").val();
                                                                                                 var centro = $("#centro").val();
+                                                                                                debugger;
                                                                                                 $.ajax({
                                                                                                     url: "autenticacion.php",
                                                                                                     type: 'post',
                                                                                                     data: {usuario: usuario, clave: clave, centro: centro},
                                                                                                     success: function(respuesta) {
-                                                                                                        if (respuesta === 'ok') {
-                                                                                                            window.location = "inicio.php";
-                                                                                                        } else {
-                                                                                                            $.smallBox({
-                                                                                                                title: "Usuario y/o Contraseña Incorrectos..",
-                                                                                                                content: "<i class='icon-remove'></i> <i>Digite Nuevamente su Usuario y Contraseña..!</i>",
-                                                                                                                color: "#C46A69",
-                                                                                                                iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                                                                                                                timeout: 4000
-                                                                                                            });
-                                                                                                            $("#usuario").val('');
-                                                                                                            $("#clave").val('');
-                                                                                                            $("#centro").val('');
+                                                                                                        switch(respuesta){
+                                                                                                            case 'ok':
+                                                                                                                window.location = "inicio.php";
+                                                                                                                break;
+                                                                                                            case 'pab':
+                                                                                                                window.open("includes/pantallaPabellon/pantalla_vistas.php","Pabellon","type=fullWindow, fullscreen=yes, resizable=yes").focus();
+                                                                                                                break;
+                                                                                                            default :
+                                                                                                                $.smallBox({
+                                                                                                                    title: "Usuario y/o Contraseña Incorrectos..",
+                                                                                                                    content: "<i class='icon-remove'></i> <i>Digite Nuevamente su Usuario y Contraseña..!</i>",
+                                                                                                                    color: "#C46A69",
+                                                                                                                    iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                                                                                                    timeout: 4000
+                                                                                                                });
+                                                                                                                $("#usuario").val('');
+                                                                                                                $("#clave").val('');
+                                                                                                                $("#centro").val('');
+                                                                                                                break;
                                                                                                         }
+                                                                                                        
                                                                                                     }
                                                                                                 });
                                                                                             }

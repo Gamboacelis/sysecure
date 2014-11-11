@@ -87,12 +87,14 @@ else{
 
     $result = $response1->value();   
     $ids1 = $result->scalarval(); 
-
+    echo count($ids1);
     echo "<table>";
     for($i = 0; $i < count($ids1); $i++){
-        echo '<tr><td>' . $ids1[$i]->me['struct']['id']->me['string'] . '</td>'
+        echo '<tr><td>' . $ids1[$i]->me['struct']['identificador']->me['string'] . '</td>'
            . '<td>' . $ids1[$i]->me['struct']['name']->me['string'] . '</td>'
-           . '<td>' . $ids1[$i]->me['struct']['last_name']->me['string'] . '</td>'   
+           . '<td>' . $ids1[$i]->me['struct']['last_name']->me['string'] . '</td>'
+           . '<td>' . $ids1[$i]->me['struct']['canton_id']->me['string'] . '</td>'
+           . '<td>' . $ids1[$i]->me['struct']['alias']->me['string'] . '</td>'   
            . '</tr>';
     }
 

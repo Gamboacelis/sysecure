@@ -79,7 +79,28 @@ $(document).ready(function() {
                 }
             });
         });
-        
+        $('#cedula').focusout(function(){
+        $.ajax({
+                url: './includes/visitante/visitantes_model.php?opcion=validarVisitanteCedula',
+                datetype: "json",
+                type: 'POST',
+                data: {cedula:$(this).val()},
+                success: function(res) {
+                    if(res==='1'){
+                        $('#cedula').parent('label').removeClass('state-success');
+                        $('#cedula').parent('label').addClass('state-error');  
+                        $(".existeCedula").remove();
+                        $('#cedula').parent('label').parent('section').append('<em class="invalid existeCedula" for="cedula">Cédula o Ruc ya existe</em>');
+                        $("button[type=submit]").attr("disabled", "disabled");
+                    }else{
+                        $(this).parent('label').removeClass('state-error'); 
+                        $(this).parent('label').addClass('state-success'); 
+                        $(".existeCedula").remove();
+                        $("button[type=submit]").removeAttr("disabled");
+                    }
+                }
+            });
+    });
         
 });
 function mostrarCelda() {

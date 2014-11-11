@@ -25,6 +25,9 @@ switch ($funcion) {
          break;  
     case 'buscarVisitante':
          buscarVisitante();         
+         break;
+     case 'validarVisitanteCedula':
+         validarVisitanteCedula();         
          break;  
 }
 
@@ -235,7 +238,17 @@ function obtenerVisitanteValido($codigo){
         return 0;
     }
 }
-
+function validarVisitanteCedula(){
+    global $dbmysql;
+    $cedula=$_POST['cedula'];
+    $sql="SELECT * FROM sys_visitante WHERE VIS_CEDULA='$cedula';";
+    $val = $dbmysql->query($sql);
+    if($val->num_rows>0){
+        echo 1;
+    }else{
+        echo 0;
+    }
+}
 function buscarVisitante(){
     global $dbmysql;
     $cedula=$_POST['cedula'];
