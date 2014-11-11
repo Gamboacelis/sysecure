@@ -333,24 +333,6 @@ function revisarVisitantesDisponibles(codPpl) {
         success: function(res) {
             $('#litaVisitantesPpl >tbody').html(res);
             $('#frmVisitantesModal').modal('show');
-//            $('select#visParentesco').on('change',function(){
-//                var codParen=$(this).val();
-//                $.ajax({
-//                    url: './includes/ppl/ppl_model.php?opcion=verificaConyugal',
-//                    datetype: "json",
-//                    type: 'POST',
-//                    data: {codParen: codParen},
-//                    success: function(res) {
-//                        if(res==='1'){
-//                            $.SmartMessageBox({
-//                                    title : "Visita Conyugal",
-//                                    content : "El Visitante Actual se su visita <span class='txt-color-orangeDark'><strong>CONYUGAL</strong></span>",
-//                                    buttons : '[Aceptar]'
-//                            });
-//                        }
-//                    }
-//                });
-//            });
         }
     });
 }
