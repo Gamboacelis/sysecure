@@ -23,14 +23,14 @@ if($consulta->num_rows>0){
             $_SESSION["usu_usuario"]=$row->USU_USUARIO;
             $_SESSION["usu_mail"]=$row->USU_EMAIL;
             $_SESSION["usu_avatar"]=$row->USU_AVATAR;
-            echo $_SESSION["usu_rol_cod"]=$row->ROL_COD;
+            $_SESSION["usu_rol_cod"]=$row->ROL_COD;
             $_SESSION["usu_rol_descrip"]=$row->ROL_DESCRIPCION;
             $_SESSION["usu_centro_cod"]=$row->CEN_COD;
             $_SESSION["usu_centro_descrip"]=$row->CEN_DESCRIPCION;
         $clGeneral->registrar_acceso();
 //        window.open("url.html","algo","type=fullWindow, fullscreen=yes, resizable=yes").focus();
-        echo $open=($_SESSION["usu_rol_cod"]!=4)?"ok":"pab";
-	echo $open;
+//        echo $open=($_SESSION["usu_rol_cod"]!=4)?"ok":"pab";
+	echo $open="ok";
 }
 else{
 	echo "no";

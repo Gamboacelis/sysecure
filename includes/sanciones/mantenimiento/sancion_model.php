@@ -169,7 +169,7 @@ function guardarNuevaSanciones() {
 
         $val = $dbmysql->query($sql);
         if ($val) {
-            $codigoSancion = $dbmysql->maxid('SAN_COD', 'sys_sanciones');
+            $codigoSancion = $dbmysql->lastid();
 
             $datos['datosActualizados'] = array("codigoSancion" => $codigoSancion, "sancion" => $sancion, "tiempo" => $tiempo, "codigoTipoSancion" => $codigoTipoSancion);
             echo json_encode($datos); // RESULTADO EXITOSO

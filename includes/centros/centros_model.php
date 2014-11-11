@@ -55,7 +55,7 @@ function guardaDatosCentro() {
             ('$ciudad','$descripcion','$direccion','$telefono','$tipo');";
     $val = $dbmysql->query($sql);
     if ($val) {
-        $maxCentro=$dbmysql->maxid( 'CEN_COD','sys_centro' );
+        $maxCentro=$dbmysql->lastid();
         $valInicial=$clGeneral->insertarParamInciales($maxCentro);
         echo 1;
     } else {
