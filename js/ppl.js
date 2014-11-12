@@ -120,6 +120,7 @@ function nuevoPpl() {
     $('#estadoLavel').hide();
     limpiarFormularioPpl();
 }
+
 function handleFileSelectImagen(evt) {
     var files = evt.target.files; // FileList object
     // Loop through the FileList and render image files as thumbnails.
