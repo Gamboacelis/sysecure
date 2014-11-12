@@ -57,53 +57,29 @@ function enviarDatosVisitante() {
 }
 
 function guardaDatosVisitante() {
-
     global $dbmysql;
-
     $nombre = strtoupper($_POST["nombre"]);
-
     $apellido = strtoupper($_POST["apellido"]);
-
     $telefono = $_POST["telefono"];
-
     $cedula = $_POST["cedula"];
-
     $direccion = strtoupper($_POST["direccion"]);
-
     $correo = strtolower($_POST["correo"]);
-    
     $parentesco = $_POST["parentesco"];     
-
     $codeImage = $_POST["codeImage"]; 
 
-
-
-
     $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_TELEFONO,VIS_CEDULA, VIS_DIRECCION,VIS_CORREO,VIS_ESTADO,PAR_COD)VALUES
-
             ('$nombre','$apellido','$telefono','$cedula','$direccion','$correo','A',$parentesco);";
-
     $val = $dbmysql->query($sql);
-
-    $id = $dbmysql->maxid('VIS_COD','sys_visitante'); 
-
+    $id = $dbmysql->lastid(); 
    if ($val) {
-
-
     if($codeImage != "")
     {    
         saveImage($codeImage,$id);
     }    
-
     echo 1;
-
     } else {
-
         echo 0;
-
     }
-
-  
 }
 
 function actualizarDatosVisitante() {

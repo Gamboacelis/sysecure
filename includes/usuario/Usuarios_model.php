@@ -102,7 +102,7 @@ function guardaDatosUsuario() {
             ('$nombre','$apellido','$usuario',MD5('$password'),'$email','$celular','$cedula','$tipoUsuario');";
     $val = $dbmysql->query($sql);
     if ($val) {
-        $maxid = $dbmysql->maxid('USU_COD', 'sys_usuarios');
+        $maxid = $dbmysql->lastid();
         $sql_usuario_centro = "INSERT INTO `sys_usuario_centro`(USU_COD,CEN_COD,ROL_COD)VALUES
                                ($maxid,$centro,$tipoUsuario);";
         $val = $dbmysql->query($sql_usuario_centro);
