@@ -239,7 +239,7 @@ date_default_timezone_set('America/Bogota');
                                                                                                 var usuario = $("#usuario").val();
                                                                                                 var clave = $("#clave").val();
                                                                                                 var centro = $("#centro").val();
-                                                                                                debugger;
+                                                                                                
                                                                                                 $.ajax({
                                                                                                     url: "autenticacion.php",
                                                                                                     type: 'post',
