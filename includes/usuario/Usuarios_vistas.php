@@ -36,7 +36,8 @@ function revisarUsuarios() {
                                         <th>ID</th>
                                         <th><i class="fa fa-fw fa-male txt-color-blue hidden-md hidden-sm hidden-xs"></i> Nombre</th>
                                         <th><i class="fa fa-fw fa-user txt-color-blue hidden-md hidden-sm hidden-xs"></i> Usuario</th>
-                                        <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Clave</th>
+                                        <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> E-Mail</th>
+                                        <th><i class="fa fa-fw fa-lock txt-color-blue hidden-md hidden-sm hidden-xs"></i> Tipo Usuario</th>
                                         <th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Acción</th>
                                     </tr>
                                 </thead>
@@ -47,6 +48,7 @@ function revisarUsuarios() {
         </article>';
     $retval .=frmUsuario();
     $retval .=frmCentros();
+    $retval .=frmCambioClave();
     return $retval;
 }
 
@@ -87,7 +89,7 @@ function frmUsuario() {
                                                                     <section>
                                                                             <label class="input"> <i class="icon-append fa fa-lock"></i>
                                                                                     <input type="password" name="password" placeholder="Password" id="password">
-                                                                                    <b class="tooltip tooltip-bottom-right">Debe ingresar una Contraseña de mínimo 3 y Máximo 20 Caracreres</b> </label>
+                                                                                    <b class="tooltip tooltip-bottom-right">Debe ingresar una Contraseña de mínimo 8 y Máximo 20 Caracreres</b> </label>
                                                                     </section>
                                                                     <section>
                                                                             <label class="input"> <i class="icon-append fa fa-lock"></i>
@@ -209,6 +211,58 @@ function frmCentros() {
                                         </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>';
+    return $retval;
+}
+
+function frmCambioClave(){
+    $retval='';
+    $retval='<div class="modal fade" id="frmCambioClaveModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                                                <header>
+                                                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                        <h2>Formulario de Registro</h2>				
+                                                </header>
+                                                <div>
+                                                    <div class="widget-body no-padding">
+                                                        <form id="cambioClave" class="smart-form" action="javascript:GuardarCambioClaveUsuario()" autocomplete="off">
+                                                            <header>
+                                                                    Cambio de Contraseña
+                                                            </header>
+                                                            <fieldset>
+                                                                <input type="hidden" id="IDuser" name="IDuser">
+                                                                <section>
+                                                                            <label class="input"> <i class="icon-append fa fa-lock"></i>
+                                                                                    <input type="password" name="password2" placeholder="Password" id="password2">
+                                                                                    <b class="tooltip tooltip-bottom-right">Debe ingresar una Contraseña de mínimo 8 y Máximo 20 Caracreres</b> </label>
+                                                                    </section>
+                                                                    <section>
+                                                                            <label class="input"> <i class="icon-append fa fa-lock"></i>
+                                                                                    <input type="password" id="passwordConfirm2"  name="passwordConfirm2" placeholder="Confirmar Password">
+                                                                                    <b class="tooltip tooltip-bottom-right">Debe ser la misma contraseña del campo anterior</b> </label>
+                                                                    </section>
+                                                            </fieldset>
+                                                            <footer>
+                                                                    <button type="submit" class="btn btn-primary">
+                                                                            Actualizar
+                                                                    </button>
+                                                            </footer>
+                                                        </form>						
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            
                         </div>
                     </div>
                 </div>';

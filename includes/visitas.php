@@ -23,7 +23,7 @@ function reporte_visitantes() {
     global $dbmysql;
     $retval = '';
     $retval = '<div class="logo-principal">
-                    <img src="img/logo/Logo-4.png" />
+                    <img src="img/logo/Logo-6.png" style="width: 70%"/>
                </div>';
 return $retval;
 }

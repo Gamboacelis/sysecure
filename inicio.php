@@ -200,7 +200,7 @@ if ($_SESSION["autenticado"] == 'SI') {
         <body class="desktop-detected pace-done fixed-header fixed-navigation fixed-ribbon smart-style-3">
             <header id="header">
                 <div id="logo-group">
-                    <span id="logo"> <img src="img/logo/Logo.png" alt="Sisecure"> </span>
+                    <span id="logo"> <img src="img/logo/Logo-6.png" alt="Sisecure" style="width: 110%"> </span>
                 </div>
                 <!-- pulled right: nav area -->
                 <div class="pull-right">

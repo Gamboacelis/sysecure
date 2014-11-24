@@ -32,7 +32,7 @@ date_default_timezone_set('America/Bogota');
     <body class="animated fadeInDown">
         <header id="header">
             <div id="logo-group">
-                <span id="logo"> <img src="img/logo/Logo.png" alt="Sysecure"> </span>
+                <span id="logo"> <img src="img/logo/Logo-6.png" alt="Sysecure" style="width: 135%"> </span>
             </div>
             <span id="extr-page-header-space">
                 <a href="javascript:abrirLogin()" class="btn btn-danger">Acceder al Sistema</a> 

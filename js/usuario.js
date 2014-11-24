@@ -1,15 +1,8 @@
 $(document).ready(function() {
-    $('#listaUsuarios').dataTable({
-        "bServerSide": true,
-        "sAjaxSource": "includes/usuario/Usuarios_dataTable.php",
-        "oLanguage": {
-            "sEmptyTable": "No hay datos disponibles en la tabla",
-            "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
-            "sInfoEmpty": "No hay entradas para mostrar",
-            "sInfoFiltered": " - Filtrado de registros _MAX_",
-            "sSearch": "Buscar Registros: ",
-            "sZeroRecords": "No hay registros que mostrar"
-        }
+    recargarUsuario();
+    validarContrasena();
+    $.validator.addMethod("validacionClave", function(value, element) {
+        return  /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/.test(value);
     });
     var $registerForm = $("#smart-form-register").validate({
         rules: {
@@ -23,64 +16,53 @@ $(document).ready(function() {
             },
             password: {
                 required: true,
-                minlength: 3,
-                maxlength: 20
+                minlength: 8,
+                maxlength: 20,
+                validacionClave:true
             },
             passwordConfirm: {
                 required: true,
-                minlength: 3,
+                minlength: 8,
                 maxlength: 20,
                 equalTo: '#password'
             },
-            nombre: {
-                required: true
-            },
-            apellido: {
-                required: true
-            },
-            genero: {
-                required: true
-            },
-            grupo: {
-                required: true
-            },
-            cargo: {
-                required: true
-            },
-            cedula: {
-                required: true
+            nombre: {required: true},
+            apellido: {required: true},
+            cedula: {required: true},
+            tipoUsuario: {required: true},
+            centro: {required: true}
+        }, 
+        messages: {
+            password: {
+                validacionClave:'La contraseñas debe contener al menos una letra mayúscula(A), al menos una letra minúscula(b), '
+                                +'al menos un número o caracter especial(1*), longitud mínima de 8 caracteres, '
             }
         },
         errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
         }
     });
-    var $cambioClaveForm = $("#cambioClave-form").validate({
-        // Rules for form validation
+    $("#cambioClave").validate({
         rules: {
-            password: {
+            password2: {
                 required: true,
-                minlength: 4,
-                maxlength: 20
-            },
-            passwordConfirm: {
-                required: true,
-                minlength: 4,
+                minlength: 8,
                 maxlength: 20,
-                equalTo: '#password'
-            }
-        },
-        // Messages for form validation
-        messages: {
-            password: {
-                required: 'Por favor digite su nueva Contraseña'
+                validacionClave:true
             },
-            passwordConfirm: {
-                required: 'Por favor, introduzca su contraseña una vez más',
-                equalTo: 'Por favor, introduzca la misma contraseña que el anterior'
+            passwordConfirm2: {
+                required: true,
+                minlength: 8,
+                maxlength: 20,
+                equalTo: '#password2'
             }
         },
-        // Do not change code below
+        messages: {
+            password2: {
+                validacionClave:'La contraseñas debe contener al menos una letra mayúscula(A), al menos una letra minúscula(b), '
+                                +'al menos un número o caracter especial(1*), longitud mínima de 8 caracteres, '
+            }
+        },
         errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
         }
@@ -101,78 +83,81 @@ $(document).ready(function() {
         }
     });
 });
+function recargarUsuario() {
+    var dtTable = $('#listaUsuarios').dataTable({
+        "bDestroy": true,
+        "bProcessing": true,
+        "bRetrieve": true,
+        "bStateSave": true,
+        "bPaginate": true,
+        "bServerSide": true,
+        "sAjaxSource": "includes/usuario/Usuarios_dataTable.php",
+        "oLanguage": {
+            "sEmptyTable": "No hay datos disponibles en la tabla",
+            "sInfo": "Existen _TOTAL_ registros en total, mostrando (_START_ a _END_)",
+            "sInfoEmpty": "No hay entradas para mostrar",
+            "sInfoFiltered": " - Filtrado de registros _MAX_",
+            "sZeroRecords": "No hay registros que mostrar"
+        }
+    });
+        dtTable.fnReloadAjax();
+}
+function validarContrasena(){
+    $('input[type=password]').keyup(function() {
+        var pswd = $(this).val();
+        if ( pswd.length < 8 ) {
+            $('#length').removeClass('valid').addClass('invalid');
+        } else {
+            $('#length').removeClass('invalid').addClass('valid');
+        }
+        //validate letter
+        if ( pswd.match(/[A-z]/) ) {
+            $('#letter').removeClass('invalid').addClass('valid');
+        } else {
+            $('#letter').removeClass('valid').addClass('invalid');
+        }
+        //validate capital letter
+        if ( pswd.match(/[A-Z]/) ) {
+            $('#capital').removeClass('invalid').addClass('valid');
+        } else {
+            $('#capital').removeClass('valid').addClass('invalid');
+        }
+        //validate number
+        if ( pswd.match(/\d/) ) {
+            $('#number').removeClass('invalid').addClass('valid');
+        } else {
+            $('#number').removeClass('valid').addClass('invalid');
+        }
+    }).focus(function() {
+        $('#pswd_info').show();
+    }).blur(function() {
+        $('#pswd_info').hide();
+    });
+}
 function cambiarClaveUsuario(usuario) {
-    $('.' + usuario).parent('section').siblings('.verclave').hide();
-    $('.' + usuario).show();
+    limpiarFormularioUsuario();
+    $('#frmCambioClaveModal').modal('show');
+    $('#IDuser').val(usuario);
 }
 function cambiarClave(usuario) {
     $('#frmClaveModal').modal('show');
     $('#IDuser').val(usuario);
 }
-function guardarCambioClave(usuario) {
+function GuardarCambioClaveUsuario() {
     $.SmartMessageBox({
         title: "Confirmación!",
         content: "Esta seguro de cambiar la Contraseña del Usuario?",
         buttons: '[No][Si]'
     }, function(ButtonPressed) {
         if (ButtonPressed === "Si") {
-            var clave = $('#password').val();
-            var codigo = $('#IDuser').val();
-            $.ajax({
-                url: "./includes/usuario/Usuarios_model.php?opcion=cambioClaveUsuario",
-                type: 'post',
-                data: {codigo: codigo, clave: clave},
-                success: function(respuesta) {
-                    if (respuesta === '1') {
-                        $('#frmClaveModal').modal('hide');
-                        $.smallBox({
-                            title: 'Actualización',
-                            content: "<i class='fa fa-clock-o'></i> <i>Usuario Actualizado su Clave...</i>",
-                            color: "#659265",
-                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                            timeout: 4000
-                        });
-                    }
-                }
-            });
-        }
-        if (ButtonPressed === "No") {
-        }
-    });
-    var url = './includes/usuario/Usuarios_model.php?opcion=enviarDatosUsuario';
-    $.ajax({
-        url: url,
-        datetype: "json",
-        type: 'POST',
-        data: {codigoUsu: usuario},
-        success: function(res) {
-            var json_obj = $.parseJSON(res);
-
-
-        }
-    });
-}
-function GuardarCambioClaveUsuario(codPar) {
-
-    $.SmartMessageBox({
-        title: "Confirmación!",
-        content: "Esta seguro de cambiar la Contraseña del Usuario?",
-        buttons: '[No][Si]'
-    }, function(ButtonPressed) {
-        if (ButtonPressed === "Si") {
-            var clave = $('#clave_' + codPar).val();
+            var clave = $('#password2').val();
+            var codPar = $('#IDuser').val();
             $.ajax({
                 url: "./includes/usuario/Usuarios_model.php?opcion=cambioClaveUsuario",
                 type: 'post',
                 data: {codigo: codPar, clave: clave},
                 success: function(respuesta) {
                     if (respuesta === '1') {
-                        var passhash = $.md5(clave);
-//                        var passhash = CryptoJS.MD5(clave).toString();
-                        $('.' + codPar).parent('td').parent('tr').addClass('success');
-                        $('.' + codPar).parent('section').siblings('.verclave').val(passhash);
-                        $('.' + codPar).parent('section').siblings('.verclave').show();
-                        $('.cambioClave').hide();
                         $.smallBox({
                             title: 'Actualización',
                             content: "<i class='fa fa-clock-o'></i> <i>Usuario Actualizado su Clave...</i>",
@@ -180,11 +165,12 @@ function GuardarCambioClaveUsuario(codPar) {
                             iconSmall: "fa fa-check fa-2x fadeInRight animated",
                             timeout: 4000
                         });
+                        limpiarFormularioUsuario();
+                        $('#frmCambioClaveModal').modal('hide');
+                        recargarUsuario();
                     }
                 }
             });
-        }
-        if (ButtonPressed === "No") {
         }
     });
 }
@@ -205,7 +191,7 @@ function editarUsuario(usuario) {
             $("#passwordConfirm").hide();
             $('#smart-form-register >header').text('Actualización de Datos Usuario')
             $('#IDuser').val(usuario);
-
+             
         }
     });
 
@@ -228,7 +214,8 @@ function guardarUsuario() {
                         timeout: 4000
                     });
                     limpiarFormularioUsuario();
-                    location.reload();
+                    $('#frmCambioClaveModal').modal('hide');
+                    recargarUsuario();
                 }
             }
         });

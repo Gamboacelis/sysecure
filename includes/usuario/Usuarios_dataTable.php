@@ -107,12 +107,16 @@ global $dbmysql;
         
 	while ( $aRow = mysql_fetch_array( $rResult ) ){
                 /* General output */
+                    $sql="SELECT * FROM `sys_roles` WHERE ROL_COD=".$aRow[ 'ROL_COD' ];
+                    $val = $dbmysql->query($sql);
+                    $row = $val->fetch_object();
                     $nombre=$aRow[ 'USU_NOMBRE' ].' '.$aRow[ 'USU_APELLIDO' ];
                     $cadenaParametros=utf8_encode($aRow[ 'USU_COD' ].','."'$nombre'");
                     $output['aaData'][] =array( ''.utf8_encode($aRow[ 'USU_COD' ]).'',
                                                 ''.utf8_encode($nombre).'',
-                                                ''.utf8_encode($aRow[ 'USU_USUARIO' ]).'',
-                                                '<div class="verclave">'.utf8_encode($aRow[ 'USU_CLAVE' ]).'</div><section><label class="input cambioClave '.$aRow[ 'USU_COD' ].'"><input type="password" placeholder="Password" name="clave" id="clave_'.$aRow[ 'USU_COD' ].'"><a class="btn btn-primary btn-xs" title="Guardar Cambio" href="javascript:GuardarCambioClaveUsuario('.$aRow[ 'USU_COD' ].')"><i class="fa fa-save"></i></a></label></section>',
+                                                ''.$aRow[ 'USU_USUARIO' ].'',
+                                                ''.$aRow[ 'USU_EMAIL' ].'',
+                                                ''.$row->ROL_DESCRIPCION.'',
                                                 '<a class="btn btn-success btn-xs" title="Centros Asignados" href="javascript:revisarCentrosDisponibles('.$aRow[ 'USU_COD' ].')">
                                                     <i class="fa fa-map-marker"></i>
                                                 </a>

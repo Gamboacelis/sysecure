@@ -9,7 +9,7 @@ nav ul li a{max-width:220px}
 #frmVisitasModal .modal-dialog{width:750px}
 #guardarVisitanteNuevo{display:none}
 #verlugarCedula{color:#f00;font-size:10em;margin:0 auto;text-align:center}
-#sparks li{overflow:unset}
+#sparks li{padding:5px 10px;overflow:unset}
 .bootstrap-timepicker-widget{z-index:10000 !important}
 .smart-style-3 #header{background-color:#3ea7d1;background-image:-webkit-linear-gradient(top, #3ea7d1, #058dc7);background-image:-moz-linear-gradient(top, #3ea7d1, #058dc7);background-image:-o-linear-gradient(top, #3ea7d1, #058dc7);background-image:-ms-linear-gradient(top, #3ea7d1, #058dc7);background-image:linear-gradient(to bottom, #3ea7d1, #058dc7)}
 .logo-principal{margin:50px;text-align:center}
@@ -24,6 +24,8 @@ div.dataTables_filter label{float:left}
 .table .txtHorariosHijo{font-size:.6em}
 .tablehijoReporte{margin-bottom:0}
 .tablehijoReporte tbody{font-size:.8em}
+#sparks li{overflow:unset}
+nav ul li a{max-width:220px}
 #imgCambio{display:none;text-align:center;background:none repeat scroll 0 0 #666;bottom:0;height:200px;opacity:.7;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";filter:alpha(opacity=70);position:absolute;width:200px}
 #imgPpl{position:relative;width:200px}
 #imgPpl:hover{opacity:.7;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";filter:alpha(opacity=70)}
@@ -40,7 +42,5 @@ div.dataTables_filter label{float:left}
 .cargar_txt span{margin:0 0 0 12px;z-index:2}
 #tbPermisosDisponibles #tablaHorarios label{display:block}
 #email,#usuario,#password,#passwordConfirm{text-transform:lowercase}
-#sparks li {overflow: unset;}
-nav ul li a {max-width: 220px;}
 .tablaPabellonesDetalle:hover{color:#058dc7;cursor:pointer}
 .txtPabellonHorario{color:#f00;font-size:1.2em;font-weight:bolder}
