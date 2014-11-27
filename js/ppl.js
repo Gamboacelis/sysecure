@@ -324,7 +324,7 @@ function carga_DatosIncialesPPL(edt) {
     $('img[alt="imagenPPL"]').attr('src', img);
     
 }
-function revisarVisitantesDisponibles(codPpl) {
+function revisarVisitantesDisponibles(codPpl) { 
     $('#IDpplNew').val(codPpl);
     $.ajax({
         url: './includes/ppl/ppl_model.php?opcion=mostrarVisitantesPpl',
