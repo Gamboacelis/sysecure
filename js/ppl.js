@@ -327,7 +327,7 @@ function carga_DatosIncialesPPL(edt) {
 function revisarVisitantesDisponibles(codPpl) { 
     $('#IDpplNew').val(codPpl);
     $.ajax({
-        url: './includes/ppl/ppl_model.php?opcion=mostrarVisitantesPpl',
+        url: './includes/ppl/modelPpl.php?opcion=mostrarVisitantesPpl',
         datetype: "json",
         type: 'POST',
         data: {codPpl: codPpl},
@@ -343,18 +343,18 @@ function editarVisita(codPpl,cod) {
     $('#vis' + cod).children('td').children('.visBtnGuardar').show();
     $('#vis' + cod).children('td').children('.visBtnDatos').hide();
 }
-function GuardarCambioVisita(codppl,codVis, tipo) {
+function GuardarCambioVisita(codppl,codVis, tipo, codigoVisitantePpl) {
     
     if (tipo === 'N') {
-        var url = './includes/ppl/ppl_model.php?opcion=guardarListaVisitante';
+        var url = './includes/ppl/modelPpl.php?opcion=guardarListaVisitante';
         var codigo = $('#IDpplNew').val();
         var nombre = $('#new').children('td').children('#visNombre').val();
         var apellido = $('#new').children('td').children('#visApellido').val();
         var parentesco = $('#new').children('td').children('#visParentesco').val();
         if(nombre!=='' && apellido!=='')
         {
-            $.ajax({
-            url: './includes/ppl/ppl_model.php?opcion=verificaConyugeVisitante',
+        /*    $.ajax({
+            url: './includes/ppl/modelPpl.php?opcion=verificaConyugeVisitante',
             datetype: "json",
             type: 'POST',
             data: {nombre: nombre,apellido:apellido, parentesco: parentesco,codppl:codppl},
@@ -379,12 +379,12 @@ function GuardarCambioVisita(codppl,codVis, tipo) {
                             timeout: 8000
                         });
                         break;
-                    default :
-                        ajaxGuardarVisita(url,tipo,codppl,codVis,nombre,apellido,parentesco);
-                        break;
+                    default :*/
+                        ajaxGuardarVisita(url,tipo,codppl,codVis,nombre,apellido,parentesco, codigoVisitantePpl);
+                       /* break;
                 }
             }
-        });
+        });*/
         }else{
             $.smallBox({
                 title: 'Error...!',
@@ -395,26 +395,39 @@ function GuardarCambioVisita(codppl,codVis, tipo) {
             });
         }
     } else {
-        var url = './includes/ppl/ppl_model.php?opcion=actualizaListaVisitante';
-        var codigo = codppl;
+        var url = './includes/ppl/modelPpl.php?opcion=actualizaListaVisitante';
+        var codppl = codppl;
         var nombre = $('#vis' + codVis).children('td').children('#visNombre').val();
         var apellido = $('#vis' + codVis).children('td').children('#visApellido').val();
         var parentesco = $('#vis' + codVis).children('td').children('#visParentesco').val();
-        ajaxGuardarVisita(url,tipo,codppl,codVis,nombre,apellido,parentesco);
+        ajaxGuardarVisita(url,tipo,codppl,codVis,nombre,apellido,parentesco, codigoVisitantePpl);
     }
     
 }
-function ajaxGuardarVisita(url,tipo,codPlp,codVis,nombreVis,apellidoVis,parentescoVis){
+function ajaxGuardarVisita(url,tipo,codPlp,codVis,nombreVis,apellidoVis,parentescoVis, codigoVisitantePpl){
     var codigo=codPlp,nombre=nombreVis,apellido=apellidoVis,parentesco=parentescoVis;
      $.ajax({
         url: url,
         datetype: "json",
         type: 'POST',
-        data: {codPlp: codigo,visCod:codVis, nombre: nombre, apellido: apellido, parentesco: parentesco},
+        data: {codPlp: codigo,visCod:codVis, nombre: nombre, apellido: apellido, parentesco: parentesco, codigoVisitantePpl:codigoVisitantePpl},
         success: function(res) {
-            if (res !== '0') {
+            console.log(res);
+            if(res === '1')
+            {
+                $.smallBox({
+                    title: "Error..!!",
+                    content: "<i class='fa fa-clock-o'></i> <i>Este visitante ya es conyuge de otro ppl</i>",
+                    color: "#C46A69",
+                    iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                    timeout: 6000
+                });
+            }
+            if (res !== '0' && res !=='1' ) {
+              if(res!=='3' && res !=='1'){
                 var json_obj = $.parseJSON(res);
-                if(json_obj.datosActualizados.tipo==='nuevo'){
+                if(json_obj.datosActualizados.tipo==='nuevo')
+                {
                     if (tipo === 'N') {
                         $('#new').children('td').children('#txtVisNombre').text(json_obj.datosActualizados.nombre);
                         $('#new').children('td').children('#txtVisApellido').text(json_obj.datosActualizados.apellido);
@@ -425,43 +438,8 @@ function ajaxGuardarVisita(url,tipo,codPlp,codVis,nombreVis,apellidoVis,parentes
                         $('#vis' + codVis).children('td').children('#txtVisApellido').text(json_obj.datosActualizados.apellido);
                         $('#vis' + codVis).children('td').children('#txtVisParentesco').text(json_obj.datosActualizados.parentesco);
                     }
-                }else{
-                    $.SmartMessageBox({
-                        title: "Confirmación!",
-                        content: "Ya existe un Visitante llamado: <span class='txt-color-orangeDark'><strong>" + json_obj.datosActualizados.nombreVisita + " " +json_obj.datosActualizados.apellidoVisita +" </strong></span> Asignado al PPL <span class='txt-color-orangeDark'><strong>"+ json_obj.datosActualizados.nombrePPL +" "+ json_obj.datosActualizados.apellidoPPL +"</strong></span>, Desea asignar el mismo Visitante a este PPL ingresado?",
-                        buttons: '[No][Si]'
-                    }, function(ButtonPressed) {
-                        if (ButtonPressed === "Si") {
-                            $.ajax({
-                                url: "./includes/ppl/ppl_model.php?opcion=guardarListaVisRepe",
-                                type: 'post',
-                                data: {codPlp: codigo,codVis:json_obj.datosActualizados.codigoVis,nombre: nombre, apellido: apellido,parentesco: parentesco},
-                                success: function(respuesta) {
-                                    if (respuesta === '1') {
-                                       revisarVisitantesDisponibles(codigo);
-                                    }
-                                }
-                            });
-
-                        }
-                    });
-                }
-            }
-       
-            if (tipo === 'N') {
-                revisarVisitantesDisponibles(codigo);
-            }
-            else {
-                $('#vis' + codVis).children('td').children('#visNombre').val(json_obj.datosActualizados.nombre);
-                $('#vis' + codVis).children('td').children('#visApellido').val(json_obj.datosActualizados.apellido);
-                $('#vis' + codVis).children('td').children('#visParentesco').prop('selectedIndex', parentesco);
-                $('#vis' + codVis).children('td').children('.txtVisDatos').show();
-                $('#vis' + codVis).children('td').children('.visDatos').hide();
-                $('#vis' + codVis).children('td').children('.visBtnGuardar').hide();
-                $('#vis' + codVis).children('td').children('.visBtnDatos').show();
-            }
-            $.ajax({
-                url: './includes/ppl/ppl_model.php?opcion=verificaConyugal',
+                    $.ajax({
+                url: './includes/ppl/modelPpl.php?opcion=verificaConyugal',
                 datetype: "json",
                 type: 'POST',
                 data: {codParen: parentesco},
@@ -485,6 +463,49 @@ function ajaxGuardarVisita(url,tipo,codPlp,codVis,nombreVis,apellidoVis,parentes
                     }
                 }
             });
+                }else{
+                    if(json_obj.datosActualizados.tipo==='repetido'){
+                    $.SmartMessageBox({
+                        title: "Confirmación!",
+                        content: "Ya existe un Visitante llamado: <span class='txt-color-orangeDark'><strong>" + json_obj.datosActualizados.nombreVisita + " " +json_obj.datosActualizados.apellidoVisita +" </strong></span> Asignado al PPL <span class='txt-color-orangeDark'><strong>"+ json_obj.datosActualizados.nombrePPL +" "+ json_obj.datosActualizados.apellidoPPL +"</strong></span>, Desea asignar el mismo Visitante a este PPL ingresado?",
+                        buttons: '[No][Si]'
+                    }, function(ButtonPressed) {
+                        if (ButtonPressed === "Si") 
+                        {
+                            $.ajax({
+                                url: "./includes/ppl/modelPpl.php?opcion=insertaVisitanteRepetido",
+                                type: 'post',
+                                data: {codPlp: codigo,codVis:json_obj.datosActualizados.codigoVis,nombre: nombre, apellido: apellido,parentesco: parentesco},
+                                success: function(respuesta) {
+                                    if (respuesta === '1') {
+                                       revisarVisitantesDisponibles(codigo);
+                                    }
+                                }
+                            });
+
+                        }
+                    });
+                }
+            }
+            }
+            }
+            
+            
+       
+            if (tipo === 'N') {
+                
+                revisarVisitantesDisponibles(codigo);
+            }
+            else {
+                $('#vis' + codVis).children('td').children('#visNombre').val(json_obj.datosActualizados.nombre);
+                $('#vis' + codVis).children('td').children('#visApellido').val(json_obj.datosActualizados.apellido);
+                $('#vis' + codVis).children('td').children('#visParentesco').prop('selectedIndex', parentesco);
+                $('#vis' + codVis).children('td').children('.txtVisDatos').show();
+                $('#vis' + codVis).children('td').children('.visDatos').hide();
+                $('#vis' + codVis).children('td').children('.visBtnGuardar').hide();
+                $('#vis' + codVis).children('td').children('.visBtnDatos').show();
+            }
+            
             
         }
     });
