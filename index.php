@@ -96,7 +96,7 @@ date_default_timezone_set('America/Bogota');
                                                         while ($row = $valcmb->fetch_object()) {
                                                             ?>
                                                             <option value="<?php echo $row->CEN_COD ?>"><?php echo $row->CEN_DESCRIPCION ?></option>
-<?php } ?>
+                                                        <?php } ?>
                                                     </select>
                                                     <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Seleccione un Centro de reclusión</b></label>
                                             </section>
@@ -204,112 +204,115 @@ date_default_timezone_set('America/Bogota');
         <script src="js/general.js"></script>
 
         <script type="text/javascript">
-                                                                                            runAllForms();
+                                                                runAllForms();
 
-                                                                                            $(function() {
-                                                                                                $("#login-form").validate({
-                                                                                                    rules: {
-                                                                                                        email: {
-                                                                                                            required: true,
-                                                                                                            email: true
-                                                                                                        },
-                                                                                                        password: {
-                                                                                                            required: true,
-                                                                                                            minlength: 3,
-                                                                                                            maxlength: 20
-                                                                                                        }
-                                                                                                    }, errorPlacement: function(error, element) {
-                                                                                                        error.insertAfter(element.parent());
-                                                                                                    }
-                                                                                                });
+                                                                $(function() {
+                                                                    $("#login-form").validate({
+                                                                        rules: {
+                                                                            email: {
+                                                                                required: true,
+                                                                                email: true
+                                                                            },
+                                                                            password: {
+                                                                                required: true,
+                                                                                minlength: 3,
+                                                                                maxlength: 20
+                                                                            }
+                                                                        }, errorPlacement: function(error, element) {
+                                                                            error.insertAfter(element.parent());
+                                                                        }
+                                                                    });
 
-                                                                                                $(".close").click(function() {
-                                                                                                    $('#muestraReporte').html('');
-                                                                                                    $('#nomPpl').val('');
-                                                                                                });
-                                                                                                $('#nomPpl').keyup(function(e) {
-                                                                                                    if (e.keyCode == 13) {
-                                                                                                        $(".btn-success").trigger("click");
+                                                                    $(".close").click(function() {
+                                                                        $('#muestraReporte').html('');
+                                                                        $('#nomPpl').val('');
+                                                                    });
+                                                                    $('#nomPpl').keyup(function(e) {
+                                                                        if (e.keyCode == 13) {
+                                                                            $(".btn-success").trigger("click");
 
-                                                                                                    }
+                                                                        }
 
-                                                                                                });
-                                                                                            });
-                                                                                            function login() {
-                                                                                                var usuario = $("#usuario").val();
-                                                                                                var clave = $("#clave").val();
-                                                                                                var centro = $("#centro").val();
-                                                                                                
-                                                                                                $.ajax({
-                                                                                                    url: "autenticacion.php",
-                                                                                                    type: 'post',
-                                                                                                    data: {usuario: usuario, clave: clave, centro: centro},
-                                                                                                    success: function(respuesta) {
-                                                                                                        switch(respuesta){
-                                                                                                            case 'ok':
-                                                                                                                window.location = "inicio.php";
-                                                                                                                break;
-                                                                                                            case 'pab':
-                                                                                                                window.open("includes/pantallaPabellon/pantalla_vistas.php","Pabellon","type=fullWindow, fullscreen=yes, resizable=yes").focus();
-                                                                                                                break;
-                                                                                                            default :
-                                                                                                                $.smallBox({
-                                                                                                                    title: "Usuario y/o Contraseña Incorrectos..",
-                                                                                                                    content: "<i class='icon-remove'></i> <i>Digite Nuevamente su Usuario y Contraseña..!</i>",
-                                                                                                                    color: "#C46A69",
-                                                                                                                    iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                                                                                                                    timeout: 4000
-                                                                                                                });
-                                                                                                                $("#usuario").val('');
-                                                                                                                $("#clave").val('');
-                                                                                                                $("#centro").val('');
-                                                                                                                break;
-                                                                                                        }
-                                                                                                        
-                                                                                                    }
-                                                                                                });
-                                                                                            }
-                                                                                            function consultarHoarios() {
-                                                                                                $('#nomPpl').focus();
-                                                                                                $('#frmConsultaModal').modal('show');
+                                                                    });
+                                                                });
+                                                                function login() {
+                                                                    var usuario = $("#usuario").val();
+                                                                    var clave = $("#clave").val();
+                                                                    var centro = $("#centro").val();
 
-                                                                                            }
-                                                                                            function consultarPPLBusqueda() {
-                                                                                                var nombreppl = $('#nomPpl').val();
-                                                                                                if (nombreppl !== '') {
-                                                                                                    $.ajax({
-                                                                                                        url: "busqueda.php?opcion=reportePPL",
-                                                                                                        type: 'post',
-                                                                                                        data: {nombreppl: nombreppl},
-                                                                                                        success: function(respuesta) {
-                                                                                                            if (respuesta !== '') {
-                                                                                                                $('#muestraReporte').html(respuesta);
-                                                                                                            } else {
-                                                                                                                $.smallBox({
-                                                                                                                    title: "No Valido",
-                                                                                                                    content: "<i class='icon-remove'></i> <i>Estimado Usuario, digite nuevamente el nombre de la Persona, nuestra base de datos no encuentra coincidencias..!</i>",
-                                                                                                                    color: "#C46A69",
-                                                                                                                    iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                                                                                                                    timeout: 7000
-                                                                                                                });
-                                                                                                                $("#nomPpl").val('');
-                                                                                                            }
-                                                                                                        }
-                                                                                                    });
-                                                                                                } else {
-                                                                                                    $.smallBox({
-                                                                                                        title: "Error..!",
-                                                                                                        content: "<i class='icon-remove'></i> <i>Debe ingresar el nombre o apellido de la Persona que busca</i>",
-                                                                                                        color: "#C46A69",
-                                                                                                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                                                                                                        timeout: 4000
-                                                                                                    });
-                                                                                                    $("#nomPpl").val('');
-                                                                                                }
-                                                                                            }
-                                                                                            function abrirLogin() {
-                                                                                                $('#ventanaLogin').modal('show');
-                                                                                            }
+                                                                    $.ajax({
+                                                                        url: "autenticacion.php",
+                                                                        type: 'post',
+                                                                        data: {usuario: usuario, clave: clave, centro: centro},
+                                                                        success: function(respuesta) {
+                                                                            switch (respuesta) {
+                                                                                case 'ok':
+                                                                                    window.location = "inicio.php";
+                                                                                    break;
+                                                                                case 'pab':
+                                                                                    window.open("includes/pantallaPabellon/pantalla_vistas.php", "Pabellon", "type=fullWindow, fullscreen=yes, resizable=yes").focus();
+                                                                                    break;
+                                                                                case 'cambio':
+                                                                                    window.open("cambioClave.php").focus();
+                                                                                    break;    
+                                                                                default :
+                                                                                    $.smallBox({
+                                                                                        title: "Usuario y/o Contraseña Incorrectos..",
+                                                                                        content: "<i class='icon-remove'></i> <i>Digite Nuevamente su Usuario y Contraseña..!</i>",
+                                                                                        color: "#C46A69",
+                                                                                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                                                                        timeout: 4000
+                                                                                    });
+                                                                                    $("#usuario").val('');
+                                                                                    $("#clave").val('');
+                                                                                    $("#centro").val('');
+                                                                                    break;
+                                                                            }
+
+                                                                        }
+                                                                    });
+                                                                }
+                                                                function consultarHoarios() {
+                                                                    $('#nomPpl').focus();
+                                                                    $('#frmConsultaModal').modal('show');
+
+                                                                }
+                                                                function consultarPPLBusqueda() {
+                                                                    var nombreppl = $('#nomPpl').val();
+                                                                    if (nombreppl !== '') {
+                                                                        $.ajax({
+                                                                            url: "busqueda.php?opcion=reportePPL",
+                                                                            type: 'post',
+                                                                            data: {nombreppl: nombreppl},
+                                                                            success: function(respuesta) {
+                                                                                if (respuesta !== '') {
+                                                                                    $('#muestraReporte').html(respuesta);
+                                                                                } else {
+                                                                                    $.smallBox({
+                                                                                        title: "No Valido",
+                                                                                        content: "<i class='icon-remove'></i> <i>Estimado Usuario, digite nuevamente el nombre de la Persona, nuestra base de datos no encuentra coincidencias..!</i>",
+                                                                                        color: "#C46A69",
+                                                                                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                                                                        timeout: 7000
+                                                                                    });
+                                                                                    $("#nomPpl").val('');
+                                                                                }
+                                                                            }
+                                                                        });
+                                                                    } else {
+                                                                        $.smallBox({
+                                                                            title: "Error..!",
+                                                                            content: "<i class='icon-remove'></i> <i>Debe ingresar el nombre o apellido de la Persona que busca</i>",
+                                                                            color: "#C46A69",
+                                                                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                                                            timeout: 4000
+                                                                        });
+                                                                        $("#nomPpl").val('');
+                                                                    }
+                                                                }
+                                                                function abrirLogin() {
+                                                                    $('#ventanaLogin').modal('show');
+                                                                }
         </script>
 
     </body>

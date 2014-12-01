@@ -143,6 +143,7 @@ function cambiarClave(usuario) {
     $('#frmClaveModal').modal('show');
     $('#IDuser').val(usuario);
 }
+
 function GuardarCambioClaveUsuario() {
     $.SmartMessageBox({
         title: "Confirmación!",

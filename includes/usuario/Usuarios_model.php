@@ -32,6 +32,9 @@ switch ($funcion) {
     case 'agregaCentrosTabla':
         agregaCentrosTabla();
         break;
+    case 'cambioClaveInicial':
+        cambioClaveInicial();
+        break;
 }
 
 function enviarDatosUsuario() {
@@ -133,7 +136,28 @@ function cambioClaveUsuario() {
     $codigo = $_POST['codigo'];
     $password = $_POST["clave"];
     $sql = "UPDATE `sys_usuarios` SET 
-            USU_CLAVE = MD5('$password')
+            USU_AUTORIZACION = MD5('$password'),
+            USU_ESTADO='C'
+           WHERE USU_COD=$codigo;";
+    $val = $dbmysql->query($sql);
+    if ($val) {
+        $sql = "SELECT * FROM `sys_usuarios`WHERE USU_COD=$codigo;";
+        $val = $dbmysql->query($sql);
+        $row = $val->fetch_object();
+        $cGeneral->auditoria('A', 'sys_usuarios', 'Cambio de Contraseña al Usuario: ' . $row->USU_USUARIO);
+        echo 1;
+    } else {
+        echo 0;
+    }
+}
+
+function cambioClaveInicial() {
+    global $dbmysql, $cGeneral;
+    $codigo = $_POST['codUsuario'];
+    $password = $_POST["clave"];
+    $sql = "UPDATE `sys_usuarios` SET 
+            USU_CLAVE = MD5('$password'),
+            USU_ESTADO = 'A'    
            WHERE USU_COD=$codigo;";
     $val = $dbmysql->query($sql);
     if ($val) {
