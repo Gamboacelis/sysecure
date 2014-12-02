@@ -158,7 +158,6 @@ function guardarVisitante(tipo) {
                         timeout: 4000
                     });
                     limpiarFormulario();
-                    location.reload();
                 }
              },
             error: function (res){
@@ -182,7 +181,7 @@ function guardarVisitante(tipo) {
                         timeout: 4000
                     });
                     limpiarFrmVisitante();
-                    debugger;
+                    
                     switch (tipo){
                         case 1:
                                 var dtTable=$('#listaVisitantes').dataTable({
@@ -223,7 +222,6 @@ function guardarVisitante(tipo) {
                             break;
                     }
 
-                    window.location.reload();
                 }
             },
             error: function (){

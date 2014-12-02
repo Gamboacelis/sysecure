@@ -29,7 +29,7 @@ if ($consulta->num_rows > 0) {
     $_SESSION["usu_centro_cod"] = $row->CEN_COD;
     $_SESSION["usu_centro_descrip"] = $row->CEN_DESCRIPCION;
     $clGeneral->registrar_acceso();
-        echo "ok";
+    echo "ok";
 } else {
     $sql2 = "SELECT uc.*, u.*, c.*, r.* FROM `sys_usuario_centro` uc,sys_usuarios u,sys_centro c,sys_roles r WHERE uc.`USU_COD`=u.`USU_COD` AND uc.`CEN_COD`=c.`CEN_COD` AND uc.`ROL_COD`=r.`ROL_COD` 
         AND u.USU_USUARIO ='" . $user . "' 
@@ -38,8 +38,20 @@ if ($consulta->num_rows > 0) {
         AND u.USU_ESTADO='C'";
     $consulta2 = $db->query($sql2);
     if ($consulta2->num_rows > 0) {
+        $row = $consulta2->fetch_object();
+        $_SESSION["autenticado"] = "SI";
+        $_SESSION["menu"] = 1;
+        $_SESSION["user_id"] = $row->USU_COD;
+        $_SESSION["usu_real_nombre"] = $row->USU_NOMBRE . ' ' . $row->USU_APELLIDO;
+        $_SESSION["usu_usuario"] = $row->USU_USUARIO;
+        $_SESSION["usu_mail"] = $row->USU_EMAIL;
+        $_SESSION["usu_avatar"] = $row->USU_AVATAR;
+        $_SESSION["usu_rol_cod"] = $row->ROL_COD;
+        $_SESSION["usu_rol_descrip"] = $row->ROL_DESCRIPCION;
+        $_SESSION["usu_centro_cod"] = $row->CEN_COD;
+        $_SESSION["usu_centro_descrip"] = $row->CEN_DESCRIPCION;
         echo "cambio";
-    }else{
+    } else {
         echo "no";
     }
 }

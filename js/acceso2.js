@@ -25,10 +25,11 @@ function permitirAcceso(nombre, cod,contr,horario,codVisitante){
                 url: "./includes/controles/acceso2/acceso2_model.php?opcion=permitirAcceso2",
                 type: 'post',
                 data: {codigo: cod, control: contr,horario:horario },
+                beforeSend: function( xhr ){
+                    $('.btnAcceso'+codVisitante).addClass('disabled');
+                },
                 success: function(respuesta) {
-
                     if (respuesta === '1') {
-
                         $.smallBox({
                             title: cod,
                             content: "<i class='fa fa-clock-o'></i> <i>Permitido el acceso del visitante...</i>",
