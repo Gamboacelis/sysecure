@@ -120,12 +120,20 @@ function eliminarPabellon(codPab, nomPab) {
                             iconSmall: "fa fa-check fa-2x fadeInRight animated",
                             timeout: 4000
                         });
+                    }else{
+                        if (respuesta === '2') {
+                            $.smallBox({
+                                title: 'Error...!',
+                                content: "<i class='fa fa-clock-o'></i> <i>El Pabellon esta siendo usada en algun Ala, No puede ser eliminada</i>",
+                                color: "#C46A69",
+                                iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                timeout: 4000
+                            });
+                        }
                     }
                 }
             });
 
-        }
-        if (ButtonPressed === "No") {
         }
     });
 }

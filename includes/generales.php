@@ -32,6 +32,29 @@ class general {
         $activarMenu44 = '';
     }
 
+    function generarCodigoDocumento($codigo) {
+        $prefijo1 = 'MJDHC';
+        $prefijo2 = 'VI';
+        switch (strlen($codigo)) {
+            case 1:
+                $codigoFinal = '0000' . $codigo;
+                break;
+            case 2:
+                $codigoFinal = '000' . $codigo;
+                break;
+            case 3:
+                $codigoFinal = '00' . $codigo;
+                break;
+            case 4:
+                $codigoFinal = '0' . $codigo;
+                break;
+            case 5:
+                $codigoFinal = $codigo;
+                break;
+        }
+        return $prefijo1 . '-' . $prefijo2 . '-' . $codigoFinal;
+    }
+
     function auditoria($tipo, $tabla, $descripcion) {
         global $dbmysql;
         $ip = general::obtenerIp();
@@ -103,8 +126,9 @@ class general {
         }
         return $pabellon;
     }
-    function obtenerPabellon($pabellon){
-         global $dbmysql;
+
+    function obtenerPabellon($pabellon) {
+        global $dbmysql;
         $sql = "SELECT PAB_DESCRIPCION
                 FROM `sys_pabellones` 
                 WHERE PAB_COD=$pabellon";
@@ -115,6 +139,7 @@ class general {
         }
         return $pabellon;
     }
+
     function obtenerHorariosPabellon($codigoPabellon) {
         global $dbmysql;
         $sql = "SELECT * FROM `sys_horarios` WHERE PAB_COD=$codigoPabellon";
@@ -217,49 +242,53 @@ class general {
         return $row->CEN_TIPO;
     }
 
-
-    function remplazarDia($fecha,$formato='')
-    {
-
-       $dia = array('Monday'    => 'Lunes',
-                 'Tuesday'   => 'Martes',
-                 'Wednesday' => 'Míercoles',
-                 'Thursday'  => 'Jueves',
-                 'Friday'    => 'Viernes',
-                 'Saturday'  => 'Sábado',
-                 'Sunday'    => 'Domingo'
+    function remplazarDia($fecha, $formato = '') {
+        $dia = array('Monday' => 'Lunes',
+            'Tuesday' => 'Martes',
+            'Wednesday' => 'Míercoles',
+            'Thursday' => 'Jueves',
+            'Friday' => 'Viernes',
+            'Saturday' => 'Sábado',
+            'Sunday' => 'Domingo'
         );
-
-
-       $mes = array(
-                 'January'    => 'Enero',
-                 'February'   => 'Febrero',
-                 'March' => 'Marzo',
-                 'April'  => 'Abril',
-                 'May'    => 'Mayo',
-                 'June'  => 'Junio',
-                 'July'    => 'Julio',
-                 'August'    => 'Agosto',
-                 'September'   => 'Septiembre',
-                 'October' => 'Octubre',
-                 'November'  => 'Noviembre',
-                 'December'    => 'Diciembre'
-              
+        $mes = array(
+            'January' => 'Enero',
+            'February' => 'Febrero',
+            'March' => 'Marzo',
+            'April' => 'Abril',
+            'May' => 'Mayo',
+            'June' => 'Junio',
+            'July' => 'Julio',
+            'August' => 'Agosto',
+            'September' => 'Septiembre',
+            'October' => 'Octubre',
+            'November' => 'Noviembre',
+            'December' => 'Diciembre'
         );
-       
-        if($formato==''){
+        if ($formato == '') {
             $diaSemana = $dia[date('l', strtotime($fecha))];
-            $diaFecha  = date('j', strtotime($fecha));
-            $mes  = $mes[date('F', strtotime($fecha))];
-            $anio  = date('Y', strtotime($fecha));        
-
-            return $diaSemana.", ".$diaFecha." de ".$mes." del ".$anio; 
-        }else{
+            $diaFecha = date('j', strtotime($fecha));
+            $mes = $mes[date('F', strtotime($fecha))];
+            $anio = date('Y', strtotime($fecha));
+            return $diaSemana . ", " . $diaFecha . " de " . $mes . " del " . $anio;
+        } else {
             $diaSemana = $dia[date('l', strtotime($fecha))];
-         return $diaSemana.", ".date($formato,strtotime($fecha));    
+            return $diaSemana . ", " . date($formato, strtotime($fecha));
         }
     }
 
+    function comboPabellon() {
+        global $dbmysql;
+        $retval = '';
+        $centro=$_SESSION["usu_centro_cod"];
+        $sql = "SELECT * FROM `sys_pabellones` WHERE CEN_COD=$centro;";
+        $val = $dbmysql->query($sql);
+        if ($val->num_rows > 0) {
+            while ($row = $val->fetch_object()) {
+                $retval.='<option value="' . $row->PAB_COD . '">' . $row->PAB_DESCRIPCION . '</option>';
+            }
+        }
+        return $retval;
+    }
+
 }
-
-

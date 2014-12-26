@@ -189,8 +189,8 @@ class modelPpl {
 
             $retval.='<tr id="vis' . $value['VIS_COD'] . '">
                         <td>' . $x . '</td>
-                        <td><div class="txtVisDatos" id="txtVisNombre">' . utf8_decode($value['NOMBRE']) . '</div><input type="text" id="visNombre" name="visNombre" class="visDatos" value="' . $value['NOMBRE'] . '"></td>
-                        <td><div class="txtVisDatos" id="txtVisApellido">' . utf8_decode($value['APELLIDO']) . '</div><input type="text" id="visApellido" name="visApellido" class="visDatos" value="' . $value['APELLIDO'] . '"></td>
+                        <td><div class="txtVisDatos" id="txtVisNombre">' . $value['NOMBRE'] . '</div><input type="text" id="visNombre" name="visNombre" class="visDatos" value="' . $value['NOMBRE'] . '"></td>
+                        <td><div class="txtVisDatos" id="txtVisApellido">' . $value['APELLIDO'] . '</div><input type="text" id="visApellido" name="visApellido" class="visDatos" value="' . $value['APELLIDO'] . '"></td>
                         <td><div class="txtVisDatos" id="txtVisParentesco">' . $value['PARENTESCODESCRIPCION'] . '</div><select id="visParentesco" name="visParentesco" class="visDatos">' . $this->comboParentesco($value['TPV_COD'], $value['CODIGOPARENTESCO']) . '</select></td>
                         <td>' . $estado . '</td>
                       </tr>';

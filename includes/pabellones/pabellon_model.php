@@ -28,7 +28,6 @@ function enviarDatosPabellon() {
     $lista['datosPabellon'] = array(
         "PAB_COD" => $row->PAB_COD,
         "NVL_COD" => $row->NVL_COD,
-        "PAB_ALA" => $row->PAB_ALA,
         "PAB_DESCRIPCION" => $row->PAB_DESCRIPCION,
         "PAB_CAPACIDAD" => $row->PAB_CAPACIDAD,
         "PAB_DETALLES" => $row->PAB_DETALLES
@@ -48,7 +47,6 @@ function actualizarDatosPabellon() {
 
     $sql = "UPDATE `sys_pabellones` SET 
                 NVL_COD    = '$nivel',
-                PAB_ALA  = '$ala',
                 PAB_DESCRIPCION   = '$descripcion',
                 PAB_CAPACIDAD     = '$capacidad',
                 PAB_DETALLES   = '$detalles'
@@ -63,7 +61,6 @@ function actualizarDatosPabellon() {
 
 function guardaDatosPabellon() {
     global $dbmysql;
-    $ala = strtoupper($_POST["ala"]);
     $descripcion = strtoupper($_POST["descripcion"]);
     $capacidad = $_POST["capacidad"];
     $detalles = strtoupper($_POST["detalles"]);
@@ -78,8 +75,8 @@ function guardaDatosPabellon() {
     if($row_v->PAB_DESCRIPCION != $descripcion)
     {   
 
-        $sql = "INSERT INTO `sys_pabellones`(CEN_COD,NVL_COD,PAB_ALA,PAB_DESCRIPCION,PAB_CAPACIDAD,PAB_DETALLES)VALUES
-                ('$centro','$nivel','$ala','$descripcion','$capacidad','$detalles');";
+        $sql = "INSERT INTO `sys_pabellones`(CEN_COD,NVL_COD,PAB_DESCRIPCION,PAB_CAPACIDAD,PAB_DETALLES)VALUES
+                ('$centro','$nivel','$descripcion','$capacidad','$detalles');";
         $val = $dbmysql->query($sql);
 
     }
@@ -94,11 +91,17 @@ function guardaDatosPabellon() {
 function eliminarPabellon() {
     global $dbmysql;
     $codigo = $_POST['codigo'];
+    $sql = "SELECT * FROM `sys_alas` WHERE PAB_COD=$codigo;";
+    $val = $dbmysql->query($sql);
+    if($val->num_rows==0){
     $sql = "DELETE  FROM `sys_pabellones` WHERE PAB_COD=$codigo;";
     $val = $dbmysql->query($sql);
     if ($val) {
         echo 1;
     } else {
         echo 0;
+    }
+    }else{
+        echo 2;
     }
 }

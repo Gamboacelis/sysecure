@@ -48,7 +48,6 @@ function reporte_pabellones() {
                                                                             <th>Descripción</th>
                                                                             <th>Capacidad</th>
                                                                             <th>Cantidad Actual</th>
-                                                                            <th>Ala</th>
                                                                             <th>Acción</th>
                                                                     </tr>
                                                             </thead>
@@ -62,7 +61,6 @@ function reporte_pabellones() {
                                                                             <td>'.$row->PAB_DESCRIPCION.'</td>
                                                                             <td align="center">'.$row->PAB_CAPACIDAD.'</td>
                                                                             <td align="center">'.$cantidadActual.'</td>
-                                                                            <td align="center">'.$row->PAB_ALA.'</td>
                                                                             <td>
                                                                                 <a class="btn btn-success btn-xs" title="Editar Pabellon" href="javascript:editarPabellon('.$row->PAB_COD.')">
                                                                                     <i class="fa fa-pencil"></i>

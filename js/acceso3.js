@@ -40,14 +40,16 @@ function permitirAcceso3(nombre, vipcontrol,pplcod,codControl,horario){
                             iconSmall: "fa fa-check fa-2x fadeInRight animated",
                             timeout: 4000
                         });
-                        $("#verlugarCedula").html('<strong>'+respuesta+'</strong>');
-                        $("#txtCedula").html('<i> Visitante: '+nombre+'</i>');
-                        $("#frmCedulaModal").modal('show');
-//                             
-                       $('#closeModalCedula').click(function(){
+//                        $("#verlugarCedula").html('<strong>'+respuesta+'</strong>');
+//                        $("#txtCedula").html('<i> Visitante: '+nombre+'</i>');
+//                        $("#frmCedulaModal").modal('show');
+////                             
+//                       $('#closeModalCedula').click(function(){
                            $('#cod_'+vipcontrol).parent('td').parent('tr').remove();
-//                           location.reload();
-                       });
+                           var message='Willian Espinosa';
+                           send( message );
+                           console.log(message);
+//                       });
                     }
                 },
                 error:function(){

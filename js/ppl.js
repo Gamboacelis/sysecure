@@ -608,8 +608,6 @@ function eliminarPpl(codPar, nomCod) {
             });
 
         }
-        if (ButtonPressed === "No") {
-        }
     });
 }
 function eliminarVisitantePpl(codPpl,codPar, nomCod) {
@@ -636,7 +634,7 @@ function eliminarVisitantePpl(codPpl,codPar, nomCod) {
                             timeout: 4000
                         });
                     }
-                    if(respuesta == 2)
+                    if(respuesta === 2)
                     {
                         alert('No se puede eliminar un visitante sancionado!');
                     }    
@@ -649,6 +647,7 @@ function eliminarVisitantePpl(codPpl,codPar, nomCod) {
     });
 }
 function limpiarFormularioPpl() {
+    $("#IDppl").val('');
     $("#nombre").val('');  /*Ala*/
     $("#apellido").val('');  /*Descripcion*/
     $("#cedula").val('');  /*Capacidad*/

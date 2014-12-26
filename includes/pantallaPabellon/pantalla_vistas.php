@@ -80,7 +80,7 @@ $tipoVisita='Familiar';
                                                                 <div class="fotoPabellon">
                                                                     <span><p class="text-danger"><strong>PPL</strong></p></span>
                                                                     <img src="../../img/avatars/male.png" width="150px">
-                                                                    <span><p><?php echo $nombrePpl?></p></span>
+                                                                    <span><p id="nombrePPl"><?php //echo $nombrePpl?></p></span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -176,5 +176,6 @@ $tipoVisita='Familiar';
         <script src="../../js/plantilla/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
         <script src="../../js/plantilla/plugin/fuelux/wizard/wizard.min.js"></script>
         <script src="../../js/pantallaPabellon.js"></script>
+        <script src="../../js/fancywebsocket.js"></script>
     </body>
 </html>

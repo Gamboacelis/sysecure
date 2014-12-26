@@ -1,6 +1,8 @@
 <?php
 
 session_start();
+include_once '../../includes/codigoBarras.php';
+$clCodigo = new generaCodigoBarras();
 include_once '../../includes/generales.php';
 $clGeneral = new general();
 include_once '../conexiones/db_local.inc.php';
@@ -52,6 +54,12 @@ switch ($funcion) {
         break;
     case 'verificaConyugal':
         verificaConyugal();
+        break;
+    case 'imprimirReporte':
+        imprimirReporte();
+        break;
+     case 'imprimirVisitantesPpl':
+        reporteVisitantesPpl();
         break;
 }
 
@@ -165,10 +173,10 @@ function mostrarVisitantesPpl() {
             /////////////////////
             $retval.='<tr id="vis' . $row->VIS_COD . '">
                         <td>' . $x . '</td>
-                        <td><div class="txtVisDatos" id="txtVisNombre">' . utf8_decode($row->VIS_NOMBRE) . '</div><input type="text" id="visNombre" name="visNombre" class="visDatos" value="' . $row->VIS_NOMBRE . '"></td>
-                        <td><div class="txtVisDatos" id="txtVisApellido">' . utf8_decode($row->VIS_APELLIDO) . '</div><input type="text" id="visApellido" name="visApellido" class="visDatos" value="' . $row->VIS_APELLIDO . '"></td>
+                        <td><div class="txtVisDatos" id="txtVisNombre">' . $row->VIS_NOMBRE . '</div><input type="text" id="visNombre" name="visNombre" class="visDatos" value="' . $row->VIS_NOMBRE . '"></td>
+                        <td><div class="txtVisDatos" id="txtVisApellido">' . $row->VIS_APELLIDO . '</div><input type="text" id="visApellido" name="visApellido" class="visDatos" value="' . $row->VIS_APELLIDO . '"></td>
                         <td><div class="txtVisDatos" id="txtVisParentesco">' . $row->PAR_DESCRIPCION . '</div><select id="visParentesco" name="visParentesco" class="visDatos">' . comboParentesco($row->TPV_COD,$row->PAR_COD) . '</select></td>
-                        <td>'.$estado.'</td>    
+                        <td class="acciones">'.$estado.'</td>    
                       </tr>';
         }
     } else {
@@ -176,7 +184,67 @@ function mostrarVisitantesPpl() {
     }
     echo $retval;
 }
-
+function reporteVisitantesPpl(){
+    global $dbmysql,$clGeneral,$clCodigo;
+    $codigoPpl = $_POST["codPpl"];
+    $fecha=  date('Y-m-d');
+    $codigo=$clGeneral->generarCodigoDocumento($codigoPpl);
+    $texto=$clGeneral->obtenerValorParametro(5);
+    $sqlPpl = "SELECT * FROM `sys_ppl` WHERE `PPL_COD`=$codigoPpl;";
+    $valPpl = $dbmysql->query($sqlPpl);
+    $rowPpl = $valPpl->fetch_object();
+    $retval = '<article class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                    <div style="position: relative; width: 100%; display: flex;"><div style="width: 70%;"><img width="200px" alt="Ministerio de Justicia" src="img/logo_minJus.png"></div><div id="mostrarCodigoBarras"  style="padding: 0px; overflow: auto; width: 209px; float: right; position: absolute;"></div></div>
+                    <div>
+                        <h2 style="text-align:center;">ACTA DE COMPROMISO</h2>
+                        <p>Yo <b>'.$rowPpl->PPL_NOMBRE.' '.$rowPpl->PPL_APELLIDO.'</b>, '.$texto.'</p><br>
+                    <div>
+                    <input type="hidden" id="codigoBarras" name="codigoBarras" value="'.$codigo.'">
+                    <div style="padding: 10px; margin: 10px; width: 100%; position: relative; display: inline-flex; border: thin dashed black;">
+                        <div style="width: 50%;">Fecha de Entrega: <b>'.$fecha.'</b></div>
+                        <div style="width: 50%;">Código Documento: <b>'.$codigo.'</b></div>
+                    </div>
+                    <div id="wid-id-4" class="jarviswidget jarviswidget-color-darken">
+                            <header>
+                                    <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                    <h2>Listado de Visitantes Autorizados <spam id="totalSeleccionados"></spam></h2>
+                            </header>
+                            <div>
+                                <div class="widget-body no-padding">
+                                    <div class="table-responsive">
+                                        <table id="impresionVisitantesPpl" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox" style="text-align: center; width: 100%; border: 1px solid black;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="border: 1px dotted;"><i class="fa fa-user"></i> Nombre</th>
+                                                    <th style="border: 1px dotted;"><i class="fa fa-user"></i> Apellido</th>
+                                                    <th style="border: 1px dotted;"><i class="fa fa-lock"></i> Parentesco</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>';
+                $sql = "SELECT vp.*,v.*,p.* FROM `sys_visitante_ppl` vp, sys_visitante v,sys_parentesco p WHERE vp.`VIS_COD`=v.`VIS_COD` AND p.PAR_COD=vp.PAR_COD AND v.VIS_ESTADO !='E' AND vp.`PPL_COD`=$codigoPpl ORDER BY v.VIS_COD;";
+                $val = $dbmysql->query($sql);
+                                    if ($val->num_rows > 0) {
+                                        while ($row = $val->fetch_object()) {
+                                            $retval.='<tr>
+                                                        <td style="border: 1px dotted;"><div>' . $row->VIS_NOMBRE . '</div></td>
+                                                        <td style="border: 1px dotted;"><div>' . $row->VIS_APELLIDO . '</div></td>
+                                                        <td style="border: 1px dotted;"><div>' . $row->PAR_DESCRIPCION . '</div></td>
+                                                      </tr>';
+                                        }
+                                    }
+                         $retval .= '</tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div style="border: thin dashed rgb(204, 204, 204); position: relative; display: inline-flex; padding: 150px 0px 0px 50px; width: 100%; margin: 0px auto;">
+                        <div style="border-top: 1px dashed black; width: 205px; text-align: center; padding: 10px;">Firma Autorizada</div>
+                        <div style="border-top: 1px dashed black; margin: 0px 80px; padding: 10px; text-align: center;">'.$rowPpl->PPL_NOMBRE.' '.$rowPpl->PPL_APELLIDO.'</div>
+                    </div>
+                </article>';
+    echo $retval;
+}
 function guardaDatosPpl() {
     global $dbmysql,$clGeneral;
     $pabellon = $_POST["pabellon"];
@@ -265,7 +333,7 @@ function guardarListaVisitante() {
             //$IdVisita = $dbmysql->maxid('VIS_COD', 'sys_visitante');
             $sql = "INSERT INTO `sys_visitante_ppl` (PPL_COD,VIS_COD,PAR_COD)
                         VALUES($codPpl,$idVisitante,$parCod);";
-           $val = $dbmysql->query($sql);
+            $val = $dbmysql->query($sql);
             $clGeneral->auditoria('I', 'sys_visitante_ppl', 'valores:'.$codPpl.','.$idVisitante.','.$parCod);    
             $sql2 = "SELECT * FROM `sys_parentesco` WHERE PAR_COD='$parCod';";
             $val2 = $dbmysql->query($sql2);

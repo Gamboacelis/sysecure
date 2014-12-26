@@ -32,6 +32,10 @@ if ($_SESSION["autenticado"] == 'SI') {
             include_once("./includes/traspaso/traspaso_vistas.php");
             include_once("./includes/roles/roles_vistas.php");
             include_once("./includes/busquedas/busquedas_vistas.php");
+            include_once("./includes/etapas/etapas_vistas.php");
+            include_once("./includes/alas/alas_vistas.php");
+            include_once("./includes/pisos/pisos_vistas.php");
+            include_once("./includes/celdas/celdas_vistas.php");
 
             switch ($option) {
                 case 'centros':
@@ -48,6 +52,26 @@ if ($_SESSION["autenticado"] == 'SI') {
                     $titulo = 'Revisión de Pabellones';
                     $activarMenu33 = 'class="active"';
                     $contenido = reporte_pabellones();
+                    break;
+                case 'etapas':
+                    $titulo = 'Revisión de Etapas';
+                    $activarMenu31 = 'class="active"';
+                    $contenido = reporte_etapa();
+                    break;
+                case 'alas':
+                    $titulo = 'Revisión de Alas';
+                    $activarMenu31 = 'class="active"';
+                    $contenido = reporte_alas();
+                    break;
+                case 'pisos':
+                    $titulo = 'Revisión de Pisos';
+                    $activarMenu31 = 'class="active"';
+                    $contenido = reporte_pisos();
+                    break;
+                case 'celdas':
+                    $titulo = 'Revisión de Celdas';
+                    $activarMenu31 = 'class="active"';
+                    $contenido = reporte_celdas();
                     break;
                 case 'parentesco':
                     $titulo = 'Revisión de Parentescos';
@@ -468,6 +492,10 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/visitas.js"></script>
             <script src="js/usuario.js"></script>
             <script src="js/pabellones.js"></script>
+            <script src="js/etapas.js"></script>
+            <script src="js/alas.js"></script>
+            <script src="js/pisos.js"></script>
+            <script src="js/celdas.js"></script>
             <script src="js/horarios.js"></script>
             <script src="js/ppl.js"></script>
             <script src="js/visitantes.js"></script>
@@ -484,6 +512,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/busquedas.js"></script>
             <script src="js/reportes.js"></script>
             <script src="js/parentesco.js"></script>
+            <script src="js/fancywebsocket.js"></script>
 
             <!-- PAGE RELATED PLUGIN(S) -->
             <script src="js/plantilla/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
