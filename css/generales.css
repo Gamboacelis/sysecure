@@ -42,5 +42,6 @@ nav ul li a{max-width:220px}
 .cargar_txt span{margin:0 0 0 12px;z-index:2}
 #tbPermisosDisponibles #tablaHorarios label{display:block}
 #email,#usuario,#password,#passwordConfirm{text-transform:lowercase}
+#frmCalendarioModal .modal-dialog{width:800px}
 .tablaPabellonesDetalle:hover{color:#058dc7;cursor:pointer}
 .txtPabellonHorario{color:#f00;font-size:1.2em;font-weight:bolder}

@@ -1,12 +1,14 @@
 <?php
 
 session_start();
+include_once PATH_PROD . SISTEM_NAME . '/includes/generales.php';
+$Generales = new general();
 include_once PATH_PROD . SISTEM_NAME . '/includes/conexiones/db_local.inc.php';
 $dbmysql = new database();
 date_default_timezone_set('America/Bogota');
 
 function frm_asignacionPabellones() {
-    global $dbmysql;
+    global $dbmysql,$Generales;
     $retval = '';
     $sql = "SELECT e.*,p.* FROM `sys_pabellones` p, sys_etapas e WHERE e.`NVL_COD`=p.`NVL_COD` AND p.CEN_COD={$_SESSION['usu_centro_cod']}";
     $val_s = $dbmysql->query($sql);
@@ -15,6 +17,13 @@ function frm_asignacionPabellones() {
                             <header>
                                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                                     <h2>Pabellones ' . $_SESSION["usu_centro_descrip"] . ' </h2>
+                                    <div class="widget-toolbar">
+                                        <div class="btn-group">
+                                                <button class="btn btn-xs btn-success btn-personal" data-toggle="modal" onclick="javascript:abrirCalendario()">
+                                                    <i class="fa fa-fw fa-plus"></i>  Abrir Calendario
+                                                </button>
+                                        </div>
+                                    </div>
                             </header>
                             <div>
                                 <div class="jarviswidget-editbox">
@@ -27,16 +36,16 @@ function frm_asignacionPabellones() {
                                                             <th>#</th>
                                                             <th>Nivel</th>
                                                             <th>Pabellon</th>
-                                                            <th>Ala</th>
+                                                            <th>Cantidad</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>';
     while ($row = $val_s->fetch_object()) {
-        $retval .= '<tr class="tablaPabellonesDetalle" id="' . $row->PAB_COD . '" onclick="javascript:mostrarHoraiosPabellon(\'' . $row->PAB_COD . '\')">
+        $retval .= '<tr class="tablaPabellonesDetalle" id="' . $row->PAB_COD . '" onclick="javascript:mostrarHoraiosPabellon(\'' . $row->PAB_COD . '\',\''.$Generales->obtenerCantidadActualPPL($row->PAB_COD).'\')">
                                                         <td>' . $row->PAB_COD . '</td>
                                                         <td>' . $row->NVL_DESCRIPCION . '</td>
                                                         <td>' . $row->PAB_DESCRIPCION . '</td>
-                                                        <td>' . $row->PAB_ALA . '</td>
+                                                        <td>' . $Generales->obtenerCantidadActualPPL($row->PAB_COD) . '</td>
                                                     </tr>';
     }
     $retval .= '</tbody>
@@ -53,7 +62,10 @@ function frm_asignacionPabellones() {
                                     <h2>Listado de Horarios asignados al Pabellon</h2>
                                     <div class="widget-toolbar">
                                         <div class="btn-group">
-                                                <button class="btn btn-xs btn-success btn-personal" data-toggle="modal" onclick="javascript:nuevoHorario()">
+                                                <button class="btn btn-xs btn-success btn-personal" data-toggle="modal" onclick="javascript:asignarPPLHorario()" style="margin:5px;">
+                                                    <i class="fa fa-lg fa-arrow-circle-o-up"></i>  Asignar PPL  <span id="cantidadPpl" class="badge bg-color-darken"></span>
+                                                </button>
+                                                <button class="btn btn-xs btn-success btn-personal" data-toggle="modal" onclick="javascript:nuevoHorario()" style="margin:5px;">
                                                     <i class="fa fa-fw fa-plus"></i>  Agregar Horario
                                                 </button>
                                         </div>
@@ -67,9 +79,9 @@ function frm_asignacionPabellones() {
                                             <tr id="tablaHorarios">
                                                     <th>Fecha</th>
                                                     <th>Tipo Visita</th>
-                                                    <th>Descripción</th>
                                                     <th>Hora Ingreso</th>
                                                     <th>Hora Salida</th>
+                                                    <th>PPL Asignados</th>
                                                     <th>Estado</th>
                                                     <th>Acciones</th>
                                             </tr>
@@ -81,6 +93,8 @@ function frm_asignacionPabellones() {
                                             </div>
                                         </div></article>';
     $retval .=frmHorarios();
+    $retval .=calendarioVisitas();
+    $retval .=frmAsignar();
     return $retval;
 }
 
@@ -171,6 +185,81 @@ function frmHorarios() {
     return $retval;
 }
 
+function frmAsignar() {
+    $retval = '';
+    $retval = '<div class="modal fade" id="frmAsignarModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                                                <header>
+                                                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                        <h2>Formulario de Registro </h2>				
+                                                </header>
+                                                <div>
+                                                    <div class="widget-body no-padding">
+                                                        <form id="formAsignar" class="smart-form" action="javascript:guardarAsignacionHorarios()">
+                                                            <header>
+                                                                    Formulario de Registro
+                                                            </header>
+                                                            <fieldset>
+                                                                    <input type="hidden" id="IDpabellonAsigna" name="IDpabellonAsigna">
+                                                                    <div class="row">
+                                                                        <section class="col col-6">
+                                                                                <label style="margin: 10px;"><strong>Datos del Pabellón</strong></label>
+                                                                                <address>
+                                                                                    <p>Pabellón <i id="txtAsignaPabellon"></i></p>
+                                                                                    <p>Cantidad Total de Ppl: <i id="txtAsignaCantidad"></i></p>
+                                                                                    <p>Número de Alas: <i id="txtAsignaAlas"></i></p>
+                                                                                    <p>Número de Pisos: <i id="txtAsignaPisos"></i></p>
+                                                                                    <p>Número de Celdas: <i id="txtAsignaCeldas"></i></p>
+                                                                                </address>
+                                                                        </section>
+                                                                        <section class="col col-6" style="text-align: center;">
+                                                                                <label style="margin: 10px;"><strong>Distribución de PPLS en horarios</strong></label>
+                                                                                <div>
+                                                                                    <table id="muestraHorarios" border="0" style="text-align:center;">
+                                                                                        <thead>
+                                                                                            <tr style="border-bottom: 1px dashed #000;font-size:0.8em;">
+                                                                                                <th >Horario</th>
+                                                                                                <th>Fecha</th>
+                                                                                                <th>Cantidad PPL</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                        </section>
+                                                                    </div>
+                                                            </fieldset>
+                                                            <fieldset>
+                                                                <span style="color: red; font-size: 1.1em">Por favor revisar la distribución que se realizara en cada horario para los ppls, esto está en base a la cantidad de ppls que están asignados a cada celda. </span>
+                                                            </fieldset>
+                                                            <footer>
+                                                                    <button class="btn btn-default"> Cancelar </button>
+                                                                    <button type="submit" class="btn btn-primary">
+                                                                        <i class="fa fa-save"></i>
+                                                                            Aceptar
+                                                                    </button>
+                                                            </footer>
+                                                        </form>						
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>';
+    return $retval;
+}
+
 function comboTipoVisitas() {
     global $dbmysql;
     $retval = '';
@@ -181,5 +270,70 @@ function comboTipoVisitas() {
             $retval.='<option value="' . $row->TPV_COD . '">' . $row->TPV_DESCRIPCION . '</option>';
         }
     }
+    return $retval;
+}
+
+function calendarioVisitas(){
+    $retval ='';
+    $retval .='<div class="modal fade" id="frmCalendarioModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                                                <header>
+                                                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                        <h2>Calendario de Visitas</h2>				
+                                                </header>
+                                                <div>';
+    $retval .='<div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget jarviswidget-color-blueDark">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
+                        <h2> My Events </h2>
+                        <div class="widget-toolbar">
+                            <div class="btn-group">
+                                <button class="btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown">
+                                        Showing <i class="fa fa-caret-down"></i>
+                                </button>
+                                <ul class="dropdown-menu js-status-update pull-right">
+                                    <li>
+                                            <a href="javascript:void(0);" id="mt">Month</a>
+                                    </li>
+                                    <li>
+                                            <a href="javascript:void(0);" id="ag">Agenda</a>
+                                    </li>
+                                    <li>
+                                            <a href="javascript:void(0);" id="td">Today</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </header>
+                    <div>
+                        <div class="widget-body no-padding">
+                            <div class="widget-body-toolbar">
+                                <div id="calendar-buttons">
+                                    <div class="btn-group">
+                                        <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-prev"><i class="fa fa-chevron-left"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-next"><i class="fa fa-chevron-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="calendar"></div>
+                        </div>
+                    </div>
+                </div>
+        </div>';
+                $retval .='</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>';
     return $retval;
 }

@@ -2,8 +2,10 @@
 
 session_start();
 include_once '../conexiones/db_local.inc.php';
-include_once '../../includes/generales.php';
 $dbmysql = new database();
+include_once '../../includes/generales.php';
+$Generales=new general();
+
 date_default_timezone_set('America/Bogota');
 $funcion = isset($_GET['opcion']) ? $_GET['opcion'] : 'ninguno';
 switch ($funcion) {
@@ -21,6 +23,9 @@ switch ($funcion) {
         break;
     case 'buscarHorariosPabellon':
         buscarHorariosPabellon();
+        break;
+    case 'asignarHorariosPpl':
+        asignarHorariosPpl();
         break;
 }
 
@@ -122,9 +127,9 @@ function buscarHorariosPabellon() {
             $retval .='<tr id="tablaHorarios">
                            <td>' . $generales->remplazarDia($row->HOR_FECHA,'d-M-Y') . '</td>
                            <td>' . $row->TPV_DESCRIPCION . '</td>
-                           <td>' . $row->HOR_DESCRIPCION . '</td>
                            <td>' . $row->HOR_HORA_ING . '</td>
                            <td>' . $row->HOR_HORA_SAL . '</td>
+                           <td align="center" style="color:red; font-size: 2em;">' . $row->HOR_ASIGNADOS . '</td>
                            <td>' . $estado . '</td>
                            <td><a class="btn btn-success btn-xs" title="Editar Horario" href="javascript:editarHorario(' . $row->HOR_COD . ')">
                                     <i class="fa fa-pencil"></i>
@@ -141,4 +146,67 @@ function buscarHorariosPabellon() {
     }
 //    $retval .=buscarArchivosProducto();
     echo $retval;
+}
+
+function asignarHorariosPpl(){
+    global $dbmysql,$Generales;
+    $idPabellon = $_POST['pabellon'];
+    $sql = "SELECT * FROM `sys_pabellones` WHERE PAB_COD =$idPabellon";
+    $val = $dbmysql->query($sql);
+    $row = $val->fetch_object();
+    $ppls=$Generales->obtenerCantidadActualPPL($idPabellon);
+    $alas=$Generales->cantidadAlas($idPabellon);
+    $pisos=$Generales->cantidadPisos($idPabellon);
+    $celdas=$Generales->cantidadCeldas($idPabellon);
+    $lista['datosPabellon'] = array(
+        "PAB_COD" => $row->PAB_COD,
+        "CEN_COD" => $row->CEN_COD,
+        "NVL_COD" => $row->NVL_COD,
+        "PAB_DESCRIPCION" => $row->PAB_DESCRIPCION,
+        "PAB_CAPACIDAD" => $row->PAB_CAPACIDAD,
+        "PAB_PPL" => $ppls,
+        "PAB_ALAS" => $alas,
+        "PAB_PISOS" => $pisos,
+        "PAB_CELDAS" => $celdas
+    );
+    $horarios=$Generales->obtenerHorariosPabellon($idPabellon);
+    $numHorarios=$horarios->num_rows;
+    $sql = "SELECT * FROM `sys_tipovisita`;";
+    $val = $dbmysql->query($sql);
+    while($row = $val->fetch_object()){
+        $tipo=$row->TPV_COD;
+        $sql_hor="SELECT count(*) AS countHorario FROM `sys_horarios` WHERE PAB_COD=$idPabellon AND `TPV_COD` =$row->TPV_COD AND `HOR_ESTADO`='A'";
+        $countHorarios = $dbmysql->query($sql_hor);
+        $rowHorarios = $countHorarios->fetch_object();
+        $cantidadHorarios=$rowHorarios->countHorario;
+        $lista['datosHorarios'][$row->TPV_COD]=$cantidadHorarios;
+        $sqlDatosHorario="SELECT * FROM `sys_horarios` WHERE PAB_COD=$idPabellon AND `TPV_COD` =$row->TPV_COD AND `HOR_ESTADO`='A'";
+        $DatosHorario = $dbmysql->query($sqlDatosHorario);
+           /**********************************
+            * DISTRIBUCION DE PPLS EN HORARIOS
+            **********************************/
+        while($datoHorario = $DatosHorario->fetch_object()){
+            $x=($cantidadHorarios!=0)?round($ppls/$cantidadHorarios):$cantidadHorarios;
+            $lista['datosPplHorarios'][]=array(
+                                "HOR_COD"=>$datoHorario->HOR_COD,
+                                "HOR_DESCRIPCION"=>$datoHorario->HOR_DESCRIPCION,
+                                "HOR_FECHA"=>$datoHorario->HOR_FECHA,
+                                "HOR_HORA_ING"=>$datoHorario->HOR_HORA_ING,
+                                "HOR_HORA_SAL"=>$datoHorario->HOR_HORA_SAL,
+                                "HOR_CANT_PPL"=>$x
+                );
+        }
+        
+        $cantidadHorariosxTipo=$lista['datosHorarios'][$row->TPV_COD];
+        $cantidadVector=($cantidadVector+$cantidadHorariosxTipo)-1;
+        $cantidadPplxPabellon=$lista['datosPabellon']['PAB_PPL'];
+        echo '/'.$residuo=$lista['datosPplHorarios'][$cantidadVector]['HOR_CANT_PPL']*$cantidadHorariosxTipo;
+        $residuo=($residuo<$cantidadPplxPabellon)?$cantidadPplxPabellon-$residuo:0;
+        for($x=0;$x<$cantidadHorariosxTipo;$x++){
+            $lista['datosPplHorarios'][$x]['HOR_CANT_PPL']=$lista['datosPplHorarios'][$x]['HOR_CANT_PPL']+$residuo;
+            $residuo=0;
+        }
+    }
+    print_r($lista);
+//    echo $encode = json_encode($lista);
 }

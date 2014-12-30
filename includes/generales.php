@@ -61,8 +61,9 @@ class general {
         $dominio = general::obtenerNombreEquipo();
         $usuario = $_SESSION["usu_usuario"];
         $fecha = date('Y-m-d H:i');
-        $sql = "INSERT INTO `sys_auditoria` (`AUD_TIPO`,`AUD_TABLA`,`AUD_DESCRIPCION`,`AUD_IP`,`AUD_DOMINIO`,`AUD_USUARIO`,`AUD_FECHAHORA`)
-              VALUES ('$tipo','$tabla','$descripcion','$ip','$dominio','$usuario','$fecha')";
+        $centro = $_SESSION["usu_centro_cod"];
+        $sql = "INSERT INTO `sys_auditoria` (`AUD_TIPO`,`CEN_COD`,`AUD_TABLA`,`AUD_DESCRIPCION`,`AUD_IP`,`AUD_DOMINIO`,`AUD_USUARIO`,`AUD_FECHAHORA`)
+              VALUES ('$tipo',$centro,'$tabla','$descripcion','$ip','$dominio','$usuario','$fecha')";
         $val = $dbmysql->query($sql);
     }
 
@@ -291,4 +292,25 @@ class general {
         return $retval;
     }
 
+    function cantidadAlas($pabellon){
+        global $dbmysql;
+        $sql = "SELECT count(*) AS CantAlas FROM `sys_alas` WHERE PAB_COD =$pabellon";
+        $val = $dbmysql->query($sql);
+        $row = $val->fetch_object();
+        return $row->CantAlas;
+    }
+    function cantidadPisos($pabellon){
+        global $dbmysql;
+        $sql = "SELECT count(*) AS CantPisos FROM `sys_pisos` WHERE PAB_COD =$pabellon";
+        $val = $dbmysql->query($sql);
+        $row = $val->fetch_object();
+        return $row->CantPisos;
+    }
+    function cantidadCeldas($pabellon){
+        global $dbmysql;
+        $sql = "SELECT count(*) AS CantCeldas FROM `sys_celdas` WHERE PAB_COD =$pabellon";
+        $val = $dbmysql->query($sql);
+        $row = $val->fetch_object();
+        return $row->CantCeldas;
+    }
 }

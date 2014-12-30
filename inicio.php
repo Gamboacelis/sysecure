@@ -36,8 +36,14 @@ if ($_SESSION["autenticado"] == 'SI') {
             include_once("./includes/alas/alas_vistas.php");
             include_once("./includes/pisos/pisos_vistas.php");
             include_once("./includes/celdas/celdas_vistas.php");
+            include_once("./includes/auditoria/auditoria_vistas.php");
 
             switch ($option) {
+                case 'auditoria':
+                    $titulo = 'Revisión de Auditoria';
+                    $activarMenu31 = 'class="active"';
+                    $contenido = reporte_auditoria();
+                    break;
                 case 'centros':
                     $titulo = 'Revisión de Centros';
                     $activarMenu31 = 'class="active"';
@@ -513,6 +519,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/reportes.js"></script>
             <script src="js/parentesco.js"></script>
             <script src="js/fancywebsocket.js"></script>
+            <script src="js/auditoria.js"></script>
 
             <!-- PAGE RELATED PLUGIN(S) -->
             <script src="js/plantilla/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
@@ -525,6 +532,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/plantilla/plugin/vectormap/jquery-jvectormap-1.2.2.min.js"></script>
             <script src="js/plantilla/plugin/vectormap/jquery-jvectormap-world-mill-en.js"></script>
             <!-- Full Calendar -->
+            <script src="js/plantilla/plugin/moment/moment.min.js"></script>
             <script src="js/plantilla/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>
             <script src="js/plantilla/plugin/datatables/jquery.dataTables.min.js"></script>
             <script src="js/plantilla/plugin/datatables/fnReloadAjax.js"></script>
