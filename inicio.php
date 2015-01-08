@@ -201,7 +201,7 @@ if ($_SESSION["autenticado"] == 'SI') {
             <meta charset="utf-8">
             <title> Sysecure </title>
             <meta name="description" content="Automatizacion y Control de Visitas a PPL">
-            <meta name="author" content="iBlack Sistemas y Comunicaciones S.A.">
+            <meta name="author" content="WieSolutions">
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
             <!-- Basic Styles -->
             <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css">
@@ -213,35 +213,16 @@ if ($_SESSION["autenticado"] == 'SI') {
             <!-- FAVICONS -->
             <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
             <link rel="icon" href="img/favicon/favicon.ico" type="image/x-icon">
-            <!-- GOOGLE FONT -->
-            
-            <link rel="apple-touch-icon" href="img/splash/sptouch-icon-iphone.png">
-            <link rel="apple-touch-icon" sizes="76x76" href="img/splash/touch-icon-ipad.png">
-            <link rel="apple-touch-icon" sizes="120x120" href="img/splash/touch-icon-iphone-retina.png">
-            <link rel="apple-touch-icon" sizes="152x152" href="img/splash/touch-icon-ipad-retina.png">
-            <!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
-            <meta name="apple-mobile-web-app-capable" content="yes">
-            <meta name="apple-mobile-web-app-status-bar-style" content="black">
-            <!-- Startup image for web apps -->
-            <link rel="apple-touch-startup-image" href="img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
-            <link rel="apple-touch-startup-image" href="img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
-            <link rel="apple-touch-startup-image" href="img/splash/iphone.png" media="screen and (max-device-width: 320px)">
         </head>
         <body class="desktop-detected pace-done fixed-header fixed-navigation fixed-ribbon smart-style-3">
             <header id="header">
                 <div id="logo-group">
                     <span id="logo"> <img src="img/logo/Logo-6.png" alt="Sisecure" style="width: 110%"> </span>
                 </div>
-                <!-- pulled right: nav area -->
                 <div class="pull-right">
-
-                    <!-- collapse menu button -->
                     <div id="hide-menu" class="btn-header pull-right">
                         <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
                     </div>
-                    <!-- end collapse menu -->
-                    <!-- #MOBILE -->
-                    <!-- Top menu profile link : this shows only when top menu is active -->
                     <ul id="mobile-profile-img" class="header-dropdown-list hidden-xs padding-5">
                         <li class="">
                             <a href="#" class="dropdown-toggle no-margin userdropdown" data-toggle="dropdown"> 
@@ -270,21 +251,14 @@ if ($_SESSION["autenticado"] == 'SI') {
                             </ul>
                         </li>
                     </ul>
-
-                    <!-- logout button -->
                     <div id="logout" class="btn-header transparent pull-right">
                         <span> <a href="logout.php" title="Sign Out" data-action="userLogout" data-logout-msg="Usted puede mejorar su seguridad aún más después de cerrar la sesión al cerrar este navegador abierto"><i class="fa fa-sign-out"></i></a> </span>
                     </div>
-                    <!-- end logout button -->
-                    <!-- fullscreen button -->
                     <div id="fullscreen" class="btn-header transparent pull-right">
                         <span> <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen"><i class="fa fa-arrows-alt"></i></a> </span>
                     </div>
-                    <!-- end fullscreen button -->
                 </div>
-                <!-- end pulled right: nav area -->
             </header>
-            <!-- END HEADER -->
             <aside id="left-panel">
                 <div class="login-info">
                     <span> <!-- User image size is adjusted inside CSS, it should stay as it --> 
@@ -308,33 +282,8 @@ if ($_SESSION["autenticado"] == 'SI') {
                 </span>
 
             </aside>
-            <!-- END NAVIGATION -->
-
-            <!-- MAIN PANEL -->
             <div id="main" role="main">
-
-                <!-- RIBBON -->
-                <!--div id="ribbon">
-                    <span class="ribbon-button-alignment"> 
-                        <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh"  rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true">
-                            <i class="fa fa-refresh"></i>
-                        </span> 
-                    </span>
-                    <!-- breadcrumb -->
-                    <!--ol class="breadcrumb">
-                        <li>Inicio</li><li>Dashboard</li>
-                    </ol>
-                    <form action="javascript:busquedas();" class="header-search pull-right">
-                            <input type="text" placeholder="Buscar Visitante" id="search-visitante">
-                            <button type="submit"><i class="fa fa-search"></i></button>
-                            <a href="javascript:void(0);" id="cancel-search-js" title="Cancel Search"><i class="fa fa-times"></i></a>
-                    </form>
-                </div>
-                <!-- END RIBBON -->
-
-                <!-- MAIN CONTENT -->
                 <div id="content">
-
                     <div class="row">
                         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-6">
                             <h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-home"></i> Inicio <span>>  <?php echo $titulo ?></span></h1>
@@ -359,17 +308,8 @@ if ($_SESSION["autenticado"] == 'SI') {
                                         </span>
                                     </h5>
                                 </li>
-                                <!--li class="sparks-info">
-                                    <h5>
-                                        Total Visitas
-                                        <span class="txt-color-blue" title="Total de Visitas General">
-                                            <i class="fa fa-bar-chart-o "></i>
                                              <?php echo $totalVisita ?>
-                                        </span>
-                                    </h5>
-                                </li-->  
                                 <li class="sparks-info">
-                                    
                                     <h5>
                                         Centro
                                         <span class="txt-color-greenDark"> <?php echo $_SESSION["usu_centro_descrip"]; ?></span>
@@ -381,15 +321,7 @@ if ($_SESSION["autenticado"] == 'SI') {
 
                     <?php echo $contenido ?>
                 </div>
-                <!-- END MAIN CONTENT -->
-
             </div>
-            <!-- END MAIN PANEL -->
-
-            <!-- SHORTCUT AREA : With large tiles (activated via clicking user name tag)
-            Note: These tiles are completely responsive,
-            you can add as many as you like
-            -->
             <div id="shortcut">
                 <ul>
                     <li>
@@ -412,84 +344,27 @@ if ($_SESSION["autenticado"] == 'SI') {
                     </li>
                 </ul>
             </div>
-            <!-- END SHORTCUT AREA -->
-
             <!--================================================== -->
-
-            <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
             <script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plantilla/plugin/pace/pace.min.js"></script>
-
-            <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-            <script>
-			if (!window.jQuery) {
-				document.write('<script src="js/plantilla/libs/jquery-2.0.2.min.js"><\/script>');
-			}
-		</script>
-
-		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-		<script>
-			if (!window.jQuery.ui) {
-				document.write('<script src="js/plantilla/libs/jquery-ui-1.10.3.min.js"><\/script>');
-			}
-		</script>
-
-            <!-- JS TOUCH : include this plugin for mobile drag / drop touch events
-            <script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script> -->
-
-            <!-- BOOTSTRAP JS -->
+            <script src="js/plantilla/libs/jquery-2.0.2.min.js"></script>
+            <script src="js/plantilla/libs/jquery-ui-1.10.3.min.js"></script>
             <script src="js/plantilla/bootstrap/bootstrap.min.js"></script>
-
-            <!-- CUSTOM NOTIFICATION -->
             <script src="js/plantilla/notification/SmartNotification.min.js"></script>
-
-            <!-- JARVIS WIDGETS -->
             <script src="js/plantilla/smartwidgets/jarvis.widget.min.js"></script>
-
-            <!-- EASY PIE CHARTS -->
             <script src="js/plantilla/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
-
-            <!-- SPARKLINES -->
             <script src="js/plantilla/plugin/sparkline/jquery.sparkline.min.js"></script>
-
-            <!-- JQUERY VALIDATE -->
             <script src="js/plantilla/plugin/jquery-validate/jquery.validate.min.js"></script>
             <script src="js/plantilla/plugin/jquery-validate/additional-methods.min.js"></script>
             <script src="js/plantilla/plugin/jquery-validate/jquery.validate.ruc.min.js"></script>
-            <!-- JQUERY VALIDATE MENSSAGE IN SPANISH -->
             <script src="js/plantilla/plugin/jquery-validate/jqueryvalidatemessage.min.js"></script>
-
-            <!-- JQUERY MASKED INPUT -->
             <script src="js/plantilla/plugin/masked-input/jquery.maskedinput.min.js"></script>
-
-            <!-- JQUERY SELECT2 INPUT -->
             <script src="js/plantilla/plugin/select2/select2.min.js"></script>
-
-            <!-- JQUERY UI + Bootstrap Slider -->
             <script src="js/plantilla/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
-
-            <!-- browser msie issue fix -->
             <script src="js/plantilla/plugin/msie-fix/jquery.mb.browser.min.js"></script>
-
-            <!-- FastClick: For mobile devices -->
             <script src="js/plantilla/plugin/fastclick/fastclick.min.js"></script>
-
-            <!-- Generador de MD5 -->
             <script src="js/plantilla/plugin/jquery-md5/jquery.md5.min.js"></script>
-            
-            <!-- SOAP JS -->
             <script src="js/plantilla/plugin/jquery-soap/jquery.soap.js"></script>
-            
-            <!-- XML2JSON JS -->
             <script src="js/plantilla/plugin/jquery-soap/jquery.xml2json.js"></script>
-            <!--[if IE 8]>
-
-            <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
-
-            <![endif]-->
-
-            <!-- Demo purpose only -->
-            <!--script src="js/plantilla/demo.min.js"></script-->
-
             <!-- MAIN APP JS FILE -->
             <script src="js/plantilla/app.min.js"></script>
             <script src="js/timeOut.js"></script>
@@ -520,18 +395,14 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/parentesco.js"></script>
             <script src="js/fancywebsocket.js"></script>
             <script src="js/auditoria.js"></script>
-
             <!-- PAGE RELATED PLUGIN(S) -->
             <script src="js/plantilla/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
             <script src="js/plantilla/plugin/clockpicker/clockpicker.min.js"></script>
-            <!-- Flot Chart Plugin: Flot Engine, Flot Resizer, Flot Tooltip -->
             <script src="js/plantilla/plugin/flot/jquery.flot.cust.min.js"></script>
             <script src="js/plantilla/plugin/flot/jquery.flot.resize.min.js"></script>
             <script src="js/plantilla/plugin/flot/jquery.flot.tooltip.min.js"></script>
-            <!-- Vector Maps Plugin: Vectormap engine, Vectormap language -->
             <script src="js/plantilla/plugin/vectormap/jquery-jvectormap-1.2.2.min.js"></script>
             <script src="js/plantilla/plugin/vectormap/jquery-jvectormap-world-mill-en.js"></script>
-            <!-- Full Calendar -->
             <script src="js/plantilla/plugin/moment/moment.min.js"></script>
             <script src="js/plantilla/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>
             <script src="js/plantilla/plugin/datatables/jquery.dataTables.min.js"></script>
@@ -546,19 +417,10 @@ if ($_SESSION["autenticado"] == 'SI') {
             <script src="js/plantilla/plugin/knob/jquery.knob.min.js"></script>
             <script src="js/plantilla/plugin/morris/raphael.min.js"></script>
             <script src="js/plantilla/plugin/morris/morris.min.js"></script>
-
-
-            <script>
-                $(document).ready(function() {
-                    // DO NOT REMOVE : GLOBAL FUNCTIONS!
-                    pageSetUp();
-
-                });
-            </script>
+            <script>$(document).ready(function() {pageSetUp();});</script>
         </body>
     </html>
     <?php
 } else {
     header('Location: index.php');
 }
-?>

@@ -63,6 +63,7 @@ function guardaDatosPisos() {
     $descripcion = strtoupper($_POST["descripcion"]);
     $pabellon = $_POST['pabellon'];
     $alas = $_POST['ala'];
+    $cantCeldas = $_POST['cantCeldas'];
     $centro = $_SESSION["usu_centro_cod"];
     $sql_v = "SELECT * FROM `sys_pisos` WHERE PIS_DESCRIPCION = '$descripcion' AND CEN_COD=$centro AND PAB_COD=$pabellon AND ALA_COD=$alas;";
     $val_v = $dbmysql->query($sql_v);
@@ -70,6 +71,15 @@ function guardaDatosPisos() {
         $sql = "INSERT INTO `sys_pisos`(CEN_COD,PAB_COD,ALA_COD,PIS_DESCRIPCION)VALUES
                 ('$centro',$pabellon,$alas,'$descripcion');";
         $val = $dbmysql->query($sql);
+        $piso=$dbmysql->lastid();
+    }
+    if($cantCeldas!==''){ 
+        for($x=1;$x<=$cantCeldas;$x++){
+            $descripcionCelda=$descripcion.'-'.$x;
+            $sql = "INSERT INTO `sys_celdas`(CEN_COD,PAB_COD,ALA_COD,PIS_COD,CEL_DESCRIPCION)VALUES
+                    ('$centro',$pabellon,$alas,$piso,'$descripcionCelda');";
+            $val = $dbmysql->query($sql);
+        }
     }
     if ($val) {
         echo 1;

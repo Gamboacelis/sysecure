@@ -17,13 +17,6 @@ function frm_asignacionPabellones() {
                             <header>
                                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                                     <h2>Pabellones ' . $_SESSION["usu_centro_descrip"] . ' </h2>
-                                    <div class="widget-toolbar">
-                                        <div class="btn-group">
-                                                <button class="btn btn-xs btn-success btn-personal" data-toggle="modal" onclick="javascript:abrirCalendario()">
-                                                    <i class="fa fa-fw fa-plus"></i>  Abrir Calendario
-                                                </button>
-                                        </div>
-                                    </div>
                             </header>
                             <div>
                                 <div class="jarviswidget-editbox">
@@ -95,6 +88,7 @@ function frm_asignacionPabellones() {
     $retval .=frmHorarios();
     $retval .=calendarioVisitas();
     $retval .=frmAsignar();
+    $retval .=listaPPLHorario();
     return $retval;
 }
 
@@ -203,12 +197,13 @@ function frmAsignar() {
                                                 </header>
                                                 <div>
                                                     <div class="widget-body no-padding">
-                                                        <form id="formAsignar" class="smart-form" action="javascript:guardarAsignacionHorarios()">
+                                                        <form id="formAsignar" class="smart-form" action="javascript:guardarAsignacionHorarios();">
                                                             <header>
                                                                     Formulario de Registro
                                                             </header>
                                                             <fieldset>
                                                                     <input type="hidden" id="IDpabellonAsigna" name="IDpabellonAsigna">
+                                                                    <input id="cantidadPpl" type="hidden" name="cantidadPpl">
                                                                     <div class="row">
                                                                         <section class="col col-6">
                                                                                 <label style="margin: 10px;"><strong>Datos del Pabellón</strong></label>
@@ -242,13 +237,52 @@ function frmAsignar() {
                                                                 <span style="color: red; font-size: 1.1em">Por favor revisar la distribución que se realizara en cada horario para los ppls, esto está en base a la cantidad de ppls que están asignados a cada celda. </span>
                                                             </fieldset>
                                                             <footer>
-                                                                    <button class="btn btn-default"> Cancelar </button>
                                                                     <button type="submit" class="btn btn-primary">
                                                                         <i class="fa fa-save"></i>
                                                                             Aceptar
                                                                     </button>
                                                             </footer>
                                                         </form>						
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>';
+    return $retval;
+}
+
+function listaPPLHorario() {
+    $retval = '';
+    $retval = '<div class="modal fade" id="frmListaHorariosModal" tabindex="-1" role="dialog" aria-labelledby="PagoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="jarviswidget jarviswidget-sortable" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                                            <header>
+                                                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                    <h2>Lista de PPls Asignados a este Horario</h2>				
+                                            </header>
+                                            <div>
+                                                <div class="widget-body no-padding">
+                                                    <table id="listaPplHorario" class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Código</th>
+                                                                <th>Nombres y Apellidos</th>
+                                                                <th>Acción</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </div>
                                         </div>

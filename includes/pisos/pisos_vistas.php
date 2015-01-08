@@ -122,6 +122,13 @@ function frmPisos() {
                                                                             <b class="tooltip tooltip-bottom-right">Ingrese la descripción del Piso</b> 
                                                                         </label>
                                                                 </section>
+                                                                 <section class="col col-6">
+                                                                        <label class="label">Crear Automático Celdas</label>
+                                                                        <label class="input"> <i class="icon-append fa fa-user"></i>
+                                                                            <input type="number" id="cantCeldas" name="cantCeldas" placeholder="Número de Celdas">
+                                                                            <b class="tooltip tooltip-bottom-right">Ingrese el Numero de Celdas que Desea crear automaticamanete</b> 
+                                                                        </label>
+                                                                </section>
                                                             </fieldset>
                                                             <footer>
                                                                     <button type="submit" class="btn btn-primary">

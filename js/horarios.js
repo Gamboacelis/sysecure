@@ -58,14 +58,16 @@ function asignarPPLHorario() {
                 var json_obj = $.parseJSON(resultado);
                 $('#txtAsignaPabellon').html(json_obj.datosPabellon.PAB_DESCRIPCION);
                 $('#txtAsignaCantidad').html(json_obj.datosPabellon.PAB_PPL);
+                $('#cantidadPpl').val(json_obj.datosPabellon.PAB_PPL);
                 $('#txtAsignaAlas').html(json_obj.datosPabellon.PAB_ALAS);
                 $('#txtAsignaPisos').html(json_obj.datosPabellon.PAB_PISOS);
                 $('#txtAsignaCeldas').html(json_obj.datosPabellon.PAB_CELDAS);
-                $.each(json_obj.datosPplHorarios, function(key, value){
+                $('#IDpabellonAsigna').val(json_obj.datosPabellon.PAB_COD);
+                $.each(json_obj.datosPplHorarios, function(key, value) {
                     $('#muestraHorarios >tbody').append('<tr style="border-bottom: 1px dashed #ccc;font-size:0.8em;">\n\
-                                                    <td><div style="padding: 5px;">'+json_obj.datosPplHorarios[key].HOR_DESCRIPCION+'</div></td>\n\
-                                                    <td><div style="padding: 5px;">'+json_obj.datosPplHorarios[key].HOR_FECHA+'</div></td>\n\
-                                                    <td><div style="padding: 5px;"><span class="badge bg-color-blue txt-color-white" style="padding: 5px">'+json_obj.datosPplHorarios[key].HOR_CANT_PPL+'</span></div></td>\n\
+                                                    <td><div style="padding: 5px;"><input id="codHorario" class="codHorario" type="hidden" name="codHorario" value="' + json_obj.datosPplHorarios[key].HOR_COD + '"><input id="cantidadHorario" class="cantidadHorario" type="hidden" name="cantidadHorario" value="' + json_obj.datosPplHorarios[key].HOR_CANT_PPL + '">' + json_obj.datosPplHorarios[key].HOR_DESCRIPCION + '</div></td>\n\
+                                                    <td><div style="padding: 5px;">' + json_obj.datosPplHorarios[key].HOR_FECHA + '</div></td>\n\
+                                                    <td><div style="padding: 5px;"><span class="badge bg-color-blue txt-color-white" style="padding: 5px">' + json_obj.datosPplHorarios[key].HOR_CANT_PPL + '</span></div></td>\n\
                                                 </tr>');
                 });
                 $('#frmAsignarModal').modal('show');
@@ -83,7 +85,40 @@ function asignarPPLHorario() {
     }
 }
 function guardarAsignacionHorarios() {
+    var horarios = '', cantidadxHorario = '';
+    var pabellon = $('#IDpabellonAsigna').val();
+    var cantidadPpl = $('#cantidadPpl').val();
 
+    $(".codHorario").each(function(index) {
+        horarios += (horarios != '') ? '/' + $(this).val() : $(this).val();
+        cantidadxHorario += (cantidadxHorario != '') ? '/' + $(this).siblings('.cantidadHorario').val() : $(this).siblings('.cantidadHorario').val();
+    });
+    console.log('Pabellon: ' + pabellon);
+    console.log('Horarios: ' + horarios);
+    console.log('Cantidad x Horario: ' + cantidadxHorario);
+    $.ajax({
+        url: "./includes/horarios/horarios_model.php?opcion=guardarAsignacionHorariosPpl",
+        type: 'post',
+        data: {pabellon: pabellon, horarios: horarios, cantidadxHorario: cantidadxHorario, cantidadPpl: cantidadPpl},
+        success: function(resultado) {
+            if (resultado === '1') {
+                mostrarHoraiosPabellon(pabellon, cantidadPpl);
+                $('#frmAsignarModal').modal('hide');
+            }
+        }
+    });
+}
+function visualizarPplsHorarios(codigoHorario) {
+    $.ajax({
+        url: './includes/horarios/horarios_model.php?opcion=consultarPplHorarios',
+        datetype: "json",
+        type: 'POST',
+        data: {codigoHorario: codigoHorario},
+        success: function(res) {
+            $('#listaPplHorario >tbody').html(res);
+            $('#frmListaHorariosModal').modal('show');
+        }
+    });
 }
 function nuevoHorario() {
     var codPabellon = $('#IDpabellon').val();
@@ -369,5 +404,37 @@ function parametrosCalendario() {
     });
     $('#td').click(function() {
         $('#calendar').fullCalendar('changeView', 'agendaDay');
+    });
+}
+function mostrarComboHorario(codPpl){
+    $('.cambioHorario'+codPpl).toggle();
+    $('.btnHorario'+codPpl).hide();
+}
+function cambiarPPLHorario(codPpl,nomPpl,codHorario){
+    var newHorario=$('#cambioHorario').val();
+    $.SmartMessageBox({
+        title: "Confirmación!",
+        content: "Esta seguro de cambiar de Horario al PPL <span class='txt-color-orangeDark'><strong>" + nomPpl + " </strong></span>?",
+        buttons: '[No][Si]'
+    }, function(ButtonPressed) {
+        if (ButtonPressed === "Si") {
+            $.ajax({
+                url: "./includes/horarios/horarios_model.php?opcion=cambiarHorariosPpl",
+                type: 'post',
+                data: {codPpl: codPpl,codHorario:codHorario,newHorario:newHorario},
+                success: function(resultado) {
+                    if(resultado==='1'){
+                        visualizarPplsHorarios(codHorario);
+                         $.smallBox({
+                            title: 'Cambio de Horario',
+                            content: "<i class='fa fa-clock-o'></i> <i>El PPL fue cambiado de horario con Éxito.../i>",
+                            color: "#659265",
+                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                            timeout: 4000
+                        });
+                    }
+                }
+            });
+        }
     });
 }
