@@ -245,12 +245,15 @@ date_default_timezone_set('America/Bogota');
                                                                         type: 'post',
                                                                         data: {usuario: usuario, clave: clave, centro: centro},
                                                                         success: function(respuesta) {
+                                                                            alert(respuesta);
                                                                             switch (respuesta) {
+                                                                                
                                                                                 case 'ok':
                                                                                     window.location = "inicio.php";
                                                                                     break;
                                                                                 case 'pab':
-                                                                                    window.open("includes/pantallaPabellon/pantalla_vistas.php", "Pabellon", "type=fullWindow, fullscreen=yes, resizable=yes").focus();
+                                                                                    window.open("includes/pantallaPabellon/pantalla_vistas.php", "_blank", "type=fullWindow, fullscreen=yes,toolbar=no, scrollbars=no, resizable=no").focus();
+//                                                                                    window.open("includes/pantallaPabellon/pantalla_vistas.php", "Pabellon", "type=fullWindow, fullscreen=yes, resizable=yes").focus();
                                                                                     break;
                                                                                 case 'cambio':
                                                                                     window.open("cambioClave.php").focus();

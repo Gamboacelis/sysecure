@@ -25,19 +25,54 @@ function permitirAcceso3() {
     $codControl=$_POST['codControl'];
     $horario=$_POST['horario'];
     $horaIng=date('H:i');
+    $centro=$_SESSION["usu_centro_cod"];
     $sql3 = "UPDATE `sys_control` SET `CON_ESTADO` = 'S' WHERE `CON_COD` = ".$codControl;
     $val3 = $dbmysql->query($sql3);
     $horaSal=$clGeneral->obtenerHorarioxCod($horario)->fetch_object();
     $sql1 = "INSERT INTO `sys_control` (`GAR_COD` ,`VIP_COD` ,`HOR_COD`,`CON_FECHA` ,`CON_ESTADO`)VALUES ('3', '$codVisita','$horario','$fecha','A');";
     $val1 = $dbmysql->query($sql1);
+    
     //CREA REGISTRO VISITA
     $poscedula= explode('/',obtenerPosicioncedula());
-    $sql2 = "INSERT INTO `sys_visitas` (`PPL_COD`,`VIP_COD` ,`HOR_COD`,`VISG_FECHA`,`VISG_HORA_INGRESO`,`VISG_HORA_SALIDA`,`VISG_POSCHAR`,`VISG_POSNUM`,`VISG_ESTADO`)
-                                VALUES ('$codPpl', '$codVisita','$horario','$fecha','$horaIng','$horaSal->HOR_HORA_SAL','$poscedula[0]','$poscedula[1]','A');";
+    $sql2 = "INSERT INTO `sys_visitas` (`PPL_COD`,CEN_COD,`VIP_COD` ,`HOR_COD`,`VISG_FECHA`,`VISG_HORA_INGRESO`,`VISG_HORA_SALIDA`,`VISG_POSCHAR`,`VISG_POSNUM`,`VISG_ESTADO`)
+                                VALUES ('$codPpl', $centro,'$codVisita','$horario','$fecha','$horaIng','$horaSal->HOR_HORA_SAL','$poscedula[0]','$poscedula[1]','A');";
     $val2 = $dbmysql->query($sql2);
     if ($val1 and $val2 and $val3) {
-        
-        echo $poscedula[0].$poscedula[1];
+        $sql_Visita="SELECT `sys_visitas`.*, sys_visitante_ppl.*,sys_visitante.*,sys_ppl.*,sys_horarios.*,sys_tipovisita.*,sys_pabellones.* 
+                        FROM `sys_visitas`, sys_visitante_ppl,sys_visitante,sys_ppl,sys_horarios,sys_tipovisita,sys_pabellones 
+                        WHERE
+                        `sys_visitas`.`VIP_COD`=sys_visitante_ppl.`VIP_COD` AND
+                        sys_visitante.`VIS_COD`=sys_visitante_ppl.`VIS_COD` AND
+                        sys_ppl.`PPL_COD`=sys_visitante_ppl.`PPL_COD` AND
+                        sys_horarios.`HOR_COD`=`sys_visitas`.`HOR_COD` AND
+                        sys_tipovisita.TPV_COD=sys_horarios.TPV_COD AND
+                        sys_pabellones.PAB_COD=sys_horarios.PAB_COD AND
+                        `sys_visitas`.`PPL_COD`= $codPpl AND
+                        `sys_visitas`.`CEN_COD`= $centro AND
+                        `sys_visitas`.`VIP_COD`= $codVisita AND
+                        `sys_visitas`.`HOR_COD`= $horario";
+        $val_Visita = $dbmysql->query($sql_Visita);
+        $row_Visita = $val_Visita->fetch_object();
+        $nombrePPl=$row_Visita->PPL_NOMBRE.' '.$row_Visita->PPL_APELLIDO;
+        $nombreVisitante=$row_Visita->VIS_NOMBRE.' '.$row_Visita->VIS_APELLIDO;
+        $lista=array(
+                    "codigoPabellon"=>$row_Visita->PAB_COD,
+                    "nombrePabellon"=>$row_Visita->PAB_DESCRIPCION,
+                    "horaEntrada"=>$row_Visita->HOR_HORA_ING,
+                    "horaSalida"=>$row_Visita->HOR_HORA_SAL,
+                    "codigoCentro"=>$row_Visita->CEN_COD,
+                    "codigoHorario"=>$row_Visita->HOR_COD,
+                    "nombreHorario"=>$row_Visita->HOR_DESCRIPCION,
+                    "tipoVisita"=>$row_Visita->TPV_DESCRIPCION,
+                    "codigoPpl"=>$row_Visita->PPL_COD,
+                    "nombrePpl"=>$nombrePPl,
+                    "fotoPpl"=>($row_Visita->PPL_IMG!='')?$row_Visita->PPL_IMG:'../../img/avatars/male.png',
+                    "codigoVisitante"=>$row_Visita->VIS_COD,
+                    "nombreVisitante"=>$nombreVisitante,
+                    "fotoVisitante"=>($row_Visita->VIS_IMAGEN!='')?$row_Visita->VIS_IMAGEN:'../../img/avatars/male.png',
+                    "ubicaCedula"=>$poscedula[0].$poscedula[1]
+        );
+        echo json_encode($lista);
         
     } else {echo 0;}
 }

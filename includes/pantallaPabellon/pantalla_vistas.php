@@ -7,7 +7,8 @@ $clGeneral = new general();
 //include_once PATH_PROD.SISTEM_NAME.'/includes/conexiones/db_local.inc.php';
 //$dbmysql = new database();
 date_default_timezone_set('America/Bogota');
-$centro = isset($_GET['centro']) ? $_GET['centro'] : 'ninguno';
+$codigoCentro = $_SESSION["usu_centro_cod"];
+$centro = $_SESSION["usu_centro_descrip"];
 $pabellon = isset($_GET['pabellon']) ? $_GET['pabellon'] : 'ninguno';
 $nomPabellon = $clGeneral->obtenerPabellon($pabellon);
 $nombrePpl='CARLOS FLORES';
@@ -61,7 +62,7 @@ $tipoVisita='Familiar';
                     <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false" data-widget-deletebutton="false">
                         <header>
                             <span class="widget-icon"> <i class="fa fa-check"></i> </span>
-                            <h2>  Información General </h2>
+                            <h2>  Información General .:. <?php echo $centro;?> </h2>
                         </header>
                         <div>
                             <div class="widget-body">
@@ -71,16 +72,16 @@ $tipoVisita='Familiar';
 
                                             <div class="tab-content">
                                                 <div class="tab-pane active" id="tab1" style="text-align: center;">
-                                                    <h3><strong>Pabellón </strong> <?php echo $nomPabellon ?></h3>
-                                                    <h2><strong><?php echo $nombrePpl?></strong> </h2>
-                                                    <p class="text-primary"> Por favor atender a la Visita tipo: <span class="text-success"><?php echo $tipoVisita?></span></p>
+                                                    <h3><strong>Pabellón </strong> <span id="nombrePabellon<?php echo $codigoCentro; ?>"></span></h3>
+                                                    <h2><strong><span id="horarioPabellon<?php echo $codigoCentro; ?>"></span></strong> </h2>
+                                                    <p class="text-primary"> Por favor atender a la Visita tipo: <span class="text-success"><span id="tipoHorario<?php echo $codigoCentro; ?>"></span></span></p>
                                                     <div class="row">
                                                         <div class="col-sm-6">
                                                             <div class="form-group">
                                                                 <div class="fotoPabellon">
                                                                     <span><p class="text-danger"><strong>PPL</strong></p></span>
-                                                                    <img src="../../img/avatars/male.png" width="150px">
-                                                                    <span><p id="nombrePPl"><?php //echo $nombrePpl?></p></span>
+                                                                    <img id="imagenPpl<?php echo $codigoCentro; ?>" src="../../img/avatars/male.png" width="150px">
+                                                                    <span><p id="nombrePPl<?php echo $codigoCentro; ?>"></p></span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -88,8 +89,8 @@ $tipoVisita='Familiar';
                                                             <div class="form-group">
                                                                 <div class="fotoPabellon">
                                                                     <span><p class="text-danger"><strong>Visitante</strong></p></span>
-                                                                    <img src="../../img/avatars/male.png" width="150px">
-                                                                   <span><p><?php echo $nombreVisitante?></p></span>
+                                                                    <img id="imagenVisitante<?php echo $codigoCentro; ?>" src="../../img/avatars/male.png" width="150px">
+                                                                   <span><p id="nombreVisitante<?php echo $codigoCentro; ?>"></p></span>
                                                                 </div>
                                                             </div>
                                                         </div>

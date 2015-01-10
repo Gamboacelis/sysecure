@@ -29,7 +29,12 @@ if ($consulta->num_rows > 0) {
     $_SESSION["usu_centro_cod"] = $row->CEN_COD;
     $_SESSION["usu_centro_descrip"] = $row->CEN_DESCRIPCION;
     $clGeneral->registrar_acceso();
-    echo "ok";
+    if($row->ROL_COD!=5){
+        echo "ok";
+    }else{
+        echo "pab";
+    }
+    
 } else {
     $sql2 = "SELECT uc.*, u.*, c.*, r.* FROM `sys_usuario_centro` uc,sys_usuarios u,sys_centro c,sys_roles r WHERE uc.`USU_COD`=u.`USU_COD` AND uc.`CEN_COD`=c.`CEN_COD` AND uc.`ROL_COD`=r.`ROL_COD` 
         AND u.USU_USUARIO ='" . $user . "' 

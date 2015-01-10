@@ -46,7 +46,7 @@ function permitirAcceso3(nombre, vipcontrol,pplcod,codControl,horario){
 ////                             
 //                       $('#closeModalCedula').click(function(){
                            $('#cod_'+vipcontrol).parent('td').parent('tr').remove();
-                           var message='Willian Espinosa';
+                           var message=respuesta;
                            send( message );
                            console.log(message);
 //                       });
