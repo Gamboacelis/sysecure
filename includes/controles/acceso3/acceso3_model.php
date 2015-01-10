@@ -61,6 +61,7 @@ function permitirAcceso3() {
                     "horaEntrada"=>$row_Visita->HOR_HORA_ING,
                     "horaSalida"=>$row_Visita->HOR_HORA_SAL,
                     "codigoCentro"=>$row_Visita->CEN_COD,
+                    "centroPabellon"=>$row_Visita->CEN_COD.'-'.$row_Visita->PAB_COD,
                     "codigoHorario"=>$row_Visita->HOR_COD,
                     "nombreHorario"=>$row_Visita->HOR_DESCRIPCION,
                     "tipoVisita"=>$row_Visita->TPV_DESCRIPCION,

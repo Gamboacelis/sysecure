@@ -83,6 +83,21 @@ $(document).ready(function() {
         }
     });
 });
+
+function mostrarComboPabellon(){
+   var val='';
+    val +='<label class="select">'+
+            '<select id="centro" name="centro">';
+            
+            
+               val +='<option value="0" selected="" disabled="">-- Centro --</option>';
+                    
+                    
+                    
+            val +='</select> <i></i>'+
+                '</label>';
+}
+
 function recargarUsuario() {
     var dtTable = $('#listaUsuarios').dataTable({
         "bDestroy": true,

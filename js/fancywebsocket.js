@@ -79,13 +79,13 @@ $(document).ready(function()
 function actualiza_mensaje(message)
 {
     var JSONdata = JSON.parse(message); //parseo la informacion
-    $('#nombrePabellon'+JSONdata.codigoCentro).html(JSONdata.nombrePabellon);
-    $('#horarioPabellon'+JSONdata.codigoCentro).html('Desde: ' + JSONdata.horaEntrada + ' Hasta: ' + JSONdata.horaSalida  );
-    $('#tipoHorario'+JSONdata.codigoCentro).html(JSONdata.tipoVisita);
-    $("#imagenPpl"+JSONdata.codigoCentro).attr("src",JSONdata.fotoPpl);
-    $('#nombrePPl'+JSONdata.codigoCentro).html(JSONdata.nombrePpl);
-    $("#imagenVisitante"+JSONdata.codigoCentro).attr("src",JSONdata.fotoVisitante);
-    $('#nombreVisitante'+JSONdata.codigoCentro).html(JSONdata.nombreVisitante);
+    $('#nombrePabellon'+JSONdata.centroPabellon).html(JSONdata.nombrePabellon);
+    $('#horarioPabellon'+JSONdata.centroPabellon).html('Desde: ' + JSONdata.horaEntrada + ' Hasta: ' + JSONdata.horaSalida  );
+    $('#tipoHorario'+JSONdata.centroPabellon).html(JSONdata.tipoVisita);
+    $("#imagenPpl"+JSONdata.centroPabellon).attr("src",JSONdata.fotoPpl);
+    $('#nombrePPl'+JSONdata.centroPabellon).html(JSONdata.nombrePpl);
+    $("#imagenVisitante"+JSONdata.centroPabellon).attr("src",JSONdata.fotoVisitante);
+    $('#nombreVisitante'+JSONdata.centroPabellon).html(JSONdata.nombreVisitante);
 }
 function actualiza_solicitud()
 {

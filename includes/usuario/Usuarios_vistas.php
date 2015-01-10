@@ -132,13 +132,16 @@ function frmUsuario() {
                                                                     </section>
                                                                     <section class="col col-6">
                                                                             <label class="select">
-                                                                                    <select id="centro" name="centro">
+                                                                                    <select id="centro" name="centro" onchange="mostrarComboPabellon();">
                                                                                             <option value="0" selected="" disabled="">-- Centro --</option>
                                                                                             ' . comboCentro() . '
                                                                                     </select> <i></i> 
                                                                             </label>
                                                                     </section>
                                                                 </div>	
+                                                                <section class="col col-6" id="mostrarComboPabellones">
+                                                                        
+                                                                </section>
                                                             </fieldset>
                                                             <footer>
                                                                     <button type="submit" class="btn btn-primary">

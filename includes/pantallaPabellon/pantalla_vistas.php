@@ -2,18 +2,10 @@
 session_start();
 include_once '../../includes/generales.php';
 $clGeneral = new general();
-//include_once PATH_PROD.SISTEM_NAME.'/includes/generales.php';
-//$clGeneral = new general();
-//include_once PATH_PROD.SISTEM_NAME.'/includes/conexiones/db_local.inc.php';
-//$dbmysql = new database();
 date_default_timezone_set('America/Bogota');
-$codigoCentro = $_SESSION["usu_centro_cod"];
+$codigoCentro = $_SESSION["usu_centro_cod"].'-'.$_SESSION["usu_pabellon_cod"];
 $centro = $_SESSION["usu_centro_descrip"];
-$pabellon = isset($_GET['pabellon']) ? $_GET['pabellon'] : 'ninguno';
-$nomPabellon = $clGeneral->obtenerPabellon($pabellon);
-$nombrePpl='CARLOS FLORES';
-$nombreVisitante='OSWALDO NAVAS';
-$tipoVisita='Familiar';
+$nomPabellon = $clGeneral->obtenerPabellon($_SESSION["usu_pabellon_cod"]);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -34,23 +26,6 @@ $tipoVisita='Familiar';
         <!-- FAVICONS -->
         <link rel="shortcut icon" href="../../img/favicon/favicon.ico" type="image/x-icon">
         <link rel="icon" href="../../img/favicon/favicon.ico" type="image/x-icon">
-        <!-- GOOGLE FONT -->
-        <link rel="apple-touch-icon" href="img/splash/sptouch-icon-iphone.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="../../img/splash/touch-icon-ipad.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="../../img/splash/touch-icon-iphone-retina.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="../../img/splash/touch-icon-ipad-retina.png">
-        <!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <!-- Startup image for web apps -->
-        <link rel="apple-touch-startup-image" href="../../img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
-        <link rel="apple-touch-startup-image" href="../../img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
-        <link rel="apple-touch-startup-image" href="../../img/splash/iphone.png" media="screen and (max-device-width: 320px)">
-        <style>
-            .widget-body{font-size: 2em;}
-            .lockscreen {top: 0;margin-top: 0;}
-            
-        </style>
     </head>
     <body class="desktop-detected pace-done fixed-header fixed-navigation fixed-ribbon smart-style-3">
         <div id="Relogin-form" class="lockscreen animated flipInY" action="javascript:Relogin();" autocomplete="off">
