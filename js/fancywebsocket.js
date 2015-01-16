@@ -79,6 +79,7 @@ $(document).ready(function()
 function actualiza_mensaje(message)
 {
     var JSONdata = JSON.parse(message); //parseo la informacion
+    console.log(JSONdata.centroPabellon);
     $('#nombrePabellon'+JSONdata.centroPabellon).html(JSONdata.nombrePabellon);
     $('#horarioPabellon'+JSONdata.centroPabellon).html('Desde: ' + JSONdata.horaEntrada + ' Hasta: ' + JSONdata.horaSalida  );
     $('#tipoHorario'+JSONdata.centroPabellon).html(JSONdata.tipoVisita);

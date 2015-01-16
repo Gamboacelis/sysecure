@@ -11,7 +11,9 @@ switch ($funcion) {
     case 'permitirAcceso3':
         permitirAcceso3();
         break;
-
+    case 'permitirAccesoFuncionario3':
+        permitirAccesoFuncionario3();
+        break;
     case 'bloquearAceeso3':
         bloquearAceeso3();
         break;
@@ -75,6 +77,26 @@ function permitirAcceso3() {
         );
         echo json_encode($lista);
         
+    } else {echo 0;}
+}
+
+function permitirAccesoFuncionario3() {
+    global $dbmysql,$clGeneral;
+    $fecha = date('Y-m-d'); 
+    $codVisita = $_POST['visCod'];
+    $horaIng=date('H:i');
+    $centro=$_SESSION["usu_centro_cod"];
+    $poscedula= explode('/',obtenerPosicioncedula());
+    $sql3 = "UPDATE `sys_visitas_funcionarios` SET
+                `VSF_FECHA` = '$fecha', 
+                `VSF_HORA_ING` = '$horaIng', 
+                `VSF_POSCHAR` = '$poscedula[0]', 
+                `VSF_POSINT` = '$poscedula[1]',
+                `VSF_ESTADO` = 'A'
+            WHERE `VSF_COD` = ".$codVisita;
+    $val3 = $dbmysql->query($sql3);
+    if ($val3) {
+        echo 1;
     } else {echo 0;}
 }
 

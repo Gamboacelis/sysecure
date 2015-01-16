@@ -11,6 +11,9 @@ switch ($funcion) {
     case 'intervalo':
         intervalo();
         break;
+    case 'intervaloFuncionario':
+        intervaloFuncionario();
+        break;
     case 'bloquearAceeso3':
         bloquearAceeso3();
         break;
@@ -44,7 +47,18 @@ function intervalo() {
     $tiempoFinal=($tiempoTrans*100)/$tiempoTotal;
     echo $tp=($tiempoFinal>=100)?100:$tiempoFinal;
 }
-
+function intervaloFuncionario() {
+    global $dbmysql;
+    $codigo = $_POST['codigo'];
+    $hora=date('H:i');
+    //CONSULTA DE HORA INGRESO Y SALIDA Y CALCULO DE TIEMPO TRANSCURRIDO
+    $sql2 = "SELECT VISG_COD,VISG_FECHA,HOR_COD,VISG_HORA_INGRESO,VISG_HORA_SALIDA FROM `sys_visitas` WHERE VISG_COD=$codigo;";
+    $val2 = $dbmysql->query($sql2);
+    $row = $val2->fetch_object();
+    $hora_entrada=date ('H:i',strtotime($row->VISG_HORA_INGRESO));
+    $tiempoTrans = (strtotime($hora) - strtotime($hora_entrada))/60;
+    echo $tiempoTrans;
+}
 function traerdatosFin(){
     global $dbmysql,$clGeneral;
     $codVisita = $_POST['visCod'];

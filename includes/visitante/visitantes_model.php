@@ -8,6 +8,9 @@ switch ($funcion) {
     case 'enviarDatosVisitante':
         enviarDatosVisitante();
         break;
+    case 'enviarDatosVisitanteGeneral':
+        enviarDatosVisitanteGeneral();
+        break;
     case 'guardaDatosVisitante':
         guardaDatosVisitante();
         break;   
@@ -28,9 +31,31 @@ switch ($funcion) {
          break;
      case 'validarVisitanteCedula':
          validarVisitanteCedula();         
-         break;  
+         break;
+    case 'guardaDatosVisitanteFuncionario':
+         guardaDatosVisitanteFuncionario();         
+         break; 
 }
-
+function enviarDatosVisitanteGeneral(){
+    global $dbmysql;
+    $idpro = $_POST['cedula'];
+    
+   $sql = "SELECT * FROM `sys_visitante` WHERE VIS_CEDULA= '$idpro'";
+    $val = $dbmysql->query($sql);
+    $row = $val->fetch_object();
+    $lista['datosVisitante'] = array(
+        "VIS_COD" => $row->VIS_COD,
+        "VIS_NOMBRE" => $row->VIS_NOMBRE,
+        "VIS_APELLIDO" => $row->VIS_APELLIDO,
+        "VIS_CEDULA" => $row->VIS_CEDULA,
+        "VIS_HUELLA" => $row->VIS_HUELLA,
+        "VIS_DIRECCION" => $row->VIS_DIRECCION,
+        "VIS_TELEFONO" => $row->VIS_TELEFONO,
+        "VIS_CORREO" => $row->VIS_CORREO,
+        "VIS_ESTADO" => $row->VIS_ESTADO
+    );
+    echo $encode = json_encode($lista);
+}
 function enviarDatosVisitante() {
     global $dbmysql;
     $idpro = ($_POST['tipo']=='C')?"VIS_CEDULA={$_POST['cedula']}":"VIS_COD ={$_POST['codigoVis']}";
@@ -76,6 +101,72 @@ function guardaDatosVisitante() {
     {    
         saveImage($codeImage,$id);
     }    
+    echo 1;
+    } else {
+        echo 0;
+    }
+}
+
+function guardaDatosVisitanteFuncionario(){
+    global $dbmysql;
+    $fecha=date('Y-m-d');
+    $fechaHora=date('Y-m-d H:i:s');
+    $centro=$_SESSION["usu_centro_cod"];
+    $codigoVisitante=$_POST['IDvisitantef'];
+    $nombre = strtoupper($_POST["nombref"]);
+    $apellido = strtoupper($_POST["apellidof"]);
+    $telefono = $_POST["telefonof"];
+    $cedula = $_POST["cedulaf"];
+    $direccion = strtoupper($_POST["direccionf"]);
+    $correo = strtolower($_POST["correof"]);
+    $razon = $_POST["razon"];   
+    $funcionario = strtoupper($_POST["funcionario"]); 
+    $sqlConsultafun="SELECT * FROM `sys_funcionarios` WHERE FUN_DESCRIPCION= '$funcionario';";
+    $valConsultafun= $dbmysql->query($sqlConsultafun);
+    if($valConsultafun->num_rows==0){
+        $sql = "INSERT INTO `sys_funcionarios`(CEN_COD,FUN_DESCRIPCION)VALUES
+                ('$centro','$funcionario');";
+        $val = $dbmysql->query($sql);
+        $codigoFuncionario=$dbmysql->lastid(); 
+    }else{
+        $row = $valConsultafun->fetch_object();
+        $codigoFuncionario=$row->FUN_COD; 
+    }   
+    if($codigoVisitante!=''){
+        $sql = "UPDATE `sys_visitante` SET 
+                    VIS_NOMBRE='$nombre',
+                    VIS_APELLIDO='$apellido',
+                    VIS_TELEFONO='$telefono',
+                    VIS_DIRECCION='$direccion',
+                    VIS_CORREO='$correo',
+                    VIS_ESTADO='A'
+                WHERE VIS_COD=$codigoVisitante;";
+        $val = $dbmysql->query($sql);
+    }else{
+        $sql = "INSERT INTO `sys_visitante`(VIS_NOMBRE,VIS_APELLIDO,VIS_TELEFONO,VIS_CEDULA, VIS_DIRECCION,VIS_CORREO,VIS_ESTADO)VALUES
+            ('$nombre','$apellido','$telefono','$cedula','$direccion','$correo','A');";
+        $val = $dbmysql->query($sql);
+        $codigoVisitante = $dbmysql->lastid(); 
+    }
+    $sqlConsultavif="SELECT * FROM `sys_visitante_funcionario` WHERE CEN_COD= '$centro' AND VIS_COD=$codigoVisitante AND FUN_COD=$codigoFuncionario AND VIF_RAZON='$razon' AND VIF_FECHA='$fecha';";
+    $valConsultavif= $dbmysql->query($sqlConsultavif);
+    if($valConsultavif->num_rows==0){
+    $sql = "INSERT INTO `sys_visitante_funcionario`(CEN_COD,VIS_COD,FUN_COD,VIF_RAZON,VIF_FECHA)VALUES
+            ('$centro','$codigoVisitante','$codigoFuncionario','$razon','$fecha');";
+    $val = $dbmysql->query($sql);
+    $codigoVisitanteFuncionario = $dbmysql->lastid(); 
+    }else{
+        $row = $valConsultavif->fetch_object();
+        $codigoVisitanteFuncionario=$row->VIF_COD; 
+    }
+    $sqlConsultavif="SELECT * FROM `sys_visitas_funcionarios` WHERE CEN_COD= '$centro' AND VIF_COD=$codigoVisitanteFuncionario AND VSF_ESTADO='P';";
+    $valConsultavif= $dbmysql->query($sqlConsultavif);
+    if($valConsultavif->num_rows==0){
+    $sql2 = "INSERT INTO `sys_visitas_funcionarios`(CEN_COD,VIF_COD,VSF_FECHA_CREA,VSF_ESTADO)VALUES
+            ('$centro','$codigoVisitanteFuncionario','$fechaHora','P');";
+    $val = $dbmysql->query($sql2);
+    }
+   if ($val) {
     echo 1;
     } else {
         echo 0;

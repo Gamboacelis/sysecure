@@ -245,9 +245,7 @@ date_default_timezone_set('America/Bogota');
                                                                         type: 'post',
                                                                         data: {usuario: usuario, clave: clave, centro: centro},
                                                                         success: function(respuesta) {
-                                                                            alert(respuesta);
                                                                             switch (respuesta) {
-                                                                                
                                                                                 case 'ok':
                                                                                     window.location = "inicio.php";
                                                                                     break;

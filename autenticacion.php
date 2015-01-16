@@ -26,6 +26,7 @@ if ($consulta->num_rows > 0) {
     $_SESSION["usu_avatar"] = $row->USU_AVATAR;
     $_SESSION["usu_rol_cod"] = $row->ROL_COD;
     $_SESSION["usu_rol_descrip"] = $row->ROL_DESCRIPCION;
+    $_SESSION["usu_pabellon_cod"] = $row->PAB_COD;
     $_SESSION["usu_centro_cod"] = $row->CEN_COD;
     $_SESSION["usu_centro_descrip"] = $row->CEN_DESCRIPCION;
     $clGeneral->registrar_acceso();
@@ -53,6 +54,7 @@ if ($consulta->num_rows > 0) {
         $_SESSION["usu_avatar"] = $row->USU_AVATAR;
         $_SESSION["usu_rol_cod"] = $row->ROL_COD;
         $_SESSION["usu_rol_descrip"] = $row->ROL_DESCRIPCION;
+        $_SESSION["usu_pabellon_cod"] = $row->PAB_COD;
         $_SESSION["usu_centro_cod"] = $row->CEN_COD;
         $_SESSION["usu_centro_descrip"] = $row->CEN_DESCRIPCION;
         echo "cambio";

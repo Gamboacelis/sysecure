@@ -3,7 +3,7 @@ session_start();
 include_once '../../includes/generales.php';
 $clGeneral = new general();
 date_default_timezone_set('America/Bogota');
-$codigoCentro = $_SESSION["usu_centro_cod"].'-'.$_SESSION["usu_pabellon_cod"];
+echo $codigoCentro = $_SESSION["usu_centro_cod"].'-'.$_SESSION["usu_pabellon_cod"];
 $centro = $_SESSION["usu_centro_descrip"];
 $nomPabellon = $clGeneral->obtenerPabellon($_SESSION["usu_pabellon_cod"]);
 ?>
